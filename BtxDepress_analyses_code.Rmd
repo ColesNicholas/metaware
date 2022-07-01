@@ -1,7 +1,18 @@
 ---
-title: Data analysis for "A meta-analysis of the effects of demand characteristics in non-clinical research"
-author: "Nicholas A. Coles and Morgan Wyatt"
+title: Data analysis for 'Does blocking facial feedback via botulinum toxin
+  injections decrease depression? A critical review and meta-analysis'
+author: "Nicholas A. Coles"
+date: "September 02, 2019"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+editor_options: 
+  chunk_output_type: console
 ---
+This script preps and performs statistical analyses for a meta-analysis of studies examining the impact of glabellar-region botulinum toxin injections on depression.
+
 The code was written in `r R.version$version.string` using R Markdown (http://rmarkdown.rstudio.com/).
 
 # Section 1: Data Prep
@@ -16,12 +27,24 @@ ipak <- function(pkg){
 }
 
 # call package function
-packages <- c('metafor', 'tidyverse', 'readxl')
+packages <- c('metafor', 'dplyr', 'readxl',
+              'weightr', 'MAd', 'robumeta', 'ggplot2',
+              'knitr', 'gtools', 'kableExtra')
 ipak(packages)
 rm(packages, ipak)
 
 # turn scientific notation off
 options(scipen = 999)
+
+# write function for converting p-values to symbols
+# code adapted from gtools package
+AbbrvPval <- function (p.value){
+    unclass(symnum(p.value, 
+                   corr = FALSE, 
+                   na = FALSE, 
+                   cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1), 
+                   symbols = c("< .001", "< .01", "< .05", "< .10", "> .10")))
+}
 ```
 
 ## Open and clean data
