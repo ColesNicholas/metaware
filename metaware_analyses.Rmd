@@ -254,6 +254,14 @@ DF <- DF %>%
   ungroup()
 ```
 
+# Export
+```{r}
+write.csv(DF %>% 
+            filter(!is.na(es)), 
+          'metaware.data.csv', 
+          row.names = FALSE)
+```
+
 # Data analysis
 Estimating overall effects
 ```{r}
