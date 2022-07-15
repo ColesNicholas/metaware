@@ -31,6 +31,24 @@ rm(packages, ipak)
 options(scipen = 999)
 ```
 
+## Open screening data
+```{r}
+# import data
+DF.screen <- 
+  read_xlsx(path = "metaware_data.xlsx",
+            sheet = "records.screening",
+            na = c("N/A")) %>% 
+  select(year)
+
+hist(DF.screen$year,
+     breaks = seq(from = 1960, 
+                  to = 2022,
+                  by = 2))
+
+rm(DF.screen)
+```
+
+
 ## Open and clean data
 ```{r open/clean data, message = FALSE, warning = FALSE}
 # import data
@@ -56,6 +74,19 @@ DF <- DF %>%
 # Cohen's d functions (defined later) to work
 DF$es <- NA
 DF$es.var <- NA
+
+# effect size by year 
+DF$year %>% hist()
+
+# record by year
+tmp <- DF %>% 
+  distinct(id,
+           .keep_all = T)
+
+tmp$year %>% 
+  hist(breaks = seq(from = 1960, 
+                  to = 2022,
+                  by = 2))
 ```
 
 Different formulas for within vs. between subjects designs
