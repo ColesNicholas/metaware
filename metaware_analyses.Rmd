@@ -89,9 +89,30 @@ tmp$year %>%
                   by = 2))
 ```
 
-Different formulas for within vs. between subjects designs
+# tmp code for log odds to d
+```{r}
+# focus on OR
+tmp <- DF %>% 
+  filter(es.calc == "or") %>% 
+  select(name, es.calc, n.1, n.2, count.1, count.2)
 
-Different formulas based on what info we're working with
+# add test row
+tmp2 <- cbind(name = "test",
+                   es.calc = "or",
+                   n.1 = as.numeric(100),
+                   n.2 = as.numeric(100),
+                   count.1 = as.numeric(5),
+                   count.2 = as.numeric(10))
+
+tmp2 %>% summary()
+
+
+# compute OR and lnOR
+tmp <- tmp %>% 
+  mutate(or = (count.1 * (n.2 - count.2)) / 
+              ((n.1 - count.1) * count.2)
+         )
+```
 
 # Calculate Cohen's *d* and variance
 ## For between-subjects data
@@ -130,6 +151,21 @@ EsBetwFval <- function(n.1, n.2, fval){
   }
 ```
 
+#### When p-values are provided
+```{r}
+# formula: Cooper, Hedges, & Valentine, 2009; p. 228
+EsBetwPval <- function(n.1, n.2, pval){
+  # calculate the inverse of the cumulative distribution function of t
+  t.inv <- qt(p = (pval / 2), 
+              df = (n.1 + n.2 - 2),
+              lower.tail = FALSE);
+  
+  es <- t.inv * sqrt((n.1 + n.2) /
+                     (n.1 * n.2));
+  return(es)
+}
+```
+
 ### Function for calculating variance of *d*
 ```{r define function EsVarBetw}
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
@@ -148,30 +184,37 @@ for (i in 1:nrow(DF)) {
     # call EsBetwMean on cases with between-subject designs and *means*
     if (DF$es.calc[i] == "m_sd") {
       DF$es[i] <- EsBetwMean(n.1 = DF$n.1[i],
-                              m.1 = DF$m.1[i],
-                              sd.1 = DF$sd.1[i],
-                              n.2 = DF$n.2[i],
-                              m.2 = DF$m.2[i],
-                              sd.2 = DF$sd.2[i]) 
+                             m.1 = DF$m.1[i],
+                             sd.1 = DF$sd.1[i],
+                             n.2 = DF$n.2[i],
+                             m.2 = DF$m.2[i],
+                             sd.2 = DF$sd.2[i]) 
       } 
     # call EsBetwTval on cases with between-subject designs and *t-values*
     if (DF$es.calc[i] == "t") {
-      DF$es[i] <- EsBetwTval (n.1 = DF$n.1[i],
-                               n.2 = DF$n.2[i],
-                               tval = DF$tval[i])
+      DF$es[i] <- EsBetwTval(n.1 = DF$n.1[i],
+                             n.2 = DF$n.2[i],
+                             tval = DF$tval[i])
       }
     
     # call EsBetwFval on cases with between-subject designs and *F-values*
     if (DF$es.calc[i] == "f") {
-      DF$es[i] <- EsBetwFval (n.1 = DF$n.1[i],
-                               n.2 = DF$n.2[i],
-                               fval = DF$fval[i])
+      DF$es[i] <- EsBetwFval(n.1 = DF$n.1[i],
+                             n.2 = DF$n.2[i],
+                             fval = DF$fval[i])
+    }
+    
+    # call EsBetwenPval on cases with between-subject designs and *p-values*
+    if (DF$es.calc[i] == "p") {
+      DF$es[i] <- EsBetwPval(n.1 = DF$n.1[i],
+                             n.2 = DF$n.2[i],
+                             pval = DF$pval[i])
     }
     
     # call EsVarBetw on cases with between subject designs
     DF$es.var[i] <- EsVarBetw(n.1 = DF$n.1[i],
-                               n.2 = DF$n.2[i],
-                               es = DF$es[i])
+                              n.2 = DF$n.2[i],
+                              es = DF$es[i])
     }
 }
 ```
