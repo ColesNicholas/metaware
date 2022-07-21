@@ -90,7 +90,7 @@ tmp$year %>%
 ```
 
 # tmp code for log odds to d
-```{r}
+```{r eval = F}
 # focus on OR
 tmp <- DF %>% 
   filter(es.calc == "or") %>% 
@@ -106,14 +106,39 @@ tmp <- DF %>%
   
   # compute OR
   rowwise() %>% 
-  mutate(or = (count.1 * (n.2 - count.2)) / 
+  mutate(or = (count.1 * (n.2 - count.2)) / #  p. 36, Equation 5.8
               ((n.1 - count.1) * count.2),
-         log.or = log(or),
-         
-         es = log.or * (sqrt(3) / pi)) %>% #  p . 47 Equation 7.1
+         log.or = log(or), #  p. 36, Equation 5.9
+         log.or.var = (1 / count.1) + # #  p. 36, Equation 5.10
+                      (1 / (n.2 - count.2)) +
+                      (1 / (n.1 - count.1)) +
+                      (1 / count.2),
+         es = log.or * (sqrt(3) / pi), #  p . 47 Equation 7.1
+         es.var = log.or.var * (3 / pi^2) #  p . 47 Equation 7.2
+         ) %>% 
   ungroup()
 
 tmp$log.or
+
+tmp2 <- tmp %>% 
+  
+  # add test row 
+  add_row(name = "test2",
+          es.calc = "or",
+          n.1 = 100,
+          n.2 = 100,
+          count.1 = 5,
+          count.2 = 10,
+          or = 1,
+          log.or = 0.9069,
+          log.or.var = 0.0676,
+          es = 0,
+          es.var = 0) %>% 
+  rowwise() %>% 
+  mutate(es = log.or * (sqrt(3) / pi), #  p . 47 Equation 7.1
+         es.var = log.or.var * (3 / pi^2)) #  p . 47 Equation 7.2
+
+tmp2[9, ] 
 
 ```
 
@@ -155,7 +180,7 @@ EsBetwFval <- function(n.1, n.2, fval){
 ```
 
 #### When p-values are provided
-```{r}
+```{r define function EsBetwPval}
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsBetwPval <- function(n.1, n.2, pval){
   # calculate the inverse of the cumulative distribution function of t
@@ -169,13 +194,48 @@ EsBetwPval <- function(n.1, n.2, pval){
 }
 ```
 
-### Function for calculating variance of *d*
+### Function for calculating variance of *d* with continuous data
 ```{r define function EsVarBetw}
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsVarBetw <- function(n.1, n.2, es){       
    es.var <- ((n.1 + n.2) / (n.1 * n.2)) +
              ((es^2) / (2 * (n.1 + n.2)));
    return(es.var)
+}
+```
+
+### Functions for calculating *d* and variance of *d* with count data
+```{r define functions EsBetwCount and EsVarBetwCount}
+# cohen's d
+EsBetwCount <- function(n.1, n.2, count.1, count.2){
+  # calculate odds ratio
+  # formula: Borenstein et al. 2011; p. 36; Equation 5.8
+  or <- (count.1 * (n.2 - count.2)) / 
+        ((n.1 - count.1) * count.2);
+  
+  # calculate log odds ratio
+  # formula: Borenstein et al. 2011; p. 36; Equation 5.9
+  log.or = log(or);
+  
+  # convert log odds ratio to Cohen's d
+  # formula: Borenstein et al. 2011; p . 47 Equation 7.1
+  es <- log.or * (sqrt(3) / pi);
+  return(es)
+}
+
+# variance of cohen's d
+EsVarBetwCount <- function(n.1, n.2, count.1, count.2){
+  # calculate log odds ratio variance
+  # formula: Borenstein et al. 2011; p. 36; Equation 5.10
+  log.or.var = (1 / count.1) +
+               (1 / (n.2 - count.2)) +
+               (1 / (n.1 - count.1)) +
+               (1 / count.2);
+  
+  # convert log odds ratio variance to variance of Cohen's d
+  # formula: Borenstein et al. 2011; p. 47 Equation 7.2
+  es.var = log.or.var * (3 / pi^2);
+  return(es.var)
 }
 ```
 
@@ -207,18 +267,31 @@ for (i in 1:nrow(DF)) {
                              fval = DF$fval[i])
     }
     
-    # call EsBetwenPval on cases with between-subject designs and *p-values*
+    # call EsBetwPval on cases with between-subject designs and *p-values*
     if (DF$es.calc[i] == "p") {
       DF$es[i] <- EsBetwPval(n.1 = DF$n.1[i],
                              n.2 = DF$n.2[i],
                              pval = DF$pval[i])
     }
     
-    # call EsVarBetw on cases with between subject designs
-    if (DF$es.calc[i] != "or"){
-    DF$es.var[i] <- EsVarBetw(n.1 = DF$n.1[i],
+    # call EsBetwCount and EsVarBetwCount on cases with between-subject designs and *count data*
+    if (DF$es.calc[i] == "or") {
+      DF$es[i] <- EsBetwCount(n.1 = DF$n.1[i],
                               n.2 = DF$n.2[i],
-                              es = DF$es[i])
+                              count.1 = DF$count.1[i],
+                              count.2 = DF$count.2[i])
+      
+      DF$es.var[i] <- EsVarBetwCount(n.1 = DF$n.1[i],
+                                     n.2 = DF$n.2[i],
+                                     count.1 = DF$count.1[i],
+                                     count.2 = DF$count.2[i])
+    }
+    
+    # call EsVarBetw on cases with continuous data and a between subject designs
+    if (DF$es.calc[i] != "or"){
+      DF$es.var[i] <- EsVarBetw(n.1 = DF$n.1[i],
+                                n.2 = DF$n.2[i],
+                                es = DF$es[i])
     }
     }
 }
