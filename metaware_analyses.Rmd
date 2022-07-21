@@ -94,24 +94,27 @@ tmp$year %>%
 # focus on OR
 tmp <- DF %>% 
   filter(es.calc == "or") %>% 
-  select(name, es.calc, n.1, n.2, count.1, count.2)
-
-# add test row
-tmp2 <- cbind(name = "test",
-                   es.calc = "or",
-                   n.1 = as.numeric(100),
-                   n.2 = as.numeric(100),
-                   count.1 = as.numeric(5),
-                   count.2 = as.numeric(10))
-
-tmp2 %>% summary()
-
-
-# compute OR and lnOR
-tmp <- tmp %>% 
+  select(name, es.calc, n.1, n.2, count.1, count.2) %>% 
+  
+  # add test row
+  add_row(name = "test",
+          es.calc = "or",
+          n.1 = 100,
+          n.2 = 100,
+          count.1 = 5,
+          count.2 = 10) %>% 
+  
+  # compute OR
+  rowwise() %>% 
   mutate(or = (count.1 * (n.2 - count.2)) / 
-              ((n.1 - count.1) * count.2)
-         )
+              ((n.1 - count.1) * count.2),
+         log.or = log(or),
+         
+         es = log.or * (sqrt(3) / pi)) %>% #  p . 47 Equation 7.1
+  ungroup()
+
+tmp$log.or
+
 ```
 
 # Calculate Cohen's *d* and variance
@@ -212,9 +215,11 @@ for (i in 1:nrow(DF)) {
     }
     
     # call EsVarBetw on cases with between subject designs
+    if (DF$es.calc[i] != "or"){
     DF$es.var[i] <- EsVarBetw(n.1 = DF$n.1[i],
                               n.2 = DF$n.2[i],
                               es = DF$es[i])
+    }
     }
 }
 ```
