@@ -48,7 +48,6 @@ hist(DF.screen$year,
 rm(DF.screen)
 ```
 
-
 ## Open and clean data
 ```{r open/clean data, message = FALSE, warning = FALSE}
 # import data
@@ -87,59 +86,8 @@ tmp$year %>%
   hist(breaks = seq(from = 1960, 
                   to = 2022,
                   by = 2))
-```
 
-# tmp code for log odds to d
-```{r eval = F}
-# focus on OR
-tmp <- DF %>% 
-  filter(es.calc == "or") %>% 
-  select(name, es.calc, n.1, n.2, count.1, count.2) %>% 
-  
-  # add test row
-  add_row(name = "test",
-          es.calc = "or",
-          n.1 = 100,
-          n.2 = 100,
-          count.1 = 5,
-          count.2 = 10) %>% 
-  
-  # compute OR
-  rowwise() %>% 
-  mutate(or = (count.1 * (n.2 - count.2)) / #  p. 36, Equation 5.8
-              ((n.1 - count.1) * count.2),
-         log.or = log(or), #  p. 36, Equation 5.9
-         log.or.var = (1 / count.1) + # #  p. 36, Equation 5.10
-                      (1 / (n.2 - count.2)) +
-                      (1 / (n.1 - count.1)) +
-                      (1 / count.2),
-         es = log.or * (sqrt(3) / pi), #  p . 47 Equation 7.1
-         es.var = log.or.var * (3 / pi^2) #  p . 47 Equation 7.2
-         ) %>% 
-  ungroup()
-
-tmp$log.or
-
-tmp2 <- tmp %>% 
-  
-  # add test row 
-  add_row(name = "test2",
-          es.calc = "or",
-          n.1 = 100,
-          n.2 = 100,
-          count.1 = 5,
-          count.2 = 10,
-          or = 1,
-          log.or = 0.9069,
-          log.or.var = 0.0676,
-          es = 0,
-          es.var = 0) %>% 
-  rowwise() %>% 
-  mutate(es = log.or * (sqrt(3) / pi), #  p . 47 Equation 7.1
-         es.var = log.or.var * (3 / pi^2)) #  p . 47 Equation 7.2
-
-tmp2[9, ] 
-
+rm(tmp)
 ```
 
 # Calculate Cohen's *d* and variance
@@ -387,8 +335,9 @@ for (i in 1:nrow(DF)) {
 # delete unnecessary variables
 rm(corr, i,
    EsBetwFval, EsBetwMean, EsBetwTval,
-   EsVarBetw, EsVarWitn, 
-   EsWitnFval, EsWitnMean, EsWitnTval)
+   EsBetwPval, EsVarBetw, EsVarWitn,
+   EsWitnFval, EsWitnMean, EsWitnTval,
+   EsBetwCount, EsVarBetwCount)
 ```
 
 ## Specify direction
