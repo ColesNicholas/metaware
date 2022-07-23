@@ -311,21 +311,21 @@ for (i in 1:nrow(DF)) {
     
     # call EsWitnTval on cases with within-subject designs and *t-values*
     if (DF$es.calc[i] == "t") {
-      DF$es[i] <- EsWitnTval (n.1 = DF$n.1[i],
-                              tval = DF$tval[i],
-                              corr = corr)
+      DF$es[i] <- EsWitnTval(n.1 = DF$n.1[i],
+                             tval = DF$tval[i],
+                             corr = corr)
   }  
     
     # call EsWitnFval on cases with within-subject designs and *F-values*
     if (DF$es.calc[i] == "f") {
-      DF$es[i] <- EsWitnFval (n.1 = DF$n.1[i],
-                              fval = DF$fval[i],
-                              corr = corr)
+      DF$es[i] <- EsWitnFval(n.1 = DF$n.1[i],
+                             fval = DF$fval[i],
+                             corr = corr)
     }
     
     # call EsVarWitn on cases with within subject designs
-    DF$es.var[i] <- EsVarWitn (n.1 = DF$n.1[i],
-                               es = DF$es[i])
+    DF$es.var[i] <- EsVarWitn(n.1 = DF$n.1[i],
+                              es = DF$es[i])
     }
   }
   
