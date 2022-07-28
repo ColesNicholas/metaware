@@ -29,29 +29,14 @@ rm(packages, ipak)
 
 # turn scientific notation off
 options(scipen = 999)
-```
 
-## Open screening data
-```{r}
-# import data
-DF.screen <- 
-  read_xlsx(path = "metaware_data.xlsx",
-            sheet = "records.screening",
-            na = c("N/A")) %>% 
-  select(year)
-
-hist(DF.screen$year,
-     breaks = seq(from = 1960, 
-                  to = 2022,
-                  by = 2))
-
-rm(DF.screen)
+# do we need Type 3 SS?
 ```
 
 ## Open and clean data
 ```{r open/clean data, message = FALSE, warning = FALSE}
 # import data
-DF <- read_xlsx(path = "metaware_data.xlsx",
+DF <- read_xlsx(path = "metaware_data_raw.xlsx",
                 sheet = "coding",
                 na = c("NA"))
 
@@ -62,20 +47,21 @@ DF <- DF %>%
   select(-ends_with("ref")) %>% 
   
   # remove variables we won't include in any analyses
-  select(-c(prop.woman : online, note))
-
-# temporarily delete p-value caess
-# DF <- DF %>% 
-#   filter(es.calc != "pval")
+  select(-c(prop.woman, age, dv, note)) %>% 
+  
+  # convert factors to factors
+  mutate(id = as.factor(id),
+         published = as.factor(published),
+         student = as.factor(student),
+         paid = as.factor(paid),
+         online = as.factor(online),
+         ref.type = as.factor(ref.type))
 
 # create blank columns for effect size and effect size variance
 # Note: these pre-exisiting columns are necessary for the 
 # Cohen's d functions (defined later) to work
 DF$es <- NA
 DF$es.var <- NA
-
-# effect size by year 
-DF$year %>% hist()
 
 # record by year
 tmp <- DF %>% 
@@ -340,12 +326,16 @@ rm(corr, i,
    EsBetwCount, EsVarBetwCount)
 ```
 
+## Delete id 18 because it's a MASSIVE outlier
+```{r}
+DF <- DF %>% 
+  filter(id != 18)
+```
+
 ## Specify direction
 This direction of the effect was coded for in the raw database, and this code ensures that all effects are in the correct direction.
 ```{r specify es direction}
 DF <- DF %>% 
-  filter(id != 18) %>%  #  temporarily deleting because es' are outrageous
-  
   # specify direction of the effect size
   rowwise() %>% 
   mutate(es = if_else(condition = direction == "positive",
@@ -359,7 +349,7 @@ DF <- DF %>%
 ```{r}
 write.csv(DF %>% 
             filter(!is.na(es)), 
-          'metaware.data.csv', 
+          'metaware.data_clean.csv', 
           row.names = FALSE)
 ```
 
@@ -367,20 +357,78 @@ write.csv(DF %>%
 Estimating overall effects
 ```{r}
 # RE meta
-results <- rma.uni(yi = es,
-                   vi = es.var,
-                   data = DF,
-                   method = "REML")
+rma.uni(yi = es,
+        vi = es.var,
+        data = DF,
+        mods = ~ online,
+        method = "REML") %>% 
+  funnel()
 
-funnel(results)
+rma.uni(yi = es,
+        vi = es.var,
+        data = DF,
+        mods = ~ design,
+        method = "REML")
+
+rma.uni(yi = es,
+        vi = es.var,
+        data = DF,
+        method = "REML")
 
 # rve meta
+## overall effect = .31
+## I2 = 86%
+## T = 0.535527
 robu.results <- robu(formula = es ~ 1,
                      data = DF, 
                      studynum = id,
                      var.eff.size = es.var,
-                     modelweights = "HEIR",
+                     modelweights = "CORR",
                      small = FALSE)
+
+# online moderator analysis
+robu(formula = es ~ online,
+     data = DF, 
+     studynum = id,
+     var.eff.size = es.var,
+     modelweights = "CORR",
+     small = FALSE)
+
+# student moderator analysis
+robu(formula = es ~ student,
+     data = DF, 
+     studynum = id,
+     var.eff.size = es.var,
+     modelweights = "CORR",
+     small = FALSE)
+
+# paid moderator analysis
+robu(formula = es ~ paid,
+     data = DF[DF$paid != "mix", ], 
+     studynum = id,
+     var.eff.size = es.var,
+     modelweights = "CORR",
+     small = FALSE)
+
+# between vs. within
+robu(formula = es ~ design,
+     data = DF, 
+     studynum = id,
+     var.eff.size = es.var,
+     modelweights = "CORR",
+     small = FALSE)
+
+# ref.type
+robu(formula = es ~ ref.type,
+     data = DF, 
+     studynum = id,
+     var.eff.size = es.var,
+     modelweights = "CORR",
+     small = FALSE)
+
+
+DF$ref.type %>% table()
+
 
 # agg meta
 library(MAd)
