@@ -22,8 +22,8 @@ ipak <- function(pkg){
 }
 
 # call package function
-packages <- c('metafor', 'tidyverse', 
-              'readxl', 'robumeta')
+packages <- c('metafor', 'tidyverse', 'PublicationBias',
+              'readxl', 'robumeta', 'MAd')
 ipak(packages)
 rm(packages, ipak)
 
@@ -354,84 +354,131 @@ write.csv(DF %>%
 ```
 
 # Data analysis
-Estimating overall effects
+## Overall effect
 ```{r}
-# RE meta
+overall <- 
+  robu(formula = es ~ 1,
+       data = DF, 
+       studynum = id,
+       var.eff.size = es.var,
+       modelweights = "HIER",
+       small = FALSE)
+```
+
+## Moderator analyses
+Prep analyses
+```{r}
+# create blank dataframe
+mod.r <- data.frame(mod = character(),
+                    level = character(),
+                    s = integer(),
+                    k = integer(),
+                    d = integer(),
+                    f = integer(),
+                    CI95 = character(),
+                    p = integer())
+
+# create list of moderators
+mod.l <- c("student", "paid", "online", 
+           "design", "ref.type", "published")
+```
+
+Create function for moderator analysis
+```{r}
+ModAnalysis <- function(mod){
+  # fit model
+  m <- rma.uni(yi = es,
+               vi = es.var,
+               data = DF,
+               mods = as.formula(paste0("~ ", mod)),
+               method = "REML") %>%
+    robust(cluster = DF$id)
+  
+  # append to moderator analysis results dataframe
+  mod.r <<- 
+    rbind(mod.r,
+          cbind(mod = mod,
+                level = NA,
+                s = m$n,
+                k = m$k,
+                d = NA,
+                f = round(m$QM, 
+                          2),
+                CI95 = NA,
+                p = round(m$QMp,
+                          4))
+          )
+}
+```
+
+Create subgroup analysis function
+```{r}
+SubAnalysis <- function(df, level, mod){
+  # fit subgroup model
+  m <- rma.uni(yi = es,
+               vi = es.var,
+               data = df,
+               method = "REML")
+  
+  # run cluster-robust analysis if there are enough observations
+   if(nrow(df) > 1){ 
+     m <- robust(m, cluster = df$id)
+     }
+  
+  # append to moderator analysis results dataframe
+  mod.r <<- 
+    rbind(mod.r,
+          cbind(mod = mod,
+                level = level,
+                s = ifelse(nrow(df) > 1,
+                           m$n,
+                           NA),
+                k = m$k,
+                d = round(m$b[1],
+                          2),
+                f = NA,
+                CI95 = paste0("[", 
+                              round(m$ci.lb,
+                                    2),
+                              ", ",
+                              round(m$ci.ub, 
+                                    2),
+                              "]"),
+                p = round(m$pval,
+                          4))
+          )
+}
+```
+
+Run moderator and subgroup analyses
+```{r}
+# DF <- DF %>% 
+#   filter(name != "Demand effects in survey experiments: An empirical assessment")
+
+for (mod in mod.l){
+  ModAnalysis(mod = mod)
+  
+  mapply(FUN = SubAnalysis,
+         df = split(DF, DF[, mod]),
+         level = names(split(DF, DF[, mod])),
+         mod = mod)
+}
+```
+
+## Publication bias analyses
+Funnel plot
+```{r}
 rma.uni(yi = es,
         vi = es.var,
         data = DF,
-        mods = ~ online,
         method = "REML") %>% 
+  robust(cluster = DF$id) %>% 
   funnel()
+```
 
-rma.uni(yi = es,
-        vi = es.var,
-        data = DF,
-        mods = ~ design,
-        method = "REML")
-
-rma.uni(yi = es,
-        vi = es.var,
-        data = DF,
-        method = "REML")
-
-# rve meta
-## overall effect = .31
-## I2 = 86%
-## T = 0.535527
-robu.results <- robu(formula = es ~ 1,
-                     data = DF, 
-                     studynum = id,
-                     var.eff.size = es.var,
-                     modelweights = "CORR",
-                     small = FALSE)
-
-# online moderator analysis
-robu(formula = es ~ online,
-     data = DF, 
-     studynum = id,
-     var.eff.size = es.var,
-     modelweights = "CORR",
-     small = FALSE)
-
-# student moderator analysis
-robu(formula = es ~ student,
-     data = DF, 
-     studynum = id,
-     var.eff.size = es.var,
-     modelweights = "CORR",
-     small = FALSE)
-
-# paid moderator analysis
-robu(formula = es ~ paid,
-     data = DF[DF$paid != "mix", ], 
-     studynum = id,
-     var.eff.size = es.var,
-     modelweights = "CORR",
-     small = FALSE)
-
-# between vs. within
-robu(formula = es ~ design,
-     data = DF, 
-     studynum = id,
-     var.eff.size = es.var,
-     modelweights = "CORR",
-     small = FALSE)
-
-# ref.type
-robu(formula = es ~ ref.type,
-     data = DF, 
-     studynum = id,
-     var.eff.size = es.var,
-     modelweights = "CORR",
-     small = FALSE)
-
-
-DF$ref.type %>% table()
-
-
-# agg meta
-library(MAd)
+PET-PEESE and 3PSM
+```{r}
+# aggregate dependent effect sizes
 DF.AGG <- agg(id = id,
               es = es,
               var = es.var,
@@ -439,12 +486,36 @@ DF.AGG <- agg(id = id,
               cor = .5, 
               data = DF)
   
-## 1.1.b. run meta-analysis  
-results.agg <- rma.uni(yi = es,
-                       vi = var,
-                       data = DF.AGG,
-                       method = "REML")
-funnel(results.agg)
-```
+# PET-PEESE models
+## syntax provided by Carter & McCullough, 2014
+##  first compute standard error of es
+DF.AGG$se <- sqrt(DF.AGG$var)
 
-Publication bias
+### create models
+pet <-   lm(DF.AGG$es ~ DF.AGG$se, 
+             weights = 1 / DF.AGG$var) %>% summary()
+peese <- lm(DF.AGG$es ~ DF.AGG$var, 
+             weights = 1 / DF.AGG$var) %>% summary()
+  
+# Vevea and Hedges (1995) Weight-Function Model
+weight.funct <- weightfunct(effect = DF.AGG$es,
+                            v = DF.AGG$var,
+                            mods = NULL,
+                            weights= NULL,
+                            fe = FALSE,
+                            table = TRUE,
+                            pval = NULL)
+
+# Mathur and VanderWeele 2020 sensitivity analyses
+corrected_meta(yi = DF$es,
+               vi = DF$es.var,
+               eta = 13,
+               clustervar = DF$id,
+               model = "robust",
+               favor.positive = T,
+               )
+
+significance_funnel(yi = DF$es,
+                    vi = DF$es.var,
+                    favor.positive = T)
+```
