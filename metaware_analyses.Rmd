@@ -375,7 +375,8 @@ mod.r <- data.frame(mod = character(),
                     k = integer(),
                     d = integer(),
                     f = integer(),
-                    CI95 = character(),
+                    LB = integer(),
+                    UB = integer(),
                     p = integer())
 
 # create list of moderators
@@ -404,7 +405,8 @@ ModAnalysis <- function(mod){
                 d = NA,
                 f = round(m$QM, 
                           2),
-                CI95 = NA,
+                LB = NA,
+                UB = NA,
                 p = round(m$QMp,
                           4))
           )
@@ -432,18 +434,13 @@ SubAnalysis <- function(df, level, mod){
                 level = level,
                 s = ifelse(nrow(df) > 1,
                            m$n,
-                           NA),
+                           1),
                 k = m$k,
                 d = round(m$b[1],
                           2),
                 f = NA,
-                CI95 = paste0("[", 
-                              round(m$ci.lb,
-                                    2),
-                              ", ",
-                              round(m$ci.ub, 
-                                    2),
-                              "]"),
+                LB = round(m$ci.lb, 2),
+                UB = round(m$ci.ub, 2),
                 p = round(m$pval,
                           4))
           )
@@ -519,3 +516,111 @@ significance_funnel(yi = DF$es,
                     vi = DF$es.var,
                     favor.positive = T)
 ```
+
+
+# Subgroup analysis forest plot'
+```{r}
+tmp <- mod.r %>% 
+  group_split(mod) %>% 
+  map_dfr(~ add_row(.x, .after = Inf)) %>% 
+  ungroup() %>% 
+  mutate(Moderator = 
+           if_else(is.na(level),
+                   mod,
+                   paste0("  ",
+                          level))
+         ) %>% 
+  relocate(Moderator, .before = mod) %>%
+  mutate(d = if_else(is.na(d),
+                     99, 
+                     as.numeric(d)),
+         LB = if_else(is.na(LB),
+                      99,
+                      as.numeric(LB)),
+         UB = if_else(is.na(UB),
+                      99,
+                      as.numeric(UB))) %>%
+  select(Moderator, s, k, d, LB, UB, p) %>% 
+  add_row(Moderator = "Moderator",
+          s = "s",
+          k = "k",
+          d = 99,
+          LB = 99,
+          UB = 99,
+          p = "p-value",
+          .before = 1) %>% 
+  add_row(Moderator = NA,
+          s = NA,
+          k = NA,
+          d = 99,
+          LB = 99,
+          UB = 99,
+          p = NA,
+          .after = 1)
+
+tmp <- tmp[1 : (nrow(tmp) - 1), ]
+```
+
+```{r}
+ggplot(data= tmp, 
+       aes(y = rev(1: nrow(tmp)), 
+           x = d,
+           xmin = LB,
+           xmax = UB)) +
+  geom_point(shape = "diamond",
+             size = 3) +
+  geom_errorbarh(height = .5) +
+  
+  # add moderator label
+  geom_text(aes(label = Moderator),
+            x = -2.25,
+            hjust = 0,
+            fontface = c("bold",
+                         rep(x= "plain",
+                             times = nrow(tmp) - 1)
+                         ),
+                   ) +
+  
+  # add s label
+  geom_text(aes(label = s),
+            x = -1.75,
+            hjust = 0,
+            fontface = c("bold",
+                         rep(x= "plain",
+                             times = nrow(tmp) - 1)
+                         ),
+                   ) +
+  
+  # add k label
+  # add study label
+  geom_text(aes(label = k),
+            x = -1.5,
+            hjust = 0,
+            fontface = c("bold",
+                         rep(x= "plain",
+                             times = nrow(tmp) - 1)
+                         ),
+                   ) +
+  
+  # add p-value label
+  geom_text(aes(label = p),
+            x = 2.1,
+            hjust = 0,
+            fontface = c("bold",
+                         rep(x= "plain",
+                             times = nrow(tmp) - 1)
+                         ),
+                   ) +
+  
+  coord_cartesian(xlim=c(-2.25, 2.25)) +
+  geom_vline(xintercept = 0, 
+             color = "black", 
+             linetype = "dashed", 
+             alpha = .5) +
+  theme_classic() +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.line.y = element_blank())
+```
+
