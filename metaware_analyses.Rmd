@@ -520,6 +520,21 @@ significance_funnel(yi = DF$es,
 
 # Subgroup analysis forest plot'
 ```{r}
+# update labels
+mod.r[!is.na(mod.r$level) &
+        mod.r$level == "cvz", ]$level = "control v. nil demand"
+mod.r[!is.na(mod.r$level) &
+        mod.r$level == "nvc", ]$level = "control v. negative demand"
+mod.r[!is.na(mod.r$level) &
+        mod.r$level == "nvz", ]$level = "nil v. negative demand"
+mod.r[!is.na(mod.r$level) &
+        mod.r$level == "pvc", ]$level = "positive demand v. control"
+mod.r[!is.na(mod.r$level) &
+        mod.r$level == "pvn", ]$level = "positive v. negative demand"
+mod.r[!is.na(mod.r$level) &
+        mod.r$level == "pvz", ]$level = "positive v. nil demand"
+mod.r[mod.r$mod == "ref.type", ]$mod = "paradigm"
+
 tmp <- mod.r %>% 
   group_split(mod) %>% 
   map_dfr(~ add_row(.x, .after = Inf)) %>% 
@@ -539,7 +554,13 @@ tmp <- mod.r %>%
                       as.numeric(LB)),
          UB = if_else(is.na(UB),
                       99,
-                      as.numeric(UB))) %>%
+                      as.numeric(UB)),
+         p = if_else(as.numeric(p) > .05,
+                     round(as.numeric(p), 2) %>% 
+                       as.character(),
+                     stars.pval(as.numeric(p))
+                     )
+         ) %>%
   select(Moderator, s, k, d, LB, UB, p) %>% 
   add_row(Moderator = "Moderator",
           s = "s",
@@ -573,7 +594,7 @@ ggplot(data= tmp,
   
   # add moderator label
   geom_text(aes(label = Moderator),
-            x = -2.25,
+            x = -2.75,
             hjust = 0,
             fontface = c("bold",
                          rep(x= "plain",
@@ -612,15 +633,19 @@ ggplot(data= tmp,
                          ),
                    ) +
   
-  coord_cartesian(xlim=c(-2.25, 2.25)) +
+  coord_cartesian(xlim=c(-2.75, 2.25)) +
   geom_vline(xintercept = 0, 
              color = "black", 
              linetype = "dashed", 
              alpha = .5) +
   theme_classic() +
+  scale_x_continuous(labels = c("", "", 
+                                seq(-1, 2))) +
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
         axis.title.y = element_blank(),
-        axis.line.y = element_blank())
+        axis.line.y = element_blank(),
+        axis.ticks.x = element_blank()) +
+  labs(x = "Cohen's standardized d")
 ```
 
