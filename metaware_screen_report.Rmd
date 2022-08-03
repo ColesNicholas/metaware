@@ -34,7 +34,7 @@ options(scipen = 999)
 ```{r}
 DF.s <- 
   read_xlsx(path = "metaware_data_raw.xlsx",
-            sheet = "records.screening") 
+            sheet = "records.screening") #%>% 
   
   # filter out records we're still waiting on
   #filter(note != "requested from library")
@@ -56,7 +56,7 @@ DF.s$NC_rationale %>% unique()
 ## should equal 32 as of 07/27
 DF.s %>% 
   filter(NC_include == '1.0') %>%
-  nrow()
+  View()
 ```
 
 ## Identify dissertations
@@ -70,14 +70,14 @@ DF.s <- DF.s %>%
 
 ## Summarize
 ```{r}
-# number screened
+# number screened (853)
 nrow(DF.s)
 
-# number of dissertations
+# number of dissertations (97)
 DF.s %>% filter(dissertation == 1) %>% nrow()
 
-# number of records determined eligible
-DF.s %>% filter(NC_include == 1) %>% nrow()
+# number of records determined eligible (32)
+DF.s %>% filter(NC_include == '1.0') %>% nrow()
 
 # year distribution
 hist(DF.s$year,

@@ -23,7 +23,8 @@ ipak <- function(pkg){
 
 # call package function
 packages <- c('metafor', 'tidyverse', 'PublicationBias',
-              'readxl', 'robumeta', 'MAd')
+              'readxl', 'robumeta', 'MAd', 'weightr',
+              'gtools')
 ipak(packages)
 rm(packages, ipak)
 
@@ -39,6 +40,9 @@ options(scipen = 999)
 DF <- read_xlsx(path = "metaware_data_raw.xlsx",
                 sheet = "coding",
                 na = c("NA"))
+
+# change ref.type pvc to cvp
+DF[DF$ref.type == "pvc", ]$ref.type = "cvp"
 
 # delete unnecessary variables
 DF <- DF %>% 
@@ -74,6 +78,12 @@ tmp$year %>%
                   by = 2))
 
 rm(tmp)
+
+# 32 studies
+DF$name %>% unique() %>% length()
+
+# 228 effect sizes
+nrow(DF)
 ```
 
 # Calculate Cohen's *d* and variance
@@ -356,6 +366,7 @@ write.csv(DF %>%
 # Data analysis
 ## Overall effect
 ```{r}
+# overall d= 0.28, 95% CI = [0.16, 0.39], T = 0.28
 overall <- 
   robu(formula = es ~ 1,
        data = DF, 
@@ -363,6 +374,13 @@ overall <-
        var.eff.size = es.var,
        modelweights = "HIER",
        small = FALSE)
+
+# get imperfect estimate of I2: 88.50%
+## RVE approach doesn't give an I2
+rma.uni(yi = es,
+        vi = es.var,
+        data = DF,
+        method = "REML")
 ```
 
 ## Moderator analyses
@@ -470,7 +488,8 @@ rma.uni(yi = es,
         data = DF,
         method = "REML") %>% 
   robust(cluster = DF$id) %>% 
-  funnel()
+  metafor::funnel(hlines = "lightgray",
+                  xlab = "Cohen's standardized d")
 ```
 
 PET-PEESE and 3PSM
@@ -482,6 +501,13 @@ DF.AGG <- agg(id = id,
               method = "BHHR",
               cor = .5, 
               data = DF)
+
+# aggregated funnel plot
+rma.uni(yi = es,
+        vi = var,
+        data = DF.AGG,
+        method = "REML") %>%
+  metafor::funnel()
   
 # PET-PEESE models
 ## syntax provided by Carter & McCullough, 2014
@@ -490,11 +516,13 @@ DF.AGG$se <- sqrt(DF.AGG$var)
 
 ### create models
 pet <-   lm(DF.AGG$es ~ DF.AGG$se, 
-             weights = 1 / DF.AGG$var) %>% summary()
+             weights = 1 / DF.AGG$var) %>% summary() #  B1 = 1.19, p = .04; B0 = 0.19, p = .75
 peese <- lm(DF.AGG$es ~ DF.AGG$var, 
-             weights = 1 / DF.AGG$var) %>% summary()
+             weights = 1 / DF.AGG$var) %>% summary() #  B1 = 1.86, p = .31; B0 = 0.08, p = .10
   
-# Vevea and Hedges (1995) Weight-Function Model
+# Vevea and Hedges (1995) Weight-Function Model 
+## test of significant X2(1) = 2.54, p = 0.11
+## bias corrected intercept = 0.38
 weight.funct <- weightfunct(effect = DF.AGG$es,
                             v = DF.AGG$var,
                             mods = NULL,
@@ -504,6 +532,7 @@ weight.funct <- weightfunct(effect = DF.AGG$es,
                             pval = NULL)
 
 # Mathur and VanderWeele 2020 sensitivity analyses
+# If eta = 14, effect size is no longer significant 
 corrected_meta(yi = DF$es,
                vi = DF$es.var,
                eta = 13,
@@ -514,11 +543,13 @@ corrected_meta(yi = DF$es,
 
 significance_funnel(yi = DF$es,
                     vi = DF$es.var,
-                    favor.positive = T)
+                    favor.positive = T,
+                    xlab = "Cohen's standardized d")
 ```
 
 
 # Subgroup analysis forest plot'
+Prep dataframe
 ```{r}
 # update labels
 mod.r[!is.na(mod.r$level) &
@@ -528,7 +559,7 @@ mod.r[!is.na(mod.r$level) &
 mod.r[!is.na(mod.r$level) &
         mod.r$level == "nvz", ]$level = "nil v. negative demand"
 mod.r[!is.na(mod.r$level) &
-        mod.r$level == "pvc", ]$level = "positive demand v. control"
+        mod.r$level == "cvp", ]$level = "control v. positive demand"
 mod.r[!is.na(mod.r$level) &
         mod.r$level == "pvn", ]$level = "positive v. negative demand"
 mod.r[!is.na(mod.r$level) &
@@ -536,9 +567,12 @@ mod.r[!is.na(mod.r$level) &
 mod.r[mod.r$mod == "ref.type", ]$mod = "paradigm"
 
 tmp <- mod.r %>% 
+  # add blank rows after each moderator
   group_split(mod) %>% 
   map_dfr(~ add_row(.x, .after = Inf)) %>% 
   ungroup() %>% 
+  
+  # add tab to the levels of the moderator
   mutate(Moderator = 
            if_else(is.na(level),
                    mod,
@@ -546,6 +580,8 @@ tmp <- mod.r %>%
                           level))
          ) %>% 
   relocate(Moderator, .before = mod) %>%
+  
+  # place fake values (99s) for the moderator analysis rows
   mutate(d = if_else(is.na(d),
                      99, 
                      as.numeric(d)),
@@ -561,7 +597,10 @@ tmp <- mod.r %>%
                      stars.pval(as.numeric(p))
                      )
          ) %>%
+  # select relevant variables
   select(Moderator, s, k, d, LB, UB, p) %>% 
+  
+  # create row of column names
   add_row(Moderator = "Moderator",
           s = "s",
           k = "k",
@@ -579,15 +618,19 @@ tmp <- mod.r %>%
           p = NA,
           .after = 1)
 
+# remove extra row
 tmp <- tmp[1 : (nrow(tmp) - 1), ]
 ```
 
+Plot figure
 ```{r}
 ggplot(data= tmp, 
        aes(y = rev(1: nrow(tmp)), 
            x = d,
            xmin = LB,
            xmax = UB)) +
+  
+  # add points and error bars
   geom_point(shape = "diamond",
              size = 3) +
   geom_errorbarh(height = .5) +
@@ -613,7 +656,6 @@ ggplot(data= tmp,
                    ) +
   
   # add k label
-  # add study label
   geom_text(aes(label = k),
             x = -1.5,
             hjust = 0,
@@ -633,11 +675,17 @@ ggplot(data= tmp,
                          ),
                    ) +
   
+  # limit view of plot
   coord_cartesian(xlim=c(-2.75, 2.25)) +
+  
+  # create line at 0
   geom_vline(xintercept = 0, 
              color = "black", 
              linetype = "dashed", 
              alpha = .5) +
+  
+  
+  # clean up aesthetics 
   theme_classic() +
   scale_x_continuous(labels = c("", "", 
                                 seq(-1, 2))) +
