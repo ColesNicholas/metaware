@@ -551,24 +551,38 @@ significance_funnel(yi = DF$es,
 # Subgroup analysis forest plot'
 Prep dataframe
 ```{r}
-# remove publication moderator
+# reorder moderator factor
 mod.r <- mod.r %>% 
-  filter(mod != "published")
+  
+  # remove publication status moderator
+  filter(mod != "published") %>% 
+  
+  # re-order moderators
+  mutate(mod = factor(mod,
+                      levels = c("student",
+                                 "online",
+                                 "paid",
+                                 "design",
+                                 "ref.type"))) %>% 
+  
+  # remove p-values for the levels
+  mutate(p = if_else(is.na(level),
+                     p,
+                     ""))
 
 # update labels
 mod.r[!is.na(mod.r$level) &
-        mod.r$level == "cvz", ]$level = "control v. nil demand"
+        mod.r$level == "cvz", ]$level = "control v. nil"
 mod.r[!is.na(mod.r$level) &
-        mod.r$level == "nvc", ]$level = "control v. negative demand"
+        mod.r$level == "nvc", ]$level = "control v. negative"
 mod.r[!is.na(mod.r$level) &
-        mod.r$level == "nvz", ]$level = "nil v. negative demand"
+        mod.r$level == "nvz", ]$level = "nil v. negative"
 mod.r[!is.na(mod.r$level) &
-        mod.r$level == "cvp", ]$level = "control v. positive demand"
+        mod.r$level == "cvp", ]$level = "control v. positive"
 mod.r[!is.na(mod.r$level) &
-        mod.r$level == "pvn", ]$level = "positive v. negative demand"
+        mod.r$level == "pvn", ]$level = "positive v. negative"
 mod.r[!is.na(mod.r$level) &
-        mod.r$level == "pvz", ]$level = "positive v. nil demand"
-mod.r[mod.r$mod == "ref.type", ]$mod = "paradigm"
+        mod.r$level == "pvz", ]$level = "positive v. nil"
 
 tmp <- mod.r %>% 
   # add blank rows after each moderator
@@ -579,7 +593,7 @@ tmp <- mod.r %>%
   # add tab to the levels of the moderator
   mutate(Moderator = 
            if_else(is.na(level),
-                   mod,
+                   as.character(mod),
                    paste0("  ",
                           level))
          ) %>% 
@@ -622,6 +636,10 @@ tmp <- mod.r %>%
           p = NA,
           .after = 1)
 
+# change name of ref.type
+tmp[!is.na(tmp$Moderator) &
+      tmp$Moderator == "ref.type", ]$Moderator = "demand comparison"
+
 # remove extra row
 tmp <- tmp[1 : (nrow(tmp) - 1), ]
 ```
@@ -636,12 +654,14 @@ ggplot(data= tmp,
   
   # add points and error bars
   geom_point(shape = "diamond",
-             size = 3) +
-  geom_errorbarh(height = .5) +
+             size = 3,
+             colour = '#FFC000') +
+  geom_errorbarh(height = .5,
+                 colour = '#FFC000') +
   
   # add moderator label
   geom_text(aes(label = Moderator),
-            x = -2.25,
+            x = -1.8,
             hjust = 0,
             fontface = c("bold",
                          rep(x= "plain",
@@ -651,7 +671,7 @@ ggplot(data= tmp,
   
   # add s label
   geom_text(aes(label = s),
-            x = -1.25,
+            x = -1,
             hjust = 0,
             fontface = c("bold",
                          rep(x= "plain",
@@ -661,7 +681,7 @@ ggplot(data= tmp,
   
   # add k label
   geom_text(aes(label = k),
-            x = -1,
+            x = -.75,
             hjust = 0,
             fontface = c("bold",
                          rep(x= "plain",
