@@ -1,0 +1,72 @@
+---
+title: Vignette creation for "A meta-analysis of the effects of demand characteristics in non-clinical research"
+author: "Nicholas A. Coles and Morgan Wyatt"
+editor_options: 
+  chunk_output_type: console
+---
+The code was written in `r R.version$version.string` using R Markdown (http://rmarkdown.rstudio.com/).
+
+# Section 1: Data Prep
+```{r setup and load packages, include = FALSE}
+# clean environment
+rm(list = ls())
+
+# load packages
+ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    
+    sapply(pkg, require, character.only = TRUE)
+}
+
+# call package function
+packages <- c('tidyverse')
+ipak(packages)
+rm(packages, ipak)
+
+```
+
+## Open data
+```{r}
+DF <- 
+  # open data
+  read.delim('id23_Demand1991.txt',
+             col.names = "V1") %>% 
+  
+  # remove non-vignette rows
+  slice(
+    # start at row after Vignette
+    (which(. == "Vignette") + 1) : 
+      
+    # stop at end of dataframe
+    nrow(.)
+    ) %>% 
+  
+  # identify vignette number
+  mutate(V1 = if_else(grepl("#", .$V1),
+                      substr(V1, 1, 9),
+                      V1)
+         ) %>% 
+  
+  # split at every new vignette
+  split(cumsum(grepl("#", .$V1))
+        ) %>% 
+  
+  # create separate column for each vignette
+  map(c) %>% 
+  bind_cols() %>% 
+  
+  # move first row to column names
+  set_names(as.character(slice(., 1))) %>%
+  slice(-1) %>% 
+  
+  # add sentence number column
+  mutate(sent = seq.int(nrow(.))) %>% 
+  
+  # pivot long then wide
+  pivot_longer(cols = -sent) %>% 
+  pivot_wider(names_from = sent,
+              values_from = value)
+```

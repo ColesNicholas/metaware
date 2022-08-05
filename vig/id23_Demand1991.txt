@@ -1,0 +1,67 @@
+﻿Title
+Demand characteristics and full spectrum lighting effects on performance and mood
+
+
+Developed by
+NAC
+
+
+Checked by
+MW
+
+
+Details
+Student
+No payment
+Not online
+
+
+Non-control demand levels
+Positive: an advertising copy from the manufacturer of the lamps that indicates that full spectrum fluorescent lamps improve performance and mood.
+Nil: an FDA paper indicating that claims that full spectrum fluorescent lamps improve performance and mood are highly exaggerated
+
+
+Procedure
+You sit in the room with the lighting
+
+
+DVs
+Reading comprehension test scores: Complete a reading comprehension test
+Arithmetic test scores: Complete an arithmetic test
+Underlining test scores: Complete a test of how quickly you can underline nouns
+Self-reported pleasure: Self-report how positive you feel
+
+
+Vignette
+#23_p_rea: Positive - reading
+Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
+You enter the room, and the researcher provides you with some information about the lamp, including an advertising copy from the manufacturer of the lamps that indicates that full spectrum fluorescent lamps improve performance and mood.
+You sit in the room and complete a reading comprehension test.
+#23_p_ari: Positive - arithmetic
+Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
+You enter the room, and the researcher provides you with some information about the lamp, including an advertising copy from the manufacturer of the lamps that indicates that full spectrum fluorescent lamps improve performance and mood.
+You sit in the room and complete an arithmetic test.
+#23_p_und: Positive - underlining
+Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
+You enter the room, and the researcher provides you with some information about the lamp, including an advertising copy from the manufacturer of the lamps that indicates that full spectrum fluorescent lamps improve performance and mood.
+You sit in the room and complete a test of how quickly you can underline nouns.
+#23_p_pos: Positive - positivity
+Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
+You enter the room, and the researcher provides you with some information about the lamp, including an advertising copy from the manufacturer of the lamps that indicates that full spectrum fluorescent lamps improve performance and mood.
+You sit in the room and self-report how positive you feel.
+#23_z_rea: Nil - reading
+Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
+You enter the room, and the researcher provides you with some information about the lamp, including an FDA paper indicating that claims that full spectrum fluorescent lamps improve performance and mood are highly exaggerated.
+You sit in the room and complete a reading comprehension test.
+#23_z_ari: Nil - arithmetic
+Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
+You enter the room, and the researcher provides you with some information about the lamp, including an FDA paper indicating that claims that full spectrum fluorescent lamps improve performance and mood are highly exaggerated.
+You sit in the room and complete an arithmetic test.
+#23_z_und: Nil - underlining
+Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
+You enter the room, and the researcher provides you with some information about the lamp, including an FDA paper indicating that claims that full spectrum fluorescent lamps improve performance and mood are highly exaggerated.
+You sit in the room and complete a test of how quickly you can underline nouns.
+#23_z_pos: Nil - positivity
+Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
+You enter the room, and the researcher provides you with some information about the lamp, including an FDA paper indicating that claims that full spectrum fluorescent lamps improve performance and mood are highly exaggerated.
+You sit in the room and self-report how positive you feel.
