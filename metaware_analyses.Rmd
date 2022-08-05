@@ -551,6 +551,10 @@ significance_funnel(yi = DF$es,
 # Subgroup analysis forest plot'
 Prep dataframe
 ```{r}
+# remove publication moderator
+mod.r <- mod.r %>% 
+  filter(mod != "published")
+
 # update labels
 mod.r[!is.na(mod.r$level) &
         mod.r$level == "cvz", ]$level = "control v. nil demand"
@@ -637,7 +641,7 @@ ggplot(data= tmp,
   
   # add moderator label
   geom_text(aes(label = Moderator),
-            x = -2.75,
+            x = -2.25,
             hjust = 0,
             fontface = c("bold",
                          rep(x= "plain",
@@ -647,7 +651,7 @@ ggplot(data= tmp,
   
   # add s label
   geom_text(aes(label = s),
-            x = -1.75,
+            x = -1.25,
             hjust = 0,
             fontface = c("bold",
                          rep(x= "plain",
@@ -657,7 +661,7 @@ ggplot(data= tmp,
   
   # add k label
   geom_text(aes(label = k),
-            x = -1.5,
+            x = -1,
             hjust = 0,
             fontface = c("bold",
                          rep(x= "plain",
@@ -667,7 +671,7 @@ ggplot(data= tmp,
   
   # add p-value label
   geom_text(aes(label = p),
-            x = 2.1,
+            x = 1.3,
             hjust = 0,
             fontface = c("bold",
                          rep(x= "plain",
@@ -676,7 +680,7 @@ ggplot(data= tmp,
                    ) +
   
   # limit view of plot
-  coord_cartesian(xlim=c(-2.75, 2.25)) +
+  coord_cartesian(xlim=c(-2.4, 2)) +
   
   # create line at 0
   geom_vline(xintercept = 0, 
@@ -687,13 +691,18 @@ ggplot(data= tmp,
   
   # clean up aesthetics 
   theme_classic() +
-  scale_x_continuous(labels = c("", "", 
-                                seq(-1, 2))) +
+  scale_x_continuous(limits = c(-2, 2),
+                     n.breaks = 10, 
+                     labels = c(rep("", 4), 
+                                seq(from = -.5, 
+                                    to = 1,
+                                    by = .5),
+                                rep("", 2))) +
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
         axis.title.y = element_blank(),
         axis.line.y = element_blank(),
         axis.ticks.x = element_blank()) +
-  labs(x = "Cohen's standardized d")
+  labs(x = "                                                  Cohen's standardized d")
 ```
 
