@@ -65,8 +65,26 @@ DF <-
   # add sentence number column
   mutate(sent = seq.int(nrow(.))) %>% 
   
-  # pivot long then wide
+  # pivot long
   pivot_longer(cols = -sent) %>% 
+  
+  # estimate reading time in milliseconds (200 words per minute)
+  mutate(
+    # estimate # of words
+    word.num = str_count(value, "\\w+"),
+    
+    # estimate reading time 
+    rt = (word.num / 200) * 60 * 1000) %>% 
+  
+  select(-word.num) %>% 
+  
+  # pivot wider
   pivot_wider(names_from = sent,
-              values_from = value)
+              values_from = c(value, rt))
+```
+
+# Export data
+```{r}
+write.csv(DF, 'metaware.vig.csv',
+          row.names = F)
 ```
