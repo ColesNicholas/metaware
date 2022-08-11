@@ -29,62 +29,79 @@ rm(packages, ipak)
 ```
 
 ## Open data
+Get list of files
 ```{r}
-DF <- 
-  # open data
-  read.delim('id23_Demand1991.txt',
-             col.names = "V1") %>% 
-  
-  # remove non-vignette rows
-  slice(
-    # start at row after Vignette
-    (which(. == "Vignette") + 1) : 
-      
-    # stop at end of dataframe
-    nrow(.)
-    ) %>% 
-  
-  # identify vignette number
-  mutate(V1 = if_else(grepl("#", .$V1),
-                      substr(V1, 1, 9),
-                      V1)
-         ) %>% 
-  
-  # split at every new vignette
-  split(cumsum(grepl("#", .$V1))
-        ) %>% 
-  
-  # create separate column for each vignette
-  map(c) %>% 
-  bind_cols() %>% 
-  
-  # move first row to column names
-  set_names(as.character(slice(., 1))) %>%
-  slice(-1) %>% 
-  
-  # add sentence number column
-  mutate(sent = seq.int(nrow(.))) %>% 
-  
-  # pivot long
-  pivot_longer(cols = -sent) %>% 
-  
-  # estimate reading time in milliseconds (200 words per minute)
-  mutate(
-    # estimate # of words
-    word.num = str_count(value, "\\w+"),
+f.list <- list.files(pattern = ".txt")
+```
+
+Create blank dataframe to paste results in
+```{r}
+v.DF <- data.frame()
+```
+
+Open each vignette file, extract relevant information, and append to v.DF
+```{r}
+for (f in f.list){
+ # open and process vignette file
+  v <- 
+    # open data
+    read.delim(f,
+               col.names = "V1") %>% 
     
-    # estimate reading time 
-    rt = (word.num / 200) * 60 * 1000) %>% 
+    # remove non-vignette rows
+    slice(
+      # start at row after Vignette
+      (which(. == "Vignette") + 1) : 
+        
+      # stop at end of dataframe
+      nrow(.)
+      ) %>% 
+    
+    # identify vignette number
+    mutate(V1 = if_else(grepl("#", .$V1),
+                        substr(V1, 1, 9),
+                        V1)
+           ) %>% 
+    
+    # split at every new vignette
+    split(cumsum(grepl("#", .$V1))
+          ) %>% 
+    
+    # create separate column for each vignette
+    map(c) %>% 
+    bind_cols() %>% 
+    
+    # move first row to column names
+    set_names(as.character(slice(., 1))) %>%
+    slice(-1) %>% 
+    
+    # add sentence number column
+    mutate(sent = seq.int(nrow(.))) %>% 
+    
+    # pivot long
+    pivot_longer(cols = -sent) %>% 
+    
+    # estimate reading time in milliseconds (200 words per minute)
+    mutate(
+      # estimate # of words
+      word.num = str_count(value, "\\w+"),
+      
+      # estimate reading time 
+      rt = (word.num / 200) * 60 * 1000) %>% 
+    
+    select(-word.num) %>% 
+    
+    # pivot wider
+    pivot_wider(names_from = sent,
+                values_from = c(value, rt)) 
   
-  select(-word.num) %>% 
-  
-  # pivot wider
-  pivot_wider(names_from = sent,
-              values_from = c(value, rt))
+  # append results to v.DF
+  v.DF <<- rbind(v.DF, v)
+}
 ```
 
 # Export data
 ```{r}
-write.csv(DF, 'metaware.vig.csv',
+write.csv(v.DF, 'metaware.vig.csv',
           row.names = F)
 ```
