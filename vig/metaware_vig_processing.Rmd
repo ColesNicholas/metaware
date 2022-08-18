@@ -1,0 +1,109 @@
+---
+title: Vignette creation for "A meta-analysis of the effects of demand characteristics in non-clinical research"
+author: "Nicholas A. Coles and Morgan Wyatt"
+editor_options: 
+  chunk_output_type: console
+---
+The code was written in `r R.version$version.string` using R Markdown (http://rmarkdown.rstudio.com/).
+
+# Section 1: Data Prep
+```{r setup and load packages, include = FALSE}
+# clean environment
+rm(list = ls())
+
+# load packages
+ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    
+    sapply(pkg, require, character.only = TRUE)
+}
+
+# call package function
+packages <- c('tidyverse')
+ipak(packages)
+rm(packages, ipak)
+
+```
+
+## Open data
+Get list of files
+```{r}
+f.list <- list.files(pattern = ".txt")
+```
+
+Create blank dataframe to paste results in
+```{r}
+v.DF <- data.frame()
+```
+
+Open each vignette file, extract relevant information, and append to v.DF
+```{r}
+for (f in f.list){
+ # open and process vignette file
+  v <- 
+    # open data
+    read.delim(f,
+               col.names = "V1") %>% 
+    
+    # remove non-vignette rows
+    slice(
+      # start at row after Vignette
+      (which(. == "Vignette") + 1) : 
+        
+      # stop at end of dataframe
+      nrow(.)
+      ) %>% 
+    
+    # identify vignette number
+    mutate(V1 = if_else(grepl("#", .$V1),
+                        substr(V1, 1, 9),
+                        V1)
+           ) %>% 
+    
+    # split at every new vignette
+    split(cumsum(grepl("#", .$V1))
+          ) %>% 
+    
+    # create separate column for each vignette
+    map(c) %>% 
+    bind_cols() %>% 
+    
+    # move first row to column names
+    set_names(as.character(slice(., 1))) %>%
+    slice(-1) %>% 
+    
+    # add sentence number column
+    mutate(sent = seq.int(nrow(.))) %>% 
+    
+    # pivot long
+    pivot_longer(cols = -sent) %>% 
+    
+    # estimate reading time in milliseconds (200 words per minute)
+    mutate(
+      # estimate # of words
+      word.num = str_count(value, "\\w+"),
+      
+      # estimate reading time 
+      rt = (word.num / 200) * 60 * 1000) %>% 
+    
+    select(-word.num) %>% 
+    
+    # pivot wider
+    pivot_wider(names_from = sent,
+                values_from = c(value, rt)) 
+  
+  # append results to v.DF
+  v.DF <<- rbind(v.DF, v)
+}
+
+rm(f, f.list, v)
+```
+
+# Export data
+```{r}
+write.csv(v.DF, 'metaware.vig.csv',
+          row.names = F)
+```
