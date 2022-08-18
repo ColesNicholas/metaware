@@ -46,7 +46,8 @@ for (f in f.list){
   v <- 
     # open data
     read.delim(f,
-               col.names = "V1") %>% 
+               col.names = "V1",
+               encoding = "UTF-8") %>% 
     
     # remove non-vignette rows
     slice(
