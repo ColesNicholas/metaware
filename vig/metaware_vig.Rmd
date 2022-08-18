@@ -98,6 +98,8 @@ for (f in f.list){
   # append results to v.DF
   v.DF <<- rbind(v.DF, v)
 }
+
+rm(f, f.list, v)
 ```
 
 # Export data
