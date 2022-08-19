@@ -88,7 +88,8 @@ for (f in f.list){
       word.num = str_count(value, "\\w+"),
       
       # estimate reading time 
-      rt = (word.num / 200) * 60 * 1000) %>% 
+      rt = (word.num / 200) * 60 * 1000 # MW, you can adjust the 200
+      ) %>% 
     
     select(-word.num) %>% 
     

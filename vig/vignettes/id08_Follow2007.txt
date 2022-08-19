@@ -1,0 +1,58 @@
+﻿Title
+A follow-up analogue study on the effectiveness of the cognitive rationale
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Students
+No payment
+Not online
+
+
+Non-control demand levels
+Positive: handed booklet saying cognition precedes affect
+Negative: handed booklet saying affect precedes cognition
+
+
+Procedure
+Read booklet
+
+
+DVs
+Post ATF Scores
+Follow-up ATF Scores
+DRQ
+
+
+Vignette
+#08_p_pos: Positive - post
+Imagine that you are a university student completing an in-person study for extra credit.
+The researcher hands you a booklet that explains that, in any given situation, your automatic thoughts about the situation come before your feelings about the situation.
+You are then shown a series of images on a computer screen. For each image, you are asked whether you had thoughts or feelings first.
+#08_p_fol: Positive - follow-up
+Imagine that you are a university student completing an in-person study for extra credit.
+The researcher hands you a booklet that explains that, in any given situation, your automatic thoughts about the situation come before your feelings about the situation.
+A week after you read this booklet, you are shown a series of images on a computer screen. For each image, you are asked whether you had thoughts or feelings first.
+#08_n_pos: Negative - post
+Imagine that you are a university student completing an in-person study for extra credit.
+The researcher hands you a booklet that explains that, in any given situation, your automatic feelings about the situation come before your thoughts about the situation.
+You are then shown a series of images on a computer screen. For each image, you are asked whether you had thoughts or feelings first.
+#08_n_fol: Negative - follow-up
+Imagine that you are a university student completing an in-person study for extra credit.
+The researcher hands you a booklet that explains that, in any given situation, your automatic feelings about the situation come before your thoughts about the situation.
+A week after you read this booklet, you are shown a series of images on a computer screen. For each image, you are asked whether you had thoughts or feelings first.
+#08_p_drq: Positive - DRQ
+Imagine that you are a university student completing an in-person study for extra credit.
+The researcher hands you a booklet that explains that, in any given situation, your automatic thoughts about the situation come before your feelings about the situation.
+A week after you read this booklet, you are asked to (1) describe 3 life events from the past week, (2) write down all the thoughts and feelings you had during the event, and (3) indicate for each event whether you had thoughts or feelings first.
+#08_n_drq: Negative - DRQ
+Imagine that you are a university student completing an in-person study for extra credit.
+The researcher hands you a booklet that explains that, in any given situation, your automatic feelings about the situation come before your thoughts about the situation.
+A week after you read this booklet, you are asked to (1) describe 3 life events from the past week, (2) write down all the thoughts and feelings you had during the event, and (3) indicate for each event whether you had thoughts or feelings first.

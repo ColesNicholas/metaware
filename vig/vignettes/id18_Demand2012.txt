@@ -1,0 +1,84 @@
+﻿Title
+Demand characteristics, pre-test attitudes and time-on-task trends in the effects of chewing gum on attention and reported mood in healthy volunteers
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Students
+Mix payment
+Not online
+
+
+Non-control demand levels
+Positive: Previous research has indicated that chewing gum improves cognitive performance and mood. This study aims to find out if these effects also exist with certain computer-based tasks
+Negative: Previous research has indicated that chewing gum impairs cognitive performance and mood. This study aims to find out if these effects also exist with certain computer-based tasks
+
+
+Procedure
+Chew gum (once and one time don’t)
+
+
+DVs
+Self-reported alertness
+Self-reported anxiety
+Self-reported hedonic tone
+Categorical search task performance
+Focused attention task performance (breadth, accuracy, speed collapsed to one vignette)
+
+
+Vignette
+#18_p_ale: Positive - alertness
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum improves cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, and ask you to report your alertness during each of the trials.
+#18_n_ale: Negative - alertness
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum impairs cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, and ask you to report your alertness during each of the trials.
+#18_p_anx: Positive - anxiety
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum improves cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, and ask you to report your anxiety during each of the trials.
+#18_n_anx: Negative - anxiety
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum impairs cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, and ask you to report your anxiety during each of the trials.
+#18_p_hed: Positive - hedonic
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum improves cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, and ask you to report your hedonic tone during each of the trials.
+#18_n_hed: Negative - hedonic
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum impairs cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, and ask you to report your hedonic tone during each of the trials.
+#18_p_cat: Positive - categorical
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum improves cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, including a task in which two crosses appear on the screen, one of them turns into an A or a B (and the other a distraction), and you must quickly identify which letter appeared.
+#18_n_cat: Negative - categorical
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum impairs cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, including a task in which two crosses appear on the screen, one of them turns into an A or a B (and the other a distraction), and you must quickly identify which letter appeared.
+#18_p_foc: Positive - focused
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum improves cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, including a task in which three crosses appear on the screen, the center one turns into an A or a B (and the two on the sides into a distraction), and you must quickly identify which letter appeared.
+#18_n_foc: Negative - focused
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum impairs cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, including a task in which three crosses appear on the screen, the center one turns into an A or a B (and the two on the sides into a distraction), and you must quickly identify which letter appeared.
+#18_p_rac: Positive - repeated
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum improves cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, including a task in which, for 5 minutes, 3-digit numbers are displayed at a rate of 100/min. You must indicate when numbers are repeated.
+#18_n_rac: Negative - repeated
+Imagine that you are a university student completing an in-person study for course credit or £10.
+The researcher tells you that previous research has indicated that chewing gum impairs cognitive performance and mood. Their study aims to find out if these effects also exist with certain computer-based tasks.
+They then run you through the trial twice, one while eating two pieces of gum, and once while not. They have you complete many tests, including a task in which, for 5 minutes, 3-digit numbers are displayed at a rate of 100/min. You must indicate when numbers are repeated.

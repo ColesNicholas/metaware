@@ -1,0 +1,40 @@
+﻿Title
+Attention or instruction: Do sustained attentional abilities really differ between high and low hypnotisable persons?
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Not clear if they are students 
+€5 payment
+Not online
+
+
+Non-control demand levels
+Positive (switch):  We know that people like you have a great ability to switch the illusion
+Negative (maintain): We know that people like you have a great ability to maintain the illusion
+
+
+Procedure
+Cube switching
+
+
+DVs
+Switches (high/med/low)
+
+
+Vignette
+#03_p_swi: Positive - switch
+Imagine that you are completing an in-person study for €5 payment .
+The researcher informs you that you will view an optical illusion wherein the orientation of the image appears to shift. After completing a measure of your ability to be hypnotized, the researcher says they believe people like you have a great ability to perceive a shift in the image.
+You view the optical illusion for one minute, and you are asked to report how many times you see the image orientation shift.
+#03_n_swi: Negative - switch
+Imagine that you are completing an in-person study for €5 payment .
+The researcher informs you that you will view an optical illusion wherein the orientation of the image appears to shift. After completing a measure of your ability to be hypnotized, the researcher says they believe people like you have a great ability to avoid perceiving a shift in the image.
+You view the optical illusion for one minute, and you are asked to report how many times you see the image orientation shift.

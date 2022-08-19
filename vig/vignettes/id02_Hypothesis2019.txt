@@ -1,0 +1,34 @@
+﻿Title
+Hypothesis awareness as a demand characteristic in laboratory-based eating behaviour research: An experimental study
+
+
+Developed by
+NAC
+
+
+Checked by
+MW
+
+
+Details
+No payment
+Not online
+
+
+Non-control demand levels
+Positive: being exposed to the color purple will increase food intake
+
+
+Procedure
+You are presented with a bowl of cookies and asked to rate them on a purple ratings sheet
+
+
+DVs
+Cookie intake: taste and eat as many as you would like
+
+
+Vignette
+#02_p_coo: Positive - cookie
+Imagine that you are completing an in-person study as a volunteer.
+The researcher informs you that they expect exposure to the color purple to increase food intake.
+You are presented with a bowl of cookies and asked to rate them on a sheet, which is purple. You are given 10 minutes to complete this task, wherein you can taste and eat as many cookies as you would like.

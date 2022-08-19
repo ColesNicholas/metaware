@@ -1,0 +1,35 @@
+﻿Title
+Experimental desensitization of snake-avoidance after an instructional manipulation
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Students
+No payment
+Not online
+
+
+Non-control demand levels
+Positive: Nine Ss were assigned to the “systematic desensitization according to therapeutically oriented instructions” (SDT) condition. Before the first session of relaxation training, these Ss heard a set of experimental instructions designed to provide a therapeutic rationale for the experiment and induce an expectation of improvement
+
+
+Procedure
+Encounter with a snake
+
+
+DVs
+Behavioral avoidance score tests
+
+
+Vignette
+#33_p_beh: Positive - behavioral
+Imagine that you are a university student with a high fear of snakes who is completing an in-person study to fulfill a course requirement.
+The researcher informs you that you will be completing a therapeutic treatment that will help reduce your fear of snakes.
+For the next 3-4 weeks, you go back in twice for the therapeutic treatment, which consists of muscle relaxation and visualization exercises. Afterwards, you are placed in a room where you have a close-up encounter with a snake. Afterwards, the researcher assesses your fear of snakes.

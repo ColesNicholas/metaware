@@ -1,0 +1,39 @@
+﻿Title
+Effect of the destructive disagreement belief on satisfaction with one's closest friend
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Students
+No payment
+
+
+Non-control demand levels
+Positive: read unhealthy statements about relationships but are told that it will make you feel better about relationship
+Negative: read healthy statements about relationships but are told that it will make you feel worse about relationship
+
+
+Procedure
+Assess relationship satisfaction with current main romantic relationship or their current closest friend. Read statements and assess again
+
+
+DVs
+Relationship satisfaction
+
+
+Vignette
+#09_p_sat: Positive - satisfaction
+Imagine that you are a university student completing a study as a volunteer or for extra credit.
+The researcher asks you to imagine having a serious disagreement about a close friend. You then read several statements that are similar to the following: “Disagreeing means that our relationship is not good.” The researcher then tells you they expect that saying and believing these statements will make you feel better about your relationship.
+After reading the statements, you are asked to report how satisfied you are with your relationship with the close friend.
+#09_n_sat: Negative - satisfaction
+Imagine that you are a university student completing a study as a volunteer or for extra credit.
+The researcher asks you to imagine having a serious disagreement about a close friend. You then read several statements that are similar to the following: “Disagreeing does not mean that our relationship is not good.” The researcher then tells you they expect that saying and believing these statements will make you feel worse about your relationship.
+After reading the statements, you are asked to report how satisfied you are with your relationship with the close friend.
