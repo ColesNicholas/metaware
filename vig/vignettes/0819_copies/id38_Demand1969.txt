@@ -1,0 +1,40 @@
+﻿Title
+Demand characteristics in a quasi-psychophysical experiment
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Students
+No payment
+Not online
+
+
+Non-control demand levels
+Positive: many errors
+Negative: few errors
+
+
+Procedure
+ID errors
+
+
+DVs
+Error count
+
+
+Vignette
+#38_p_err: Positive - errors
+Imagine that you are a university student completing an in-person study as a volunteer.
+The researcher informs you that you will be looking at a new screen for commercial airlines. They then inform you that they believe the screen does not meet certain legibility requirements. They add that they thus expect you to make many reading errors while viewing the screen.
+You are then shown the screen in a dark room and asked to identify several sets of letters.
+#38_n_err: Negative - errors
+Imagine that you are a university student completing an in-person study as a volunteer.
+The researcher informs you that you will be looking at a new screen for commercial airlines. They then inform you that they believe the screen meets, and even exceed, certain legibility requirements. They add that they thus expect you to make only a few reading errors while viewing the screen.
+You are then shown the screen in a dark room and asked to identify several sets of letters.

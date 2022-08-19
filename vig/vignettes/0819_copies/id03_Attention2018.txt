@@ -17,11 +17,9 @@ Not online
 
 
 Non-control demand levels
-~03_p: People like you have a great ability to perceive a shift in the optical illusion.
-~03_n: People like you have a great ability to avoid perceiving a shift in the optical illusion.
+Positive (switch):  We know that people like you have a great ability to switch the illusion
+Negative (maintain): We know that people like you have a great ability to maintain the illusion
 
-Fake demand scenario
-~03_f: People like you have a great ability to draw complex shapes.
 
 Procedure
 Cube switching

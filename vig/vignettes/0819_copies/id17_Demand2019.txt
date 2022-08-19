@@ -1,0 +1,40 @@
+﻿Title
+Demand effects in survey experiments: An empirical assessment (Study 5)
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Not students
+Payment
+Online
+
+
+Non-control demand levels
+Positive: support rally more when free speech is emphasized
+Incentive: this ^ but with money
+
+
+Procedure
+Described scenarios, controversial rally
+
+
+DVs
+Rally support
+
+
+Vignette
+#17_p_ral: Positive - rally
+Imagine that you are working a free-lance job where you are paid to complete an online study.
+The researcher informs you that they believe you will be more tolerant of controversial groups in society when you are reminded about freedom of speech.
+You are then presented with a hypothetical op-ed article about a controversial group trying to hold a rally. The researchers then ask you to report how much you tolerate the controversial group.
+#17_i_ral: Incentive- rally
+Imagine that you are working a free-lance job where you are paid to complete an online study.
+The researcher informs you that they believe you will be more tolerant of controversial groups in society when you are reminded about freedom of speech. They also inform you that you will receive a $0.25 bonus payment if your response is consistent with their hypothesis.
+You are then presented with a hypothetical op-ed article about a controversial group trying to hold a rally. The researchers then ask you to report how much you tolerate the controversial group.

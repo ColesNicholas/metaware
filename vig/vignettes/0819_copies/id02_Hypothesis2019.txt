@@ -16,10 +16,8 @@ Not online
 
 
 Non-control demand levels
-~02_p: Exposure to the color purple will increase food intake.
+Positive: being exposed to the color purple will increase food intake
 
-Fake demand scenario
-~02_f: Exposure to the color black will increase food intake
 
 Procedure
 You are presented with a bowl of cookies and asked to rate them on a purple ratings sheet

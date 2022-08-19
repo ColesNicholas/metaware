@@ -1,0 +1,40 @@
+﻿Title
+A demonstration of nonlinear demand characteristics in the 'Mozart Effect' experimental paradigm (Study 2)
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Mixed Student/non-students
+No Payment
+Not online
+
+
+Non-control demand levels
+Positive: listening to Mozart’s music will make you physically stronger
+Negative: listening to Mozart’s music should cause a decrease in physical strength
+
+
+Procedure
+Play mozart music
+
+
+DVs
+Pushups: number of pushups completed in thirty seconds
+
+
+Vignette
+#35_p_pus: Positive - pushups
+Imagine that you are completing an in-person study as a volunteer or for course credit.
+The researcher informs you that, based on a growing amount of research, they believe that listening to Mozart’s music will increase your physical strength.
+The experimenter plays Mozart music for ten minutes, shuts it off, and then asks you to complete as many pushups as possible in thirty seconds.
+#35_n_pus: Negative - pushups
+Imagine that you are completing an in-person study as a volunteer or for course credit.
+The researcher informs you that, based on a growing amount of research, they believe that listening to Mozart’s music will decrease your physical strength.
+The experimenter plays Mozart music for ten minutes, shuts it off, and then asks you to complete as many pushups as possible in thirty seconds.

@@ -1,0 +1,40 @@
+﻿Title
+The social psychology of perception experiments: Hills, backpacks, glucose and the problem of generalizability
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Students
+No payment
+Not online
+
+
+Non-control demand levels
+Nil: In a moment I'm going to ask you to estimate the slant of that hill/path. Before you do that, though, I want to explain that we are studying compliance effects in psychology. In a previous experiment we found that if we asked people to wear a backpack they nearly all assumed that we intended the backpack to affect their judgments. Since most subjects want to be cooperative, many of them altered their estimates to try to help us out. We are trying to find out if there is a way to make people just report what they see rather than trying to be compliant with what they think we want them to say. As far as we know, wearing a heavy backpack does not affect your visual system, so please simply estimate the slope of the hill. That is, make the best estimate you can based only on what you see.
+
+
+Procedure
+Backpack trek
+
+
+DVs
+Manual steepness estimate
+Verbal steepness estimate
+
+
+Vignette
+#07_z_ver: Nil - verbal
+Imagine that you are a university student completing an in-person study as a volunteer or for extra credit.
+The researcher walks you to a hill and asks you to put on a heavy backpack. Afterwards, they tell you they expect the backpack to have no impact on your perception of the steepness of the hill.
+While you stand at the bottom of the hill with the heavy backpack on, the researcher then asks you to verbally report how steep the hill is.
+#07_z_man: Nil - manual
+Imagine that you are a university student completing an in-person study as a volunteer or for extra credit.
+The researcher walks you to a hill and asks you to put on a heavy backpack. Afterwards, they tell you they expect the backpack to have no impact on your perception of the steepness of the hill.
+While you stand at the bottom of the hill with the heavy backpack on, the researcher then asks you to use your hand to convey how steep the hill is.

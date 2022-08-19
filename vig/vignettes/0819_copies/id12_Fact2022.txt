@@ -1,0 +1,49 @@
+﻿Title
+Fact or artifact? Demand characteristics and participants’ beliefs can moderate, but do not fully account for, the effects of facial feedback on emotional experience
+
+
+Developed by
+NAC
+
+
+Checked by
+[initials]
+
+
+Details
+Student
+No payment
+online
+
+
+Non-control demand levels
+Positive: posing smiles will increase happiness / posing scowls will increase anger
+Nil: posing smiles will not increase happiness / posing scowls will not increase anger
+
+
+Procedure
+Pose happy, angry, neutral expressions for 5 seconds. After each facial expression pose, self-report happiness/anger
+
+
+DVs
+Self-reported happiness
+Self-reported anger
+
+
+Vignette
+#12_p_hap: Positive - happiness
+Imagine that you are a university student completing an online study for course credit.
+You are informed that the researcher expects posing happy expressions to increase feelings of happiness.
+You pose happy, neutral, and angry expressions and then self-report how happy you feel.
+#12_z_hap: Nil - happiness
+Imagine that you are a university student completing an in-person study for course credit.
+You are informed that the researcher expects posing happy expressions to have no effect on your feelings of happiness.
+You pose happy, neutral, and angry expressions and then self-report how happy you feel.
+#12_p_ang: Positive - anger
+Imagine that you are a university student completing an in-person study for course credit.
+You are informed that the researcher expects posing angry expressions to increase feelings of anger.
+You pose happy, neutral, and angry expressions and then self-report how angry you feel.
+#12_z_ang: Nil - anger
+Imagine that you are a university student completing an in-person study for course credit.
+You are informed that the researcher expects posing angry expressions to have no effect on your feelings of anger.
+You pose happy, neutral, and angry expressions and then self-report how angry you feel.

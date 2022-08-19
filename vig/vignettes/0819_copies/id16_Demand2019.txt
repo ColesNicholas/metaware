@@ -1,0 +1,36 @@
+﻿Title
+Demand effects in survey experiments: An empirical assessment (Study 4)
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Not students
+Payment
+Online
+
+
+Non-control demand levels
+Positive: exhibit bias towards same partisan news (same as 14_p_new)
+Incentive: this ^ but with money
+
+
+Procedure
+Pick news headlines based on source
+
+
+DVs
+News bias
+
+
+Vignette
+#16_i_new: Incentive - news
+Imagine that you are working a free-lance job where you are paid to complete an online study.
+The researcher tells you you will be indicating which type of news items you most prefer to read. They inform you that they anticipate you will be more likely to choose an article that favors your preferred political party because people tend to seek out information that is consistent with their personal views. They also inform you that you will receive a $0.25 bonus payment if your response is consistent with their hypothesis.
+You are presented with a series of article headlines, each which is tagged as coming from either a pro-Republican, pro-Democrat, or non-partisan news source. For each series of headlines, you are asked to indicate which article you prefer.
