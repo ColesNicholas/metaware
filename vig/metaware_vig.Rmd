@@ -6,7 +6,7 @@ editor_options:
 ---
 The code was written in `r R.version$version.string` using R Markdown (http://rmarkdown.rstudio.com/).
 
-# Section 1: Data Prep
+# Prep environment
 ```{r setup and load packages, include = FALSE}
 # clean environment
 rm(list = ls())
@@ -28,7 +28,7 @@ rm(packages, ipak)
 
 ```
 
-## Open data
+# Prepare vignettes
 Get list of files
 ```{r}
 f.list <- list.files(path = "./vignettes",
@@ -102,7 +102,49 @@ for (f in f.list){
   v.DF <<- rbind(v.DF, v)
 }
 
-rm(f, f.list, v)
+rm(f, v)
+```
+
+# Prepare list of hypotheses
+Create blank dataframe to paste results in
+```{r}
+h.DF <- data.frame()
+```
+
+```{r}
+f.list = f.list[1:4]
+```
+
+Open each vignette file, extract relevant information, and append to v.DF
+```{r}
+for (f in f.list){
+  h <- 
+    # open data
+    read.delim(file = paste0("./vignettes/", f),
+               col.names = "V1",
+               encoding = "UTF-8") %>% 
+      
+    # identify hypotheses using the ~ identifier
+    filter(grepl("~", V1)) %>% 
+    
+    # separate hypothesis from key
+    separate(V1,
+             into = c("name", "hypothesis"),
+             sep = 7)
+  
+  # append results to h.DF
+  h.DF <<- rbind(h.DF, h)
+  }
+```
+
+# Merge h.DF and v.DF
+```{r}
+h.DF <- h.DF %>% 
+  filter(grepl("04_", name))
+
+v.DF <- v.DF %>% 
+  filter(grepl("04_", name))
+  
 ```
 
 # Export data
