@@ -1,4 +1,4 @@
-﻿Title
+Title
 Fact or artifact? Demand characteristics and participants’ beliefs can moderate, but do not fully account for, the effects of facial feedback on emotional experience
 
 
@@ -7,7 +7,7 @@ NAC
 
 
 Checked by
-[initials]
+MW
 
 
 Details
@@ -17,9 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: posing smiles will increase happiness / posing scowls will increase anger
-Nil: posing smiles will not increase happiness / posing scowls will not increase anger
+~11_p: Posing happy expressions will increase feelings of happiness, and posing angry expressions will increase feelings of anger.
+~11_z: Posing happy expressions will not increase feelings of happiness, and posing angry expressions will not increase feelings of anger
 
+Fake demand scenario
+~11_f: Posing happy expressions will increase hunger, and posing angry expressions will increase thirst.
 
 Procedure
 Pose happy, angry, neutral expressions for 5 seconds. After each facial expression pose, self-report happiness/anger

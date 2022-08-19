@@ -1,4 +1,4 @@
-﻿Title
+Title
 Demand characteristics and full spectrum lighting effects on performance and mood
 
 
@@ -17,8 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: an advertising copy from the manufacturer of the lamps that indicates that full spectrum fluorescent lamps improve performance and mood.
-Nil: an FDA paper indicating that claims that full spectrum fluorescent lamps improve performance and mood are highly exaggerated
+~23_p: These lamps improve performance and mood.
+
+
+Fake demand scenario
+~23_f: These lamps induce fatigue.
 
 
 Procedure

@@ -1,4 +1,4 @@
-﻿Title
+Title
 The induction of anomalous experiences in a mirror-gazing facility
 
 
@@ -16,8 +16,11 @@ Not online
 
 
 Non-control demand levels
-Positive: told that anomalous experiences (unusual bodily sensations, seeing apparitions, hearing unusual sounds/voices, consciousness separates from body) have been previously found with this procedure
-Nil: told that unusual experiences such as changes in hearing/vision, unusual bodily sensations have been previously found in this procedure. Told that there are no consistencies to the type of experiences reported, so don’t try to elicit anything in particular. It’s okay to not experience anything
+~20_p: Anomalous experiences such as apparitions, consciousness separating from the body, and strange noises are common in mirror-gazing facilities.
+~20_z: Anomalous experiences such as apparitions, consciousness separating from the body, and strange noises sometimes occur in mirror-gazing facilities, but there is no consistency to it.
+
+Fake demand scenario
+~20_f: Experiences such as hunger, thirst, and sadness are common in mirror-gazing facilities.
 
 
 Procedure

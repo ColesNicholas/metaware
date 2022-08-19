@@ -1,4 +1,4 @@
-﻿Title
+Title
 Effect of rational and irrational statements and demand characteristics on task anxiety
 
 
@@ -15,10 +15,12 @@ Students
 No payment
 Not online
 
-
 Non-control demand levels
-Negative-irrational: told irrational statements will make you feel less anxious
-Negative-rational: told rational statements will make you feel more anxious
+~21_n: Reading and believing a set of statements provided by the researcher should have an effect on your anxiety.
+
+
+Fake demand scenario
+~21_f: Reading and believing a set of statements provided by the researcher should have an effect on your hunger.
 
 
 Procedure

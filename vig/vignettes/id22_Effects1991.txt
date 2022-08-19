@@ -1,4 +1,4 @@
-﻿Title
+Title
 Effects of experimental context, demand characteristics, and situational cues: New data
 
 
@@ -17,7 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: experiences such as ​​"any visual imagery, fantasies, special or unusual feelings, difficulties in concentration, hallucinations, feelings of disorientation," are "not unusual under the conditions" to which the subjects were to be subjected.
+~22_p: It is not unusual to experience visual imagery, fantasies, difficulties in concentration, and hallucinations while in the sensory deprivation chamber.
+
+
+Fake demand scenario
+~22_f: It is not unusual to experience euphoria while in the sensory deprivation chamber.
 
 
 Procedure

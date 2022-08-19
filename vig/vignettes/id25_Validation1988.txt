@@ -1,4 +1,4 @@
-﻿Title
+Title
 Validation of a music mood induction procedure: Some preliminary findings
 
 
@@ -15,10 +15,13 @@ Students
 No payment
 Not online
 
-
 Non-control demand levels
-Positive: subjects told that (H) people generally felt happy and exhilarated after listening to the music (S) people generally felt sad and despondent after listening to the music
-Negative (counter-demand): due to a so-called “social comparison effect” people who listened to this music tended to feel the opposite emotion
+~25_p: Listening to happy music generally makes people feel happy and exhilarated, and listening to sad music generally makes people feel sad and despondent.
+~25_n: Listening to happy music generally makes people feel the opposite emotion, and listening to sad music generally makes people feel the opposite emotion.
+
+
+Fake demand scenario
+~25_f: Listening to happy music generally makes people feel uncomfortable, and listening to sad music generally makes people feel alert.
 
 
 Procedure

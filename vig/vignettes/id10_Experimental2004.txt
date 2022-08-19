@@ -1,4 +1,4 @@
-﻿Title
+Title
 A follow-up analogue study on the effectiveness of the cognitive rationale
 
 
@@ -17,9 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: handed booklet saying cognition precedes affect
-Negative: handed booklet saying affect precedes cognition
+~10_p: In any given situation, your automatic thoughts about the situation come before your feelings about the situation.
+~10_n: In any given situation, your automatic feelings about the situation come before your thoughts about the situation.
 
+Fake demand scenario
+~10_f: In any given situation, it is equally important to ask others about their thoughts as well as their feelings.
 
 Procedure
 Read booklet
