@@ -41,9 +41,9 @@ The researcher tells you to imagine yourself as an HR officer tasked with sortin
 You are then presented with a resume, which contains either a stereotypically White American or African American name. You are then asked to indicate how willing you are to call the candidate for an interview.
 #14_p_new: Positive - news
 Imagine that you are working a free-lance job where you are paid to complete an online study.
-The researcher tells you you will be indicating which type of news items you most prefer to read. They inform you that they anticipate you will be more likely to choose an article that favors your preferred political party because people tend to seek out information that is consistent with their personal views.
+The researcher says you will be indicating which type of news items you most prefer to read. They inform you that they anticipate you will be more likely to choose an article that favors your preferred political party because people tend to seek out information that is consistent with their personal views.
 You are presented with a series of article headlines, each which is tagged as coming from either a pro-Republican, pro-Democrat, or non-partisan news source. For each series of headlines, you are asked to indicate which article you prefer.
 #14_n_new: Negative - news
 Imagine that you are working a free-lance job where you are paid to complete an online study.
-The researcher tells you you will be indicating which type of news items you most prefer to read. They inform you that they anticipate you will be more likely to choose an article that goes against your preferred political party because people often strive to hear diverse points of view.
+The researcher says you will be indicating which type of news items you most prefer to read. They inform you that they anticipate you will be more likely to choose an article that goes against your preferred political party because people often strive to hear diverse points of view.
 You are presented with a series of article headlines, each which is tagged as coming from either a pro-Republican, pro-Democrat, or non-partisan news source. For each series of headlines, you are asked to indicate which article you prefer.

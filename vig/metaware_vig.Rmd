@@ -31,7 +31,8 @@ rm(packages, ipak)
 ## Open data
 Get list of files
 ```{r}
-f.list <- list.files(pattern = ".txt")
+f.list <- list.files(path = "./vignettes",
+                     pattern = ".txt")
 ```
 
 Create blank dataframe to paste results in
@@ -45,7 +46,7 @@ for (f in f.list){
  # open and process vignette file
   v <- 
     # open data
-    read.delim(f,
+    read.delim(file = paste0("./vignettes/", f),
                col.names = "V1",
                encoding = "UTF-8") %>% 
     
@@ -88,7 +89,7 @@ for (f in f.list){
       word.num = str_count(value, "\\w+"),
       
       # estimate reading time 
-      rt = (word.num / 200) * 60 * 1000 # MW, you can adjust the 200
+      rt = (word.num / 250) * 60 * 1000 # MW, you can adjust the 200
       ) %>% 
     
     select(-word.num) %>% 
