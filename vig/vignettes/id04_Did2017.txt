@@ -17,9 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: frontal tDCS will improve performance
-Negative: frontal tDCS will impair performance
+~04_p: A brain stimulation procedure will improve your performance.
+~04_n: A brain stimulation procedure will impair your performance.
 
+Fake demand scenario
+~04_f: A brain stimulation procedure will make you lose your appetite.
 
 Procedure
 Brain stimulation
