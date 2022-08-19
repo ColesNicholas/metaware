@@ -17,9 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: handed booklet saying cognition precedes affect
-Negative: handed booklet saying affect precedes cognition
+~08_p: In any given situation, your automatic thoughts about the situation come before your feelings about the situation.
+~08_n: In any given situation, your automatic feelings about the situation come before your thoughts about the situation.
 
+Fake demand scenario
+~08_f: In any given situation, it is equally important to communicate your feelings as well as your thoughts.
 
 Procedure
 Read booklet

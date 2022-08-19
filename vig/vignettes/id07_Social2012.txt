@@ -17,8 +17,10 @@ Not online
 
 
 Non-control demand levels
-Nil: In a moment I'm going to ask you to estimate the slant of that hill/path. Before you do that, though, I want to explain that we are studying compliance effects in psychology. In a previous experiment we found that if we asked people to wear a backpack they nearly all assumed that we intended the backpack to affect their judgments. Since most subjects want to be cooperative, many of them altered their estimates to try to help us out. We are trying to find out if there is a way to make people just report what they see rather than trying to be compliant with what they think we want them to say. As far as we know, wearing a heavy backpack does not affect your visual system, so please simply estimate the slope of the hill. That is, make the best estimate you can based only on what you see.
+~07_z: A heavy backpack you will wear will have no impact on your perception of the steepness of the hill.
 
+Fake demand scenario
+~07_f: A heavy backpack you will wear will have no impact on how much you sweat while climbing a hill.
 
 Procedure
 Backpack trek

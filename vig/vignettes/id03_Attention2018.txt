@@ -21,7 +21,7 @@ Non-control demand levels
 ~03_n: People like you have a great ability to avoid perceiving a shift in the optical illusion.
 
 Fake demand scenario
-~03_f: People like you have a great ability to draw complex shapes.
+~03_f: People like you have a great ability to memorize musical melodies.
 
 Procedure
 Cube switching

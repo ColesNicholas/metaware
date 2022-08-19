@@ -16,9 +16,11 @@ No payment
 
 
 Non-control demand levels
-Positive: read unhealthy statements about relationships but are told that it will make you feel better about relationship
-Negative: read healthy statements about relationships but are told that it will make you feel worse about relationship
+~09_p: Reading and believing a set of statements created by the researcher will make you feel better about your relationship with your friend.
+~09_n: Reading and believing a set of statements created by the researcher will make you feel worse about your relationship with your friend.
 
+Fake demand scenario
+~09_f: Reading and believing a set of statements created by the researcher will inspire you to make more friends.
 
 Procedure
 Assess relationship satisfaction with current main romantic relationship or their current closest friend. Read statements and assess again

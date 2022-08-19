@@ -17,8 +17,10 @@ Not online
 
 
 Non-control demand levels
-Positive: previous research has shown that green and blue colors are going to relax you and thus make unpleasant sounds more tolerable
+~05_p: Green and blue colors will make unpleasant sounds more tolerable.
 
+Fake demand scenario
+~05_f: Green and blue colors will make pleasant tastes more pronounced.
 
 Procedure
 While sitting in front of the colored screen, you listen to three unpleasant sounds
