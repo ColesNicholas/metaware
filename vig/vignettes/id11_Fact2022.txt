@@ -35,15 +35,15 @@ Vignette
 Imagine that you are a university student completing an in-person study for course credit.
 The researcher informs you that they expect posing happy expressions to increase feelings of happiness.
 You pose happy, neutral, and angry expressions and then self-report how happy you feel.
-#11_z_hap: Positive - happiness
+#11_z_hap: Nil - happiness
 Imagine that you are a university student completing an in-person study for course credit.
 The researcher informs you that they expect posing happy expressions to have no effect on your feelings of happiness.
 You pose happy, neutral, and angry expressions and then self-report how happy you feel.
-#11_p_ang: Positive - happiness
+#11_p_ang: Positive - anger
 Imagine that you are a university student completing an in-person study for course credit.
 The researcher informs you that they expect posing angry expressions to increase feelings of anger.
 You pose happy, neutral, and angry expressions and then self-report how angry you feel.
-#11_z_ang: Positive - happiness
+#11_z_ang: Nil - anger
 Imagine that you are a university student completing an in-person study for course credit.
 The researcher informs you that they expect posing angry expressions to have no effect on your feelings of anger.
 You pose happy, neutral, and angry expressions and then self-report how angry you feel.
