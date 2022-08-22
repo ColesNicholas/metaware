@@ -17,7 +17,10 @@ Not online
 
 
 Non-control demand levels
-Negative: told elation statements make depression
+~29_n: Reading statements provided by the experimenter will cause you to feel more depressed.
+
+Fake demand scenario
+~29_f: Reading statements provided by the experimenter will improve your performance on a math test.
 
 
 Procedure

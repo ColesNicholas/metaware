@@ -17,11 +17,13 @@ Not online
 
 
 Non-control demand levels
-~23_p: These lamps improve performance and mood.
+~23_p: The lamps used in the study improve performance and mood.
+~23_z: Claims about the effects of the lamps used in the study on performance and mood have been highly exaggerated.
 
 
 Fake demand scenario
-~23_f: These lamps induce fatigue.
+~23_f: The lamps used in the study may omit an unusual sound.
+
 
 
 Procedure

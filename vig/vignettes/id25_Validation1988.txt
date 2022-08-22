@@ -17,11 +17,11 @@ Not online
 
 Non-control demand levels
 ~25_p: Listening to happy music generally makes people feel happy and exhilarated, and listening to sad music generally makes people feel sad and despondent.
-~25_n: Listening to happy music generally makes people feel the opposite emotion, and listening to sad music generally makes people feel the opposite emotion.
+~25_n: Listening to happy and sad music generally makes people feel the opposite emotion.
 
 
 Fake demand scenario
-~25_f: Listening to happy music generally makes people feel uncomfortable, and listening to sad music generally makes people feel alert.
+~25_f: Listening to happy music generally makes people more creative and listening to sad music generally makes people less creative.
 
 
 Procedure

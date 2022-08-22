@@ -17,9 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: mention that in previous research salivation increases
-Negative: mention that in previous research salivation decreases
+~27_p: Taking the pill will increase salivation.
+~27_n: Taking the pill will decrease salivation.
 
+Fake demand scenario
+~27_f: Taking the pill will decrease hearing.
 
 Procedure
 Take a pill (participating in a study to determine the efficacy of a pill which produced a noncaloric stomach preload)

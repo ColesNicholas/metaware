@@ -17,9 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: subjects told hypothesis of the experiment was that muscle strength would increase under the pink condition
-Negative: subjects told hypothesis of the experiment was that muscle strength would decrease under the pink condition
+~26_p: The color pink will increase muscle strength.
+~26_n: The color pink will decrease muscle strength.
 
+Fake demand scenario
+~26_f: The color pink will decrease happiness.
 
 Procedure
 Shown pink panel for 1 minute, then grip strength measured by a hand dynamometer while looking at the panel.
