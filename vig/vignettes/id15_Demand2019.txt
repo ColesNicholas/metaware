@@ -16,7 +16,7 @@ Payment
 Online
 
 Non-control demand levels
-~15_p_mil: yYu will more strongly support military action against a country when it is described as non-democratic.
+~15_p_mil: You will more strongly support military action against a country when it is described as non-democratic.
 ~15_p_wel: You will be more inclined to support the tightening of welfare policies if welfare recipients are described as lazy.
 
 Fake demand scenario
