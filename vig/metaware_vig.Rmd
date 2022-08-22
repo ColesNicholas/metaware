@@ -133,50 +133,31 @@ for (f in f.list){
   }
 ```
 
+# Prep h.DF for merge
+```{r}
+h.DF <- h.DF[1:12, ]
+
+h.DF <- h.DF %>% 
+  mutate(id = substr(x = name,
+                     start = 2,
+                     stop = 3),
+         dir = substr(x = name,
+                      start = 5,
+                      stop = 5)) %>% 
+  select(-name) %>% 
+  pivot_wider(names_from = dir,
+              values_from = hypothesis)
+```
+
 # Merge h.DF and v.DF
 ```{r}
-h.DF <- h.DF %>% 
-  filter(grepl("04_", name)) %>% 
-  mutate(id = substr(x = name,
-                     start = 2,
-                     stop = 3)) 
-  
-  # mutate(key = substr(x = name,
-  #                     start = 2,
-  #                     stop = 5))
-
 v.DF <- v.DF %>% 
-  filter(grepl("04_", name)) %>% 
   mutate(id = substr(x = name,
                      start = 2,
-                     stop = 3)) %>% 
-  select(name, value_1, id)
-  # mutate(key = substr(x = name, 
-  #                     start = 2, 
-  #                     stop = 5))
+                     stop = 3))
 
 DF <- full_join(v.DF, h.DF,
-                by = "id") %>% 
-  
-  # determine if hypothesis is real
-  mutate(h_true = if_else(
-    condition = 
-      substr(x = name.x,
-             start = 2,
-             stop = 5) == 
-      
-      substr(x = name.y,
-             start = 2,
-             stop = 5),
-    true = 1,
-    false = 0)
-    ) %>% 
-  
-  # pivot wider
-  pivot_wider(id_cols = id,
-              names_from = h_true,
-              values_from = hypothesis)
-  
+                by = "id")
 ```
 
 # Export data
