@@ -19,6 +19,8 @@ Non-control demand levels
 ~02_p: Exposure to the color purple will increase food intake.
 
 Fake demand scenario
+~02_n: Exposure to the color purple will decrease food intake.
+~02_z: Exposure to the color purple will have no impact on food intake.
 ~02_f: Exposure to the color purple will increase happiness.
 
 Procedure

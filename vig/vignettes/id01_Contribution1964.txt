@@ -17,10 +17,12 @@ Not online
 
 
 Non-control demand levels
-~01_p: The perception of unusual sights, sounds, feelings, and lapses in concentration are common while in a sensory deprivation chamber.
+~01_p: Sensory deprivation chambers often lead to increases in the perception of unusual sights, sounds, feelings, and lapses in concentration.
 
 Fake demand scenario
-~01_f: Increases in relaxation, concentration, and lucidity are common while in a sensory deprivation chamber.
+~01_n: Sensory deprivation chambers often lead to decreases in the perception of unusual sights, sounds, feelings, and lapses in concentration.
+~01_z: Sensory deprivation chambers have no impact on the perception of unusual sights, sounds, feelings, and lapses in concentration.
+~01_f: Sensory deprivation chambers increase relaxation, concentration, and lucidity.
 
 Procedure
 Sensory deprivation chamber (but it isn’t actually)

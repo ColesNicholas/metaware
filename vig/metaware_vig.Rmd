@@ -111,10 +111,6 @@ Create blank dataframe to paste results in
 h.DF <- data.frame()
 ```
 
-```{r}
-f.list = f.list[1:4]
-```
-
 Open each vignette file, extract relevant information, and append to v.DF
 ```{r}
 for (f in f.list){
@@ -140,10 +136,46 @@ for (f in f.list){
 # Merge h.DF and v.DF
 ```{r}
 h.DF <- h.DF %>% 
-  filter(grepl("04_", name))
+  filter(grepl("04_", name)) %>% 
+  mutate(id = substr(x = name,
+                     start = 2,
+                     stop = 3)) 
+  
+  # mutate(key = substr(x = name,
+  #                     start = 2,
+  #                     stop = 5))
 
 v.DF <- v.DF %>% 
-  filter(grepl("04_", name))
+  filter(grepl("04_", name)) %>% 
+  mutate(id = substr(x = name,
+                     start = 2,
+                     stop = 3)) %>% 
+  select(name, value_1, id)
+  # mutate(key = substr(x = name, 
+  #                     start = 2, 
+  #                     stop = 5))
+
+DF <- full_join(v.DF, h.DF,
+                by = "id") %>% 
+  
+  # determine if hypothesis is real
+  mutate(h_true = if_else(
+    condition = 
+      substr(x = name.x,
+             start = 2,
+             stop = 5) == 
+      
+      substr(x = name.y,
+             start = 2,
+             stop = 5),
+    true = 1,
+    false = 0)
+    ) %>% 
+  
+  # pivot wider
+  pivot_wider(id_cols = id,
+              names_from = h_true,
+              values_from = hypothesis)
   
 ```
 

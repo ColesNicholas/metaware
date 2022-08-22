@@ -21,6 +21,7 @@ Non-control demand levels
 ~03_n: People like you have a great ability to avoid perceiving a shift in the optical illusion.
 
 Fake demand scenario
+~03_z: Your ability to perceive shifts in the optical illusion are normal.
 ~03_f: People like you have a great ability to memorize musical melodies.
 
 Procedure
