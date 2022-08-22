@@ -1,4 +1,4 @@
-﻿Title
+Title
 A demonstration of nonlinear demand characteristics in the 'Mozart Effect' experimental paradigm (Study 2)
 
 
@@ -17,12 +17,15 @@ Not online
 
 
 Non-control demand levels
-Positive: listening to Mozart’s music will make you physically stronger
-Negative: listening to Mozart’s music should cause a decrease in physical strength
+~35_p: Listening to Mozart’s music will make you physically stronger.
+~35_n: Listening to Mozart’s music will make you physically weaker.
+
+Fake demand scenario
+~35_f: Listening to Mozart's music will cause you to experience an enhanced sense of smell.
 
 
 Procedure
-Play mozart music
+Play Mozart music
 
 
 DVs

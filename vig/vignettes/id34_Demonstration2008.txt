@@ -1,4 +1,4 @@
-﻿Title
+Title
 A demonstration of nonlinear demand characteristics in the 'Mozart Effect' experimental paradigm (Study 1)
 
 
@@ -17,12 +17,15 @@ Not online
 
 
 Non-control demand levels
-Positive: beneficial effect of listening to Mozart on test-taking capabilities
-Negative: non-beneficial effect of listening to Mozart on test-taking capabilities
+~34_p: Listening to Mozart will improve test-taking capabilities.
+~34_n: Listening to Mozart will impair test-taking capabilities.
+
+Fake demand scenario
+~34_f: Listening to Mozart will cause you to experience a complex blend of emotions.
 
 
 Procedure
-Play mozart music
+Play Mozart music
 
 
 DVs

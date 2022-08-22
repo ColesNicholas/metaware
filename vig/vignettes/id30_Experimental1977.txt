@@ -1,4 +1,4 @@
-﻿Title
+Title
 Experimental compensation, task interest and the cooperation with demand characteristics of volunteer and sign-up subjects
 
 
@@ -16,9 +16,12 @@ Mixed payment
 Not online
 
 
-Non-control demand levels
-Positive: told puzzle performance to decrease due to fatigue
 
+Non-control demand levels
+~30_p: Puzzle performance will decrease between trials due to fatigue.
+
+Fake demand scenario
+~30_f: Puzzle performance will increase between trials due to experience.
 
 Procedure
 Solve puzzles for 10 minutes twice

@@ -1,4 +1,4 @@
-﻿Title
+Title
 Demand awareness and participant willingness as determinants of aggressive response to film violence
 
 
@@ -17,8 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: experimenter expects aggression to rise after watching aggressive film
-Negative: experimenter expects aggression to fall after watching aggressive film (film takes aggression out of you)
+~31_p: Your aggression will increase after watching an aggressive film.
+~31_n: Your aggression will fall after watching an aggressive film.
+
+Fake demand scenario
+~31_f: Your strength will increase after watching an aggressive film.
 
 
 Procedure

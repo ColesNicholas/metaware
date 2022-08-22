@@ -1,4 +1,4 @@
-﻿Title
+Title
 Demand effects in survey experiments: An empirical assessment (Study 4)
 
 
@@ -17,8 +17,10 @@ Online
 
 
 Non-control demand levels
-Positive: exhibit bias towards same partisan news (same as 14_p_new)
-Incentive: this ^ but with money
+~16_i: You will be more likely to choose an article that favors your preferred political party.
+
+Fake demand scenario
+~16_f: You will be more likely to choose an article written by an author of your gender.
 
 
 Procedure

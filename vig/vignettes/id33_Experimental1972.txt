@@ -1,4 +1,4 @@
-﻿Title
+Title
 Experimental desensitization of snake-avoidance after an instructional manipulation
 
 
@@ -17,8 +17,10 @@ Not online
 
 
 Non-control demand levels
-Positive: Nine Ss were assigned to the “systematic desensitization according to therapeutically oriented instructions” (SDT) condition. Before the first session of relaxation training, these Ss heard a set of experimental instructions designed to provide a therapeutic rationale for the experiment and induce an expectation of improvement
+~33_p: The therapeutic treatment will help reduce your fear of snakes.
 
+Fake demand scenario
+~33_f: The therapeutic treatment will help decrease your depression.
 
 Procedure
 Encounter with a snake

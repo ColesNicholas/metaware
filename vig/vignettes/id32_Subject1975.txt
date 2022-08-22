@@ -1,4 +1,4 @@
-﻿Title
+Title
 Subject effects and demand characteristics
 
 
@@ -17,9 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: you will copy 95 telephone numbers in 7 minutes
-Negative: you will copy 55 telephone numbers in 7 minutes
+~32_p: Given the lighting conditions, you will copy 95 telephone numbers in 7 minutes.
+~32_n: Given the lighting conditions, you will copy 55 telephone numbers in 7 minutes.
 
+Fake demand scenario
+~32_f: Given the lighting conditions, you will be able to add a larger series of numbers in 7 minutes.
 
 Procedure
 Complete a practice trial, where they copy phone numbers for 7 minutes. Researcher adjusts lighting and participants then re-complete the task.

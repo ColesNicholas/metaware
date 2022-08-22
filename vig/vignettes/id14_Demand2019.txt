@@ -1,4 +1,4 @@
-﻿Title
+Title
 Demand effects in survey experiments: An empirical assessment (Study 2)
 
 
@@ -17,9 +17,13 @@ Online
 
 
 Non-control demand levels
-Positive: exhibit bias (towards white/same partisan)
-Negative: exhibit bias (against white/same partisan)
+~14_p_res: You will be more likely to choose candidates with stereotypical White American names to receive an interview.
+~14_n_res: You will be more likely to choose candidates with stereotypical African American names to receive an interview.
+~14_p_new: You will be more likely to choose an article that favors your preferred political party.
+~14_n_new: You will be more likely to choose an article that goes against your preferred political party.
 
+Fake demand scenario
+~14_f: You will exhibit no ideological bias.
 
 Procedure
 Resume or news

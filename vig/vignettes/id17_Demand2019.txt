@@ -1,4 +1,4 @@
-﻿Title
+Title
 Demand effects in survey experiments: An empirical assessment (Study 5)
 
 
@@ -17,8 +17,10 @@ Online
 
 
 Non-control demand levels
-Positive: support rally more when free speech is emphasized
-Incentive: this ^ but with money
+~17_p: You will be more tolerant of controversial groups in society when you are reminded about freedom of speech.
+
+Fake demand scenario
+~17_f: You will give longer responses to open-ended survey questions when you are reminded about freedom of speech.
 
 
 Procedure

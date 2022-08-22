@@ -1,4 +1,4 @@
-﻿Title
+Title
 Demand characteristics of music affect performance on the Wonderlic Personnel Test of Intelligence
 
 
@@ -17,8 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: the researcher informs you of the beneficial effect of listening to Mozart on cognitive performance.
-Negative: the researcher informs you of the non-beneficial effect of listening to Mozart on cognitive performance.
+~36_p: Listening to Mozart will improve cognitive performance.
+~36_n: Listening to Mozart will impair cognitive performance.
+
+Fake demand scenario
+~36_f: Listening to Mozart will increase your chances of playing an instrument later in life.
 
 
 Procedure

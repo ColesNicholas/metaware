@@ -1,4 +1,4 @@
-﻿Title
+Title
 Demand characteristics in a quasi-psychophysical experiment
 
 
@@ -17,8 +17,11 @@ Not online
 
 
 Non-control demand levels
-Positive: many errors
-Negative: few errors
+~38_p: While using an airplane screen prototype, you will make many reading errors.
+~38_n: While using an airplane screen prototype, you will make few reading errors.
+
+Fake demand scenario
+~38_f: While using an airplane screen prototype, you will experienced an enhanced sense of safety.
 
 
 Procedure

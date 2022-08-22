@@ -1,4 +1,4 @@
-﻿Title
+Title
 Demand effects in survey experiments: An empirical assessment (Study 3)
 
 
@@ -15,8 +15,13 @@ Not students
 Payment
 Online
 
-
 Non-control demand levels
+~15_p_mil: yYu will more strongly support military action against a country when it is described as non-democratic.
+~15_p_wel: You will be more inclined to support the tightening of welfare policies if welfare recipients are described as lazy.
+
+Fake demand scenario
+~15_f: You will have no opinion on policy decisions.
+
 Positive: support tightening welfare for lazy desc, support action against non-democratic
 Incentive: this ^ but with money
 
