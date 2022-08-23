@@ -86,6 +86,21 @@ DF$name %>% unique() %>% length()
 nrow(DF)
 ```
 
+# Temp: check vigs
+```{r eval = F}
+DF <- DF %>% 
+  select(id, name,
+         ref.type, vig.1, vig.2) %>% 
+  mutate(vig.1b = substr(vig.1, 4, 4),
+         vig.2b = substr(vig.2, 4, 4))
+
+# inspect
+DF %>% 
+  group_by(ref.type, vig.1b, vig.2b) %>%
+  tally() %>% View()
+```
+
+
 # Calculate Cohen's *d* and variance
 ## For between-subjects data
 ### Functions for calculating *d* 

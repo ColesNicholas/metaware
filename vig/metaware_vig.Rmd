@@ -155,10 +155,10 @@ v.DF <- v.DF %>%
                      start = 2,
                      stop = 3))
 
-
 # merge
 DF <- full_join(v.DF, h.DF,
-                by = "id")
+                by = "id") %>%
+    select(-id)
 ```
 
 # Export data
