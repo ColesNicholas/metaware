@@ -99,6 +99,7 @@ DF %>%
             m.opp = mean(opp, na.rm = T),
             sd.opp = sd(opp, na.rm = T)
             ) %>% 
-  write.csv("vig.ratings.csv")
+  write.csv("vig.ratings.csv",
+            row.names = F)
 ```
 
