@@ -135,7 +135,7 @@ for (f in f.list){
 rm(f, f.list, h)
 ```
 
-# Merge h.DF and v.DF for merge
+# Merge h.DF and v.DF
 ```{r}
 # prep h.DF for merge
 h.DF <- h.DF %>% 
