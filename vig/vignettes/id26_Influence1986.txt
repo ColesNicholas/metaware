@@ -21,7 +21,7 @@ Non-control demand levels
 ~26_n: Viewing the color pink will decrease muscle strength.
 
 Fake demand scenario
-~26_n: Viewing the color pink will have no impact on muscle strength.
+~26_z: Viewing the color pink will have no impact on muscle strength.
 ~26_f: Viewing the color pink will decrease happiness.
 
 Procedure

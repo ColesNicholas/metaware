@@ -130,13 +130,14 @@ for (f in f.list){
   
   # append results to h.DF
   h.DF <<- rbind(h.DF, h)
-  }
+}
+
+rm(f, f.list, h)
 ```
 
-# Prep h.DF for merge
+# Merge h.DF and v.DF for merge
 ```{r}
-h.DF <- h.DF[1:12, ]
-
+# prep h.DF for merge
 h.DF <- h.DF %>% 
   mutate(id = substr(x = name,
                      start = 2,
@@ -147,21 +148,21 @@ h.DF <- h.DF %>%
   select(-name) %>% 
   pivot_wider(names_from = dir,
               values_from = hypothesis)
-```
 
-# Merge h.DF and v.DF
-```{r}
+# prep v.DF for merge
 v.DF <- v.DF %>% 
   mutate(id = substr(x = name,
                      start = 2,
                      stop = 3))
 
+
+# merge
 DF <- full_join(v.DF, h.DF,
                 by = "id")
 ```
 
 # Export data
 ```{r}
-write.csv(v.DF, 'metaware.vig.csv',
+write.csv(DF, 'metaware.vig.csv',
           row.names = F)
 ```

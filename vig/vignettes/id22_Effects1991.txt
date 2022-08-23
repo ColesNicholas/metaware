@@ -21,8 +21,8 @@ Non-control demand levels
 
 
 Fake demand scenario
-~20_n: While in sensory deprivation chambers, people are less likely to experience disruptions in visual imagery and concentration.
-~20_z:  It is extremley uncommon to experience visual imagery, fantasies, difficulties in concentration, and hallucinations while in the sensory deprivation chamber.
+~22_n: While in sensory deprivation chambers, people are less likely to experience disruptions in visual imagery and concentration.
+~22_z:  It is extremley uncommon to experience visual imagery, fantasies, difficulties in concentration, and hallucinations while in the sensory deprivation chamber.
 ~22_f: People who enter sensory deprivation chambers do not typically report any unusual experiences.
 
 Procedure
