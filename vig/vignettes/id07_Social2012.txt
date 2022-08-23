@@ -20,6 +20,8 @@ Non-control demand levels
 ~07_z: A heavy backpack you will wear will have no impact on your perception of the steepness of the hill.
 
 Fake demand scenario
+~07_p: A heavy backpack you will wear will make a hill appear more steep.
+~07_n: A heavy backpack you will wear will make a hill appear less steep.
 ~07_f: A heavy backpack you will wear will have no impact on how much you sweat while climbing a hill.
 
 Procedure

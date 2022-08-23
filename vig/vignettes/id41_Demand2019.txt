@@ -19,6 +19,8 @@ Non-control demand levels
 ~41_p: You will be more inclined to support the tightening of welfare policies if welfare recipients are described as lazy.
 
 Fake demand scenario
+~41_n: You will be less inclined to support the tightening of welfare policies if welfare recipients are described as lazy.
+~41_z: The way that welfar recipients are described will not impact your support for welfare policies.
 ~41_f: You will have no opinion on policy decisions.
 
 Procedure

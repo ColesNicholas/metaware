@@ -17,11 +17,12 @@ Not online
 
 
 Non-control demand levels
-~26_p: The color pink will increase muscle strength.
-~26_n: The color pink will decrease muscle strength.
+~26_p: Viewing the color pink will increase muscle strength.
+~26_n: Viewing the color pink will decrease muscle strength.
 
 Fake demand scenario
-~26_f: The color pink will decrease happiness.
+~26_n: Viewing the color pink will have no impact on muscle strength.
+~26_f: Viewing the color pink will decrease happiness.
 
 Procedure
 Shown pink panel for 1 minute, then grip strength measured by a hand dynamometer while looking at the panel.

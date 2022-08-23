@@ -19,6 +19,8 @@ Non-control demand levels
 ~15_p: You will more strongly support military action against a country when it is described as non-democratic.
 
 Fake demand scenario
+~15_n: You will more strongly support military action against a country when it is described as democratic.
+~15_z: Whether or not a country is described as democratic will not impact the extent to which you strongly support military action against it.
 ~15_f: You will have no opinion on policy decisions.
 
 Procedure

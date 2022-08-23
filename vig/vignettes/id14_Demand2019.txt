@@ -17,10 +17,11 @@ Online
 
 
 Non-control demand levels
-~14_p_res: You will be more likely to choose candidates with stereotypical White American names to receive an interview.
-~14_n_res: You will be more likely to choose candidates with stereotypical African American names to receive an interview.
+~14_p: You will be more likely to choose candidates with stereotypical White American names to receive an interview.
+~14_n: You will be more likely to choose candidates with stereotypical African American names to receive an interview.
 
 Fake demand scenario
+~14_z: You will be equally likely to choose candidates with stereotypical White American vs. stereotypical African American names to receive an interview.
 ~14_f: You will exhibit no ideological bias.
 
 Procedure

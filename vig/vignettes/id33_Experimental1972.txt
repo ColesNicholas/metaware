@@ -20,6 +20,8 @@ Non-control demand levels
 ~33_p: The therapeutic treatment will help reduce your fear of snakes.
 
 Fake demand scenario
+~33_n: The therapeutic treatment will make you more afraid of snakes.
+~33_z: The therapeutic treatment will not impact your fear of snakes.
 ~33_f: The therapeutic treatment will help decrease your depression.
 
 Procedure

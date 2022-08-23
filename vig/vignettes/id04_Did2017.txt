@@ -21,6 +21,7 @@ Non-control demand levels
 ~04_n: A brain stimulation procedure will impair your performance.
 
 Fake demand scenario
+~04_z: A brain stimulation procedure will not impact your performance.
 ~04_f: A brain stimulation procedure will make you lose your appetite.
 
 Procedure

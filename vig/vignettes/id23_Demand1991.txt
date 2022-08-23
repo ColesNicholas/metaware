@@ -22,6 +22,7 @@ Non-control demand levels
 
 
 Fake demand scenario
+~23_n: The lamps used in the study decrease performance and mood.
 ~23_f: The lamps used in the study may omit an unusual sound.
 
 

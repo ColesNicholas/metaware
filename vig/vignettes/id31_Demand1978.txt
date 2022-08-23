@@ -21,6 +21,7 @@ Non-control demand levels
 ~31_n: Your aggression will fall after watching an aggressive film.
 
 Fake demand scenario
+~31_z: An aggressive film will have no impact on your aggression.
 ~31_f: Your strength will increase after watching an aggressive film.
 
 

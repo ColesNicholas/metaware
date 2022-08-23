@@ -20,6 +20,8 @@ Non-control demand levels
 ~05_p: Green and blue colors will make unpleasant sounds more tolerable.
 
 Fake demand scenario
+~05_n: Green and blue colors will make unpleasant sounds less tolerable.
+~05_z: Green and blue colors will not impact the tolerability of unpleasant sounds.
 ~05_f: Green and blue colors will make pleasant tastes more pronounced.
 
 Procedure

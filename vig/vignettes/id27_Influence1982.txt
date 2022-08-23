@@ -21,6 +21,7 @@ Non-control demand levels
 ~27_n: Taking the pill will decrease salivation.
 
 Fake demand scenario
+~27_z: Taking the pill will have no impact on salivation.
 ~27_f: Taking the pill will decrease hearing.
 
 Procedure

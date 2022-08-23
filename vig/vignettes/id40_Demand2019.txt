@@ -17,11 +17,12 @@ Online
 
 
 Non-control demand levels
-~40_p_new: You will be more likely to choose an article that favors your preferred political party.
-~40_n_new: You will be more likely to choose an article that goes against your preferred political party.
+~40_p: You will be more likely to choose an article that favors your preferred political party.
+~40_n: You will be more likely to choose an article that goes against your preferred political party.
 
 Fake demand scenario
-~40_f: You will exhibit no ideological bias.
+~40_z: You will be equally likely to choose n article that favors vs. disfavors your preferred political party.
+~40_f: You will be more likely to choose an article written by an author of your gender.
 
 Procedure
 Resume or news

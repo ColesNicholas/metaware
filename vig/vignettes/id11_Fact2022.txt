@@ -21,6 +21,7 @@ Non-control demand levels
 ~11_z: Posing happy expressions will not increase feelings of happiness, and posing angry expressions will not increase feelings of anger
 
 Fake demand scenario
+~11_n: Posing happy expressions will decrease feelings of happiness, and posing angry expressions will decrease feelings of anger.
 ~11_f: Posing happy expressions will increase hunger, and posing angry expressions will increase thirst.
 
 Procedure

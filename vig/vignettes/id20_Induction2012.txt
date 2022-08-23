@@ -20,6 +20,7 @@ Non-control demand levels
 ~20_z: Anomalous experiences such as apparitions, consciousness separating from the body, and strange noises sometimes occur in mirror-gazing facilities, but there is no consistency to it.
 
 Fake demand scenario
+~20_n: While in mirror-gazing facilities, people are less likely to experience altered states of perceptions, like apparitions and out-of-body experiences.
 ~20_f: Experiences such as hunger, thirst, and sadness are common in mirror-gazing facilities.
 
 

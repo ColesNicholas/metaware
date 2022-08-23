@@ -20,7 +20,8 @@ Non-control demand levels
 ~38_p: While using an airplane screen prototype, you will make many reading errors.
 ~38_n: While using an airplane screen prototype, you will make few reading errors.
 
-Fake demand scenario
+Fake demand scenario (not strange 38_z)
+~38_z: While using an airplane screen prototype, you will appreciate its unique design.
 ~38_f: While using an airplane screen prototype, you will experienced an enhanced sense of safety.
 
 

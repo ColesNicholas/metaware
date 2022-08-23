@@ -18,10 +18,13 @@ Not online
 
 
 Non-control demand levels
-~30_p: Puzzle performance will decrease between trials due to fatigue.
+~30_p: Puzzle performance will decrease across trials due to fatigue.
 
 Fake demand scenario
-~30_f: Puzzle performance will increase between trials due to experience.
+~30_n: Puzzle performance will increase across trials due to experience.
+~30_z: Puzzle performance will be similar across trials.
+~30_f: The more trials you complete, the more agitated puzzles will make you.
+
 
 Procedure
 Solve puzzles for 10 minutes twice

@@ -20,6 +20,8 @@ Non-control demand levels
 ~16_p: You will be more likely to choose an article that favors your preferred political party.
 
 Fake demand scenario
+~16_n: You will be more likely to choose an article that disfavors your preferred political party.
+~16_z: You will be equally likely to choose an article that favors vs. disfavors your preferred political party.
 ~16_f: You will be more likely to choose an article written by an author of your gender.
 
 

@@ -20,7 +20,8 @@ Non-control demand levels
 ~32_p: Given the lighting conditions, you will copy 95 telephone numbers in 7 minutes.
 ~32_n: Given the lighting conditions, you will copy 55 telephone numbers in 7 minutes.
 
-Fake demand scenario
+Fake demand scenario (note strange 32_z)
+~32_z: The lighting conditions will have no impact on your ability to copy telephone numbers.
 ~32_f: Given the lighting conditions, you will be able to add a larger series of numbers in 7 minutes.
 
 Procedure

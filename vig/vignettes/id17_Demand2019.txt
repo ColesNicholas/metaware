@@ -20,6 +20,8 @@ Non-control demand levels
 ~17_p: You will be more tolerant of controversial groups in society when you are reminded about freedom of speech.
 
 Fake demand scenario
+~17_n: You will be less tolerant of controversial groups in society when you are reminded about freedom of speech.
+~17_z: Being reminded about freedom of speech will not impcat your tolerace for controversial groups in society.
 ~17_f: You will give longer responses to open-ended survey questions when you are reminded about freedom of speech.
 
 

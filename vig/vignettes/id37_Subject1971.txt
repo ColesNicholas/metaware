@@ -19,7 +19,9 @@ Not online
 Non-control demand levels
 ~37_p: During a 4-6 week stay at the hospital for physical rehabilitative therapy, your attitudes towards the hospital and yourself will change.
 
-Fake demand scenario
+Fake demand scenario (note strange 37_n)
+~37_z: During a 4-6 week stay at the hospital for physical rehabilitative therapy, your attitudes towards the hospital and yourself will not change.
+~37_n: During a 4-6 week stay at the hospital for physical rehabilitative therapy, your body will get progressively stronger.
 ~37_f: During a 4-6 week stay at the hospital for physical rehabilitative therapy, you will develop a refined sense of taste.
 
 
