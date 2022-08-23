@@ -1,0 +1,104 @@
+---
+title: Code for processing ratings for "A meta-analysis of the effects of demand characteristics in non-clinical research"
+author: "Nicholas A. Coles and Morgan Wyatt"
+editor_options: 
+  chunk_output_type: console
+---
+The code was written in `r R.version$version.string` using R Markdown (http://rmarkdown.rstudio.com/).
+
+# Section 1: Data Prep
+```{r setup and load packages, include = FALSE}
+# clean environment
+rm(list = ls())
+
+# load packages
+ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    
+    sapply(pkg, require, character.only = TRUE)
+}
+
+# call package function
+packages <- c('tidyverse')
+ipak(packages)
+rm(packages, ipak)
+```
+
+## Calculate summary statistics for each vignette
+To-do: manipulation check
+```{r}
+# import data
+DF <- read_csv(file = "metaware_ratings_test.csv") %>% 
+  # remove unnecessary variables
+  select(-c(StartDate : UserLanguage),
+         -contains("Click"),
+         -contains("Submit"),
+         -contains("Count")) %>% 
+  
+  # remove row containing ImportId
+  filter(!grepl("ImportId", `1_hyp_awr`)) %>% 
+  
+  # assign participant ids
+  mutate(ss = 1 : nrow(.),
+         ss = as.character(ss)) %>%  
+  
+  # select vignettes columns
+  select(`1_hyp_awr` : `118_hyp_opp`, ss) %>% 
+  
+  # extract key from first row
+  mutate_all(~if_else(condition = grepl("#", .),
+                      true = substr(x = .,
+                                    start = 2,
+                                    stop = 9),
+                      false = .))
+
+# append first row to column name
+## append name
+colnames(DF) <- paste(sep = "##",
+                      colnames(DF),
+                      as.character(unlist(DF[1, ]))
+                      )
+
+## remove first row
+DF <- DF[-1, ]
+
+## fix ss variable naming
+DF <- DF %>% 
+  rename("ss" = "ss##1")
+
+# prep dataframe for summary statistics calculation
+DF <- DF %>% 
+  # pivot longer
+  pivot_longer(cols = contains("##"),
+               names_to = c("var", "vig"),
+               names_sep = "##") %>% 
+  
+  # extract variable name
+  mutate(var = substr(x = var,
+                      start = nchar(var) - 2,
+                      stop = nchar(var))) %>% 
+  
+  # pivot wider
+  pivot_wider(names_from = var,
+              values_from = value) %>% 
+  
+  # convert columns to collect class
+  mutate_at(c("awr", "mot", "opp"),
+            as.numeric)
+```
+
+Extract summary info
+```{r}
+DF %>% 
+  group_by(vig) %>% 
+  summarise(m.mot = mean(mot, na.rm = T),
+            sd.mot = sd(mot, na.rm = T),
+            m.opp = mean(opp, na.rm = T),
+            sd.opp = sd(opp, na.rm = T)
+            ) %>% 
+  write.csv("vig.ratings.csv")
+```
+
