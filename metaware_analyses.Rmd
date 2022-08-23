@@ -370,6 +370,36 @@ DF <- DF %>%
   ungroup()
 ```
 
+# Merge vignette rating data
+Probably better to do some sort of pivot here
+```{r eval = F}
+DF <- DF %>% 
+  select(id, vig.1, vig.2, es, es.var) 
+
+DF.vig <- read.csv("vig.ratings.csv") %>% 
+  select(-c(sd.mot, sd.opp))
+
+# vig.1 join
+DF.vig <- rename(DF.vig, 
+                 vig.1 = vig,
+                 vig.1.m = m.mot,
+                 vig.1.o = m.opp) 
+  
+tmp <- full_join(DF, DF.vig,
+                 by = "vig.1")
+
+# vig.2 join
+DF.vig <- rename(DF.vig, 
+                 vig.2 = vig.1,
+                 vig.2.m = vig.1.m,
+                 vig.2.o = vig.1.o) 
+  
+tmp <- full_join(tmp, DF.vig,
+                 by = "vig.2")
+
+```
+
+
 # Export
 ```{r}
 write.csv(DF %>% 
