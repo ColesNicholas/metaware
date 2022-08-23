@@ -51,7 +51,7 @@ DF <- DF %>%
   select(-ends_with("ref")) %>% 
   
   # remove variables we won't include in any analyses
-  select(-c(prop.woman, age, dv, note)) %>% 
+  select(-c(dv, note)) %>% 
   
   # convert factors to factors
   mutate(id = as.factor(id),
@@ -79,10 +79,10 @@ tmp$year %>%
 
 rm(tmp)
 
-# 32 studies
+# 31 studies
 DF$name %>% unique() %>% length()
 
-# 228 effect sizes
+# 222 effect sizes
 nrow(DF)
 ```
 
@@ -412,6 +412,26 @@ ModAnalysis <- function(mod){
                mods = as.formula(paste0("~ ", mod)),
                method = "REML") %>%
     robust(cluster = DF$id)
+  
+  m1 <- rma.uni(yi = es,
+               vi = es.var,
+               data = DF,
+               method = "REML") %>%
+    robust(cluster = DF$id)
+  
+  m2 <- rma.uni(yi = es,
+               vi = es.var,
+               data = DF,
+               mods = ~  student,
+               method = "REML") %>%
+    robust(cluster = DF$id)
+  
+  Wald_test(m2, 
+            constraints = constrain_zero(2:3), 
+            vcov = "CR2",
+            cluster = DF$id)
+
+
   
   # append to moderator analysis results dataframe
   mod.r <<- 
