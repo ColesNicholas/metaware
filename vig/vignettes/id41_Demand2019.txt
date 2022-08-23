@@ -1,0 +1,41 @@
+Title
+Demand effects in survey experiments: An empirical assessment (Study 3)
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Not students
+Payment
+Online
+
+Non-control demand levels
+~41_p: You will be more inclined to support the tightening of welfare policies if welfare recipients are described as lazy.
+
+Fake demand scenario
+~41_f: You will have no opinion on policy decisions.
+
+Procedure
+Described scenarios, military action or welfare
+
+
+DVs
+Military action
+Welfare policy
+
+
+Vignette
+#41_p_nin: Positive - welfare
+Imagine that you are working a free-lance job where you are paid to complete an online study.
+The researcher informs you that they believe you will be more inclined to support the tightening of welfare policies if welfare recipients are described as lazy vs. unlucky.
+You are then presented with a case study of a hypothetical welfare recipient who is described as either lazy or unlucky. You are then asked to report the extent to which you support restricting access to social welfare.
+#41_p_yin: Incentive - welfare
+Imagine that you are working a free-lance job where you are paid to complete an online study.
+The researcher informs you that they believe you will be more inclined to support the tightening of welfare policies if welfare recipients are described as lazy vs. unlucky. They also inform you that you will receive a $0.25 bonus payment if your response is consistent with their hypothesis.
+You are then presented with a case study of a hypothetical welfare recipient who is described as either lazy or unlucky. You are then asked to report the extent to which you support restricting access to social welfare.

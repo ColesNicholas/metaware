@@ -1,0 +1,43 @@
+Title
+Demand effects in survey experiments: An empirical assessment (Study 2)
+
+
+Developed by
+MW
+
+
+Checked by
+NAC
+
+
+Details
+Not students
+Payment
+Online
+
+
+Non-control demand levels
+~40_p_new: You will be more likely to choose an article that favors your preferred political party.
+~40_n_new: You will be more likely to choose an article that goes against your preferred political party.
+
+Fake demand scenario
+~40_f: You will exhibit no ideological bias.
+
+Procedure
+Resume or news
+
+
+DVs
+Resume bias
+News bias
+
+
+Vignette
+#40_p_new: Positive - news
+Imagine that you are working a free-lance job where you are paid to complete an online study.
+The researcher says you will be indicating which type of news items you most prefer to read. They inform you that they anticipate you will be more likely to choose an article that favors your preferred political party because people tend to seek out information that is consistent with their personal views.
+You are presented with a series of article headlines, each which is tagged as coming from either a pro-Republican, pro-Democrat, or non-partisan news source. For each series of headlines, you are asked to indicate which article you prefer.
+#40_n_new: Negative - news
+Imagine that you are working a free-lance job where you are paid to complete an online study.
+The researcher says you will be indicating which type of news items you most prefer to read. They inform you that they anticipate you will be more likely to choose an article that goes against your preferred political party because people often strive to hear diverse points of view.
+You are presented with a series of article headlines, each which is tagged as coming from either a pro-Republican, pro-Democrat, or non-partisan news source. For each series of headlines, you are asked to indicate which article you prefer.

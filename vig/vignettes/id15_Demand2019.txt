@@ -16,15 +16,10 @@ Payment
 Online
 
 Non-control demand levels
-~15_p_mil: You will more strongly support military action against a country when it is described as non-democratic.
-~15_p_wel: You will be more inclined to support the tightening of welfare policies if welfare recipients are described as lazy.
+~15_p: You will more strongly support military action against a country when it is described as non-democratic.
 
 Fake demand scenario
 ~15_f: You will have no opinion on policy decisions.
-
-Positive: support tightening welfare for lazy desc, support action against non-democratic
-Incentive: this ^ but with money
-
 
 Procedure
 Described scenarios, military action or welfare
@@ -36,19 +31,11 @@ Welfare policy
 
 
 Vignette
-#15_p_mil: Positive - military
+#15_p_nin: Positive - military
 Imagine that you are working a free-lance job where you are paid to complete an online study.
 The researcher informs you that they believe you will more strongly support military action against a country when it is described as non-democratic (vs. democratic).
 You are then presented with a hypothetical situation describing a country that is a threat to the U.S., including information about whether they are democratic or non-democratic.The researchers then ask you the extent to which you support military action against this country.
-#15_i_mil: Incentive - military
+#15_p_yin: Incentive - military
 Imagine that you are working a free-lance job where you are paid to complete an online study.
 The researcher informs you that they believe you will more strongly support military action against a country when it is described as non-democratic (vs. democratic). They also inform you that you will receive a $0.25 bonus payment if your response is consistent with their hypothesis.
 You are then presented with a hypothetical situation describing a country that is a threat to the U.S., including information about whether they are democratic or non-democratic. The researchers then ask you the extent to which you support military action against this country.
-#15_p_wel: Positive - welfare
-Imagine that you are working a free-lance job where you are paid to complete an online study.
-The researcher informs you that they believe you will be more inclined to support the tightening of welfare policies if welfare recipients are described as lazy vs. unlucky.
-You are then presented with a case study of a hypothetical welfare recipient who is described as either lazy or unlucky. You are then asked to report the extent to which you support restricting access to social welfare.
-#15_i_wel: Incentive - welfare
-Imagine that you are working a free-lance job where you are paid to complete an online study.
-The researcher informs you that they believe you will be more inclined to support the tightening of welfare policies if welfare recipients are described as lazy vs. unlucky. They also inform you that you will receive a $0.25 bonus payment if your response is consistent with their hypothesis.
-You are then presented with a case study of a hypothetical welfare recipient who is described as either lazy or unlucky. You are then asked to report the extent to which you support restricting access to social welfare.
