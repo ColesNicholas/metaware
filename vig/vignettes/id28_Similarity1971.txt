@@ -17,11 +17,11 @@ Not online
 
 
 Non-control demand levels
-~28_p: The extent to which you are attracted to a person will depend on how similar they are to you.
+~28_p: You will be more attracted to people if they are more similar to you. 
 
-Fake demand scenario (note: oddity with 28_n)
-~28_n: You are less likely to get into a physical alteraction with people who are more similar to you.
-~28_z: The extent to which you are attracted to a person will not depend on how similar they are to you.
+Fake demand scenario
+~28_n: You will be less attracted to people if they are more similar to you. 
+~28_z: You will be equally attracted to people who are similar and dissimilar to you.
 ~28_f: You are less likely to get into a verbal alteraction with people who are more similar to you.
 
 Procedure
