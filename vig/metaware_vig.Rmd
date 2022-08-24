@@ -159,6 +159,15 @@ v.DF <- v.DF %>%
 DF <- full_join(v.DF, h.DF,
                 by = "id") %>%
     select(-id)
+
+rm(h.DF, v.DF)
+```
+
+# Separate 12_p_hap and 12_z_hap from rest of vigs
+```{r}
+DF.12 <- DF %>% 
+  filter(name == "#12_p_hap" | name == "#12_z_hap")
+temp <- DF %>% filter(grepl("#12", name))
 ```
 
 # Export data
