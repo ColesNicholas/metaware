@@ -167,11 +167,12 @@ rm(h.DF, v.DF)
 ```{r}
 DF.12 <- DF %>% 
   filter(name == "#12_p_hap" | name == "#12_z_hap")
-temp <- DF %>% filter(grepl("#12", name))
 ```
 
 # Export data
 ```{r}
 write.csv(DF, 'metaware.vig.csv',
+          row.names = F)
+write.csv(DF.12, 'metaware.vig12.csv',
           row.names = F)
 ```
