@@ -109,7 +109,7 @@ For 4 hours, you are left in the room. Afterwards, you are asked to report if yo
 Imagine that you are a university student completing an in-person study for payment.
 The researcher tells you that you will be placed in a sensory deprivation room. They then inform you that the following experiences are not unusual while in such a room: visual imagery, fantasies, special or unusual feelings, difficulties in concentration, hallucinations, and/or feelings of disorientation.
 For 4 hours, you are left in the room. Afterwards, you are asked to report if you experienced any unpleasant emotions.
-#01_p_unp: Positive - anxiety
+#01_p_anx: Positive - anxiety
 Imagine that you are a university student completing an in-person study for payment.
 The researcher tells you that you will be placed in a sensory deprivation room. They then inform you that the following experiences are not unusual while in such a room: visual imagery, fantasies, special or unusual feelings, difficulties in concentration, hallucinations, and/or feelings of disorientation.
 For 4 hours, you are left in the room. Afterwards, you are asked to report if you experienced any anxiety.
