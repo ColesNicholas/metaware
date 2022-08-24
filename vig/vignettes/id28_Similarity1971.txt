@@ -39,5 +39,5 @@ The researcher informs you that they believe you will be more attracted to peopl
 You are presented with a stranger who is quite similar to you and asked to rate your attraction to them.
 #28_p_dis: Positive - dissimilar
 Imagine that you are a university student completing an in-person study as a volunteer or for extra course credit.
-The researcher informs you that they believe you will be more attracted to people that are more similar to you. They ask that you behave in a manner consistent with this hypothesis.
+The researcher informs you that they believe you will be more attracted to people that are dissimilar to you. They ask that you behave in a manner consistent with this hypothesis.
 You are presented with a stranger who is quite dissimilar to you and asked to rate your attraction to them.
