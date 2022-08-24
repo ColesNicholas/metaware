@@ -1,4 +1,4 @@
-﻿Title
+Title
 Laboratory induction of mood states through the reading of self-referent mood statements: Affective changes or demand characteristics?
 
 
@@ -17,12 +17,12 @@ Not online
 
 
 Non-control demand levels
-~29_n: Reading statements provided by the experimenter will cause you to feel more depressed.
+~29_n: Reading the statements provided by the experimenter will cause you to feel more depressed.
 
 Fake demand scenario
-~29_p: Reading statements provided by the experimenter will cause you to feel less depressed.
-~29_z: Reading statements provided by the experimenter will not impact your mood.
-~29_f: Reading statements provided by the experimenter will improve your performance on a math test.
+~29_p: Reading the statements provided by the experimenter will cause you to feel less depressed.
+~29_z: Reading the statements provided by the experimenter will not impact your mood.
+~29_f: Reading the statements provided by the experimenter will improve your performance on a math test.
 
 
 Procedure

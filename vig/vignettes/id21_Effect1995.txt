@@ -16,13 +16,13 @@ No payment
 Not online
 
 Non-control demand levels
-~21_n: Reading and believing a set of statements provided by the researcher should have an effect on your anxiety.
+~21_n: Reading and believing the set of statements provided by the researcher should have an effect on your anxiety.
 
 
 Fake demand scenario (note unusual nature of 21_p)
-~21_p: Reading and believing a set of statements provided by the researcher should have an effect on your happiness.
-~21_z: Reading and believing a set of statements provided by the researcher should have no impact on your anxiety.
-~21_f: Reading and believing a set of statements provided by the researcher should have an effect on your hunger.
+~21_p: Reading and believing the set of statements provided by the researcher should have an effect on your happiness.
+~21_z: Reading and believing the set of statements provided by the researcher should have no impact on your anxiety.
+~21_f: Reading and believing the set of statements provided by the researcher should have an effect on your hunger.
 
 
 Procedure

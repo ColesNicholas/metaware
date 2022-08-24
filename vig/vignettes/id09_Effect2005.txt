@@ -1,4 +1,4 @@
-﻿Title
+Title
 Effect of the destructive disagreement belief on satisfaction with one's closest friend
 
 
@@ -16,12 +16,12 @@ No payment
 
 
 Non-control demand levels
-~09_p: Reading and believing a set of statements created by the researcher will make you feel better about your relationship with your friend.
-~09_n: Reading and believing a set of statements created by the researcher will make you feel worse about your relationship with your friend.
+~09_p: Reading and believing the set of statements created by the researcher will make you feel better about your relationship with your friend.
+~09_n: Reading and believing the set of statements created by the researcher will make you feel worse about your relationship with your friend.
 
 Fake demand scenario
-~09_z: Reading and believing a set of statements created by the researcher will not impact how you feel about your relationship with your friend.
-~09_f: Reading and believing a set of statements created by the researcher will inspire you to make more friends.
+~09_z: Reading and believing the set of statements created by the researcher will not impact how you feel about your relationship with your friend.
+~09_f: Reading and believing the set of statements created by the researcher will inspire you to make more friends.
 
 Procedure
 Assess relationship satisfaction with current main romantic relationship or their current closest friend. Read statements and assess again
