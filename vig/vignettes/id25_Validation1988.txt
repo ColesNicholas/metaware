@@ -40,7 +40,7 @@ Self-reported depression (S)
 Vignette
 #25_p_hap: Positive - happiness
 Imagine that you are a university student completing an in-person study as a volunteer.
-The researcher tells you that you will listen to happy music and informs you that people generally feel happy and exhilarated when listening to the music.
+The researcher tells you that you will listen to happy or sad music. They then informs you that people generally feel happy after happy music and sad after sad music.
 You listen to the happy music for 8-10 minutes and then self-report how happy you feel.
 #25_n_hap: Negative - happiness
 Imagine that you are a university student completing an in-person study as a volunteer.
@@ -48,7 +48,7 @@ The researcher tells you that you will listen to happy music and informs you tha
 You listen to the happy music for 8-10 minutes and then self-report how happy you feel.
 #25_p_exh: Positive - exhilaration
 Imagine that you are a university student completing an in-person study as a volunteer.
-The researcher tells you that you will listen to happy music and informs you that people generally feel happy and exhilarated when listening to the music.
+The researcher tells you that you will listen to happy or sad music. They then informs you that people generally feel happy after happy music and sad after sad music.
 You listen to the happy music for 8-10 minutes and then self-report how exhilarated you feel.
 #25_n_exh: Negative - exhilaration
 Imagine that you are a university student completing an in-person study as a volunteer.
@@ -56,7 +56,7 @@ The researcher tells you that you will listen to happy music and informs you tha
 You listen to the happy music for 8-10 minutes and then self-report how exhilarated you feel.
 #25_p_sad: Positive - sadness
 Imagine that you are a university student completing an in-person study as a volunteer.
-The researcher tells you that you will listen to sad music and informs you that people generally feel sad and despondent when listening to the music.
+The researcher tells you that you will listen to happy or sad music. They then informs you that people generally feel happy after happy music and sad after sad music.
 You listen to the sad music for 8-10 minutes and then self-report how sad you feel.
 #25_n_sad: Negative - sadness
 Imagine that you are a university student completing an in-person study as a volunteer.
@@ -64,7 +64,7 @@ The researcher tells you that you will listen to sad music and informs you that,
 You listen to the sad music for 8-10 minutes and then self-report how sad you feel.
 #25_p_des: Positive - despondence
 Imagine that you are a university student completing an in-person study as a volunteer.
-The researcher tells you that you will listen to sad music and informs you that people generally feel sad and despondent when listening to the music.
+The researcher tells you that you will listen to happy or sad music. They then informs you that people generally feel happy after happy music and sad after sad music.
 You listen to the sad music for 8-10 minutes and then self-report how despondent you feel.
 #25_n_des: Negative - despondence
 Imagine that you are a university student completing an in-person study as a volunteer.
@@ -72,7 +72,7 @@ The researcher tells you that you will listen to sad music and informs you that,
 You listen to the sad music for 8-10 minutes and then self-report how despondent you feel.
 #25_p_dep: Positive - depression
 Imagine that you are a university student completing an in-person study as a volunteer.
-The researcher tells you that you will listen to sad music and informs you that people generally feel sad and despondent when listening to the music.
+The researcher tells you that you will listen to happy or sad music. They then informs you that people generally feel happy after happy music and sad after sad music.
 You listen to the sad music for 8-10 minutes and then self-report how depressed you feel.
 #25_n_dep: Negative - depression
 Imagine that you are a university student completing an in-person study as a volunteer.
