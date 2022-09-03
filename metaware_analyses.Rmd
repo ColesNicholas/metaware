@@ -431,6 +431,15 @@ rma.uni(yi = es,
 ## Moderator analyses
 Prep analyses
 ```{r}
+# recode ref.type
+DF <- DF %>% 
+  mutate(ref.r = if_else(ref.type == "cvp" |
+                           ref.type == "nvc" |
+                           ref.type == "cvz",
+                         "single",
+                         "double"),
+         ref.r = factor(ref.r))
+
 # create blank dataframe
 mod.r <- data.frame(mod = character(),
                     level = character(),
@@ -444,7 +453,8 @@ mod.r <- data.frame(mod = character(),
 
 # create list of moderators
 mod.l <- c("student", "paid", "online", 
-           "design", "ref.type", "published")
+           "design", "ref.type", "ref.r", "published",
+           "year")
 ```
 
 Create function for moderator analysis
@@ -457,26 +467,6 @@ ModAnalysis <- function(mod){
                mods = as.formula(paste0("~ ", mod)),
                method = "REML") %>%
     robust(cluster = DF$id)
-  
-  m1 <- rma.uni(yi = es,
-               vi = es.var,
-               data = DF,
-               method = "REML") %>%
-    robust(cluster = DF$id)
-  
-  m2 <- rma.uni(yi = es,
-               vi = es.var,
-               data = DF,
-               mods = ~  student,
-               method = "REML") %>%
-    robust(cluster = DF$id)
-  
-  Wald_test(m2, 
-            constraints = constrain_zero(2:3), 
-            vcov = "CR2",
-            cluster = DF$id)
-
-
   
   # append to moderator analysis results dataframe
   mod.r <<- 
@@ -538,10 +528,12 @@ Run moderator and subgroup analyses
 for (mod in mod.l){
   ModAnalysis(mod = mod)
   
-  mapply(FUN = SubAnalysis,
+  if(mod != "year"){
+   mapply(FUN = SubAnalysis,
          df = split(DF, DF[, mod]),
          level = names(split(DF, DF[, mod])),
-         mod = mod)
+         mod = mod) 
+  }
 }
 ```
 
