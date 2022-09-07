@@ -410,6 +410,7 @@ write.csv(DF %>%
 
 # Data analysis
 ## Overall effect
+RVE
 ```{r}
 # overall d= 0.28, 95% CI = [0.16, 0.39], T = 0.28
 overall <- 
@@ -427,6 +428,80 @@ rma.uni(yi = es,
         data = DF,
         method = "REML")
 ```
+
+ML
+Need to add this formula first: https://raw.githubusercontent.com/MathiasHarrer/dmetar/master/R/mlm.variance.distribution.R
+```{r}
+DF$es.id <- 1 : nrow(DF)
+
+overall <- rma.mv(yi = es,
+                  V = es.var,
+                  data = DF,
+                  random = ~ 1 | id / es.id)
+
+i2 <- var.comp(overall)
+
+summary(i2)
+
+# re-run some mod analyses
+rma.mv(yi = es,
+       V = es.var,
+       data = DF,
+       mods = ~ student,
+       random = ~ 1 | id / es.id)
+
+rma.mv(yi = es,
+       V = es.var,
+       data = DF,
+       mods = ~ online,
+       random = ~ 1 | id / es.id)
+
+rma.mv(yi = es,
+       V = es.var,
+       data = DF,
+       mods = ~ ref.r,
+       random = ~ 1 | id / es.id)
+```
+
+ML complex
+```{r}
+library(clubSandwich)
+
+V <- with(DF,
+          impute_covariance_matrix(vi = es.var, 
+                                   cluster = id, 
+                                   r = .6))
+
+overall <- rma.mv(yi = es,
+                  V = V,
+                  data = DF,
+                  random = ~ 1 | id / es.id,
+                  sparse = T)
+
+i2 <- var.comp(overall)
+
+# re-run some mod analyses
+rma.mv(yi = es,
+       V = V,
+       data = DF,
+       mods = ~ student,
+       random = ~ 1 | id / es.id)
+
+rma.mv(yi = es,
+       V = V,
+       data = DF,
+       mods = ~ online,
+       random = ~ 1 | id / es.id)
+
+rma.mv(yi = es,
+       V = V,
+       data = DF,
+       mods = ~ ref.r,
+       random = ~ 1 | id / es.id)
+
+summary(i2)
+```
+
 
 ## Moderator analyses
 Prep analyses
