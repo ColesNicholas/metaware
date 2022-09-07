@@ -470,7 +470,7 @@ library(clubSandwich)
 V <- with(DF,
           impute_covariance_matrix(vi = es.var, 
                                    cluster = id, 
-                                   r = .6))
+                                   r = .1))
 
 overall <- rma.mv(yi = es,
                   V = V,
