@@ -1,0 +1,52 @@
+---
+title             : "A meta-analysis of the effects of demand characteristics"
+shorttitle        : "Demand characteristics meta-analysis"
+
+author: 
+  - name          : "Nicholas A. Coles"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Cordura Hall, 210 Panama St, Stanford, CA 94305" 
+    email         : "ncoles@stanford.edu"
+  - name          : "Morgan H. Wyatt"
+    affiliation   : "1"
+  - name          : "Michael C. Frank"
+    affiliation   : "1"
+
+affiliation:
+  - id            : "1"
+    institution   : "Center for the Study of Language and Information, Stanford University"
+
+authornote: |
+  All materials, data, and code are available at <insert OSF link>. 
+
+abstract: |
+  TBD
+  
+keywords          : "demand characteristics, hypothesis awareness, placebo effect, research methods, meta-analysis"
+wordcount         : "TBD"
+
+bibliography      : "r-references.bib"
+
+floatsintext      : no
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_docx
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::
