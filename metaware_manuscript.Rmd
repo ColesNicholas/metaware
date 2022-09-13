@@ -41,8 +41,13 @@ classoption       : "man"
 output            : papaja::apa6_docx
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include = F}
+# load necessary packages
 library("papaja")
+library("tidyverse")
+library("readxl")
+
+# identify refs
 r_refs("r-references.bib")
 ```
 
@@ -86,9 +91,95 @@ No matter how motivated they are to confirm the hypothesis, Rosnow and Rosenthal
 
 ## Coles et al.'s (2022) framework
 
-Researchers have generally conceptualized the effects of demand characteristics on participants\' responses as a *response bias* (Orne, 1962; Rosnow and Aiken, 1973; Strohmetz, 2007). For example, demand characteristics that indicate the researcher expects an intervention to boost mood is *not* posited to impact participants' actual mood; Instead, the demand characteristics are posited to merely impact participants' mood *reports.*
+Researchers have generally conceptualized the effects of demand characteristics on participants' responses as a *response bias* (Orne, 1962; Rosnow and Aiken, 1973; Strohmetz, 2007). For example, demand characteristics that indicate the researcher expects an intervention to boost mood is *not* posited to impact participants' actual mood; Instead, the demand characteristics are posited to merely impact participants' mood *reports.*
 
 Coles et al. (2022) argued that demand characteristics not only have the potential to lead to response biases--but also placebo biases (Figure 1). They defined (a) response biases as changes mediated by relatively deliberate changes that participants make to their responses, and (b) placebo effects as changes that are mediated by the relatively automatic activation of beliefs or pre-existing conditioned responses (Zion and Crum, 2018). Thus, unlike Rosnow and Rosenthal (1997), Coles and colleagues argued that demand characteristics can impact responses even when participants have neither the motivation nor opportunity to adjust their responses. Preliminary evidence for this assertion comes from Coles et al.'s observation that participants' beliefs did not always match the demand characteristics manipulation. For example, some participants disclosed that they (a) did not personally believe that posed expressions impacted emotion, but (b) recognized that the experimenter did. Both the manipulation of demand characteristics and measures of participants' beliefs independently moderated facial feedback effects, providing preliminary evidence of distinct psychological mechanisms.
+
+# Methodology
+
+We describe the scope of our meta-analysis using the Population, Intervention, Comparison, Outcome framework (Schardt et al. 2007). Our population-of-interest was human subjects participating in non-clinical research studies. We excluded clinical research studies so that we could focus on research that better isolated the mechanism most often discussed in the demand characteristics literature: response biases (as opposed to placebo effects). Given that there is a sizable literature on placebo effects, excluding clinical tests of demand characteristics also helped us improve the feasibility of the project.
+
+The intervention-of-interest was manipulations of the hypothesis communicated to participants--i.e., scenarios where a researcher tells participants about the effect of an independent variable on a dependent variable. We focused on this intervention because it provides a relatively overt test of the impact of demand characteristics.
+
+Our comparison-of-interest were conditions where either no hypothesis or a different hypothesis was communicated to participants. Our outcome-of-interest was the dependent variable described in the communicated hypothesis. For example, in a study that manipulated whether the intervention is described as "mood-boosting" or "mood-dampening", the outcome-of-interest would be any measure of mood.
+
+## Literature search
+
+```{r literature search, include = F}
+# open and process literature search data
+DF.s <- 
+  # open data
+  read_xlsx(path = "data/metaware_data_raw.xlsx",
+            sheet = "records.screening") %>% 
+  
+  # identify unpublished dissertations by identifying links that contain the word 'dissertation'
+  mutate(dissertation = if_else(grepl("dissertation", link),
+                                1,
+                                0)
+         )
+
+# calculate number of records from PsycInfo by removing all records with no known database (i.e., ones that were personally found)
+r.pi <- DF.s %>% 
+  filter(!is.na(Database)) %>% 
+  nrow()
+
+# calculate number of unpublished records (i.e., dissertations)
+r.unp <- DF.s %>% 
+  filter(dissertation == 1) %>% 
+  nrow()
+```
+
+Our literature search strategy was developed in consultation with a librarian at Stanford University. Given the broad nature of the demand characteristics construct, we determined that a truly comprehensive strategy was infeasible (see Limitations section). Thus, we sought to design a strategy that best balanced comprehensiveness and feasibility.
+
+We searched APA PsycInfo using relatively broad search terms: "demand characteristics" OR "hypothesis awareness". This yielded `r r.pi` records. We additionally released a call for unpublished studies on the Society for Personality and Social Psychology Open Forum; Twitter; Facebook Psychological Methods Discussion Group and PsychMAP groups. This yielded `r nrow(DF.s) - r.pi` additional records. In total, `r r.unp` of the records were unpublished.
+
+## Screening
+
+```{r final.df, include = F}
+# open effect size data
+DF.es <- 
+  read_csv(file = "data/metaware.data_clean.csv")
+
+# specify number of studies (denoted by id column)
+num.s <- DF.es$id %>% 
+  unique() %>% 
+  length()
+
+# specify number of papers (denoted by name column)
+num.p <- DF.es$name %>% 
+  unique() %>% 
+  length()
+```
+
+To be eligible for inclusion in the meta-analysis, the following criteria must have been met:
+
+-   The researcher manipulated what participants were told about the effect of an independent variable on a dependent variable. This included both *positive demand* (participants told that the dependent variable will increase), *negative demand* (participants told that the dependent variable will decrease) and *nil demand* (participants told the dependent variable will be unaffected) conditions.
+
+    We excluded scenarios where the researcher described an effect that was non-nil and non-directional. We did so because participants in these scenarios could not readily infer how to adjust their responses. For example, if participants were told that an independent variable would "impact mood", it is not clear if participants should infer that the mood will be boosted (positive demand) or dampened (nil demand).
+
+-   The demand characteristics manipulation was not strongly confounded. For example, a study by Sigall and Adair (1974) was excluded because the manipulation of the stated hypothesis was confounded with a disclosure about the meaning of the behavior. Specifically, participants were either informed or not informed that the researcher expected them to copy a large quantity of numbers. When participants were informed about this hypothesis, they were also told that such behavior would be indicative of an undesirable personality trait.
+
+-   Information necessary for computing at least one effect size was included.
+
+N. C. and M. W. screened records independently, reviewed potentially relevant records together, and coded the information for moderator analyses and effect size computations. Disagreements were resolved through discussion. It total, `r num.s` studies from `r num.p` records were eligible for inclusion.
+
+```{r clean.env.1, include = F}
+rm(DF.s, r.pi, r.unp, num.s, num.p)
+```
+
+## Effect size index
+
+We used standardized mean difference scores as our effect size index (Cohen's $d_{s}$ and $d_{rm}$; Borenstein, 2009; Cohen, 1988).
+
+In some scenarios, we estimated the main effect of demand characteristics. For example, Coles et al. (2022) manipulated whether participants were told that smiling would increase happiness. Here, the main effect of demand characteristics can be computed by comparing happiness ratings from smiling participants who were either informed or not informed about its expected effect.
+
+In other scenarios, we estimated the interactive effect of demand characteristics. For example, in the same Coles et al. (2022) study, participants reported happiness both after smiling and scowling. Participants' mood generally improved when smiling vs. scowling (i.e., there was a main effect of facial pose). However, the difference was more pronounced when participants were told about the mood-boosting effects of smiling. In other words, there was an interaction between facial pose and demand characteristics. In this scenario, the interactive effect of demand characteristics was computed by calculating a difference-in-differences score.
+
+Effect sizes were calculated so that positive values indicated an effect consistent with the demand characteristics manipulation. For example, if participants were told that an intervention should increase mood, an increase in mood would be coded as a positive effect. If participants were told that an intervention should decrease mood, an increase in mood would be coded as a negative effect.
+
+For repeated-measure comparisons, the correlation between the repeated measures is needed to calculate Cohen's \$d\_{rm}\$. This correlation is rarely reported, so we followed Borenstein's (2009) recommendation and performed sensitivity analyses on an assumed correlation. We preregistered a default correlation of $r$ = .50 but performed sensitivity analysis with $r$ = .10, .30, .50, .70, and .90.
+
+Often, studies contained multiple effect sizes of interest. For example, Coles et al. (2022) had a positive demand, nil demand, and control condition. Participants also completed several facial expression poses (happy, angry, and neutral) and self-reported several emotions (happiness and anger). To be comprehensive, we recorded all reported effect sizes and account for dependencies in our models (described later).
 
 # References
 
