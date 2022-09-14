@@ -53,10 +53,6 @@ r_refs("r-references.bib")
 
 # To-do
 
-[] Create Figure 2
-
-[] Update and upload Figure 3
-
 [] Look over Qualtrics to see if any details are missing
 
 [] Start writing preliminary results
@@ -66,6 +62,8 @@ r_refs("r-references.bib")
 [] Update pre-registration
 
 [] Separate processing and analysis code
+
+[] Clean up folder structure
 
 [] Have M.W. add refs
 
@@ -87,7 +85,7 @@ In this paper, we provide an overview of a comprehensive framework for conceptua
 
 ## Rosnow and Rosenthal's (1997) demand characteristics framework
 
-Rosnow and Rosenthal (1997) proposed that there are three key moderators of the effects of demand characteristic: (1) receptivity to cues, (2) motivation to provide hypothesis-consistent responses, and (3) opportunity to alter their responses (Figure).
+Rosnow and Rosenthal (1997) proposed that there are three key moderators of the effects of demand characteristic: (1) receptivity to cues, (2) motivation to provide hypothesis-consistent responses, and (3) opportunity to alter their responses (Figure \@ref(fig:framework)).
 
 ```{r framework, fig.cap = "Rosnow and Rosenthal’s (1997) and Coles et al.’s (2022) frameworks for conceptualizing the impact of demand characteristics on participants’ responses."}
 knitr::include_graphics("images/metaware_framework.png")
@@ -113,7 +111,7 @@ No matter how motivated they are to confirm the hypothesis, Rosnow and Rosenthal
 
 Researchers have generally conceptualized the effects of demand characteristics on participants' responses as a *response bias* (Orne, 1962; Rosnow and Aiken, 1973; Strohmetz, 2007). For example, demand characteristics that indicate the researcher expects an intervention to boost mood is *not* posited to impact participants' actual mood; Instead, the demand characteristics are posited to merely impact participants' mood *reports.*
 
-Coles et al. (2022) argued that demand characteristics not only have the potential to lead to response biases--but also placebo biases (Figure 1). They defined (a) response biases as changes mediated by relatively deliberate changes that participants make to their responses, and (b) placebo effects as changes that are mediated by the relatively automatic activation of beliefs or pre-existing conditioned responses (Zion and Crum, 2018). Thus, unlike Rosnow and Rosenthal (1997), Coles and colleagues argued that demand characteristics can impact responses even when participants have neither the motivation nor opportunity to adjust their responses. Preliminary evidence for this assertion comes from Coles et al.'s observation that participants' beliefs did not always match the demand characteristics manipulation. For example, some participants disclosed that they (a) did not personally believe that posed expressions impacted emotion, but (b) recognized that the experimenter did. Both the manipulation of demand characteristics and measures of participants' beliefs independently moderated facial feedback effects, providing preliminary evidence of distinct psychological mechanisms.
+Coles et al. (2022) argued that demand characteristics not only have the potential to lead to response biases--but also placebo biases (Figure \@ref(fig:framework)). They defined (a) response biases as changes mediated by relatively deliberate changes that participants make to their responses, and (b) placebo effects as changes that are mediated by the relatively automatic activation of beliefs or pre-existing conditioned responses (Zion and Crum, 2018). Thus, unlike Rosnow and Rosenthal (1997), Coles and colleagues argued that demand characteristics can impact responses even when participants have neither the motivation nor opportunity to adjust their responses. Preliminary evidence for this assertion comes from Coles et al.'s observation that participants' beliefs did not always match the demand characteristics manipulation. For example, some participants disclosed that they (a) did not personally believe that posed expressions impacted emotion, but (b) recognized that the experimenter did. Both the manipulation of demand characteristics and measures of participants' beliefs independently moderated facial feedback effects, providing preliminary evidence of distinct psychological mechanisms.
 
 # Methodology
 
@@ -207,11 +205,11 @@ Cohen's $d$ represents a standardized mean difference between two groups. Often,
 
 ## Post-hoc measures of motivation, opportunity, and belief
 
-Both Rosnow and Rosenthal (1997) and Coles et al. (2022) posited that the effects of demand characteristics are moderated by participants' (1) motivation to provide hypothesis-consistent responses and (2) opportunity to adjust their responses (Figure 1). Coles et al. (2022) additionally predicted a third moderator: (3) participants' belief in the hypothesized effect. Unfortunately, these variables were rarely measured in the studies included in the meta-analysis.
+Both Rosnow and Rosenthal (1997) and Coles et al. (2022) posited that the effects of demand characteristics are moderated by participants' (1) motivation to provide hypothesis-consistent responses and (2) opportunity to adjust their responses (Figure \@ref(fig:framework)). Coles et al. (2022) additionally predicted a third moderator: (3) participants' belief in the hypothesized effect. Unfortunately, these variables were rarely measured in the studies included in the meta-analysis.
 
-As an indirect measure of these three moderators-of-interest, we estimated their values through a new set of participants. (See SI for construct validity analyses.) For each demand characteristic condition and dependent variable combination, we created vignettes that described key study details. For example, Coles et al. (2022, Study 1) had two demand characteristics manipulations (positive demand and nil demand) and two dependent variables (self-reported happiness and anger). Thus, we created four vignettes (see Figure 2).
+As an indirect measure of these three moderators-of-interest, we estimated their values through a new set of participants. (See SI for construct validity analyses.) For each demand characteristic condition and dependent variable combination, we created vignettes that described key study details. For example, Coles et al. (2022, Study 1) had two demand characteristics manipulations (positive demand and nil demand) and two dependent variables (self-reported happiness and anger). Thus, we created four vignettes (see Figure \@ref(fig:vig)).
 
-```{r vigs, fig.cap = "Vignettes from Coles et al., 2022, Study 1."}
+```{r vig, fig.cap = "Vignettes for Coles et al. 2022, Study 1."}
 knitr::include_graphics("images/metaware_vigs.png")
 ```
 
@@ -221,9 +219,13 @@ For the control conditions, we assumed that motivation and belief ratings were 0
 
 ### Accounting for different demand comparisons
 
-For each effect size, we summed the motivation and belief scores for the two conditions being compared. Doing so allows us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where a procedure is either described as mood-boosting (positive demand) or mood-dampening (negative demand). If participants are equally motivated to confirm the hypothesis in both conditions, mood reports will be biased upward in the first condition and downward in the second condition (see Figure 2, Panel A, Column 1). In other words, the size of the demand effect is doubled because the motivational forces in the two conditions produce an additive effect. Similarly, these motivational forces could hypothetically cancel each other out. This would happen if participants were (a) motivated to confirm the hypothesis in the positive demand condition, and (b) motivated to disconfirm the hypothesis in the negative demand condition (see Figure 2, Panel A, Column 2). We used a similar approach for belief scores (Figure 2, Panel B).
+```{r mods, fig.cap = "Hypothetical data from a study where a procedure is either described as mood-boosting (positive demand), described as mood-dampening (negative demand), or not described at all (control). Data provides examples of how the effects of demand characteristics (d) on self-reported mood are moderating by participants' reports of their motivation to confirm the stated hypothesis (m, Panel A), belief in the stated hypothesis (b, Panel B), and opportunity to adjust responses (c, Panel C). In each panel, separate examples are provided for scenarios where motivation is invariant (Column 1) and variant (Column 2) across levels of demand characteristics"}
+knitr::include_graphics("images/metaware_mods.png")
+```
 
-Theoretically, the opportunity to adjust responses should not differ between conditions. Thus, we averaged the opportunity ratings from the non-control conditions (see Figure 3).
+For each effect size, we summed the motivation and belief scores for the two conditions being compared. Doing so allows us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where a procedure is either described as mood-boosting (positive demand), described as mood-dampening (negative demand), or not described at all (control). If participants are equally motivated to confirm the hypothesis in both conditions, mood reports will be biased upward in the first condition and downward in the second condition (see Figure \@ref(fig:mods), Panel A, Column 1). In other words, the size of the demand effect is doubled because the motivational forces in the two conditions produce an additive effect. Similarly, these motivational forces could hypothetically cancel each other out. This would happen if participants were (a) motivated to confirm the hypothesis in the positive demand condition, and (b) motivated to disconfirm the hypothesis in the negative demand condition (see Figure \@ref(fig:mods), Panel A, Column 2). We used a similar approach for belief scores (Figure \@ref(fig:mods), Panel B).
+
+Theoretically, the opportunity to adjust responses should not differ between conditions. Thus, we averaged the opportunity ratings from the non-control conditions (see Figure \@ref(fig:mods), Panel C).
 
 We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in this condition. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil-hypothesis), and (b) is extremely motivated to disconfirm the hypothesis. Relative to a control condition, this participant could act upon their motivation by either increasing (negative effect direction) *or* decreasing (positive effect direction) their mood. Nonetheless, we discuss potential strategies in the Limitations sections for addressing this question in future primary research.
 
