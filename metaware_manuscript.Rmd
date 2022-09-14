@@ -87,7 +87,7 @@ In this paper, we provide an overview of a comprehensive framework for conceptua
 
 ## Rosnow and Rosenthal's (1997) demand characteristics framework
 
-Rosnow and Rosenthal (1997) proposed that there are three key moderators of the effects of demand characteristic: (1) receptivity to cues, (2) motivation to provide hypothesis-consistent responses, and (3) opportunity to alter their responses (Figure 1).
+Rosnow and Rosenthal (1997) proposed that there are three key moderators of the effects of demand characteristic: (1) receptivity to cues, (2) motivation to provide hypothesis-consistent responses, and (3) opportunity to alter their responses (Figure).
 
 ```{r framework, fig.cap = "Rosnow and Rosenthal’s (1997) and Coles et al.’s (2022) frameworks for conceptualizing the impact of demand characteristics on participants’ responses."}
 knitr::include_graphics("images/metaware_framework.png")
@@ -210,6 +210,10 @@ Cohen's $d$ represents a standardized mean difference between two groups. Often,
 Both Rosnow and Rosenthal (1997) and Coles et al. (2022) posited that the effects of demand characteristics are moderated by participants' (1) motivation to provide hypothesis-consistent responses and (2) opportunity to adjust their responses (Figure 1). Coles et al. (2022) additionally predicted a third moderator: (3) participants' belief in the hypothesized effect. Unfortunately, these variables were rarely measured in the studies included in the meta-analysis.
 
 As an indirect measure of these three moderators-of-interest, we estimated their values through a new set of participants. (See SI for construct validity analyses.) For each demand characteristic condition and dependent variable combination, we created vignettes that described key study details. For example, Coles et al. (2022, Study 1) had two demand characteristics manipulations (positive demand and nil demand) and two dependent variables (self-reported happiness and anger). Thus, we created four vignettes (see Figure 2).
+
+```{r vigs, fig.cap = "Vignettes from Coles et al., 2022, Study 1."}
+knitr::include_graphics("images/metaware_vigs.png")
+```
 
 In total, there were X vignettes. N participants reviewed 20 randomly-selected vignettes. For each vignette, participants were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, participants rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses, (2) be able to adjust their responses on the outcome-of-interest, and (3) believe the experimenter's hypothesis. For each vignette, participants' motivation, opportunity, and belief ratings were removed if they did not correctly identify the communicated hypothesis. The remaining scores were averaged.
 
