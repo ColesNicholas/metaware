@@ -51,9 +51,29 @@ library("readxl")
 r_refs("r-references.bib")
 ```
 
-Imagine that one day a mysterious man approaches you and begins telling you about a new method for understanding humans: Colesology. The man tells you that Colesology is an extremely effective method for estimating causal relationships. However, he adds that there's a tiny issue: sometimes the method is thrown off by a *methodological artifact*.
+# To-do
 
-When you ask the Colesologist about this artifact, he explains that it sometimes causes researchers to detect an effect that is not real; other times it causes them to miss an effect that is real. Sometimes it causes estimated relationships to be biased upward; other times it causes the estimates to be biased downward. And, in general, it means that the things researchers observe using this method don't necessarily capture real-world human behavior. At this point, you might become skeptical and ask the Colesologist, "How does this methodological artifact work?" His response: they don't know, because sometimes the artifact seems to matter and sometimes it does not.
+[] Create Figure 2
+
+[] Update and upload Figure 3
+
+[] Look over Qualtrics to see if any details are missing
+
+[] Start writing preliminary results
+
+[] Have Mike review again?
+
+[] Update pre-registration
+
+[] Separate processing and analysis code
+
+[] Have M.W. add refs
+
+[] Have M.W. build moderator table
+
+Imagine that one day a mysterious person approaches you and begins telling you about a new method for understanding humans: Colesology. The person tells you that Colesology is an extremely effective method for estimating causal relationships. However, they add that there's a tiny issue: sometimes the method is thrown off by a *methodological artifact*.
+
+When you ask the Colesologist about this artifact, they explain that it sometimes causes researchers to detect an effect that is not real; other times it causes them to miss an effect that is real. Sometimes it causes estimated relationships to be biased upward; other times it causes the estimates to be biased downward. And, in general, it means that the things researchers observe using this method don't necessarily capture real-world human behavior. At this point, you might become skeptical and ask the Colesologist, "How does this methodological artifact work?" Their response: they don't know, because sometimes the artifact seems to matter and sometimes it does not.
 
 In this scenario, you would reasonably question whether Colesology is a valid method of scientific inquiry. But here's the thing: we are not describing Colesology, we are describing experimental psychology.
 
@@ -75,7 +95,7 @@ knitr::include_graphics("images/metaware_framework.png")
 
 ### Receptivity to the cues
 
-Rosnow and Rosenthal (1997) argued that participants must be perceptive to demand characteristics in order for them to impact downstream responses (Rosnow and Aiken, 1973; Strohmetz, 2007). As an extreme example, imagine that a researcher hands an infant participant a sheet of paper that precisely explains the researcher's hypothesis. Demand characteristics are certainly present---but they are not predicted to have an impact because the infant is not receptive to the cues (i.e., cannot read).
+Rosnow and Rosenthal (1997) argued that participants must be perceptive to demand characteristics in order for them to impact downstream responses (Rosnow & Aiken, 1973; Strohmetz, 2007). As an extreme example, imagine that a researcher hands an infant participant a sheet of paper that precisely explains the researcher's hypothesis. Demand characteristics are certainly present---but they are not predicted to have an impact because the infant is not receptive to the cues (i.e., cannot read).
 
 ### Motivation to provide hypothesis-consistent responses
 
@@ -180,6 +200,28 @@ Effect sizes were calculated so that positive values indicated an effect consist
 For repeated-measure comparisons, the correlation between the repeated measures is needed to calculate Cohen's \$d\_{rm}\$. This correlation is rarely reported, so we followed Borenstein's (2009) recommendation and performed sensitivity analyses on an assumed correlation. We preregistered a default correlation of $r$ = .50 but performed sensitivity analysis with $r$ = .10, .30, .50, .70, and .90.
 
 Often, studies contained multiple effect sizes of interest. For example, Coles et al. (2022) had a positive demand, nil demand, and control condition. Participants also completed several facial expression poses (happy, angry, and neutral) and self-reported several emotions (happiness and anger). To be comprehensive, we recorded all reported effect sizes and account for dependencies in our models (described later).
+
+## Types of demand characteristic comparisons
+
+Cohen's $d$ represents a standardized mean difference between two groups. Often, this comparison involved a single demand characteristic condition (positive, negative, or nil demand) compared to a control group. Sometimes, however, this comparison involved two demand characteristic comparisons (e.g., positive demand compared to negative demand). We coded whether the comparison involved one vs. two comparisons. In addition, we coded each type of comparison: positive vs. control, nil vs. control, negative vs. control, positive vs. nil, positive vs. negative, nil vs. negative.
+
+## Post-hoc measures of motivation, opportunity, and belief
+
+Both Rosnow and Rosenthal (1997) and Coles et al. (2022) posited that the effects of demand characteristics are moderated by participants' (1) motivation to provide hypothesis-consistent responses and (2) opportunity to adjust their responses (Figure 1). Coles et al. (2022) additionally predicted a third moderator: (3) participants' belief in the hypothesized effect. Unfortunately, these variables were rarely measured in the studies included in the meta-analysis.
+
+As an indirect measure of these three moderators-of-interest, we estimated their values through a new set of participants. (See SI for construct validity analyses.) For each demand characteristic condition and dependent variable combination, we created vignettes that described key study details. For example, Coles et al. (2022, Study 1) had two demand characteristics manipulations (positive demand and nil demand) and two dependent variables (self-reported happiness and anger). Thus, we created four vignettes (see Figure 2).
+
+In total, there were X vignettes. N participants reviewed 20 randomly-selected vignettes. For each vignette, participants were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, participants rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses, (2) be able to adjust their responses on the outcome-of-interest, and (3) believe the experimenter's hypothesis. For each vignette, participants' motivation, opportunity, and belief ratings were removed if they did not correctly identify the communicated hypothesis. The remaining scores were averaged.
+
+For the control conditions, we assumed that motivation and belief ratings were 0 because participants were not given information about the experimenter's hypothesis. We also assumed that opportunity ratings in the control condition were equivalent to the average ratings from non-control conditions.
+
+### Accounting for different demand comparisons
+
+For each effect size, we summed the motivation and belief scores for the two conditions being compared. Doing so allows us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where a procedure is either described as mood-boosting (positive demand) or mood-dampening (negative demand). If participants are equally motivated to confirm the hypothesis in both conditions, mood reports will be biased upward in the first condition and downward in the second condition (see Figure 2, Panel A, Column 1). In other words, the size of the demand effect is doubled because the motivational forces in the two conditions produce an additive effect. Similarly, these motivational forces could hypothetically cancel each other out. This would happen if participants were (a) motivated to confirm the hypothesis in the positive demand condition, and (b) motivated to disconfirm the hypothesis in the negative demand condition (see Figure 2, Panel A, Column 2). We used a similar approach for belief scores (Figure 2, Panel B).
+
+Theoretically, the opportunity to adjust responses should not differ between conditions. Thus, we averaged the opportunity ratings from the non-control conditions (see Figure 3).
+
+We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in this condition. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil-hypothesis), and (b) is extremely motivated to disconfirm the hypothesis. Relative to a control condition, this participant could act upon their motivation by either increasing (negative effect direction) *or* decreasing (positive effect direction) their mood. Nonetheless, we discuss potential strategies in the Limitations sections for addressing this question in future primary research.
 
 # References
 
