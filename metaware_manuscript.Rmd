@@ -51,37 +51,23 @@ library("readxl")
 r_refs("r-references.bib")
 ```
 
-# To-do
+Imagine that one day a mysterious person approaches you and begins telling you about a new method for understanding humans: Colesology.
 
-[] Look over Qualtrics to see if any details are missing
+The person explains that Colesology in a new approach for estimating causal relationships. However, they adds that the method can sometimes be thrown off by a *methodological artifact.* You ask the Colesologist about this artifact. They explain that, sometimes, it causes researchers to detect an effect that's not real; other times, it causes researchers to miss an effect that *is* real. They add that, sometimes, the artifact causes estimated relationships to be biased upward; other times, it causes the estimates to be biased downward. And, in general, they explain, it means that the things researchers observe using Colesology don't necessarily capture real-world human behavior.
 
-[] Start writing preliminary results
+At this point, you might become skeptical and ask the Colesologist, "How does this methodological artifact work?" Their response? They don't know, because sometimes the artifact seems to matter and other times it doesn't.
 
-[] Have Mike review again?
+If this scenario were real, you would reasonably question whether Colesology is a valid method of scientific inquiry. But here's the thing: we're not describing Colesology, we're describing experimental psychology.
 
-[] Update pre-registration
+## Demand characteristics as a methodological artifact
 
-[] Separate processing and analysis code
+In 1962, Martin Orne published a seminal paper highlighting a view that challenged deeply-ingrained beliefs about experimental psychology. Orne argued that research participants are not passive responders to the experimental context. Instead, he suggested that participants actively try to make sense of the situation based on their assumptions, beliefs, and motivations. One factor that Orne believed played a particularly powerful role was *demand characteristics*: "cues which convey an experimental hypothesis to the subject" (p. 779). This influential idea was not immediately accepted by all (e.g., Berkowitz, 1971; Milgram, 1972). Nonetheless, over the next 60 years, demand characteristics slowly become recognized as a literal textbook methodological concern in experimental psychology (Sharpe and Whelton, 2016).
 
-[] Clean up folder structure
+Orne initially focused on evidence that demand characteristics might lead to false positives---such as patients exhibiting sham symptoms of hypnosis (Orne, 1959). Follow-up research, though, indicated that demand characteristics might also lead to false negatives. For example, Hayes and King (1967) demosntrated that participants will ignore visual cues of depth when they believe that doing so is the purpose of the experiment. In addition to creating inferential errors, demand characteristics might also bias estimates of causal relationships. For example, Coles et al. (2022) found that the estimated effect of facial poses on self-reported emotion could be amplified or attenuated based on the communicated purpose of the study. Yet, the idea continues to be controversial. For example, in large replications of classic studies in behavioral economics, Mummolo and Peterson (2021) consistently failed to find that manipulations of their communicated hypothesis impacted participants' responses.
 
-[] Have M.W. add refs
+After over 60 years, experimental psychologists are left with an uncomfortable truth: demand characteristics are a literal textbook methodological concern---but it is not clear when and how their effects emerge. The goal of the current paper is to use meta-analysis to take stock of what we know (and don't know) about demand characteristics.
 
-[] Have M.W. build moderator table
-
-Imagine that one day a mysterious person approaches you and begins telling you about a new method for understanding humans: Colesology. The person tells you that Colesology is an extremely effective method for estimating causal relationships. However, they add that there's a tiny issue: sometimes the method is thrown off by a *methodological artifact*.
-
-When you ask the Colesologist about this artifact, they explain that it sometimes causes researchers to detect an effect that is not real; other times it causes them to miss an effect that is real. Sometimes it causes estimated relationships to be biased upward; other times it causes the estimates to be biased downward. And, in general, it means that the things researchers observe using this method don't necessarily capture real-world human behavior. At this point, you might become skeptical and ask the Colesologist, "How does this methodological artifact work?" Their response: they don't know, because sometimes the artifact seems to matter and sometimes it does not.
-
-In this scenario, you would reasonably question whether Colesology is a valid method of scientific inquiry. But here's the thing: we are not describing Colesology, we are describing experimental psychology.
-
-## Debates about demand characteristics as a methodological artifact
-
-In 1962, Martin Orne published a seminal paper highlighting a view that challenged deeply-ingrained beliefs about the role of experiments in psychology. Rather than conceptualizing research participants as passive responders to the experimental context, Orne argued that participants actively navigate and try to make sense of the study context based on their assumptions, beliefs, and motivations. In particular, Orne emphasized that participants are perceptive to *demand characteristics:* "cues which convey an experimental hypothesis to the subject" (p. 779).
-
-In the 60 years since Orne published his seminal paper, demand characteristics have become a literal textbook methodological concern in human subjects research (Sharpe and Whelton, 2016). But textbook psychology often does not capture the reality of the discipline. In actuality, disagreements about the extent to which demand characteristics impact participants' response persist; Uncertainty about how such effects work remains. For example, Mummolo and Peterson (2021) consistently failed to find that manipulations of their communicated hypothesis impacted participants' responses in large replications of classic studies in behavioral economics. Based on these findings, some researchers have argued that the effects of demand characteristics are "rare" (Clayton et al., 2020, p. 1092), supported by "little evidence" (Guess & Coppock, 2020, p. 1512), and/or "limited" (Vial, Brescoll, & Dovidio, 2019, p. 94). Yet, there are some contexts where these effects are more reliable. For example, in three experiments, Coles et al. (2022) found that the effects of posed facial expressions on emotional experience were moderated by demand characteristics. These facial feedback effects were larger when participants were told that the purpose of the study was to demonstrate that the effects are real and smaller when told the purpose was to demonstrate the effects are not real. Nonetheless, Coles et al. were left with the following conclusion: it is still unclear "how and when demand characteristics impact behavior" (p. 61).
-
-In this paper, we provide an overview of a comprehensive framework for conceptualizing the impact of demand characteristics on participants' responses (Rosnow & Rosenthal, 1997). We also review an alternative account that attempts to bridge the gap between research on demand characteristics and research on placebo effects (Coles et al., 2022). Next, we use meta-analysis to conduct the first quantitative synthesis of strict experimental tests of the effects of demand characteristics on participants' responses. Through this meta-analysis, we not only estimate the overall impact of demand characteristics, but also use moderator analyses to provide preliminary tests of predictions made by Rosnow and Rosenthal (1997) and Coles et al., (2022). We end with a discussion of the steps required to transform frameworks about demand characteristics into formal theories---theories we believe might help distinguishing experimental psychology from the invalid methods of Colesology.
+In this paper, we first provide an overview of a framework designed to accommodate the potentially varied effects of demand characteristics (Rosnow & Rosenthal, 1997). We also review a complementary framework that attempts to bridge the gap between research on demand characteristics and research on placebo effects (Coles et al., 2022). Next, we use meta-analysis to conduct the first quantitative synthesis of strict experimental tests of the effects of demand characteristics. Through this meta-analysis, we not only estimate the overall impact of demand characteristics, but also use moderator analyses to provide preliminary tests of predictions made by Rosnow and Rosenthal (1997) and Coles et al. (2022). We end with a discussion of the steps we believe are required to transform vague frameworks about demand characteristics into formal theories---theories we believe might help distinguishing a valid experimental psychology from the invalid methods of Colesology.
 
 ## Rosnow and Rosenthal's (1997) demand characteristics framework
 
@@ -228,6 +214,24 @@ For each effect size, we summed the motivation and belief scores for the two con
 Theoretically, the opportunity to adjust responses should not differ between conditions. Thus, we averaged the opportunity ratings from the non-control conditions (see Figure \@ref(fig:mods), Panel C).
 
 We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in this condition. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil-hypothesis), and (b) is extremely motivated to disconfirm the hypothesis. Relative to a control condition, this participant could act upon their motivation by either increasing (negative effect direction) *or* decreasing (positive effect direction) their mood. Nonetheless, we discuss potential strategies in the Limitations sections for addressing this question in future primary research.
+
+# To-do
+
+[] Look over Qualtrics to see if any details are missing
+
+[] Start writing preliminary results
+
+[] Have Mike review again?
+
+[] Update pre-registration
+
+[] Separate processing and analysis code
+
+[] Clean up folder structure
+
+[] Have M.W. add refs
+
+[] Have M.W. build moderator table
 
 # References
 
