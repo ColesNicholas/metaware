@@ -191,17 +191,25 @@ Cohen's $d$ represents a standardized mean difference between two groups. Often,
 
 ## Post-hoc measures of motivation, opportunity, and belief
 
+```{r vig.desc, include = F}
+# identify total number of vignettes
+vig.n <- read.csv(file = "vig/metaware.vig.csv") %>% 
+  nrow()
+```
+
 Both Rosnow and Rosenthal (1997) and Coles et al. (2022) posited that the effects of demand characteristics are moderated by participants' (1) motivation to provide hypothesis-consistent responses and (2) opportunity to adjust their responses (Figure \@ref(fig:framework)). Coles et al. (2022) additionally predicted a third moderator: (3) participants' belief in the hypothesized effect. Unfortunately, these variables were rarely measured in the studies included in the meta-analysis.
 
-As an indirect measure of these three moderators-of-interest, we estimated their values through a new set of participants. (See SI for construct validity analyses.) For each demand characteristic condition and dependent variable combination, we created vignettes that described key study details. For example, Standing, Verpaelst, and Ulmer (2008) had two demand characteristics manipulations (positive demand and nil demand) and two dependent variables (measures of verbal and spatial reasoning). Thus, we created four vignettes (see Figure \@ref(fig:vig)).
+As an indirect measure of these three moderators-of-interest, we estimated their values through a new set of participants. (See SI for construct validity analyses.) For each demand characteristic condition and dependent variable combination, we created vignettes that described key study details. For example, Standing, Verpaelst, and Ulmer (2008) had two demand characteristics manipulations (positive demand and nil demand) and two dependent variables (measures of verbal and spatial reasoning). Thus, we created four vignettes for this study (see Figure \@ref(fig:vig)).
+
+In total, there were `r vig.n` vignettes. We did not create vignettes for control conditions because participants were not given information about the experimenter's hypothesis. We assumed that not communicating a hypothesis meant that participants (a) could not be motivated to confirm the hypothesis, and (b) would not have any pre-existing beliefs about the effect-of-interest activated. Thus, we assumed that motivation and belief scores in this condition were zero. We also assumed that opportunity ratings in the control condition were equivalent to the average ratings from non-control conditions.
 
 ```{r vig, fig.cap = "Vignettes for Coles et al. 2022, Study 1."}
 knitr::include_graphics("images/metaware_vigs.png")
 ```
 
-In total, there were X vignettes. N participants reviewed 20 randomly-selected vignettes. For each vignette, participants were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, participants rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses, (2) be able to adjust their responses on the outcome-of-interest, and (3) believe the experimenter's hypothesis. For each vignette, participants' motivation, opportunity, and belief ratings were removed if they did not correctly identify the communicated hypothesis. The remaining scores were averaged.
+N undergraduates from Stanford University reviewed 20 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses, (2) be able to adjust their responses on the outcome-of-interest, and (3) believe the experimenter's hypothesis. (Raters also indicated whether they believed the actual participants would confirm the hypothesis, which we discuss later.) These questions were presented in random order.
 
-For the control conditions, we assumed that motivation and belief ratings were 0 because participants were not given information about the experimenter's hypothesis. We also assumed that opportunity ratings in the control condition were equivalent to the average ratings from non-control conditions.
+For each vignette, ratings were removed if the rater did not correctly identify the communicated hypothesis. The remaining scores were averaged across rater to provide mean estimates of motivation, opportunity, and belief.
 
 ### Accounting for different demand comparisons
 
@@ -209,19 +217,23 @@ For the control conditions, we assumed that motivation and belief ratings were 0
 knitr::include_graphics("images/metaware_mods.png")
 ```
 
-For each effect size, we summed the motivation and belief scores for the two conditions being compared. Doing so allows us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where a procedure is either described as mood-boosting (positive demand), described as mood-dampening (negative demand), or not described at all (control). If participants are equally motivated to confirm the hypothesis in both conditions, mood reports will be biased upward in the first condition and downward in the second condition (see Figure \@ref(fig:mods), Panel A, Column 1). In other words, the size of the demand effect is doubled because the motivational forces in the two conditions produce an additive effect. Similarly, these motivational forces could hypothetically cancel each other out. This would happen if participants were (a) motivated to confirm the hypothesis in the positive demand condition, and (b) motivated to disconfirm the hypothesis in the negative demand condition (see Figure \@ref(fig:mods), Panel A, Column 2). We used a similar approach for belief scores (Figure \@ref(fig:mods), Panel B).
+Cohen's $d$ represents the standardized difference between two conditions. Thus, for each effect size, we summed the motivation and belief scores for the two conditions being compared. Doing so allowed us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where a procedure is either described as mood-boosting (positive demand), described as mood-dampening (negative demand), or not described at all (control). If participants are equally motivated to confirm the hypothesis in both conditions, mood reports will be biased upward in the first condition and downward in the second condition (see Figure \@ref(fig:mods), Panel A, Column 1). In other words, the size of the demand effect is doubled because the motivational forces in the two conditions produce an additive effect. Similarly, these motivational forces could hypothetically cancel each other out. This would happen if participants were (a) motivated to confirm the hypothesis in the positive demand condition, and (b) motivated to disconfirm the hypothesis in the negative demand condition (see Figure \@ref(fig:mods), Panel A, Column 2). We used a similar approach for belief scores (Figure \@ref(fig:mods), Panel B).
 
 Theoretically, the opportunity to adjust responses should not differ between conditions. Thus, we averaged the opportunity ratings from the non-control conditions (see Figure \@ref(fig:mods), Panel C).
 
-We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in this condition. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil-hypothesis), and (b) is extremely motivated to disconfirm the hypothesis. Relative to a control condition, this participant could act upon their motivation by either increasing (negative effect direction) *or* decreasing (positive effect direction) their mood. Nonetheless, we discuss potential strategies in the Limitations sections for addressing this question in future primary research.
+We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in this condition. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil-demand), and (b) is extremely motivated to disconfirm the hypothesis. Relative to a control condition, this participant could act upon their motivation by either increasing (negative effect direction) *or* decreasing (positive effect direction) their mood. Nonetheless, we discuss potential strategies in the Limitations sections for addressing this question in future primary research.
+
+## Rater forecasts of demand effects
+
+Even if researchers cannot necessarily explain how demand characteristics work, it would be valuable to be able to predict their effects (Yarkoni & Westfall, 2017). Orne suggested that participants themselves may be able make such forecasts (1969, 1970). To examine this, raters who reviewed the vignettes also predicted whether other participants would confirm vs. disconfirm the researcher's hypothesis. These values were computed using the same approach as motivation and belief scores.
+
+## Other moderators
+
+We also coded for several moderators that we had no a-priori hypotheses about. This included: (1) whether the study was published vs. unpublished, (2) whether the sample was student or non-student (e.g., MTurk), (3) whether participants were paid, (4) whether the study was conducted online, and (5) whether demand characteristics were manipulated within vs. between subjects.
 
 # To-do
 
-Update spatial reasoning vig (then re-update qualtrics)
-
-Update Fig 2
-
-[] Look over Qualtrics to see if any details are missing
+[] Add scale anchors to measures
 
 [] Start writing preliminary results
 
