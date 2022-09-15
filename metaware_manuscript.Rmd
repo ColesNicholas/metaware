@@ -193,7 +193,7 @@ Cohen's $d$ represents a standardized mean difference between two groups. Often,
 
 ```{r vig.desc, include = F}
 # identify total number of vignettes
-vig.n <- read.csv(file = "vig/metaware.vig.csv") %>% 
+vig.n <- read.csv(file = "vig/metaware_VigCombined.csv") %>% 
   nrow()
 ```
 
