@@ -1,10 +1,10 @@
 ---
-title: Vignette creation for "A meta-analysis of the effects of demand characteristics in non-clinical research"
+title: Combine vignettes into single data file
 author: "Nicholas A. Coles and Morgan Wyatt"
 editor_options: 
   chunk_output_type: console
 ---
-The code was written in `r R.version$version.string` using R Markdown (http://rmarkdown.rstudio.com/).
+This code creates a .csv file containing (1) a unique vignette identifier, (2) 3 columns containing extracted lines of text for each vignette, (3) 3 columns containing estimated reading times for each line of text, and (4) four columns containing extracted hypotheses for each vignette.
 
 # Prep environment
 ```{r setup and load packages, include = FALSE}
@@ -12,24 +12,11 @@ The code was written in `r R.version$version.string` using R Markdown (http://rm
 rm(list = ls())
 
 # load packages
-ipak <- function(pkg){
-    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-    
-    if (length(new.pkg)) 
-        install.packages(new.pkg, dependencies = TRUE)
-    
-    sapply(pkg, require, character.only = TRUE)
-}
-
-# call package function
-packages <- c('tidyverse')
-ipak(packages)
-rm(packages, ipak)
-
+library("tidyverse")
 ```
 
-# Prepare vignettes
-Get list of files
+# Extract vignette lines of text and estimate reading time
+Get list of all vignette files
 ```{r}
 f.list <- list.files(path = "./vignettes",
                      pattern = ".txt")
@@ -50,12 +37,12 @@ for (f in f.list){
                col.names = "V1",
                encoding = "UTF-8") %>% 
     
-    # remove non-vignette rows
+    # remove non-vignette rows via slicing
     slice(
       # start at row after Vignette
       (which(. == "Vignette") + 1) : 
         
-      # stop at end of dataframe
+      # stop at end of file
       nrow(.)
       ) %>% 
     
@@ -83,13 +70,13 @@ for (f in f.list){
     # pivot long
     pivot_longer(cols = -sent) %>% 
     
-    # estimate reading time in milliseconds (200 words per minute)
+    # estimate reading time in milliseconds (400 words per minute)
     mutate(
       # estimate # of words
       word.num = str_count(value, "\\w+"),
       
       # estimate reading time 
-      rt = (word.num / 400) * 60 * 1000 # MW, you can adjust the 200
+      rt = (word.num / 400) * 60 * 1000
       ) %>% 
     
     select(-word.num) %>% 
@@ -105,7 +92,7 @@ for (f in f.list){
 rm(f, v)
 ```
 
-# Prepare list of hypotheses
+# Extract list of hypotheses
 Create blank dataframe to paste results in
 ```{r}
 h.DF <- data.frame()
@@ -135,7 +122,7 @@ for (f in f.list){
 rm(f, f.list, h)
 ```
 
-# Merge h.DF and v.DF
+# Merge dataframe containing hypotheses (h.DF) and vignette text (v.DF)
 ```{r}
 # prep h.DF for merge
 h.DF <- h.DF %>% 
@@ -163,17 +150,8 @@ DF <- full_join(v.DF, h.DF,
 rm(h.DF, v.DF)
 ```
 
-# Separate 12_p_hap and 12_z_hap from rest of vigs
-```{r eval = F}
-DF.12 <- DF %>% 
-  filter(name == "#12_p_hap" | name == "#12_z_hap")
-
-write.csv(DF.12, 'metaware.vig12.csv',
-          row.names = F)
-```
-
 # Export data
 ```{r}
-write.csv(DF, 'metaware.vig.csv',
+write.csv(DF, 'metaware_VigCombined.csv',
           row.names = F)
 ```
