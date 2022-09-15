@@ -38,7 +38,7 @@ Vignette
 #34_p_spa: Positive - spatial
 Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
 The researcher informs you that they are interested in the beneficial effects of listening to Mozart on test-taking capabilities.
-While Mozart music is played, you are then asked to complete a test measuring spatial relations, wherein you see unfolding shapes and guess the corresponding folded pattern.
+While Mozart music is played, you are then asked to complete a test measuring spatial reasoning, wherein you see unfolding shapes and guess the corresponding folded pattern.
 #34_p_ver: Positive - verbal
 Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
 The researcher informs you that they are interested in the beneficial effects of listening to Mozart on test-taking capabilities.
@@ -46,7 +46,7 @@ While Mozart music is played, you are then asked to complete a test measuring ve
 #34_n_spa: Negative - spatial
 Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
 The researcher informs you that they are interested in the non-beneficial effects of listening to Mozart on test-taking capabilities.
-While Mozart music is played, you are then asked to complete a test measuring spatial relations, wherein you see unfolding shapes and guess the corresponding folded pattern.
+While Mozart music is played, you are then asked to complete a test measuring spatial reasoning, wherein you see unfolding shapes and guess the corresponding folded pattern.
 #34_n_ver: Negative - verbal
 Imagine that you are a university student completing an in-person study as a volunteer or for course credit.
 The researcher informs you that they are interested in the non-beneficial effects of listening to Mozart on test-taking capabilities.
