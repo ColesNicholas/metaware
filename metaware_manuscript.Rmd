@@ -1,7 +1,6 @@
 ---
 title             : "A meta-analysis of the effects of demand characteristics"
 shorttitle        : "Demand characteristics meta-analysis"
-
 author: 
   - name          : "Nicholas A. Coles"
     affiliation   : "1"
@@ -12,33 +11,28 @@ author:
     affiliation   : "1"
   - name          : "Michael C. Frank"
     affiliation   : "1"
-
 affiliation:
   - id            : "1"
     institution   : "Center for the Study of Language and Information, Stanford University"
-
 authornote: |
   All materials, data, and code are available at <insert OSF link>. 
-
 abstract: |
   TBD
   
 keywords          : "demand characteristics, hypothesis awareness, placebo effect, research methods, meta-analysis"
 wordcount         : "TBD"
-
 bibliography      : "r-references.bib"
-
 floatsintext      : no
 linenumbers       : yes
 draft             : no
 mask              : no
-
 figurelist        : no
 tablelist         : no
 footnotelist      : no
-
 classoption       : "man"
 output            : papaja::apa6_docx
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = F}
@@ -46,6 +40,8 @@ output            : papaja::apa6_docx
 library("papaja")
 library("tidyverse")
 library("readxl")
+library("metafor")
+#library("robumeta")
 
 # identify refs
 r_refs("r-references.bib")
@@ -103,7 +99,7 @@ Coles et al. (2022) argued that demand characteristics not only have the potenti
 
 We describe the scope of our meta-analysis using the Population, Intervention, Comparison, Outcome framework (Schardt et al. 2007). Our population-of-interest was human subjects participating in non-clinical research studies. We excluded clinical research studies so that we could focus on research that better isolated the mechanism most often discussed in the demand characteristics literature: response biases (as opposed to placebo effects). Given that there is a sizable literature on placebo effects, excluding clinical tests of demand characteristics also helped us improve the feasibility of the project.
 
-The intervention-of-interest was manipulations of the hypothesis communicated to participants--i.e., scenarios where a researcher tells participants about the effect of an independent variable on a dependent variable. We focused on this intervention because it provides a relatively overt test of the impact of demand characteristics.
+The intervention-of-interest was explicit manipulations of the hypothesis communicated to participants--i.e., scenarios where a researcher tells participants about the effect of an independent variable on a dependent variable. We focused on this intervention because it provides a relatively overt test of the impact of demand characteristics.
 
 Our comparison-of-interest were conditions where either no hypothesis or a different hypothesis was communicated to participants. Our outcome-of-interest was the dependent variable described in the communicated hypothesis. For example, in a study that manipulated whether the intervention is described as "mood-boosting" or "mood-dampening", the outcome-of-interest would be any measure of mood.
 
@@ -207,7 +203,7 @@ In total, there were `r vig.n` vignettes. We did not create vignettes for contro
 knitr::include_graphics("images/metaware_vigs.png")
 ```
 
-N undergraduates from Stanford University reviewed 20 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses, (2) be able to adjust their responses on the outcome-of-interest, and (3) believe the experimenter's hypothesis. (Raters also indicated whether they believed the actual participants would confirm the hypothesis, which we discuss later.) These questions were presented in random order.
+N undergraduates from Stanford University reviewed 20 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 7 = "extremely capable), and (3) believe the experimenter's hypothesis (0 ="strong disbelief" to 7 = "strong belief"). (Raters also indicated whether they believed the actual participants would confirm the hypothesis, which we discuss later.) These questions were presented in random order.
 
 For each vignette, ratings were removed if the rater did not correctly identify the communicated hypothesis. The remaining scores were averaged across rater to provide mean estimates of motivation, opportunity, and belief.
 
@@ -217,33 +213,95 @@ For each vignette, ratings were removed if the rater did not correctly identify 
 knitr::include_graphics("images/metaware_mods.png")
 ```
 
-Cohen's $d$ represents the standardized difference between two conditions. Thus, for each effect size, we summed the motivation and belief scores for the two conditions being compared. Doing so allowed us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where a procedure is either described as mood-boosting (positive demand), described as mood-dampening (negative demand), or not described at all (control). If participants are equally motivated to confirm the hypothesis in both conditions, mood reports will be biased upward in the first condition and downward in the second condition (see Figure \@ref(fig:mods), Panel A, Column 1). In other words, the size of the demand effect is doubled because the motivational forces in the two conditions produce an additive effect. Similarly, these motivational forces could hypothetically cancel each other out. This would happen if participants were (a) motivated to confirm the hypothesis in the positive demand condition, and (b) motivated to disconfirm the hypothesis in the negative demand condition (see Figure \@ref(fig:mods), Panel A, Column 2). We used a similar approach for belief scores (Figure \@ref(fig:mods), Panel B).
+Cohen's $d$ represents the standardized difference between *two* groups. Thus, for each effect size, we summed the motivation and belief scores for the two groups being compared. Doing so allowed us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where a procedure is either described as mood-boosting (positive demand), described as mood-dampening (negative demand), or not described at all (control). If participants are equally motivated to confirm the hypothesis in both conditions, mood reports will be biased upward in the first condition and downward in the second condition (see Figure \@ref(fig:mods), Panel A, Column 1). In other words, the size of the demand effect is doubled because the motivational forces in the two conditions produce an additive effect. Similarly, these motivational forces could hypothetically cancel each other out. This would happen if participants were (a) motivated to confirm the hypothesis in the positive demand condition, and (b) motivated to disconfirm the hypothesis in the negative demand condition (see Figure \@ref(fig:mods), Panel A, Column 2). We used a similar approach for belief scores (Figure \@ref(fig:mods), Panel B).
 
 Theoretically, the opportunity to adjust responses should not differ between conditions. Thus, we averaged the opportunity ratings from the non-control conditions (see Figure \@ref(fig:mods), Panel C).
 
-We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in this condition. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil-demand), and (b) is extremely motivated to disconfirm the hypothesis. Relative to a control condition, this participant could act upon their motivation by either increasing (negative effect direction) *or* decreasing (positive effect direction) their mood. Nonetheless, we discuss potential strategies in the Limitations sections for addressing this question in future primary research.
+We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in this condition. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil-demand), and (b) is extremely motivated to disconfirm the hypothesis. Relative to a control condition, this participant could disconfirm the hypothesis by either increasing (negative effect direction) *or* decreasing (positive effect direction) their mood report. Nonetheless, we discuss potential strategies in the Limitations sections for addressing this question in future primary research.
 
 ## Rater forecasts of demand effects
 
-Even if researchers cannot necessarily explain how demand characteristics work, it would be valuable to be able to predict their effects (Yarkoni & Westfall, 2017). Orne suggested that participants themselves may be able make such forecasts (1969, 1970). To examine this, raters who reviewed the vignettes also predicted whether other participants would confirm vs. disconfirm the researcher's hypothesis. These values were computed using the same approach as motivation and belief scores.
+Even if researchers cannot necessarily explain how demand characteristics work, it might be valuable to be able to predict their effects (Yarkoni & Westfall, 2017). Orne suggested that participants themselves may be able make such forecasts (1969, 1970). To examine this, raters who reviewed the vignettes also predicted whether other participants would confirm vs. disconfirm the researcher's hypothesis (-3 = "extremely likely to adjust responses to be inconsistent" to 3 = "extremely likely to adjust responses to be consistent"). These values were computed using the same approach as motivation and belief scores.
 
 ## Other moderators
 
-We also coded for several moderators that we had no a-priori hypotheses about. This included: (1) whether the study was published vs. unpublished, (2) whether the sample was student or non-student (e.g., MTurk), (3) whether participants were paid, (4) whether the study was conducted online, and (5) whether demand characteristics were manipulated within vs. between subjects.
+We also coded several moderators for which we had no a-priori hypotheses. This included: (1) whether the study was published vs. unpublished, (2) whether the sample was student or non-student (e.g., MTurk), (3) whether participants were paid, (4) whether the study was conducted online, and (5) whether demand characteristics were manipulated within vs. between subjects.
+
+## **Meta-analytic approach**
+
+```{r}
+# calculate percentage of studies with multiple effect sizes
+mult.eff.per <- DF.es %>% 
+  # identify number of effect sizes for each study (id)
+  group_by(id) %>% 
+  count() %>% 
+  
+  # code whether each study has more than one effect size
+  mutate(dep = if_else(n > 1,
+                       true = 1,
+                       false = 0)
+         ) %>% 
+  
+  # calculate proportion of studies with more than one effect size 
+  ungroup() %>% 
+  summarise(mult.eff = mean(dep)) %>% 
+  
+  # export as numeric and turn into percentage
+  as.numeric() %>% 
+  round(digits = 2) * 100
+```
+
+For estimating overall effects and moderators, we used random-effects meta-analysis with robust variance estimates (Hedges, Tipton, & Johnson, 2010). We included random-effects because Rosnow and Rosenthal (1997) and Coles et al. (2022) posited that moderators create a distribution of true effects---as opposed to a single fixed-effect (Hedges & Vevea, 1998). We used robust variance estimates because `r mult.eff.per`% of studies provided multiple effect sizes of interest, which violates the statistical assumption that effect sizes are independent. Like many meta-analysis procedures, meta-analysis with robust variance estimates uses an inverse-variance weighting scheme that adjusts for dependencies among effect sizes. For the present work, we used a heirarchical effects weighting scheme (Tanner-Smith & Tipton, 2014).
+
+To estimate the overall effect size, we fit an intercept-only model. The intercept of this model can be interpreted as the precision-weighted overall effect size, adjusted for correlated-effect dependencies. We used the same approach to estimate subgroup overall effect sizes by subsetting the data by each level of each moderator. For moderator analyses, continuous and effect-coded categorical moderators were separately entered into the meta-regression model.
+
+### **Publication bias analyses**
+
+The most common way to assess publication bias with dependent structures is to aggregate the dependent effect sizes and perform standard publication bias analyses. Following this approach, we used the MAd R package to aggregate dependent effect sizes (Del Re & Hoyt, 2010). We then used precision effect tests (i.e., PET-PEESE; Stanley & Doucouliagos, 2014) and weight-function modeling (Vevea & Hedges, 1995) to test for the presence of publication bias and estimate the bias-corrected overall effect size. As a further sensitivity analysis, we used an approach by Mathur and VanderWeele (2020) to estimate the maximal publication bias required to shift the observed overall effect size estimate to zero.
+
+# Results
+
+```{r}
+# estimate overall effect size
+overall <-
+  rma.uni(yi = es,
+          vi = es.var,
+          data = DF.es,
+          method = "REML") %>% 
+  robust(cluster = DF.es$id)
+```
+
+Results indicated that, overall, explicit manipulations of demand characteristics create a small-to-medium acquiescence effect, $d$ = `r overall$b` , 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis.
+
+That being said, the observed effects of demand characteristics were highly heterogeneous. The standard deviation of the distribution of effects $\tau$ = `r sqrt(overall$tau2)` was larger than the overall effect---and `r overall$I2`% of variability appeared to be driven by heterogeneity (i.e., $I^2$ = `r overall$I2`).
+
+### Moderator analyses
+
+#### Motivation, opportunity, and belief
+
+#### Other moderators
+
+### Forecasts
+
+### Publication bias analyses
+
+# Discussion
+
+# Thoughts
+
+Compare average effect of demand to average effect in psychology. It suggest that it's plausible that these are driven by demand. When looking at the distribution, it's clear that no effect is too big to rule out concerns about demand.
+
+Might want to plot es distribution and identify proportion of (a) non-negligible acquiesence, (b) non-negligible counter-acquiesence, and (c) non-acquiesence.
 
 # To-do
-
-[] Add scale anchors to measures
-
-[] Start writing preliminary results
-
-[] Have Mike review again?
-
-[] Update pre-registration
 
 [] Separate processing and analysis code
 
 [] Clean up folder structure
+
+[] Have Mike review again?
+
+[] Update pre-registration
 
 [] Have M.W. add refs
 
