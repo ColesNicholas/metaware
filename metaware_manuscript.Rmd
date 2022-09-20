@@ -109,7 +109,7 @@ Our comparison-of-interest were conditions where either no hypothesis or a diffe
 # open and process literature search data
 DF.s <- 
   # open data
-  read_xlsx(path = "data/metaware_data_raw.xlsx",
+  read_xlsx(path = "data/metaware_EsData_raw.xlsx",
             sheet = "records.screening") %>% 
   
   # identify unpublished dissertations by identifying links that contain the word 'dissertation'
@@ -138,7 +138,7 @@ We searched APA PsycInfo using relatively broad search terms: "demand characteri
 ```{r final.df, include = F}
 # open effect size data
 DF.es <- 
-  read_csv(file = "data/metaware.data_clean.csv")
+  read_csv(file = "data/metaware_data_clean.csv")
 
 # specify number of studies (denoted by id column)
 num.s <- DF.es$id %>% 
@@ -296,6 +296,8 @@ Might want to plot es distribution and identify proportion of (a) non-negligible
 # To-do
 
 [] Separate processing and analysis code
+
+[] Need to add info about the outlier
 
 [] Clean up folder structure
 

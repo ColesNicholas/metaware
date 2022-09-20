@@ -12,41 +12,30 @@ The code was written in `r R.version$version.string` using R Markdown (http://rm
 rm(list = ls())
 
 # load packages
-ipak <- function(pkg){
-    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-    
-    if (length(new.pkg)) 
-        install.packages(new.pkg, dependencies = TRUE)
-    
-    sapply(pkg, require, character.only = TRUE)
-}
-
-# call package function
-packages <- c('tidyverse')
-ipak(packages)
-rm(packages, ipak)
+library(tidyverse)
 ```
 
 ## Calculate summary statistics for each vignette
 To-do: manipulation check
 ```{r}
 # import data
-DF <- read_csv(file = "metaware_ratings_test.csv") %>% 
+DF <- read_csv(file = "data/metaware_SurvData_raw.csv") %>% 
   # remove unnecessary variables
   select(-c(StartDate : UserLanguage),
+         -c(hap1_bl1_hap : survey_order),
          -contains("Click"),
          -contains("Submit"),
          -contains("Count")) %>% 
   
   # remove row containing ImportId
-  filter(!grepl("ImportId", `1_hyp_awr`)) %>% 
+  filter(!grepl("ImportId", `1_awr`)) %>% 
   
   # assign participant ids
   mutate(ss = 1 : nrow(.),
          ss = as.character(ss)) %>%  
   
   # select vignettes columns
-  select(`1_hyp_awr` : `118_hyp_opp`, ss) %>% 
+  select(`1_awr` : `119_opp`, ss) %>% 
   
   # extract key from first row
   mutate_all(~if_else(condition = grepl("#", .),
@@ -92,14 +81,19 @@ DF <- DF %>%
 
 Extract summary info
 ```{r}
-DF %>% 
+vig.sum <- DF %>% 
   group_by(vig) %>% 
   summarise(m.mot = mean(mot, na.rm = T),
             sd.mot = sd(mot, na.rm = T),
+            
             m.opp = mean(opp, na.rm = T),
-            sd.opp = sd(opp, na.rm = T)
-            ) %>% 
-  write.csv("vig.ratings.csv",
-            row.names = F)
+            sd.opp = sd(opp, na.rm = T),
+            
+            m.bel = mean(bel, na.rm = T),
+            sd.bel = sd(bel, na.rm = T),
+            
+            m.pre = mean(pre, na.rm = T),
+            sd.pre = sd(pre, na.rm = T)
+            )
 ```
 
