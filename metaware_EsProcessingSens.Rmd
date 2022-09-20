@@ -1,0 +1,44 @@
+---
+title: Sensitivity analysis for effect size processing
+author: "Nicholas A. Coles and Morgan Wyatt"
+editor_options: 
+  chunk_output_type: console
+---
+This code processes the effect size and survey data with different assumed correlations for within-subject effect sizes
+
+# Prep environment
+```{r setup and load packages, include = FALSE}
+# clean environment
+rm(list = ls())
+
+# set token indicating that this is a sensitivity analysis
+sens <- T
+
+# create list of correlations to examine
+corr.list <- seq(from = .1, 
+                 to = .9, 
+                 by = .2)
+```
+
+# Create sensitivity analysis databases
+```{r}
+# for each correlation, 
+# (1) compute effect sizes by sourcing 'metaware_EsProcessing.Rmd'
+# (2) save results in data/r_sensitivity
+for (c in corr.list){
+  # set corr
+  corr <- c
+  
+  # source script
+  source(knitr::purl("metaware_EsProcessing.Rmd", quiet=TRUE), 
+         local = knitr::knit_global())
+  
+  # export dataframe
+  write.csv(DF,
+            paste0("data/r_sensitivity/metaware_data_clean_r", 
+                   c, 
+                   ".csv"),
+            row.names = F
+            )
+}
+```
