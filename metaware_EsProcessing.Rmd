@@ -23,7 +23,7 @@ DF <- read_xlsx(path = "data/metaware_EsData_raw.xlsx",
                 sheet = "coding",
                 na = c("NA"))
 
-# change ref.type pvc to cvp
+# change ref.type pvc to cvp (for aesthetics)
 DF[DF$ref.type == "pvc", ]$ref.type = "cvp"
 
 # delete unnecessary variables
@@ -33,7 +33,7 @@ DF <- DF %>%
   select(-ends_with("ref")) %>% 
   
   # remove variables we won't include in any analyses
-  select(-c(dv, note)) %>% 
+  select(-c(dv, note, outcome)) %>% 
   
   # convert factors to factors
   mutate(id = as.factor(id),
@@ -319,6 +319,11 @@ DF <- DF %>%
   ungroup()
 ```
 
+## Remove unnecessary variables
+```{r}
+DF <- DF %>% 
+  select(-c(es.calc : pval))
+```
 
 
 # Open and clean survey data
@@ -392,32 +397,24 @@ TBD
 surv.sum <- DF.surv %>% 
   group_by(vig) %>% 
   summarise(m.mot = mean(mot, na.rm = T),
-            #sd.mot = sd(mot, na.rm = T),
-            
             m.opp = mean(opp, na.rm = T),
-            #sd.opp = sd(opp, na.rm = T),
-            
             m.bel = mean(bel, na.rm = T),
-            #sd.bel = sd(bel, na.rm = T),
-            
-            m.pre = mean(pre, na.rm = T),
-            #sd.pre = sd(pre, na.rm = T)
-            )
+            m.pre = mean(pre, na.rm = T)
+            ) %>% 
+  ungroup()
 
 rm(DF.surv)
 ```
 
 # Combine ES and survey data
 ```{r}
-tmp <- DF %>% 
-  select(id, vig.1, vig.2) %>% 
-  rename(vig = vig.1) %>% 
-  mutate(tmp = "hi")
-
 # connect summary data to ES dataframe
-a <- 
+DF <- DF %>% 
+  # rename vig.1 to vig to enable join
+  rename(vig = vig.1) %>% 
+  
   # connect summary data to vig.1
-  left_join(x = tmp, 
+  left_join(x = ., 
             y = surv.sum,
             by = "vig") %>% 
   
@@ -442,9 +439,12 @@ a <-
          v2.bel = m.bel, 
          v2.pre = m.pre)
 
-# calculate mot, opp, bel, and pre scores
-a <- a %>% 
+# calculate mot, opp, bel, and pre scores. Then delete vestigial
+DF <- DF %>% 
   rowwise() %>% 
+  
+  # calculate scores, 
+  # summing in instances where there are two demand conditions--i.e., !is.na(v2.mot)
   mutate(mot = 
            if_else(condition = is.na(v2.mot),
                    true = v1.mot,
@@ -455,59 +455,33 @@ a <- a %>%
                    true = v1.bel,
                    false = v1.bel + v2.bel),
          
+         opp = 
+           if_else(condition = is.na(v2.opp),
+                   true = v1.opp,
+                   false = v1.opp + v2.opp),
+         
          pre = 
            if_else(condition = is.na(v2.pre),
                    true = v1.pre,
                    false = v1.pre + v2.pre)
-         )
+         ) %>% 
+  ungroup() %>% 
+  
+  # remove vestigial 
+  select(-c(vig.1, vig, v1.mot : v2.pre))
+
+rm(surv.sum)
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Probably better to do some sort of pivot here
-```{r eval = F}
+# Remove unnecessary columns
+```{r}
 DF <- DF %>% 
-  select(id, vig.1, vig.2, es, es.var) 
-
-DF.vig <- read.csv("vig.ratings.csv") %>% 
-  select(-c(sd.mot, sd.opp))
-
-# vig.1 join
-DF.vig <- rename(DF.vig, 
-                 vig.1 = vig,
-                 vig.1.m = m.mot,
-                 vig.1.o = m.opp) 
-  
-tmp <- full_join(DF, DF.vig,
-                 by = "vig.1")
-
-# vig.2 join
-DF.vig <- rename(DF.vig, 
-                 vig.2 = vig.1,
-                 vig.2.m = vig.1.m,
-                 vig.2.o = vig.1.o) 
-  
-tmp <- full_join(tmp, DF.vig,
-                 by = "vig.2")
-
+  select(c(outcome, es.calc : pval))
 ```
-
 
 # Export
 ```{r}
-write.csv(DF %>% 
-            filter(!is.na(es)), 
-          'data/metaware_data_clean.csv', 
+write.csv(DF, 
+          "data/metaware_data_clean.csv", 
           row.names = FALSE)
 ```
