@@ -1,0 +1,67 @@
+---
+title: "Extraction of M and SDs from the replication of Coles et al. 2022 for demand characteristics meta-analysis"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Setup R environment
+```{r}
+# clear environment
+rm(list = ls())
+
+# load packages
+library('tidyverse')
+
+# turn off scientific notation
+options(scipen=999)
+```
+
+## Load and process clean data
+```{r}
+DF <- 
+  # open data
+  read.csv("isager2022_DataLongClean.csv",
+           sep = ";") %>% 
+  
+  # rename variable that had trouble importing
+  rename(subject_id = "ï..subject_id") %>% 
+  
+  # select relevant variables
+  select(subject_id, demand, block.num,
+         trial, happy) %>% 
+  
+  # pivot wider
+  pivot_wider(names_from = block.num,
+              values_from = happy,
+              names_prefix = "block_") %>% 
+  
+  # average across blocks
+  rowwise() %>% 
+  mutate(hap_avg = mean(c(block_1, block_2, block_3))) %>% 
+  ungroup() %>% 
+  select(-c(block_1 : block_3)) %>% 
+  
+  # pivot wider
+  pivot_wider(names_from = trial,
+              values_from = hap_avg) %>% 
+  
+  # calculate difference score
+  rowwise() %>% 
+  mutate(hap_dif = happ - neut) %>% 
+  ungroup()
+```
+
+## Descriptives
+Means
+```{r}
+DF %>% 
+  group_by(demand) %>% 
+  summarise(n = n(),
+            m.hap_H = mean(happ),
+            sd.hap_H = sd(happ),
+            m.hap_H.N = mean(hap_dif),
+            sd.hap_H.N =sd(hap_dif)) %>% 
+  write.csv("isager2022_descriptives.csv",
+            row.names = F)
+```

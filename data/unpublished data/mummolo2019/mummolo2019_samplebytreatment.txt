@@ -1,0 +1,45 @@
+[1] "## Survey 1 ##"
+[1] "Framing Experiment"
+
+   Baseline        Hint Explanation 
+        485         437         451 
+[1] "News Choice Experiment"
+
+   Baseline        Hint Explanation 
+        391         392         410 
+[1] "## Survey 2 ##"
+[1] "Resume Experiment"
+
+   Baseline White Helps Black Helps 
+        513         493         516 
+[1] "News Choice Experiment"
+
+         Baseline Unfriendly Source   Friendly Source 
+              478               499               534 
+[1] "## Survey 3 ##"
+[1] "Democratic Peace Experiment"
+
+   Baseline Explanation   Incentive 
+        620         655         599 
+[1] "Welfare Experiment"
+
+   Baseline Explanation   Incentive 
+        604         642         628 
+[1] "## Survey 4 ##"
+[1] "News Choice Experiment"
+
+   baseline information   incentive 
+        780         803         791 
+[1] "## Survey 5 ##"
+[1] "Democratic Peace Experiment"
+
+ Baseline      Info Incentive 
+     1828      1826      1896 
+[1] "Welfare Experiment"
+
+ Baseline      Info Incentive 
+     1833      1861      1856 
+[1] "Framing Experiment"
+
+ Baseline      Info Incentive 
+     1867      1844      1839 

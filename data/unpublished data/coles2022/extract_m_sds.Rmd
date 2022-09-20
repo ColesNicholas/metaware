@@ -1,0 +1,111 @@
+---
+title: "Extraction of M and SDs from Coles et al. 2022 for demand characteristics meta-analysis"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Setup R environment
+```{r}
+# clear environment
+rm(list = ls())
+
+# load packages
+library('tidyverse')
+```
+
+## Load clean data
+```{r}
+DF.long <- readRDS("data.long.clean.rds")
+DF.wide <- readRDS("data.wide.clean.rds")
+```
+
+## Prep dataset
+```{r}
+DF.wide.new <- DF.wide %>% 
+  
+  # filter out studies that did not manipulate demand characteristics
+  filter(study != "Study_5" &
+         study != "Study_6") %>% 
+  
+  # rowwise (within-participant) computations
+  rowwise() %>% 
+  
+  # average across blocks
+  mutate(# happiness scores
+         happy_Happy = mean(c(happy_1_Happy, happy_2_Happy)),
+         happy_Anger = mean(c(happy_1_Anger, happy_2_Anger)),
+         happy_Neutral = mean(c(happy_1_Neutral, happy_2_Neutral)),
+         
+         # anger scores
+         anger_Happy = mean(c(anger_1_Happy, anger_2_Happy)),
+         anger_Anger = mean(c(anger_1_Anger, anger_2_Anger)),
+         anger_Neutral = mean(c(anger_1_Neutral, anger_2_Neutral))
+         ) %>% 
+  
+  # calculate difference-in-difference scores
+  mutate(# self-reported happiness
+        happy_H.N = happy_Happy - happy_Neutral,
+        happy_H.A = happy_Happy - happy_Anger,
+        
+        # self-reported anger
+        anger_A.N = anger_Anger - anger_Neutral,
+        anger_A.H = anger_Anger - anger_Happy) %>% 
+  
+  ungroup()
+```
+
+
+## Calculate difference in difference scores
+```{r}
+DF.wide.new %>% 
+  group_by(study, demand) %>% 
+  summarise(# self-reported happiness
+            m.happy_H.N = mean(happy_H.N) %>% round(2),
+            sd.happy_H.N = sd(happy_H.N) %>% round(2),
+            m.happy_H.A = mean(happy_H.A) %>% round(2),
+            sd.happy_H.A = sd(happy_H.A) %>% round(2),
+            
+            # self-reported anger
+            m.anger_A.N = mean(anger_A.N) %>% round(2),
+            sd.anger_A.N = sd(anger_A.N) %>% round(2),
+            m.anger_A.H = mean(anger_A.H) %>% round(2),
+            sd.anger_A.H = sd(anger_A.H) %>% round(2),
+            
+            # n
+            n = n()) %>% 
+  ungroup() %>% 
+  write.csv("coles2022_diff.in.diff.csv",
+            row.names = F)
+```
+
+
+## Calculate cross-block means and mean differences
+```{r}
+DF.wide.new %>%
+  group_by(study, demand) %>% 
+  summarise(# self-reported happiness
+            m.h.H = mean(happy_Happy) %>% round(2),
+            sd.h.H = sd(happy_Happy) %>% round(2),
+            m.h.A = mean(happy_Anger) %>% round(2),
+            sd.h.A = sd(happy_Anger) %>% round(2),
+            m.h.N = mean(happy_Neutral) %>% round(2),
+            sd.h.N = sd(happy_Neutral) %>% round(2),
+            
+            # self-reported anger
+            m.a.H = mean(anger_Happy) %>% round(2),
+            sd.a.H = sd(anger_Happy) %>% round(2),
+            m.a.A = mean(anger_Anger) %>% round(2),
+            sd.a.A = sd(anger_Anger) %>% round(2),
+            m.a.N = mean(anger_Neutral) %>% round(2),
+            sd.a.N = sd(anger_Neutral) %>% round(2),
+            
+            # n
+            n = n()) %>%
+  ungroup() %>% 
+  write.csv("coles2022_msd.csv")
+
+rm(DF.wide.new)
+```
+
+
