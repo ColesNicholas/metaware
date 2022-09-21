@@ -341,6 +341,10 @@ That being said, the observed effects of demand characteristics were highly hete
 Run these without the z demand comparisons
 
 #### Other moderators
+```{r}
+
+```
+
 
 ### Forecasts
 
@@ -355,14 +359,13 @@ Compare average effect of demand to average effect in psychology. It suggest tha
 Might want to plot es distribution and identify proportion of (a) non-negligible acquiesence, (b) non-negligible counter-acquiesence, and (c) non-acquiesence.
 
 # To-do
+[] Add moderator analyses
 
 [] Clean up folder structure
 
 [] Have Mike review again?
 
 [] Update pre-registration
-
-[] Have M.W. add refs
 
 [] Have M.W. build moderator table
 

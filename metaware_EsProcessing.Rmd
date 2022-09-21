@@ -23,7 +23,6 @@ DF <- read_xlsx(path = "data/metaware_EsData_raw.xlsx",
 # change ref.type pvc to cvp (for aesthetics)
 DF[DF$ref.type == "pvc", ]$ref.type = "cvp"
 
-# delete unnecessary variables
 DF <- DF %>% 
   
   # remove reference columns
@@ -32,13 +31,20 @@ DF <- DF %>%
   # remove variables we won't include in any analyses
   select(-c(dv, note, outcome)) %>% 
   
+  # create ref.r var that indicates whether there were one or two demand conditions
+  mutate(ref.r = 
+           if_else(ref.type == "cvp" |
+                     ref.type == "nvc" |
+                     ref.type == "cvz",
+                   true = "single",
+                   false = "double")) %>% 
+  
   # convert factors to factors
-  mutate(id = as.factor(id),
-         published = as.factor(published),
-         student = as.factor(student),
-         paid = as.factor(paid),
-         online = as.factor(online),
-         ref.type = as.factor(ref.type))
+  mutate(across(.cols = c(id, published, student,
+                          paid, online, ref.type,
+                          ref.r),
+                .fns = as.factor)
+         )
 
 # create blank columns for effect size and effect size variance
 # Note: these pre-exisiting columns are necessary for the 
