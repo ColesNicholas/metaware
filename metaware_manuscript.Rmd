@@ -335,38 +335,41 @@ Results indicated that, overall, explicit manipulations of demand characteristic
 That being said, the observed effects of demand characteristics were highly heterogeneous. The standard deviation of the distribution of effects $\tau$ = `r sqrt(overall$tau2)` was larger than the overall effect---and `r overall$I2`% of variability appeared to be driven by heterogeneity (i.e., $I^2$ = `r overall$I2`).
 
 ### Moderator analyses
+
 ```{r mod_new, inclufe F}
 # create list of moderators
 mod.l <- c("student", "paid", "online", 
            "design", "ref.type", "ref.r", "published",
            "year")
 
-# for each moderator, conduct moderator and (if categorical) subgroup analyses
+# create moderator analysis function
+ModAnalysis = function(m) {
+ # moderator analysis
+  mod.m <- rma.uni(yi = es, 
+                   vi = es.var,
+                   data = DF.es,
+                   mods = as.formula(paste0("~ ", m)),
+                   method = "REML") %>% 
+    robust(cluster = DF.es$id)
+           
+  # subgroup analysis
+  sub.m <- rma.uni(yi = es,
+                   vi = es.var,
+                   data = DF.es,
+                   mods = as.formula(paste0("~ 0 + ", m)),
+                   method = "REML") %>%
+    robust(cluster = DF.es$id)
+  
+  # return as list
+  return(list(mod = mod.m,
+              sub = sub.m)) 
+}
+
+# for each moderator, conduct moderator and subgroup analyses
 mod.r <- 
   sapply(X = mod.l,
          simplify = F,
-         FUN = function(m) {
-           # moderator analysis
-           mod.m <- rma.uni(yi = es,
-                            vi = es.var,
-                            data = DF.es,
-                            mods = as.formula(paste0("~ ", m)),
-                            method = "REML") %>%
-             robust(cluster = DF.es$id)
-           
-           # subgroup analysis
-           sub.m <- rma.uni(yi = es,
-                            vi = es.var,
-                            data = DF.es,
-                            mods = as.formula(paste0("~ 0 + ", m)),
-                            method = "REML") %>%
-             robust(cluster = DF.es$id)
-           
-           # return as list
-           return(list(mod = mod.m,
-                       sub = sub.m))
-    }
-    )
+         FUN = ModAnalysis)
 ```
 
 #### Motivation, opportunity, and belief
@@ -386,15 +389,28 @@ Mock text: The effects of demand characteristics were larger in studies where pa
 Figure idea: Same scatterplot panel.
 
 #### Other moderators
-We did not find that the effects of demand characteristics were moderated by the following moderators: whether the researchers manipulated demand characteristics within- ($d$ = `r mod.r[mod.r$mod == "design" & !is.na(mod.r$level) & mod.r$level == "within", ]$d`) or between-subjects, 
 
-used a within- (d = XX, 95% CI, p) or between-subjects design, F(df) = XX, p = XX); etc.
+Results indicated that the effects of demand characteristics were moderated by participant pool, $F$(`r mod.r$student$mod$QMdf[1]`, `r mod.r$student$mod$QMdf[2]`) = `r mod.r$student$mod$QM`, $p$ = `r printp(mod.r$student$mod$QMp)`. The effects were medium-to-large in studies with studies with students ($d$ = `r mod.r$student$sub$b[3]`, 95% CI [`r mod.r$student$sub$ci.lb[3]`, `r mod.r$student$sub$ci.ub[3]`], $p$ `r printp(mod.r$student$sub$pval[3])`), extremely small in studies with a mix of students and non-students ($d$ = `r mod.r$student$sub$b[1]`, 95% CI [`r mod.r$student$sub$ci.lb[1]`, `r mod.r$student$sub$ci.ub[1]`], $p$ = `r printp(mod.r$student$sub$pval[1])`), and near-zero in studies with non-students ($d$ = `r mod.r$student$sub$b[2]`, 95% CI [`r mod.r$student$sub$ci.lb[2]`, `r mod.r$student$sub$ci.ub[2]`], $p$ = `r printp(mod.r$student$sub$pval[2])`). The effects of demand characteristics also tended to be larger for in-person ($d$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($d$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)`.
+
+Results indicated that the effects of demand characteristics can be additive. Compared to instances where a demand characteristic condition was compared to a control group ($d$ = `r mod.r$ref.r$sub$b[2]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[2]`, `r mod.r$ref.r$sub$ci.ub[2]`], $p$ `r printp(mod.r$ref.r$sub$pval[2])`), effect sizes were approximately twice as large when two demand characteristic conditions were compared ($d$ = `r mod.r$ref.r$sub$b[1]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[1]`, `r mod.r$ref.r$sub$ci.ub[1]`], $p$ `r printp(mod.r$ref.r$sub$pval[1])`), $F$(`r mod.r$ref.r$mod$QMdf[1]`, `r mod.r$ref.r$mod$QMdf[2]`) = `r mod.r$ref.r$mod$QM`, $p$ = `r printp(mod.r$ref.r$mod$QMp)`.
+
+The effects of demand characteristics varied depending on the type of demand characteristic manipulation (positive)
+
+The effects of demand characteristics tended to be numerically larger in unpaid ($d$ = `r mod.r$paid$sub$b[1]`, 95% CI [`r mod.r$paid$sub$ci.lb[1]`, `r mod.r$paid$sub$ci.ub[1]`], $p$ `r printp(mod.r$paid$sub$pval[1])`) vs. paid ($d$ = `r mod.r$paid$sub$b[2]`, 95% CI [`r mod.r$paid$sub$ci.lb[2]`, `r mod.r$paid$sub$ci.ub[2]`], $p$ = `r printp(mod.r$paid$sub$pval[2])`) studies---but this difference was not statistically significant, $F$(`r mod.r$paid$mod$QMdf[1]`, `r mod.r$paid$mod$QMdf[2]`) = `r mod.r$paid$mod$QM`, $p$ = `r printp(mod.r$paid$mod$QMp)`.
+
+We did not find that demand characteristics effects were larger in paid vs. unpaid studies,
+
+We did not find that the effects of demand characteristics were moderated by whether the researchers manipulated demand characteristics within- ($d$ = `r mod.r$design$sub$b[1]`, 95% CI [`r mod.r$design$sub$ci.lb[1]`, `r mod.r$design$sub$ci.ub[1]`], $p$ `r printp(mod.r$design$sub$pval[1])`) or between-subjects ($d$ = `r mod.r$design$sub$b[2]`, 95% CI [`r mod.r$design$sub$ci.lb[2]`, `r mod.r$design$sub$ci.ub[2]`], $p$ = `r printp(mod.r$design$sub$pval[2])`), $F$(`r mod.r$design$mod$QMdf[1]`, `r mod.r$design$mod$QMdf[2]`) = `r mod.r$design$mod$QM`, $p$ = `r printp(mod.r$design$mod$QMp)`.
+
+We also did not find that the effects of demand characteristics were moderated by the year the study was published $\beta$ = `r mod.r$year$mod$b["year", ]`, 95% CI [`r mod.r$year$mod$ci.lb[2]`, `r mod.r$year$mod$ci.ub[2]`], $t$(`r sum(mod.r$year$mod$QMdf)`) = `r mod.r$year$mod$zval[2]`, $p$ = `r printp(mod.r$year$mod$pval[2])`.
 
 We did, however, find that the the effects of demand characteristics were studies were completed in-person () vs. online
 
 ### Forecasts
 
 ### Publication bias analyses
+
+We did not find evidence of different effects among unpublished ($d$ = `r mod.r$published$sub$b[1]`, 95% CI [`r mod.r$published$sub$ci.lb[1]`, `r mod.r$published$sub$ci.ub[1]`], $p$ = `r printp(mod.r$published$sub$pval[1])`) and published ($d$ = `r mod.r$published$sub$b[2]`, 95% CI [`r mod.r$published$sub$ci.lb[2]`, `r mod.r$published$sub$ci.ub[2]`], $p$ `r printp(mod.r$published$sub$pval[2])`) studies $F$(`r mod.r$published$mod$QMdf[1]`, `r mod.r$published$mod$QMdf[2]`) = `r mod.r$published$mod$QM`, $p$ = `r printp(mod.r$published$mod$QMp)`.
 
 # Discussion
 
@@ -405,6 +421,7 @@ Compare average effect of demand to average effect in psychology. It suggest tha
 Might want to plot es distribution and identify proportion of (a) non-negligible acquiesence, (b) non-negligible counter-acquiesence, and (c) non-acquiesence.
 
 # To-do
+
 [] Add moderator analyses
 
 [] Clean up folder structure
