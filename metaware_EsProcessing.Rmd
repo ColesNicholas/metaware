@@ -324,7 +324,6 @@ DF <- DF %>%
   select(-c(es.calc : pval))
 ```
 
-
 # Open and clean survey data
 ```{r}
 # import data

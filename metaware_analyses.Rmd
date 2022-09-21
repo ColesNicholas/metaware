@@ -506,15 +506,6 @@ summary(i2)
 ## Moderator analyses
 Prep analyses
 ```{r}
-# recode ref.type
-DF <- DF %>% 
-  mutate(ref.r = if_else(ref.type == "cvp" |
-                           ref.type == "nvc" |
-                           ref.type == "cvz",
-                         "single",
-                         "double"),
-         ref.r = factor(ref.r))
-
 # create blank dataframe
 mod.r <- data.frame(mod = character(),
                     level = character(),

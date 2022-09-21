@@ -303,24 +303,24 @@ Even if researchers cannot explain how demand characteristics work, it might be 
 
 We also coded several moderators for which we had no a-priori hypotheses. This included: (1) whether the study was published vs. unpublished, (2) whether the sample was student or non-student (e.g., MTurk), (3) whether participants were paid or unpaid (4) whether the study was conducted online or in-person , and (5) whether demand characteristics were manipulated within- vs. between-subjects.
 
-## **Meta-analytic approach**
+## Meta-analytic approach
 
 For estimating overall effects and moderators, we used random-effects meta-analysis with robust variance estimates [@hedges2010robust]. We included random-effects because @rosnow1997people and @coles2022fact posited that moderators create a distribution of true effects---as opposed to a single fixed-effect [@hedges1998fixed]. We used robust variance estimates because `r mult.eff.per`% of studies provided multiple effect sizes of interest, which violates the statistical assumption that effect sizes are independent. Like many meta-analysis procedures, meta-analysis with robust variance estimates uses an inverse-variance weighting scheme that adjusts for dependencies among effect sizes. For the present work, we used a hierarchical effects weighting scheme [@tanner2014robust].
 
 To estimate the overall effect size, we fit an intercept-only model. The intercept of this model can be interpreted as the precision-weighted overall effect size, adjusted for correlated-effect dependencies. We used the same approach to estimate subgroup overall effect sizes by subsetting the data by each level of each moderator. For moderator analyses, continuous and dummy-coded categorical moderators were separately entered into the meta-regression model.
 
-```{r clean.env.2}
+```{r clean.env.2, include = F}
 # delete vestigial
-rm(mult.eff.per, vig.n, survey.n)
+rm(mult.eff.per, vig.n, survey.n, sens.range)
 ```
 
-### **Publication bias analyses**
+### Publication bias analyses
 
 The most common way to assess publication bias with dependent structures is to aggregate the dependent effect sizes and perform standard publication bias analyses. Following this approach, we used the MAd R package to aggregate dependent effect sizes. We then used precision effect tests [i.e., PET-PEESE, @stanley2014meta] and weight-function modeling [@vevea1995general] to test for the presence of publication bias and estimate the bias-corrected overall effect size. As a further sensitivity analysis, we used an approach by @mathur2020sensitivity to estimate the maximal publication bias required to shift the observed overall effect size estimate to zero.
 
 # Results
 
-```{r}
+```{r overall, include = F}
 # estimate overall effect size
 overall <-
   rma.uni(yi = es,
@@ -330,21 +330,67 @@ overall <-
   robust(cluster = DF.es$id)
 ```
 
-Results indicated that, overall, explicit manipulations of demand characteristics create a small-to-medium acquiescence effect, $d$ = `r overall$b` , 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis.
+Results indicated that, overall, explicit manipulations of demand characteristics create a small-to-medium acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis.
 
 That being said, the observed effects of demand characteristics were highly heterogeneous. The standard deviation of the distribution of effects $\tau$ = `r sqrt(overall$tau2)` was larger than the overall effect---and `r overall$I2`% of variability appeared to be driven by heterogeneity (i.e., $I^2$ = `r overall$I2`).
 
 ### Moderator analyses
+```{r mod_new, inclufe F}
+# create list of moderators
+mod.l <- c("student", "paid", "online", 
+           "design", "ref.type", "ref.r", "published",
+           "year")
+
+# for each moderator, conduct moderator and (if categorical) subgroup analyses
+mod.r <- 
+  sapply(X = mod.l,
+         simplify = F,
+         FUN = function(m) {
+           # moderator analysis
+           mod.m <- rma.uni(yi = es,
+                            vi = es.var,
+                            data = DF.es,
+                            mods = as.formula(paste0("~ ", m)),
+                            method = "REML") %>%
+             robust(cluster = DF.es$id)
+           
+           # subgroup analysis
+           sub.m <- rma.uni(yi = es,
+                            vi = es.var,
+                            data = DF.es,
+                            mods = as.formula(paste0("~ 0 + ", m)),
+                            method = "REML") %>%
+             robust(cluster = DF.es$id)
+           
+           # return as list
+           return(list(mod = mod.m,
+                       sub = sub.m))
+    }
+    )
+```
 
 #### Motivation, opportunity, and belief
 
 Run these without the z demand comparisons
 
+Mock text: The effects of demand characteristics were larger in studies where participants indicated they would be motivated to confirm the hypothesis, B = XX, F(df) = XX, p = XX, R2.
+
+Figure idea: Different scatterplot panels for each moderator; ES on y-axis; moderator on x axis; jittered observations; linear trend line with CI
+
+#### Rater forecasts
+
+Run this without the z demand comparisons
+
+Mock text: The effects of demand characteristics were larger in studies where participants predicted that other would change their responses to confirm the hypothesis, B = XX, F(df) = XX, p = XX. However, overall accuracy was low, explaining R2 proportion of the observed heterogeneity.
+
+Figure idea: Same scatterplot panel.
+
 #### Other moderators
-```{r}
+We did not find that the effects of demand characteristics were moderated by the following moderators: whether the researchers manipulated demand characteristics within- ($d$ = `r mod.r[mod.r$mod == "design" & !is.na(mod.r$level) & mod.r$level == "within", ]$d`) or between-subjects, 
 
-```
+used a within- (d = XX, 95% CI, p) or between-subjects design, F(df) = XX, p = XX); etc.
 
+We did, however, find that the the effects of demand characteristics were studies were completed in-person () vs. online
 
 ### Forecasts
 
