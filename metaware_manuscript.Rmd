@@ -36,13 +36,15 @@ editor_options:
 ---
 
 ```{r setup, include = F}
-# load necessary packages
+# load packages writing and data processing packages
 library("papaja")
 library("tidyverse")
 library("readxl")
+
+# load meta-analyses packages
 library("metafor")
 library("weightr")
-#library("robumeta")
+library("PublicationBias")
 
 # identify refs
 r_refs("r-references.bib")
@@ -377,6 +379,9 @@ mod.r[["ref.type"]] <-
               df = DF.es[DF.es$ref.r == "single", ])
 
 # add mot, opp, bel, and pre
+
+# delete vestigial 
+rm(mod.l, ModAnalysis)
 ```
 
 #### Motivation, opportunity, and belief
@@ -407,6 +412,180 @@ We did not find that the effects of demand characteristics were moderated by whe
 
 ### Publication bias analyses
 
+```{r}
+overall %>% 
+  metafor::funnel(x = .,
+                  hlines = "lightgray",
+                  xlab = "Cohen's standardized d")
+
+rma.uni(yi = yi,
+        vi = vi,
+        data = DF.agg,
+        method = "REML") %>% 
+  metafor::funnel()
+```
+
+```{r pub.bias2, include = F}
+##########################
+# Define publication bias analysis that
+# 1. Mathur and VanderWeele 2020 sensitivity analyses
+# 2a. Aggregates dependent effect sizes (with given rho value)
+# 2b. Fits PET-PEESE models w/ aggregated effects
+# 2c. Fits Vevea and Hedges (1995) Weight-Function Model w/ aggregated effects
+# 2d. Fit funnel plot
+# 3. Organizes results into list
+##########################
+
+PubBias = function(rho.val = .5){
+  # 1.sensitivity analyses
+  ########################
+  sens <- corrected_meta(yi = DF.es$es,
+                         vi = DF.es$es.var,
+                         eta = 49,
+                         clustervar = DF.es$id,
+                         model = "robust",
+                         favor.positive = T)
+  
+  # 2a. aggregate dependent effect sizes
+  ########################
+  DF.agg <- DF.es %>%
+    
+    # convert to an 'escalc' object so function can run
+    escalc(yi = es,
+           vi = es.var,
+           data = DF.es,
+           measure = "SMD") %>%
+    
+    # delete vestigial: es is now yi; es.var is now vi
+    select(-c(es, es.var)) %>% 
+    
+    # aggregate dependencies
+    aggregate(x = .,
+              cluster = id,
+              rho = rho.val)
+
+  # 2b. PET-PEESE (syntax provided by Carter & McCullough, 2014)
+  ########################
+  # compute standard error of es
+  DF.agg$se <- sqrt(DF.agg$vi)
+  
+  PEESE2 <- regtest(x = DF.agg$yi, 
+                  vi= DF.agg$vi,
+                  sei = DF.agg$se, 
+                  data = DF.agg,
+                  predictor= "sei")
+  # fit models
+  pet <- lm(DF.agg$yi ~ DF.agg$se, 
+            weights = 1 / DF.agg$vi) %>% 
+    summary()
+  
+  peese <- lm(DF.agg$yi ~ DF.agg$vi, 
+               weights = 1 / DF.agg$vi) %>% 
+    summary()
+  
+  # 2c. Weight-function model
+  ########################
+  weight.funct <- weightfunct(effect = DF.agg$yi,
+                              v = DF.agg$vi,
+                              mods = NULL,
+                              weights= NULL,
+                              fe = FALSE,
+                              table = TRUE,
+                              pval = NULL)
+  
+  # 2d. funnel plot
+  rma.uni(yi = yi,
+          vi = vi,
+          data = DF.agg,
+          method = "REML") %>%   
+    metafor::funnel(hlines = "lightgray",
+                    xlab = "Cohen's standardized d")
+  
+  # save funnel plot as object
+  funnel.plot <- recordPlot()
+    
+  # clear R environment
+  plot.new()
+  
+  # 3. Organize results in list 
+  ########################
+  list(DF.agg = DF.agg,
+       pet = pet,
+       peese = peese,
+       weight.funct = weight.funct,
+       funnel = funnel.plot,
+       sens = sens) %>%  
+    return()
+}
+
+# for range of rho values, run publication bias analyses
+rho.l = seq(from = .1,
+            to = .9,
+            by = .2)
+
+pub.r <- lapply(X = rho.l,
+                FUN = PubBias)
+
+names(pub.r) = paste0("rho_", rho.l) #  name list
+
+# delete vestigial 
+rm(rho.l, PubBias)
+
+# look at sensitivity analyses
+## general story: often, but not always, find evidence of reverse publication bias (preference for negative effects)
+lapply(pub.r, function(x){x[["pet"]]})
+lapply(pub.r, function(x){x[["peese"]]})
+lapply(pub.r, function(x){x[["weight.funct"]]})
+lapply(pub.r, function(x){x[["funnel"]]})
+
+# plot funnels
+overall %>% 
+  metafor::funnel(x = .,
+                  hlines = "lightgray",
+                  xlab = "Cohen's standardized d")
+
+pub.r$rho_0.5$funnel
+```
+
+Note to Nick: the results basically flip depending on whether you use fixed- or random-effects meta.
+
+I think it's because of how those small studies are being weighed?
+
+rma.uni(yi = yi, 
+        vi = vi,
+        data = DF.agg,
+        mods = ~ se,
+        method = "FE") # switch to RE to see phenom
+```{r}
+plot(DF.agg$yi, DF.agg$vi)
+
+ggplot(DF.agg, 
+       aes(x = vi, y = yi)) +
+  geom_point()
+
+ggplot(DF.agg, 
+       aes(x = vi, y = yi, size = 1 / vi)) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              mapping = aes(weight = 1 / vi), 
+              color = "black", 
+              show.legend = FALSE)
+
+ggplot(DF.agg, 
+       aes(x = vi, y = yi, size = 1 / (.32 +vi)
+           )
+       ) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              mapping = aes(weight = 1 / (.32 +vi)), 
+              color = "black", 
+              show.legend = FALSE)
+
+, size = Wind)) +
+        geom_point()
+```
+
+
 ```{r pub.bias, include = F}
 ##########################
 # publication bias analyses
@@ -428,7 +607,9 @@ DF.agg <- DF.es %>%
             cluster = id,
             rho = .5)
 
+##########################
 # PET-PEESE models
+##########################
 # syntax provided by Carter & McCullough, 2014
 ## first compute standard error of es
 DF.agg$se <- sqrt(DF.agg$vi)
@@ -442,7 +623,9 @@ peese <- lm(DF.agg$yi ~ DF.agg$vi,
              weights = 1 / DF.agg$vi) %>% 
   summary()
   
+##########################
 # Vevea and Hedges (1995) Weight-Function Model 
+##########################
 weight.funct <- weightfunct(effect = DF.agg$yi,
                             v = DF.agg$vi,
                             mods = NULL,
@@ -451,14 +634,33 @@ weight.funct <- weightfunct(effect = DF.agg$yi,
                             table = TRUE,
                             pval = NULL)
 
+##########################
+# Mathur and VanderWeele 2020 sensitivity analyses
+# Note: can use non-aggregated data
+##########################
+sens <- corrected_meta(yi = DF.es$es,
+                       vi = DF.es$es.var,
+                       eta = 49,
+                       clustervar = DF.es$id,
+                       model = "robust",
+                       favor.positive = T)
+
 # organize into list
-pub.bias <- list(df = DF.agg,
+pub.bias <- list(DF.agg = DF.agg,
                  pet = pet,
                  peese = peese,
-                 weight.funct = weight.funct)
+                 weight.funct = weight.funct,
+                 sens = sens)
 
-rm(DF.agg, pet, peese, weight.funct, mod.l, ModAnalysis)
+rm(DF.agg, pet, peese, 
+   weight.funct, sens, mod.l, 
+   ModAnalysis)
 ```
+
+Performed publication bias analyses for our overall effect.
+
+Started with a graphical diagnostic: an examination of the funnel plot
+
 
 We did not find evidence of different effects among unpublished ($d$ = `r mod.r$published$sub$b[1]`, 95% CI [`r mod.r$published$sub$ci.lb[1]`, `r mod.r$published$sub$ci.ub[1]`], $p$ = `r printp(mod.r$published$sub$pval[1])`) and published ($d$ = `r mod.r$published$sub$b[2]`, 95% CI [`r mod.r$published$sub$ci.lb[2]`, `r mod.r$published$sub$ci.ub[2]`], $p$ `r printp(mod.r$published$sub$pval[2])`) studies $F$(`r mod.r$published$mod$QMdf[1]`, `r mod.r$published$mod$QMdf[2]`) = `r mod.r$published$mod$QM`, $p$ = `r printp(mod.r$published$mod$QMp)`.
 
