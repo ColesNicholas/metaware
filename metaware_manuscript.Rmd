@@ -142,8 +142,8 @@ We searched APA PsycInfo using broad search terms: "demand characteristics" OR "
 DF.es <- 
   read_csv(file = "data/metaware_data_clean.csv")
 
-# identify total number of studies (denoted by id column)
-num.s <- DF.es$id %>% 
+# identify total number of studies (denoted by id.study column)
+num.s <- DF.es$id.study %>% 
   unique() %>% 
   length()
 
@@ -154,7 +154,7 @@ num.p <- DF.es$name %>%
 
 # for the known outlier (id = 18), give an example of the largest effect size
 outlier.es <- DF.es %>% 
-  filter(id == 18) %>% 
+  filter(id.study == 18) %>% 
   summarise(max.es = min(es)) %>% #  using min because largest value is neg
   round(2)
 ```
@@ -172,9 +172,11 @@ To be eligible for inclusion in the meta-analysis, the following criteria must h
 N. C. and M. W. screened records independently, reviewed potentially relevant records together, and coded the information for moderator analyses and effect size computations. Disagreements were resolved through discussion. It total, `r num.s` studies from `r num.p` records were eligible for inclusion. However, one record [@allen2012demand] was removed because the information reported led to implausibly large effect size estimates (e.g., $d$ = `r outlier.es`).
 
 ```{r clean.env.1, include = F}
-# remove outlier
+# remove outlier and re-initialize id factors
 DF.es <- DF.es %>% 
-  filter(id != 18)
+  filter(id.study != 18) %>% 
+  mutate(id.study = factor(id.study),
+         id.es = factor(id.es))
 
 # clean environment
 rm(DF.s, r.pi, r.unp, num.s, num.p, outlier.es)
@@ -201,15 +203,15 @@ sens.res <-
   sapply(X = sens.df.list, 
          FUN = function(i){
            # open data
-           DF.es <- read.csv(paste0("data/r_sensitivity/",
+           df <- read.csv(paste0("data/r_sensitivity/",
                                     i)
                              ) 
            # fit model
            mod <- rma.uni(yi = es,
                           vi = es.var,
-                          data = DF.es,
+                          data = df,
                           method = "REML") %>% 
-             robust(cluster = DF.es$id)
+             robust(cluster = id.study)
            
            # return overall es as a number
            mod$b %>% 
@@ -231,7 +233,7 @@ For repeated-measure comparisons, the correlation between the repeated measures 
 # calculate percentage of studies with multiple effect sizes
 mult.eff.per <- DF.es %>% 
   # identify number of effect sizes for each study (id)
-  group_by(id) %>% 
+  group_by(id.study) %>% 
   count() %>% 
   
   # code whether each study has more than one effect size
@@ -320,17 +322,20 @@ The most common way to assess publication bias with dependent structures is to a
 
 ```{r overall, include = F}
 # estimate overall effect size
-overall <-
-  rma.uni(yi = es,
-          vi = es.var,
-          data = DF.es,
-          method = "REML") %>% 
-  robust(cluster = DF.es$id)
+overall <- 
+  rma.mv(yi = es,
+         V = es.var,
+         data = DF.es,
+         random = ~ 1 | id.study / id.es)
+# overall <-
+#   rma.uni(yi = es,
+#           vi = es.var,
+#           data = DF.es,
+#           method = "REML") %>% 
+#   robust(cluster = DF.es$id)
 ```
 
-Results indicated that, overall, explicit manipulations of demand characteristics create a small-to-medium acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis.
-
-That being said, the observed effects of demand characteristics were highly heterogeneous. The standard deviation of the distribution of effects $\tau$ = `r sqrt(overall$tau2)` was larger than the overall effect---and `r overall$I2`% of variability appeared to be driven by heterogeneity (i.e., $I^2$ = `r overall$I2`).
+Results indicated that, overall, explicit manipulations of demand characteristics create a small acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $z$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis. That being said, the observed effects of demand characteristics were highly heterogeneous. The between-study ($\tau$ = `r sqrt(overall$overall$sigma2[1])`) and within-study ($\sigma$ = `r sqrt(overall$overall$sigma2[2])`) standard deviation of effects was approximately the same size of the overall effect. This suggests the presence of moderators.
 
 ### Moderator analyses
 
@@ -425,7 +430,7 @@ rma.uni(yi = yi,
   metafor::funnel()
 ```
 
-```{r pub.bias2, include = F}
+```{r pub.bias, include = F}
 ##########################
 # Define publication bias analysis that
 # 1. Mathur and VanderWeele 2020 sensitivity analyses
@@ -545,116 +550,6 @@ overall %>%
                   xlab = "Cohen's standardized d")
 
 pub.r$rho_0.5$funnel
-```
-
-Note to Nick: the results basically flip depending on whether you use fixed- or random-effects meta.
-
-I think it's because of how those small studies are being weighed?
-
-rma.uni(yi = yi, 
-        vi = vi,
-        data = DF.agg,
-        mods = ~ se,
-        method = "FE") # switch to RE to see phenom
-```{r}
-plot(DF.agg$yi, DF.agg$vi)
-
-ggplot(DF.agg, 
-       aes(x = vi, y = yi)) +
-  geom_point()
-
-ggplot(DF.agg, 
-       aes(x = vi, y = yi, size = 1 / vi)) +
-  geom_point() +
-  geom_smooth(method = "lm", 
-              mapping = aes(weight = 1 / vi), 
-              color = "black", 
-              show.legend = FALSE)
-
-ggplot(DF.agg, 
-       aes(x = vi, y = yi, size = 1 / (.32 +vi)
-           )
-       ) +
-  geom_point() +
-  geom_smooth(method = "lm", 
-              mapping = aes(weight = 1 / (.32 +vi)), 
-              color = "black", 
-              show.legend = FALSE)
-
-, size = Wind)) +
-        geom_point()
-```
-
-
-```{r pub.bias, include = F}
-##########################
-# publication bias analyses
-##########################
-# aggregate dependent effect sizes
-DF.agg <- DF.es %>%
-  
-  # convert to an 'escalc' object so function can run
-  escalc(yi = es,
-         vi = es.var,
-         data = DF.es,
-         measure = "SMD") %>% 
-  
-  # delete vestigial: es is now yi; es.var is now vi
-  select(-c(es, es.var)) %>% 
-  
-  # aggregate dependencies
-  aggregate(x = .,
-            cluster = id,
-            rho = .5)
-
-##########################
-# PET-PEESE models
-##########################
-# syntax provided by Carter & McCullough, 2014
-## first compute standard error of es
-DF.agg$se <- sqrt(DF.agg$vi)
-
-## create models
-pet <- lm(DF.agg$yi ~ DF.agg$se, 
-          weights = 1 / DF.agg$vi) %>% 
-  summary()
-
-peese <- lm(DF.agg$yi ~ DF.agg$vi, 
-             weights = 1 / DF.agg$vi) %>% 
-  summary()
-  
-##########################
-# Vevea and Hedges (1995) Weight-Function Model 
-##########################
-weight.funct <- weightfunct(effect = DF.agg$yi,
-                            v = DF.agg$vi,
-                            mods = NULL,
-                            weights= NULL,
-                            fe = FALSE,
-                            table = TRUE,
-                            pval = NULL)
-
-##########################
-# Mathur and VanderWeele 2020 sensitivity analyses
-# Note: can use non-aggregated data
-##########################
-sens <- corrected_meta(yi = DF.es$es,
-                       vi = DF.es$es.var,
-                       eta = 49,
-                       clustervar = DF.es$id,
-                       model = "robust",
-                       favor.positive = T)
-
-# organize into list
-pub.bias <- list(DF.agg = DF.agg,
-                 pet = pet,
-                 peese = peese,
-                 weight.funct = weight.funct,
-                 sens = sens)
-
-rm(DF.agg, pet, peese, 
-   weight.funct, sens, mod.l, 
-   ModAnalysis)
 ```
 
 Performed publication bias analyses for our overall effect.

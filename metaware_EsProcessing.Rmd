@@ -39,8 +39,12 @@ DF <- DF %>%
                    true = "single",
                    false = "double")) %>% 
   
+  # create study and es_id columns
+  rename(id.study = id) %>% 
+  mutate(id.es = 1 : nrow(DF)) %>% 
+  
   # convert factors to factors
-  mutate(across(.cols = c(id, published, student,
+  mutate(across(.cols = c(id.study, id.es, published, student,
                           paid, online, ref.type,
                           ref.r),
                 .fns = as.factor)
@@ -442,6 +446,12 @@ DF <- DF %>%
   select(-c(vig.1, vig, v1.mot : v2.pre))
 
 rm(surv.sum)
+
+# arrange variables
+DF <- DF %>% 
+  select(id.study, id.es, 
+         name : ref.r, 
+         es, es.var)
 ```
 
 # Export
