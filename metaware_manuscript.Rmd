@@ -352,20 +352,31 @@ ModAnalysis = function(m, df = DF.es) {
   df <- df
   
   # moderator analysis
-  mod.m <- rma.uni(yi = es, 
-                   vi = es.var,
-                   data = df,
-                   mods = as.formula(paste0("~ ", m)),
-                   method = "REML") %>%
-    robust(cluster = id)
+  mod.m <- rma.mv(yi = es,
+                  V = es.var,
+                  data = DF.es,
+                  random = ~ 1 | id.study / id.es,
+                  mods = as.formula(paste0("~ ", m)))
+  
+  sub.m <- rma.mv(yi = es,
+                  V = es.var,
+                  data = DF.es,
+                  random = ~ 1 | id.study / id.es,
+                  mods = as.formula(paste0("~ 0 + ", m)))
+  # mod.m <- rma.uni(yi = es, 
+  #                  vi = es.var,
+  #                  data = df,
+  #                  mods = as.formula(paste0("~ ", m)),
+  #                  method = "REML") %>%
+  #   robust(cluster = id)
            
   # subgroup analysis
-  sub.m <- rma.uni(yi = es,
-                   vi = es.var,
-                   data = df,
-                   mods = as.formula(paste0("~ 0 + ", m)),
-                   method = "REML") %>%
-    robust(cluster = id)
+  # sub.m <- rma.uni(yi = es,
+  #                  vi = es.var,
+  #                  data = df,
+  #                  mods = as.formula(paste0("~ 0 + ", m)),
+  #                  method = "REML") %>%
+  #   robust(cluster = id)
   
   # return results as list
   return(list(mod = mod.m,
@@ -387,6 +398,11 @@ mod.r[["ref.type"]] <-
 
 # delete vestigial 
 rm(mod.l, ModAnalysis)
+
+# tmp
+lapply(X = mod.r, FUN = function(x){x[["sub"]]
+  }
+  )
 ```
 
 #### Motivation, opportunity, and belief
