@@ -305,9 +305,7 @@ We also coded several moderators for which we had no a-priori hypotheses. This i
 
 ## Meta-analytic approach
 
-For estimating overall effects and testing moderators, we used random-effects meta-analysis with robust variance estimates [@hedges2010robust]. We used random-effects because @rosnow1997people and @coles2022fact posited that moderators create a distribution of true effects---as opposed to a single fixed-effect [@hedges1998fixed]. We used robust variance estimates because `r mult.eff.per`% of studies provided multiple effect sizes of interest, which violates the statistical assumption that effect sizes are independent. Like many meta-analysis procedures, meta-analysis with robust variance estimates uses an inverse-variance weighting scheme that adjusts for dependencies among effect size [@tanner2014robust].
-
-To estimate the overall effect size, we fit an intercept-only model. The intercept of this model can be interpreted as the precision-weighted overall effect size, adjusted for effect size dependencies. For moderator analyses, continuous and dummy-coded categorical moderators were separately entered into the meta-regression model. For categorical moderators, we used the models to additionally estimate subrgroup overall effect sizes.
+For estimating overall effects and testing moderators, we used three-level meta-analysis. Three-level meta-analysis accommodates dependent effect sizes by modeling three sources of variability: the sampling error of individual studies (level 1), variability within studies (level 2), and variability between studies (level 3). To estimate the overall effect size, we fit an intercept-only three-level meta-regression model. For moderator analyses, continuous and dummy-coded categorical moderators were separately entered into the meta-regression model. For categorical moderators, we used the models to estimate overall effect sizes within each subgroup of the moderator.
 
 ```{r clean.env.2, include = F}
 # delete vestigial
@@ -316,7 +314,19 @@ rm(mult.eff.per, vig.n, survey.n, sens.range)
 
 ### Publication bias analyses
 
-The most common way to assess publication bias with dependent structures is to aggregate the dependent effect sizes and perform standard publication bias analyses. Following this approach, we used the MAd R package to aggregate dependent effect sizes. We then used precision effect tests [i.e., PET-PEESE, @stanley2014meta] and weight-function modeling [@vevea1995general] to test for the presence of publication bias and estimate the bias-corrected overall effect size. As a further sensitivity analysis, we used an approach by @mathur2020sensitivity to estimate the maximal publication bias required to shift the observed overall effect size estimate to zero.
+We used several approaches to assess and correct for potential publication bias in our overall effect size estimate.
+
+First, we visually examined *funnel plots* of observed effect sizes against their standard errors, the latter which is an index of effect size precision. Without publication bias, funnel plot distributions typically resemble a funnel: relatively large studies estimate the effect with high precision, and effect sizes fan out in *both* directions as the studies become less precise. If, however, relatively imprecise non-significant findings are omitted from the scientific record (i.e., there is publication bias), the resulting distribution is often asymmetric/sloped. For our purposes, we examined funnel plots both with (a) all effect sizes, and (b) effect sizes that were aggregated in cases of non-independence.
+
+Second, we conducted precision-effect tests in (a) a two-level meta-regression with robust variance estimates, and (b) a three-level meta-regression (citation). In precision-effect tests, the relationship between effect size and variability---which would be absent when there is no publication bias---is estimated and controlled for in a meta-regression model. This subsequently produces estimates of publication bias and the bias-corrected overall effect. Precision-effect tests are usually conducted in a two-level meta-regression and have exaggerated error rates when there are non-independent effect sizes. Nonetheless, Rodgers and Pustejovsky (2021) demonstrated that the method retains fairly good statistical properties when expanded to either (a) include robust variance estimates , or (b) include a third level that accommodates nested effects. We used both approaches in the current work.
+
+Third, we used weight-function modeling with aggregated dependent effect sizes [@vevea1995general]. In weight-function modeling, weighted distribution theory is used to model biased selection behavior, which is then compared to unadjusted model. If the adjusted model provides increased fit, publication bias is a concern and the adjusted model can be used to estimate the bias-corrected overall effect size. Once again, weight-function modeling was designed for two-level meta-analysis and has exaggerated error rates when there are non-independent effect sizes. Nonetheless, Rodgers and Pustejovsky (2021) demonstrated that the method retains fairly good statistical properties when non-independent effect sizes are aggregated.
+
+Fourth, we examined whether effect sizes differ among published and non-published records. To do so, we fit a three-level meta-regression with publication status entered as a dummy-coded predictor. Last, we used an approach by @mathur2020sensitivity to estimate the maximal publication bias required to shift the observed overall effect size estimate to zero. To adjust for non-independence, we used robust variance estimates for this approach.
+
+we examined funnel plots, performed precision-effect tests, fit a weight-function model, compared
+
+implemented three approaches: (1) modeling non-independent effect sizes using three-level meta-analysis, (2) adjusting for non-independent effect sizes using robust variance estimation (e.g. Coles et al., 2019a), and (3) aggregated non-independent effect sizes (e.g., Coles et al., 2019b.
 
 # Results
 
@@ -581,7 +591,6 @@ overall %>%
 pub.r$rho_0.5$funnel
 ```
 
-
 ```{r pub.bias, include = F, eval = F}
 ##########################
 # Define publication bias analysis that
@@ -707,7 +716,6 @@ pub.r$rho_0.5$funnel
 Performed publication bias analyses for our overall effect.
 
 Started with a graphical diagnostic: an examination of the funnel plot
-
 
 We did not find evidence of different effects among unpublished ($d$ = `r mod.r$published$sub$b[1]`, 95% CI [`r mod.r$published$sub$ci.lb[1]`, `r mod.r$published$sub$ci.ub[1]`], $p$ = `r printp(mod.r$published$sub$pval[1])`) and published ($d$ = `r mod.r$published$sub$b[2]`, 95% CI [`r mod.r$published$sub$ci.lb[2]`, `r mod.r$published$sub$ci.ub[2]`], $p$ `r printp(mod.r$published$sub$pval[2])`) studies $F$(`r mod.r$published$mod$QMdf[1]`, `r mod.r$published$mod$QMdf[2]`) = `r mod.r$published$mod$QM`, $p$ = `r printp(mod.r$published$mod$QMp)`.
 
