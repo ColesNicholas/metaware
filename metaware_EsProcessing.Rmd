@@ -391,8 +391,65 @@ DF.surv <- DF.surv %>%
             as.numeric)
 ```
 
-## Remove failed attention checks
-TBD
+## Process attention checks
+Specify whether participants correctly identified the communicated hypothesis
+Note: awr should be 1, 2, and 3 for pos, neg, and nil respectively
+```{r}
+DF.surv <- DF.surv %>% 
+  
+  # identify whether the demand condition was pos, neg, or nil
+  mutate(dem = substr(x = vig,
+                      start = 4,
+                      stop = 4))
+  
+## set att.chk to 0 (false) by default
+DF.surv$att.chk = 0
+
+## set att.chk to 1 when hypothesis is correctly identified
+DF.surv[DF.surv$dem == "p" & 
+      !is.na(DF.surv$awr) &
+      DF.surv$awr == 1, ]$att.chk = 1
+
+DF.surv[DF.surv$dem == "n" & 
+      !is.na(DF.surv$awr) &
+      DF.surv$awr == 2, ]$att.chk = 1
+
+DF.surv[DF.surv$dem == "z" & 
+      !is.na(DF.surv$awr) &
+      DF.surv$awr == 3, ]$att.chk = 1
+
+## if participants did not specify a  hypothesis, set att.chk to NA
+DF.surv[is.na(DF.surv$awr), ]$att.chk = NA
+```
+
+Examine attention check data
+```{r}
+# overall
+DF.surv %>%
+  summarise(m = mean(att.chk,
+                     na.rm = T))
+
+# split by demand type
+DF.surv %>%
+  group_by(dem) %>%
+  summarise(m = mean(att.chk,
+                     na.rm = T))
+
+# split by vignette
+DF.surv %>% 
+  group_by(vig) %>% 
+  filter(!is.na(att.chk)) %>% 
+  summarise(n = n(),
+            m = mean(att.chk)) %>% 
+  arrange(m) %>% 
+  View()
+```
+
+Limit to observations where attention check was passed
+```{r}
+DF.surv <- DF.surv %>% 
+  filter(att.chk == 1)
+```
 
 ## Calculate summary statistics
 ```{r}
