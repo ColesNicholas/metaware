@@ -441,8 +441,8 @@ DF.surv %>%
   filter(!is.na(att.chk)) %>% 
   summarise(n = n(),
             m = mean(att.chk)) %>% 
-  arrange(m) %>% 
-  View()
+  arrange(m) #%>% 
+  #View()
 ```
 
 Limit to observations where attention check was passed
@@ -497,18 +497,33 @@ DF <- DF %>%
          v2.opp = m.opp, 
          v2.bel = m.bel, 
          v2.pre = m.pre) %>% 
-  ungroup() %>% 
   
-  # remove vestigial 
-  select(-c(vig.1, vig, v1.mot : v2.pre))
+  # sum motivation, opportunity, belief, and prediction scores
+  rowwise() %>% 
+  mutate(mot = sum(c(v1.mot, v2.mot), 
+                   na.rm = T),
+         opp = sum(c(v1.opp, v2.opp), 
+                   na.rm = T),
+         bel = sum(c(v1.bel, v2.bel), 
+                   na.rm = T),
+         pre = sum(c(v1.pre, v2.pre), 
+                   na.rm = T)) %>% 
+  ungroup()
 
 rm(surv.sum)
+
+# tmp code: if  no vignette ratings exist, leave mot to pre blank
+DF[is.na(DF$v1.mot), ]$mot = NA
+DF[is.na(DF$v1.mot), ]$opp = NA
+DF[is.na(DF$v1.mot), ]$bel = NA
+DF[is.na(DF$v1.mot), ]$pre = NA
 
 # arrange variables
 DF <- DF %>% 
   select(id.study, id.es, 
          name : ref.r, 
-         es, es.var)
+         es, es.var,
+         mot : pre)
 ```
 
 # Export

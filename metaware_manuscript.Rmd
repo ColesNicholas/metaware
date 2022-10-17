@@ -345,11 +345,6 @@ Results indicated that, overall, explicit manipulations of demand characteristic
 ### Moderator analyses
 
 ```{r mod, include = F}
-# create list of moderators
-mod.l <- c("student", "paid", "online", 
-           "design", "ref.r", "published",
-           "year")
-
 # create moderator analysis function
 ModAnalysis = function(m, df = DF.es) {
   
@@ -377,17 +372,49 @@ ModAnalysis = function(m, df = DF.es) {
 }
 
 # conduct moderator and subgroup analyses for moderators assessed with full dataset 
+mod.l <- c("student", "paid", "online", 
+           "design", "ref.r", "published",
+           "year")
 mod.r <- 
   sapply(X = mod.l,
          simplify = F,
          FUN = ModAnalysis)
+
+rm(mod.l)
 
 # test ref.type moderator in scenarios where there is a control comparison (i.e., ref.r == single)
 mod.r[["ref.type"]] <- 
   ModAnalysis(m = "ref.type",
               df = DF.es[DF.es$ref.r == "single", ])
 
-# add mot, opp, bel, and pre
+# add motivation, opportunity, belief, and prediction moderators
+## TMP: visualize data
+tmp <- DF.es %>% 
+  filter(ref.type != "cvz" &
+                         ref.type != "pvz")
+
+plot(tmp$es, tmp$mot)
+plot(tmp$es, tmp$opp)
+plot(tmp$es, tmp$bel)
+plot(tmp$es, tmp$pre)
+
+cor(tmp$es, tmp$mot,
+    use = "pairwise.complete.obs")
+cor(tmp$es, tmp$opp,
+    use = "pairwise.complete.obs")
+cor(tmp$es, tmp$bel,
+    use = "pairwise.complete.obs")
+cor(tmp$es, tmp$pre,
+    use = "pairwise.complete.obs")
+
+# Note: comparisons with nil-demand conditions are excluded
+mod.r.2 <- 
+  sapply(X = c("mot", "opp", "bel", "pre"),
+         simplify = F,
+         FUN = ModAnalysis,
+         df = DF.es %>% 
+               filter(ref.type != "cvz" &
+                        ref.type != "pvz"))
 
 # delete vestigial 
 rm(mod.l, ModAnalysis)
