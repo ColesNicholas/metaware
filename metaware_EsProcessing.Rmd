@@ -331,7 +331,8 @@ DF <- DF %>%
 # Open and clean survey data
 ```{r}
 # import data
-DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>% 
+DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>%
+  
   # remove unnecessary variables
   select(-c(StartDate : UserLanguage),
          -c(hap1_bl1_hap : survey_order),
@@ -526,7 +527,7 @@ DF <- DF %>%
          mot : pre)
 ```
 
-## Prep dataset for second part of survey
+# Prep dataset for second part of survey
 ```{r}
 # import data
 DF.surv2 <- 
@@ -561,7 +562,24 @@ DF.surv2 <- DF.surv2 %>%
     
     # condition and individual difference items
     demand,
-    indiv_gend_var, indiv_agee_var, ethnicity) %>% 
+    indiv_gend_var, indiv_agee_var, ethnicity,
+    
+    # relevant vignette data
+    `46_awr` : `46_opp`,
+    `47_awr` : `47_opp`) %>% 
+  
+  # rename vignette variables
+  rename(pos_awr = `46_awr`,
+         pos_mot = `46_mot`,
+         pos_pre = `46_pre`,	
+         pos_bel = `46_bel`,
+         pos_opp = `46_opp`,
+         
+         nil_awr = `47_awr`,
+         nil_mot = `47_mot`,
+         nil_pre = `47_pre`,	
+         nil_bel = `47_bel`,
+         nil_opp = `47_opp`) %>% 
   
   # add subid variable
   mutate(sub = factor(1 : nrow(.))) %>% 
@@ -595,7 +613,16 @@ DF.surv2 <- DF.surv2 %>%
   # fix variable types
   mutate_at(.vars = c("mot", "pre", "bel", "opp",
                       "mot_gen", "indiv_agee_var", 
-                      "hap", "sat", "enj"),
+                      
+                      "hap", "sat", "enj",
+                      
+                      "pos_awr", "pos_mot",
+                      "pos_pre", "pos_bel",
+                      "pos_opp",
+                      
+                      "nil_awr", "nil_mot",
+                      "nil_pre", "nil_bel",
+                      "nil_opp"),
             .funs = as.numeric) %>%
   
   mutate_at(.vars = c("demand", "indiv_gend_var",
@@ -625,7 +652,8 @@ DF.surv2 <- DF.surv2 %>%
   select(sub, demand, trial, block.num, happy, 
          att.chk, awr,
          mot : mot_gen,
-         indiv_gend_var : ethnicity)
+         indiv_gend_var : ethnicity,
+         pos_awr : nil_opp)
 ```
 
 # Export
@@ -645,3 +673,60 @@ write.csv(DF.surv2,
           row.names = F)
 ```
 
+# prelimin analyses
+```{r}
+library(lme4)
+library(lmerTest)
+library(emmeans)
+
+# test facial feedback by demand interaction
+
+m <- lmer(happy ~ trial * block.num * demand + 
+            (1 | sub),
+          data = DF.surv2)
+
+anova(m)
+emmeans(m, 
+        pairwise ~ trial)
+joint_tests(m, by = "demand")
+
+# interactions
+m <- lmer(happy ~ trial + block.num + demand + 
+            (trial : demand) + 
+            (trial : demand : mot) +
+            (1 | sub),
+          data = DF.surv2)
+
+summary(m)
+
+m <- lmer(happy ~ trial + block.num + demand + 
+            (trial : demand) + 
+            (trial : demand : bel) +
+            (1 | sub),
+          data = DF.surv2)
+
+summary(m)
+
+m <- lmer(happy ~ trial + block.num + demand + 
+            (trial : demand) + 
+            (trial : demand : opp) +
+            (1 | sub),
+          data = DF.surv2)
+
+summary(m)
+
+# convergent validity analyses
+DF.pos <- DF.surv2 %>% 
+  filter(demand == "pos")
+
+DF.nil <- DF.surv2 %>% 
+  filter(demand == "nil")
+
+cor(DF.pos$pos_mot, DF.pos$mot,
+    use = "pairwise.complete.obs")
+```
+
+
+Need to save these two columns:
+12_p_hap
+12_z_hap
