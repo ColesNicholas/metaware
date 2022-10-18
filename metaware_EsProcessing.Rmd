@@ -526,12 +526,122 @@ DF <- DF %>%
          mot : pre)
 ```
 
+## Prep dataset for second part of survey
+```{r}
+# import data
+DF.surv2 <- 
+  read_csv(file = "data/metaware_SurvData_raw.csv")
+
+# remove rows containing unnecessary variable details
+DF.surv2 <- DF.surv2[-(1 : 2), ]
+
+# process data
+DF.surv2 <- DF.surv2 %>%
+  
+  # identify relevant variables
+  select(
+    # block 1 happy pose emotion reports
+    hap1_bl1_hap : hap1_bl1_enj,
+    
+    # block 1 neutral pose emotion reports
+    neu1_bl1_hap : neu1_bl1_enj,
+    
+    # block 2 happy pose emotion reports
+    hap2_bl2_hap : hap2_bl2_enj,
+    
+    # block 2 neutral pose emotion reports
+    neu2_bl2_hap : neu2_bl2_enj,
+    
+    # motivation, prediction, belief, and opportunity scores
+    mot : opp, mot_gen,
+    
+    # manipulation check items (awareness and attention checks)
+    hap1_bl1_att, hap2_bl2_att, neu1_bl1_att, neu2_bl2_att,
+    awr,
+    
+    # condition and individual difference items
+    demand,
+    indiv_gend_var, indiv_agee_var, ethnicity) %>% 
+  
+  # add subid variable
+  mutate(sub = factor(1 : nrow(.))) %>% 
+  
+  # identify whether attention checks were all passed
+  mutate(att.chk = 
+           if_else(condition = 
+                     hap1_bl1_att == "5" &
+                     neu1_bl1_att == "5" &
+                     hap2_bl2_att == "5" &
+                     neu2_bl2_att == "5",
+                   true = 1,
+                   false = 1)
+         ) %>% 
+  
+  # create separate rows for each trial 
+    # 1. Gather emotion reports into a single column
+    gather(key = "dv", 
+           value = "value",
+           hap1_bl1_hap : neu2_bl2_enj) %>% 
+  
+    # 2. Create separate variables that identify the trial and outcome using "_..._ naming convention separator
+    separate(col = "dv", 
+             into = c("trial", "outcome"),
+             sep = "_..._") %>%
+    
+    # 3. Spread outcomes into individual rows
+    pivot_wider(names_from = "outcome",
+                values_from = "value") %>% 
+  
+  # fix variable types
+  mutate_at(.vars = c("mot", "pre", "bel", "opp",
+                      "mot_gen", "indiv_agee_var", 
+                      "hap", "sat", "enj"),
+            .funs = as.numeric) %>%
+  
+  mutate_at(.vars = c("demand", "indiv_gend_var",
+                      "ethnicity", "sub"),
+            .funs = as.factor) %>% 
+  
+  # Calculate self-reported happiness scores
+  rowwise() %>%
+  mutate(happy = mean(c(hap, sat, enj))) %>% 
+  ungroup() %>% 
+  
+  # identify block number
+  mutate(block.num = if_else(condition = trial == "hap1" |
+                                         trial == "neu1",
+                             true = 1,
+                             false = 2),
+         block.num = factor(block.num)) %>% 
+  
+  # create new trial variable that remove redundant information about block
+  mutate(trial = substr(x = trial, 
+                        start = 1, 
+                        stop = 3),
+         trial = factor(trial)) %>% 
+  
+  # organize dataframe
+  arrange(sub, block.num, trial) %>% 
+  select(sub, demand, trial, block.num, happy, 
+         att.chk, awr,
+         mot : mot_gen,
+         indiv_gend_var : ethnicity)
+```
+
 # Export
-When sensitivity analyses are performed, there will be a token variable created called "sens". If this variable does not exist (i.e., it isn't a sensitivity analysis) export the data as the official clean version.
+When sensitivity analyses are performed, there will be a token variable created called "sens". If this variable does not exist (i.e., it isn't a sensitivity analysis) export the main data as the official clean version.
 ```{r}
 if(!exists("sens")){
   write.csv(DF, 
             "data/metaware_data_clean.csv", 
-            row.names = FALSE)
+            row.names = F)
 }
 ```
+
+Export second survey dataset
+```{r}
+write.csv(DF.surv2,
+          "data/metaware_survey2_clean.csv",
+          row.names = F)
+```
+
