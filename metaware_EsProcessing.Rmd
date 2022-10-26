@@ -697,7 +697,7 @@ m <- lmer(happy ~ trial + block.num + demand +
             (1 | sub),
           data = DF.surv2)
 
-summary(m)
+anova(m)
 
 m <- lmer(happy ~ trial + block.num + demand + 
             (trial : demand) + 
@@ -705,7 +705,7 @@ m <- lmer(happy ~ trial + block.num + demand +
             (1 | sub),
           data = DF.surv2)
 
-summary(m)
+anova(m)
 
 m <- lmer(happy ~ trial + block.num + demand + 
             (trial : demand) + 
@@ -713,7 +713,11 @@ m <- lmer(happy ~ trial + block.num + demand +
             (1 | sub),
           data = DF.surv2)
 
-summary(m)
+anova(m)
+
+# new simpler belief and motivation analyses
+tmp <-
+  
 
 # convergent validity analyses
 DF.pos <- DF.surv2 %>% 
@@ -724,6 +728,8 @@ DF.nil <- DF.surv2 %>%
 
 cor(DF.pos$pos_mot, DF.pos$mot,
     use = "pairwise.complete.obs")
+
+rm(DF.pos, DF.nil)
 ```
 
 
