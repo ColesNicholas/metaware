@@ -427,6 +427,8 @@ DF.surv[is.na(DF.surv$awr), ]$att.chk = NA
 DF.surv[DF.surv$vig == "28_p_dis" &
           !is.na(DF.surv$awr) &
           DF.surv$awr == 2, ]$att.chk = 1
+
+## re-examination of 36_n_won suggested it was poorly worded (we meant to convey that it would hinder performance, but many people thought we meant it would improve performance)
 ```
 
 Examine attention check data
