@@ -421,6 +421,12 @@ DF.surv[DF.surv$dem == "z" &
 
 ## if participants did not specify a  hypothesis, set att.chk to NA
 DF.surv[is.na(DF.surv$awr), ]$att.chk = NA
+
+## manually fix 28_p_dis
+## there were some oddities in how we created this vignette--but the correct hypothesis would be 2 (not 1)
+DF.surv[DF.surv$vig == "28_p_dis" &
+          !is.na(DF.surv$awr) &
+          DF.surv$awr == 2, ]$att.chk = 1
 ```
 
 Examine attention check data
@@ -442,8 +448,8 @@ DF.surv %>%
   filter(!is.na(att.chk)) %>% 
   summarise(n = n(),
             m = mean(att.chk)) %>% 
-  arrange(m) #%>% 
-  #View()
+  arrange(m) %>% 
+  View()
 ```
 
 Limit to observations where attention check was passed
@@ -674,21 +680,71 @@ write.csv(DF.surv2,
 ```
 
 # prelimin analyses
+Note that your belief question is a bit hard to interpret for this study.
+
+In the nil-hypothesis condition, what exactly does it mean to think tha tthey hypothesized effect is true/untrue? Is the hypothesized effect the nil or non-nil effect?
+
+The convergent validity analyses have very few n. Not sure if we're going to learn anything there.
 ```{r}
 library(lme4)
 library(lmerTest)
 library(emmeans)
 
-# test facial feedback by demand interaction
+# convergent validity analyses
+DF.pos <- DF.surv2 %>% 
+  filter(demand == "pos")
 
+DF.nil <- DF.surv2 %>% 
+  filter(demand == "nil")
+
+cor(DF.pos$pos_mot, DF.pos$mot,
+    use = "pairwise.complete.obs")
+
+cor(DF.nil$nil_mot, DF.nil$mot,
+    use = "pairwise.complete.obs")
+
+rm(DF.pos, DF.nil)
+
+# test facial feedback by demand interaction
 m <- lmer(happy ~ trial * block.num * demand + 
             (1 | sub),
           data = DF.surv2)
 
 anova(m)
+
 emmeans(m, 
         pairwise ~ trial)
+
 joint_tests(m, by = "demand")
+
+# belief
+DF.surv2 %>% 
+  group_by(demand) %>% 
+  summarise(m.bel = mean(bel,
+                         na.rm = T))
+lm(bel ~ demand,
+   data = DF.surv2) %>% 
+  anova()
+
+lmer(happy ~ trial + block.num + bel + 
+            (trial : bel) +
+            (1 | sub),
+          data = DF.surv2) %>% 
+  anova()
+
+# motivation
+## need to recode motivation for the nil hypothesis condition
+DF.surv2 <- DF.surv2 %>% 
+  rowwise() %>% 
+  mutate(mot = if_else(demand == "nil",
+                       mot * (-1),
+                       mot))
+
+lmer(happy ~ trial + block.num + mot + 
+            (trial : mot) +
+            (1 | sub),
+          data = DF.surv2) %>% 
+  anova()
 
 # interactions
 m <- lmer(happy ~ trial + block.num + demand + 
@@ -716,20 +772,8 @@ m <- lmer(happy ~ trial + block.num + demand +
 anova(m)
 
 # new simpler belief and motivation analyses
-tmp <-
-  
 
-# convergent validity analyses
-DF.pos <- DF.surv2 %>% 
-  filter(demand == "pos")
 
-DF.nil <- DF.surv2 %>% 
-  filter(demand == "nil")
-
-cor(DF.pos$pos_mot, DF.pos$mot,
-    use = "pairwise.complete.obs")
-
-rm(DF.pos, DF.nil)
 ```
 
 
