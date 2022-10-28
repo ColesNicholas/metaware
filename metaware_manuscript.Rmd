@@ -338,7 +338,7 @@ overall <-
 #   robust(cluster = DF.es$id)
 ```
 
-Results indicated that, overall, explicit manipulations of demand characteristics create a small acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis. That being said, the observed effects of demand characteristics were highly heterogeneous. The between-study ($\tau$ = `r sqrt(overall$sigma2[1])`) and within-study ($\sigma$ = `r sqrt(overall$sigma2[2])`) effect standard deviation was approximately the same size of the overall effect. This suggests that moderators (as opposed to mere sampling error) are producing meaningful shifts in the effects of demand characteristics.
+Results indicated that, overall, explicit manipulations of demand characteristics create a small acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis.
 
 ### Moderator analyses
 
@@ -352,14 +352,14 @@ ModAnalysis = function(m, df = DF.es) {
   # moderator analysis
   mod.m <- rma.mv(yi = es,
                   V = es.var,
-                  data = DF.es,
+                  data = df,
                   random = ~ 1 | id.study / id.es,
                   mods = as.formula(paste0("~ ", m)),
                   test= "t")
   
   sub.m <- rma.mv(yi = es,
                   V = es.var,
-                  data = DF.es,
+                  data = df,
                   random = ~ 1 | id.study / id.es,
                   mods = as.formula(paste0("~ 0 + ", m)),
                   test= "t")
@@ -402,9 +402,11 @@ mod.r = c(mod.r, mod.r.2)
 rm(ModAnalysis, mod.r.2)
 ```
 
+The observed effects of demand characteristics were highly heterogeneous. Indeed, the between-study ($\tau$ = `r sqrt(overall$sigma2[1])`) and within-study ($\sigma$ = `r sqrt(overall$sigma2[2])`) effect standard deviation was approximately the same size of the overall effect. This suggests that moderators (as opposed to mere sampling error) are producing meaningful shifts in the effects of demand characteristics.
+
 #### Motivation, opportunity, and belief
 
-Contrary to predictions made by @rosnow1997people and @coles2022fact, we did not find that the effects of demand characteristics were moderated by ratings of the extent to which participants would be motivated to confirm the experimenter's hypothesis, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`. We did, however, find that demand characteristics tended to produce larger acquiescence effects when participants indicated that they had more control over the outcome of interest, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])`. Consistent with @coles2022fact, demand characteristics tended to produce larger acquiescence effects when raters indicated that they believed the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])`.
+Contrary to predictions made by @rosnow1997people and @coles2022fact, we did not find that the effects of demand characteristics were moderated by ratings of the extent to which participants would be motivated to confirm the experimenter's hypothesis, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`. We also did not find that demand characteristic effects were moderated by ratings of the extent to which participants could control the outcome of interest, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])`. Consistent with @coles2022fact, however, demand characteristic effects were larger when raters indicated that they believed the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])`.
 
 #### Other moderators
 
@@ -571,9 +573,18 @@ pub.r$rho_0.5$funnel
 
 # Discussion
 
-Compare average effect of demand to average effect in psychology. It suggest that it's plausible that these are driven by demand. When looking at the distribution, it's clear that no effect is too big to rule out concerns about demand.
+Contrary to classic coneptualizations of the impact of demand characteristics () and frameworks proposed by @rosnow1997people and @coles2022fact, we did not find evidence of two moderators that should underlie response biases: motivation to adjust responses and opportunity to adjust responses. Instead, our results are unexpectedly more consistent with a more parsimonious view: that phenomena typically described by experimental psychologists as "demand effects" are actually *placebo effects*. Applied to classic work by Orne, maybe participants did not exhibit sham symptoms of hypnosis because they were motivated to please the experimenter; instead maybe they intentionally or unintentionally responded in a manner that was consistent with their personal beliefs (a self-fulfilling prophecy or placebo effect).
 
-Might want to plot es distribution and identify proportion of (a) non-negligible acquiescence, (b) non-negligible counter-acquiescence, and (c) non-acquiescence.
+This still doesn't make sense when explaining why Mummolo didn't find the effect. Had above average belief ratings
+
+```{r}
+DF.es %>% 
+  filter(name == "Demand effects in survey experiments: An empirical assessment") %>%  View
+```
+
+## Implications
+
+Based on the belief that demand characteristics is a response bias moderated by motivation and opportunity to adjust responses, two recommendations have been proposed to combat demand characteristics: lower participants' (1) motivation to adjust responses (e.g., by emphasizing the importance of natural responding), and/or (2) ability to adjust responses (e.g., by using difficult-to-control measures, like implicit or physiological measures). The "demand-as-placebo" account, however, suggests that these approaches are likely to be ineffective. Regardless of whether participants are motivated or able to adjust responses, knowledge of the experimenter's hypothesis can create placebo-induced changes in their responses.
 
 # Limitations
 
@@ -594,6 +605,29 @@ Our literature search was non-comprehensive.
 -   Furthermore, Orne's writings on demand characteristics often included discussions of even broader (but difficult to measure) aspects of the social situations, including social norms about participant behavior, pacts of ignorance about admitting awareness of the true purpose of the study, etc.
 
 Publication bias analyses are problematic. Evidence of moderation is correlational. There may be confounding.
+
+# thoughts
+
+Compare average effect of demand to average effect in psychology. It suggest that it's plausible that these are driven by demand. When looking at the distribution, it's clear that no effect is too big to rule out concerns about demand.
+
+Might want to plot es distribution and identify proportion of (a) non-negligible acquiescence, (b) non-negligible counter-acquiescence, and (c) non-acquiescence.
+
+### Exploratory stuff
+
+```{r}
+df <- DF.es %>% 
+               filter(ref.type != "cvz" &
+                        ref.type != "pvz")
+
+mod.m <- rma.mv(yi = es,
+                  V = es.var,
+                  data = df,
+                  random = ~ 1 | id.study / id.es,
+                  mods = ~ opp * bel,
+                  test= "t")
+
+mod.m %>% anova()
+```
 
 # To-do
 
