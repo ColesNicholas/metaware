@@ -38,6 +38,7 @@ editor_options:
 library("papaja")
 library("tidyverse")
 library("readxl")
+library("gridExtra")
 
 # load meta-analyses packages
 library("metafor")
@@ -585,6 +586,152 @@ DF.es %>%
 ## Implications
 
 Based on the belief that demand characteristics is a response bias moderated by motivation and opportunity to adjust responses, two recommendations have been proposed to combat demand characteristics: lower participants' (1) motivation to adjust responses (e.g., by emphasizing the importance of natural responding), and/or (2) ability to adjust responses (e.g., by using difficult-to-control measures, like implicit or physiological measures). The "demand-as-placebo" account, however, suggests that these approaches are likely to be ineffective. Regardless of whether participants are motivated or able to adjust responses, knowledge of the experimenter's hypothesis can create placebo-induced changes in their responses.
+
+# New figure
+```{r eval = F}
+theme_set(theme_classic())
+
+#################
+# motivation plot
+#################
+# get predicted and actual values into a single dataset
+mot.df <- predict(mod.r$mot$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$mot$mod$yi)
+
+# plot
+m <- ggplot(data = mot.df,
+            aes(x = X.mot,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .5) +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "Cohen's d", 
+       x = "motivation ratings")
+
+rm(mot.df)
+
+#################
+# opportunity plot
+#################
+# get predicted and actual values into a single dataset
+opp.df <- predict(mod.r$opp$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$opp$mod$yi)
+
+# plot
+o <- ggplot(data = opp.df,
+            aes(x = X.opp,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .5) +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "", 
+       x = "opportunity ratings")
+
+rm(opp.df)
+
+#################
+# belief plot
+#################
+# get predicted and actual values into a single dataset
+bel.df <- predict(mod.r$bel$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$bel$mod$yi)
+
+# plot
+b <- ggplot(data = bel.df,
+            aes(x = X.bel,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .5) +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "Cohen's d", 
+       x = "belief ratings")
+
+rm(bel.df)
+
+#################
+# prediction plot
+#################
+# get predicted and actual values into a single dataset
+pre.df <- predict(mod.r$pre$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$pre$mod$yi)
+
+# plot
+p <- ggplot(data = pre.df,
+            aes(x = X.pre,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .5) +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "", 
+       x = "prediction ratings")
+
+rm(pre.df)
+
+#################
+# merge plots
+#################
+grid.arrange(m, o, b, p,
+             nrow = 2)
+
+rm(m, o, b, p)
+```
+
 
 # Limitations
 
