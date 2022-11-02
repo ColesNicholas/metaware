@@ -747,35 +747,6 @@ lmer(happy ~ trial + block.num + mot +
             (1 | sub),
           data = DF.surv2) %>% 
   anova()
-
-# interactions
-m <- lmer(happy ~ trial + block.num + demand + 
-            (trial : demand) + 
-            (trial : demand : mot) +
-            (1 | sub),
-          data = DF.surv2)
-
-anova(m)
-
-m <- lmer(happy ~ trial + block.num + demand + 
-            (trial : demand) + 
-            (trial : demand : bel) +
-            (1 | sub),
-          data = DF.surv2)
-
-anova(m)
-
-m <- lmer(happy ~ trial + block.num + demand + 
-            (trial : demand) + 
-            (trial : demand : opp) +
-            (1 | sub),
-          data = DF.surv2)
-
-anova(m)
-
-# new simpler belief and motivation analyses
-
-
 ```
 
 

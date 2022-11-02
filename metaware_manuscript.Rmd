@@ -47,6 +47,9 @@ library("PublicationBias")
 
 # identify refs
 r_refs("r-references.bib")
+
+# set theme
+theme_set(theme_classic())
 ```
 
 Imagine that one day a mysterious person approaches you and begins telling you about a new method for understanding humans: Colesology. The person explains that Colesology is useful for estimating causal relationships---but adds that it can sometimes be thrown off by a *methodological artifact.* When you ask the Colesologist about this artifact, they explain that it sometimes causes researchers to detect an effect that's not real, and other times causes them to miss an effect that is real. They explain that it sometimes causes relationships to be biased upward and other times causes them to be biased downward. And then they offer a confession: they don't understand how the artifact works. Because sometimes the artifact seems to matter and other times it doesn't.
@@ -407,7 +410,158 @@ The observed effects of demand characteristics were highly heterogeneous. Indeed
 
 #### Motivation, opportunity, and belief
 
-Contrary to predictions made by @rosnow1997people and @coles2022fact, we did not find that the effects of demand characteristics were moderated by ratings of the extent to which participants would be motivated to confirm the experimenter's hypothesis, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`. We also did not find that demand characteristic effects were moderated by ratings of the extent to which participants could control the outcome of interest, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])`. Consistent with @coles2022fact, however, demand characteristic effects were larger when raters indicated that they believed the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])`.
+```{r mod.fig, fig.cap = "The effects of demand characteristics on participants' responses were not significantly moderated by motivation and opportunity ratings. They were, however, significantly moderated by belief and prediction ratings."}
+
+#################
+# motivation plot
+#################
+# get predicted and actual values into a single dataset
+mot.df <- predict(mod.r$mot$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$mot$mod$yi)
+
+# plot
+m <- ggplot(data = mot.df,
+            aes(x = X.mot,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "Cohen's d", 
+       x = "motivation ratings")
+
+rm(mot.df)
+
+#################
+# opportunity plot
+#################
+# get predicted and actual values into a single dataset
+opp.df <- predict(mod.r$opp$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$opp$mod$yi)
+
+# plot
+o <- ggplot(data = opp.df,
+            aes(x = X.opp,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "", 
+       x = "opportunity ratings")
+
+rm(opp.df)
+
+#################
+# belief plot
+#################
+# get predicted and actual values into a single dataset
+bel.df <- predict(mod.r$bel$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$bel$mod$yi)
+
+# plot
+b <- ggplot(data = bel.df,
+            aes(x = X.bel,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "Cohen's d", 
+       x = "belief ratings")
+
+rm(bel.df)
+
+#################
+# prediction plot
+#################
+# get predicted and actual values into a single dataset
+pre.df <- predict(mod.r$pre$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$pre$mod$yi)
+
+# plot
+p <- ggplot(data = pre.df,
+            aes(x = X.pre,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "", 
+       x = "prediction ratings")
+
+rm(pre.df)
+
+#################
+# merge plots
+#################
+grid.arrange(m, o, b, p,
+             nrow = 2)
+
+rm(m, o, b, p)
+```
+
+Contrary to predictions made by @rosnow1997people and @coles2022fact, we did not find that the effects of demand characteristics were moderated by ratings of the extent to which participants would be motivated to confirm the experimenter's hypothesis, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])` (Figure \@ref(fig:mod.fig). We also did not find that demand characteristic effects were moderated by ratings of the extent to which participants could control the outcome of interest, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure \@ref(fig:mod.fig). Consistent with @coles2022fact, however, demand characteristic effects were larger when raters indicated that they believed the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:mod.fig).
 
 #### Other moderators
 
@@ -419,7 +573,7 @@ We did not find that the effects of demand characteristics were moderated by whe
 
 ### Forecasts
 
-Raters predictions about the effects of demand characteristics were associated with the observed effects, but this association was weak, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])`.
+Raters predictions about the effects of demand characteristics were associated with the observed effects, but this association was weak, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])` (Figure \@ref(fig:mod.fig).
 
 Would be nice to be able to explain how much heterogeneity is explained by this variable...
 
@@ -501,7 +655,7 @@ PubBias = function(rho.val = .5){
           data = DF.es,
           method = "REML") %>%   
     metafor::funnel(hlines = "lightgray",
-                    xlab = "Cohen's standardized d")
+                    xlab = "Cohen's standardized d") 
   
   # 4b. funnel plot w/ aggregated dependencies
   ########################
@@ -572,6 +726,53 @@ The weight-function model suggested that better fit was achieved with a model in
 pub.r$rho_0.5$funnel
 ```
 
+# New pub bias plot
+```{r}
+# create temp dataset with se values
+tmp <- DF.es %>%  
+  rowwise() %>% 
+  mutate(se = sqrt(es.var)) %>% 
+  ungroup()
+
+# create temporary sequence of ses
+se.seq = seq(0, max(tmp$se), 
+             length.out = nrow(DF.es))
+
+ll95 = overall$b[1] - (1.96 * se.seq)
+ul95 = overall$b[1] + (1.96 * se.seq)
+
+# create coordinates for polygon
+t.coord <- rbind(cbind(x = overall$b[1],
+                       y = 0),
+                 
+                 cbind(x = min(ll95),
+                       y = max(tmp$se)),
+                 
+                 cbind(x = max(ul95),
+                       y = max(tmp$se))
+                 ) %>% 
+  as.data.frame()
+  
+# plot
+ggplot(data = tmp,
+       aes(x = es,
+           y = se)) +
+  geom_polygon(data = t.coord,
+               aes(x = x,
+                   y = y),
+               fill = "#3366FF",
+               alpha = .1) +
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  scale_y_reverse() +
+  geom_vline(xintercept = overall$b[1],
+             linetype = "dotted") +
+  labs(x = "Cohen's d", 
+       y = "Standard error")
+```
+
+
 # Discussion
 
 Contrary to classic coneptualizations of the impact of demand characteristics () and frameworks proposed by @rosnow1997people and @coles2022fact, we did not find evidence of two moderators that should underlie response biases: motivation to adjust responses and opportunity to adjust responses. Instead, our results are unexpectedly more consistent with a more parsimonious view: that phenomena typically described by experimental psychologists as "demand effects" are actually *placebo effects*. Applied to classic work by Orne, maybe participants did not exhibit sham symptoms of hypnosis because they were motivated to please the experimenter; instead maybe they intentionally or unintentionally responded in a manner that was consistent with their personal beliefs (a self-fulfilling prophecy or placebo effect).
@@ -586,152 +787,6 @@ DF.es %>%
 ## Implications
 
 Based on the belief that demand characteristics is a response bias moderated by motivation and opportunity to adjust responses, two recommendations have been proposed to combat demand characteristics: lower participants' (1) motivation to adjust responses (e.g., by emphasizing the importance of natural responding), and/or (2) ability to adjust responses (e.g., by using difficult-to-control measures, like implicit or physiological measures). The "demand-as-placebo" account, however, suggests that these approaches are likely to be ineffective. Regardless of whether participants are motivated or able to adjust responses, knowledge of the experimenter's hypothesis can create placebo-induced changes in their responses.
-
-# New figure
-```{r eval = F}
-theme_set(theme_classic())
-
-#################
-# motivation plot
-#################
-# get predicted and actual values into a single dataset
-mot.df <- predict(mod.r$mot$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$mot$mod$yi)
-
-# plot
-m <- ggplot(data = mot.df,
-            aes(x = X.mot,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .5) +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "Cohen's d", 
-       x = "motivation ratings")
-
-rm(mot.df)
-
-#################
-# opportunity plot
-#################
-# get predicted and actual values into a single dataset
-opp.df <- predict(mod.r$opp$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$opp$mod$yi)
-
-# plot
-o <- ggplot(data = opp.df,
-            aes(x = X.opp,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .5) +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "", 
-       x = "opportunity ratings")
-
-rm(opp.df)
-
-#################
-# belief plot
-#################
-# get predicted and actual values into a single dataset
-bel.df <- predict(mod.r$bel$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$bel$mod$yi)
-
-# plot
-b <- ggplot(data = bel.df,
-            aes(x = X.bel,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .5) +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "Cohen's d", 
-       x = "belief ratings")
-
-rm(bel.df)
-
-#################
-# prediction plot
-#################
-# get predicted and actual values into a single dataset
-pre.df <- predict(mod.r$pre$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$pre$mod$yi)
-
-# plot
-p <- ggplot(data = pre.df,
-            aes(x = X.pre,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .5) +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "", 
-       x = "prediction ratings")
-
-rm(pre.df)
-
-#################
-# merge plots
-#################
-grid.arrange(m, o, b, p,
-             nrow = 2)
-
-rm(m, o, b, p)
-```
-
 
 # Limitations
 
