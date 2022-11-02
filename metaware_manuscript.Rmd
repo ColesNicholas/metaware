@@ -38,7 +38,7 @@ editor_options:
 library("papaja")
 library("tidyverse")
 library("readxl")
-library("gridExtra")
+library("cowplot")
 
 # load meta-analyses packages
 library("metafor")
@@ -72,7 +72,7 @@ After over 60 years, experimental psychologists are left with an uncomfortable s
 knitr::include_graphics("images/metaware_framework.png")
 ```
 
-### Receptivity to the cues
+### Receptivity to cues
 
 @rosnow1997people argued that participants must be perceptive to demand characteristics in order for them to impact downstream responses [see also @rosnow1973mediation; @strohmetz2008research]. As an extreme example, imagine that a researcher hands an infant participant a sheet of paper that precisely explains the researcher's hypothesis. Demand characteristics are certainly present, but they are not predicted to have an impact because the infant is not receptive to the cues (i.e., cannot read).
 
@@ -410,7 +410,9 @@ The observed effects of demand characteristics were highly heterogeneous. Indeed
 
 #### Motivation, opportunity, and belief
 
-```{r mod.fig, fig.cap = "The effects of demand characteristics on participants' responses were not significantly moderated by motivation and opportunity ratings. They were, however, significantly moderated by belief and prediction ratings."}
+TMP TEX?
+
+```{r mod.fig, fig.cap= "The effects of demand characteristics on participants' responses were not significantly moderated by motivation (Panel A) or opportunity (Panel B) ratings. They were, however, significantly moderated by belief (Panel C) and prediction (Panel D) ratings."}
 
 #################
 # motivation plot
@@ -555,8 +557,8 @@ rm(pre.df)
 #################
 # merge plots
 #################
-grid.arrange(m, o, b, p,
-             nrow = 2)
+plot_grid(m, o, b, p,
+          labels = c("A", "B", "C", "D"))
 
 rm(m, o, b, p)
 ```
@@ -648,29 +650,29 @@ PubBias = function(rho.val = .5){
   
   # 4a. funnel plot
   ########################
-  par(mfrow=c(1,2))
+  #par(mfrow=c(1,2))
   
   rma.uni(yi = es,
           vi = es.var,
           data = DF.es,
-          method = "REML") %>%   
-    metafor::funnel(hlines = "lightgray",
-                    xlab = "Cohen's standardized d") 
+          method = "REML")# %>%   
+   # metafor::funnel(hlines = "lightgray",
+                   # xlab = "Cohen's standardized d") 
   
   # 4b. funnel plot w/ aggregated dependencies
   ########################
-  rma.uni(yi = yi,
+  funnel.plot <- rma.uni(yi = yi,
           vi = vi,
           data = DF.agg,
-          method = "REML") %>%   
-    metafor::funnel(hlines = "lightgray",
-                    xlab = "Cohen's standardized d (aggregated)")
+          method = "REML") #%>%   
+    #metafor::funnel(hlines = "lightgray",
+     #               xlab = "Cohen's standardized d (aggregated)")
   
   # save funnel plot as object
-  funnel.plot <- recordPlot()
+  #funnel.plot <- recordPlot()
     
   # clear R environment
-  plot.new()
+  #plot.new()
   
   # 5. Organize results in list 
   ########################
@@ -722,12 +724,14 @@ The weight-function model suggested that better fit was achieved with a model in
 
 (Not currently describing Mathur sensitivity analysis because of uncertainty around direction of bias, which must be specified in the analysis.)
 
-```{r funnel, fig.cap = "Funnel plot of non-aggregated and aggregated effect sizes."}
+```{r funnel, fig.cap = "Funnel plot of non-aggregated and aggregated effect sizes.", eval = F}
 pub.r$rho_0.5$funnel
 ```
 
 # New pub bias plot
-```{r}
+
+```{r funnel2, fig.cap = "Funnel plot of raw (A) or aggregated (B) effect sizes ploted against their corresponding standard errors."}
+##########non-aggregated
 # create temp dataset with se values
 tmp <- DF.es %>%  
   rowwise() %>% 
@@ -754,7 +758,7 @@ t.coord <- rbind(cbind(x = overall$b[1],
   as.data.frame()
   
 # plot
-ggplot(data = tmp,
+a <- ggplot(data = tmp,
        aes(x = es,
            y = se)) +
   geom_polygon(data = t.coord,
@@ -770,6 +774,54 @@ ggplot(data = tmp,
              linetype = "dotted") +
   labs(x = "Cohen's d", 
        y = "Standard error")
+
+##########aggregated
+tmp <- pub.r$rho_0.5$DF.agg %>% 
+  rowwise() %>% 
+  mutate(es = yi,
+         se = sqrt(vi)) %>% 
+  ungroup()
+
+# create temporary sequence of ses
+se.seq = seq(0, max(tmp$se), 
+             length.out = nrow(tmp))
+
+ll95 = overall$b[1] - (1.96 * se.seq)
+ul95 = overall$b[1] + (1.96 * se.seq)
+
+# create coordinates for polygon
+t.coord <- rbind(cbind(x = pub.r$rho_0.5$funnel$b[1],
+                       y = 0),
+                 
+                 cbind(x = min(ll95),
+                       y = max(tmp$se)),
+                 
+                 cbind(x = max(ul95),
+                       y = max(tmp$se))
+                 ) %>% 
+  as.data.frame()
+  
+# plot
+b <- ggplot(data = tmp,
+       aes(x = es,
+           y = se)) +
+  geom_polygon(data = t.coord,
+               aes(x = x,
+                   y = y),
+               fill = "#3366FF",
+               alpha = .1) +
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  scale_y_reverse() +
+  geom_vline(xintercept = pub.r$rho_0.5$funnel$b[1],
+             linetype = "dotted") +
+  labs(x = "Cohen's d", 
+       y = "Standard error")
+
+
+plot_grid(a, b,
+          labels = c("A", "B"))
 ```
 
 
@@ -833,9 +885,7 @@ mod.m %>% anova()
 
 # To-do
 
-[] Add Figure 4 number
-
-[] Need to add refs
+[] Need to streamline publication bias analysis figure (or just drop completely)
 
 [] F-value looks off here "Instances where a demand characteristic condition was compared to a control group allowed us to additional test whether participants respond more strongly to positive, nil, or negative demand characteristics."
 
@@ -843,13 +893,9 @@ mod.m %>% anova()
 
 [] Have Mike review again?
 
-[] Update pre-registration
-
 [] Have M.W. work on outcome type
 
 [] Have M.W. build codebooks
-
-[] Will have to update figures
 
 # References
 
