@@ -470,23 +470,23 @@ surv.sum <- DF.surv %>%
             m.pre = mean(pre, na.rm = T)
             ) %>% 
    ungroup()
-# 
-# DF.surv %>% 
-#   group_by(vig) %>% 
-#   summarise(m.mot = mean(mot, na.rm = T),
-#             sd.mot = sd(mot, na.rm = T),
-#             
-#             m.opp = mean(opp, na.rm = T),
-#             sd.opp = sd(opp, na.rm = T),
-#             
-#             m.bel = mean(bel, na.rm = T),
-#             sd.bel = sd(bel, na.rm = T),
-#             
-#             m.pre = mean(pre, na.rm = T),
-#             sd.pre = sd(pre, na.rm = T)
-#             
-#             ) %>% 
-#   ungroup()
+ 
+ DF.surv %>% 
+   group_by(vig) %>% 
+   summarise(m.mot = mean(mot, na.rm = T),
+             sd.mot = sd(mot, na.rm = T),
+             
+             m.opp = mean(opp, na.rm = T),
+             sd.opp = sd(opp, na.rm = T),
+             
+             m.bel = mean(bel, na.rm = T),
+             sd.bel = sd(bel, na.rm = T),
+             
+             m.pre = mean(pre, na.rm = T),
+             sd.pre = sd(pre, na.rm = T)
+             
+             ) %>% 
+   ungroup()
 
 rm(DF.surv)
 ```
@@ -701,9 +701,16 @@ write.csv(DF.surv2,
 # prelimin analyses
 Note that your belief question is a bit hard to interpret for this study.
 
-In the nil-hypothesis condition, what exactly does it mean to think tha tthey hypothesized effect is true/untrue? Is the hypothesized effect the nil or non-nil effect?
+In the nil-hypothesis condition, what exactly does it mean to think that they hypothesized effect is true/untrue? Is the hypothesized effect the nil or non-nil effect?
 
 The convergent validity analyses have very few n. Not sure if we're going to learn anything there.
+
+Here's the summary of results, though:
+
+- Replicated Coles et al. 2022. Trail by demand interaction is significant; facial feedback stronger in postitive demand condition
+
+- Belief, but not motivation, moderated the facial feedback effect.
+
 ```{r}
 library(lme4)
 library(lmerTest)
