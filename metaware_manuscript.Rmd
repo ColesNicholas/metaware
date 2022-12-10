@@ -824,7 +824,6 @@ plot_grid(a, b,
           labels = c("A", "B"))
 ```
 
-
 # Discussion
 
 Contrary to classic coneptualizations of the impact of demand characteristics () and frameworks proposed by @rosnow1997people and @coles2022fact, we did not find evidence of two moderators that should underlie response biases: motivation to adjust responses and opportunity to adjust responses. Instead, our results are unexpectedly more consistent with a more parsimonious view: that phenomena typically described by experimental psychologists as "demand effects" are actually *placebo effects*. Applied to classic work by Orne, maybe participants did not exhibit sham symptoms of hypnosis because they were motivated to please the experimenter; instead maybe they intentionally or unintentionally responded in a manner that was consistent with their personal beliefs (a self-fulfilling prophecy or placebo effect).

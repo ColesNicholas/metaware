@@ -469,7 +469,24 @@ surv.sum <- DF.surv %>%
             m.bel = mean(bel, na.rm = T),
             m.pre = mean(pre, na.rm = T)
             ) %>% 
-  ungroup()
+   ungroup()
+# 
+# DF.surv %>% 
+#   group_by(vig) %>% 
+#   summarise(m.mot = mean(mot, na.rm = T),
+#             sd.mot = sd(mot, na.rm = T),
+#             
+#             m.opp = mean(opp, na.rm = T),
+#             sd.opp = sd(opp, na.rm = T),
+#             
+#             m.bel = mean(bel, na.rm = T),
+#             sd.bel = sd(bel, na.rm = T),
+#             
+#             m.pre = mean(pre, na.rm = T),
+#             sd.pre = sd(pre, na.rm = T)
+#             
+#             ) %>% 
+#   ungroup()
 
 rm(DF.surv)
 ```
