@@ -163,7 +163,7 @@ outlier.es <- DF.es %>%
 
 To be eligible for inclusion in the meta-analysis, the following criteria must have been met:
 
--   The researcher manipulated what participants were told about the effect of an independent variable on a dependent variable. This included both *positive demand* (participants told that the dependent variable will increase), *negative demand* (participants told that the dependent variable will decrease) and *nil demand* (participants told the dependent variable will be unaffected) conditions.
+-   The researcher manipulated what participants were told about the effect of an independent variable on a dependent variable. This included both *positive demand* (participants told that the dependent variable will increase), *negative demand* (participants told that the dependent variable will decrease) and *nil demand* (participants told the dependent variable will be unaffected) conditions. Often, but not always, this is compared to a *control* condition where participants were not told about an effect of an independent variable on a dependent variable.
 
     We excluded scenarios where the researcher described an effect that was *non-directional*. We did so because participants in these scenarios could not readily infer how their responses should change. For example, if participants were told that an independent variable would "impact mood", it is not clear if participants should infer that the mood will be boosted (positive demand) or dampened (negative demand).
 
@@ -321,7 +321,7 @@ First, we visually examined *funnel plots,* wherein observed effect sizes are pl
 
 Second, we conducted precision-effect tests [@stanley2014meta]. In precision-effect tests, the relationship between observed effect sizes and their standard errors---which would be absent when there is no publication bias---is estimated and controlled for in a meta-regression model. This subsequently produces estimates of publication bias and the bias-corrected overall effect. Precision-effect tests were developed and validated for meta-analyses with independent effect sizes. Nonetheless, @rodgers2021evaluating demonstrated that the method retains fairly good statistical properties when (1) 3LMA is used or (2) dependent effect sizes are aggregated and modeled using random-effects (i.e., two level) meta-regression. We used both approaches.
 
-Third, we used weight-function modeling [@vevea1995general]. In weight-function modeling, weighted distribution theory is used to model biased selection based on the significance of observed effects, which is then compared to an unadjusted model. If the adjusted model provides increased fit, publication bias is a concern and the model can be used to estimate the bias-corrected overall effect size. Once again, weight-function modeling was designed for meta-analyses with independent effect sizes. Nonetheless, @rodgers2021evaluating demonstrated that the method retains fairly good statistical properties when non-independent effect sizes are aggregated. We thus aggregated non-independent effect sizes when using this procedure.
+Third, we used weight-function modeling [@vevea1995general]. In weight-function modeling, weighted distribution theory is used to model biased selection based on the significance of observed effects, which is then compared to an unadjusted model. If the adjusted model provides increased fit, publication bias is a concern and the model can be used to estimate the bias-corrected overall effect size. Once again, weight-function modeling was designed for meta-analyses with independent effect sizes, but it has fairly good statistical properties when non-independent effect sizes are aggregated [@rodgers2021evaluating]. We thus aggregated non-independent effect sizes when using this procedure.
 
 As a sensitivity analysis, we included publication status as a dummy-coded predictor to our overall-effect 3LMA. This allowed us to estimate the difference in the magnitude of published vs. unpublished effects.
 
@@ -342,7 +342,7 @@ overall <-
 #   robust(cluster = DF.es$id)
 ```
 
-Results indicated that, overall, explicit manipulations of demand characteristics create a small acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis.
+Results indicated that, overall, explicit manipulations of demand characteristics create a small acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis. For example, if participants were hypothetically told that an intervention should improve mood (positive demand), they would generally report slightly improved moods; if told that an intervention should worsen mood (negative demand), they would generally report slightly worsened moods.
 
 ### Moderator analyses
 
