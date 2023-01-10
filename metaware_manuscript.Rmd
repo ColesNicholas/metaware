@@ -45,6 +45,11 @@ library("metafor")
 library("weightr")
 library("PublicationBias")
 
+# load mixed-effect regression packages
+library(lme4)
+library(lmerTest)
+library(emmeans)
+
 # identify refs
 r_refs("r-references.bib")
 
@@ -794,6 +799,7 @@ t.coord <- rbind(cbind(x = pub.r$rho_0.5$funnel$b[1],
                        y = max(tmp$se))
                  ) %>% 
   as.data.frame()
+
   
 # plot
 b <- ggplot(data = tmp,
@@ -816,6 +822,8 @@ b <- ggplot(data = tmp,
 
 plot_grid(a, b,
           labels = c("A", "B"))
+
+rm(a, b)
 ```
 
 # Discussion
@@ -836,11 +844,66 @@ Last, like in most meta-analysis, it is possible that our moderator analyses wer
 
 ### Converging evidence from a replication study
 
-Despite the limitations of our approach for studying the moderating role of motivation, opportunity, and belief, we observed similar patterns in a large replication of @coles2022fact. After our participants complete the vignette ratings task, we had them complete a close replication of @coles2022fact. At the beginning of this study, we told N participants that we hypothesized that posed smiles will either (a) increase (positive demand) or (b) not impact (nil demand) feelings of happiness. Participants than posed happy and neutral expressions across two blocks, self-reporting the extent to which they felt happy after each pose. At the end of the study, participants filled out similar questions about their motivation to confirm the hypothesis, opportunity to adjust responses, and belief in the hypothesized effect.
+```{r s3.data, include = F}
+# open and clean data
+DF.s3 <- 
+  # open data
+  read_csv(file = "data/metaware_survey2_clean.csv") %>% 
+  
+  # fix variable class
+  mutate_at(.vars = c("sub", "demand",
+                      "trial", "block.num"),
+            .funs = as.factor)
+```
 
-Replicating @coles2022fact, a mixed-effect regression with (a) facial pose, demand characteristics, and block effect-coded and (b) random-intercepts for participants, indicated that participants reported higher levels of happiness after posing happy vs. neutral expressions (stats). Further, this effect was more pronounced in the positive (stats) vs. nil (stats) demand conditions, stats.
+```{r s3.d.int, include = F}
+# test facial feedback by demand interaction
+## fit mixed-effects model
+m.d <- lmer(happy ~ trial * block.num * demand + 
+            (1 | sub),
+          data = DF.s3)
 
-Most importantly, though, we replicated the pattern of results from the meta-analysis. Separately, we entered the continuous ratings of motivation, opportunity, and belief in the mixed-effect regression. We did not find that the effect of facial poses was moderated by ratings of motivation to confirm the hypothesis (stats) or opportunity to adjust responses (stats). We did, however, find that the effect of facial poses was moderated by participants' beliefs about the hypothesized effect (stats). These results further support the idea that phenomena previously described as "demand effects" might in actuality be placebo effects.
+## omnibus tests
+m.d.aov <- anova(m.d)
+
+# simple effect of pose within each level of demand
+m.d.joint <- emmeans(m.d, pairwise ~ trial | demand)$contrasts %>% 
+  as.data.frame()
+```
+
+Despite the limitations of our approach for studying the moderating role of motivation, opportunity, and belief, we observed similar patterns in a large replication of @coles2022fact. After our participants complete the vignette ratings task, we had them complete a close replication of @coles2022fact. At the beginning of this study, we told `r length(unique(DF.s3$sub))` participants that we hypothesized that posed smiles will either (a) increase (positive demand, n = `r length(unique(DF.s3[DF.s3$demand == "pos", ]$sub))`) or (b) not impact (nil demand, n = `r length(unique(DF.s3[DF.s3$demand == "nil", ]$sub))`) feelings of happiness. Participants than posed happy and neutral expressions across two blocks. After each pose, participants self-reporting the extent to which they experienced happiness, satisfaction, and enjoyment (0 = "not at all" to 6 = "maximally"), which were averaged to form a happiness composite score. As filler items, participants also self-reported the extent to which they experienced fear (alarmed, scared, and fear) and anger (irritation, aggravation, and annoyance). Using similar items as the vignette study, participants at the end of the study reported the extent to which they were motivated to confirm the hypothesis, able to adjust responses, and believed the hypothesized effect.
+
+Replicating @coles2022fact, a mixed-effect regression with (a) facial pose, demand characteristics, and block entered as effect-coded factors and (b) random-intercepts for participants, indicated that participants reported higher levels of happiness after posing happy vs. neutral expressions, *M~diff~* = `r -(m.d@beta[2])`, *F*(`r m.d.aov["trial",]$NumDF`, `r m.d.aov["trial",]$DenDF`) = `r m.d.aov["trial", 5]`, *p* `r printp(m.d.aov["trial", 6])`. Further, this effect was more pronounced in the positive (*M~diff~* = `r m.d.joint[m.d.joint$demand == "pos", ]$estimate`) vs. nil (*M~diff~* = `r m.d.joint[m.d.joint$demand == "nil", ]$estimate`) demand conditions, *F*(`r m.d.aov["trial:demand",]$NumDF`, `r m.d.aov["trial:demand",]$DenDF`) = `r m.d.aov["trial:demand", 5]`, *p =* `r printp(m.d.aov["trial:demand", 6])`.
+
+```{r s3.int.others, include = F}
+# delete vestigial from last moderator analysis
+rm(m.d, m.d.aov, m.d.joint)
+
+# moderation by motivation
+m.m.aov <- lmer(happy ~ trial + block.num + mot + 
+                  (trial : mot) +
+                  (1 | sub),
+                data = DF.s3) %>% 
+  anova()
+
+# moderation by opportunity
+m.o.aov <- lmer(happy ~ trial + block.num + opp + 
+                  (trial : opp) +
+                  (1 | sub),
+                data = DF.s3) %>% 
+  anova()
+
+# moderation by belief
+m.b <- lmer(happy ~ trial + block.num + bel + 
+              (trial : bel) +
+              (1 | sub),
+            data = DF.s3)
+
+m.b.aov <- m.b %>% anova()
+
+```
+
+Most importantly, though, we replicated the pattern of results from the meta-analysis. For each moderator (motivation, opportunity, and belief), we fit a mixed-effect regression containing (a) trial and block number as effect-coded factors, (b) the moderator entered as a continuous variable, (c) a higher-order trial by moderator interaction term, and (d) random intercepts for participants. We did not find that the effect of facial poses was moderated by ratings of motivation to confirm the hypothesis (*F*(`r m.m.aov["trial:mot",]$NumDF`, `r m.m.aov["trial:mot",]$DenDF`) = `r m.m.aov["trial:mot", 5]`, *p =* `r printp(m.m.aov["trial:mot", 6])` or opportunity to adjust responses (*F*(`r m.o.aov["trial:opp",]$NumDF`, `r m.o.aov["trial:opp",]$DenDF`) = `r m.o.aov["trial:opp", 5]`, *p* = `r printp(m.o.aov["trial:opp", 6])`. We did, however, find that the effect of facial poses was moderated by participants' beliefs about the hypothesized effect (*F*(`r m.b.aov["trial:bel", ]$NumDF`, `r m.b.aov["trial:bel", ]$DenDF`) = `r m.b.aov["trial:bel", 5]`, *p =* `r printp(m.b.aov["trial:bel", 6])`. Specifically, the facial feedback effect was larger among participants who more strongly believed in the effect, \$\\beta = `r -(m.b@beta[2])`.
 
 ### Can a "demand as placebo" account explain discrepancies in the literature?
 
@@ -967,6 +1030,10 @@ mod.m %>% anova()
 ```
 
 # To-do
+
+[] Add markdown for study 3
+
+[] Add forest plot
 
 [] Need to streamline publication bias analysis figure (or just drop completely)
 

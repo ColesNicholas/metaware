@@ -678,7 +678,14 @@ DF.surv2 <- DF.surv2 %>%
          att.chk, awr,
          mot : mot_gen,
          indiv_gend_var : ethnicity,
-         pos_awr : nil_opp)
+         pos_awr : nil_opp) %>% 
+  
+  # recode (flip) motivation for the nil hypothesis condition
+  rowwise() %>% 
+  mutate(mot = if_else(demand == "nil",
+                       mot * (-1),
+                       mot)) %>% 
+  ungroup()
 ```
 
 # Export
@@ -754,20 +761,6 @@ lm(bel ~ demand,
 
 lmer(happy ~ trial + block.num + bel + 
             (trial : bel) +
-            (1 | sub),
-          data = DF.surv2) %>% 
-  anova()
-
-# motivation
-## need to recode motivation for the nil hypothesis condition
-DF.surv2 <- DF.surv2 %>% 
-  rowwise() %>% 
-  mutate(mot = if_else(demand == "nil",
-                       mot * (-1),
-                       mot))
-
-lmer(happy ~ trial + block.num + mot + 
-            (trial : mot) +
             (1 | sub),
           data = DF.surv2) %>% 
   anova()
