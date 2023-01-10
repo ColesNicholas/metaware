@@ -730,8 +730,10 @@ pub.r$rho_0.5$funnel
 # New pub bias plot
 
 ```{r funnel2, fig.cap = "Funnel plot of raw (A) or aggregated (B) effect sizes ploted against their corresponding standard errors."}
-##########non-aggregated
-# create temp dataset with se values
+########## 
+# Funnel plot with non-aggregated dependencies
+########## 
+# create a temporary dataset with standard error (se) values
 tmp <- DF.es %>%  
   rowwise() %>% 
   mutate(se = sqrt(es.var)) %>% 
@@ -758,8 +760,8 @@ t.coord <- rbind(cbind(x = overall$b[1],
   
 # plot
 a <- ggplot(data = tmp,
-       aes(x = es,
-           y = se)) +
+            aes(x = es,
+                y = se)) +
   geom_polygon(data = t.coord,
                aes(x = x,
                    y = y),
@@ -774,7 +776,12 @@ a <- ggplot(data = tmp,
   labs(x = "Cohen's d", 
        y = "Standard error")
 
-##########aggregated
+# delete vestigial
+rm(tmp, ll95, ul95, se.seq, t.coord)
+
+########## 
+# Funnel plot with aggregated dependencies
+########## 
 tmp <- pub.r$rho_0.5$DF.agg %>% 
   rowwise() %>% 
   mutate(es = yi,
@@ -800,8 +807,6 @@ t.coord <- rbind(cbind(x = pub.r$rho_0.5$funnel$b[1],
                  ) %>% 
   as.data.frame()
 
-  
-# plot
 b <- ggplot(data = tmp,
        aes(x = es,
            y = se)) +
@@ -819,7 +824,12 @@ b <- ggplot(data = tmp,
   labs(x = "Cohen's d", 
        y = "Standard error")
 
-
+# delete vestigial
+rm(tmp, ll95, ul95, se.seq, t.coord)
+  
+########## 
+# Plot funnels next to each other plot with aggregated dependencies
+##########
 plot_grid(a, b,
           labels = c("A", "B"))
 
