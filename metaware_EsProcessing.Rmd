@@ -547,7 +547,7 @@ DF[is.na(DF$v1.mot), ]$pre = NA
 # arrange variables
 DF <- DF %>% 
   select(id.study, id.es, 
-         name : ref.r, 
+         citation : ref.r, 
          es, es.var,
          mot : pre)
 ```
@@ -704,69 +704,3 @@ write.csv(DF.surv2,
           "data/metaware_survey2_clean.csv",
           row.names = F)
 ```
-
-# prelimin analyses
-Note that your belief question is a bit hard to interpret for this study.
-
-In the nil-hypothesis condition, what exactly does it mean to think that they hypothesized effect is true/untrue? Is the hypothesized effect the nil or non-nil effect?
-
-The convergent validity analyses have very few n. Not sure if we're going to learn anything there.
-
-Here's the summary of results, though:
-
-- Replicated Coles et al. 2022. Trail by demand interaction is significant; facial feedback stronger in postitive demand condition
-
-- Belief, but not motivation, moderated the facial feedback effect.
-
-```{r}
-library(lme4)
-library(lmerTest)
-library(emmeans)
-
-# convergent validity analyses
-DF.pos <- DF.surv2 %>% 
-  filter(demand == "pos")
-
-DF.nil <- DF.surv2 %>% 
-  filter(demand == "nil")
-
-cor(DF.pos$pos_mot, DF.pos$mot,
-    use = "pairwise.complete.obs")
-
-cor(DF.nil$nil_mot, DF.nil$mot,
-    use = "pairwise.complete.obs")
-
-rm(DF.pos, DF.nil)
-
-# test facial feedback by demand interaction
-m <- lmer(happy ~ trial * block.num * demand + 
-            (1 | sub),
-          data = DF.surv2)
-
-anova(m)
-
-emmeans(m, 
-        pairwise ~ trial)
-
-joint_tests(m, by = "demand")
-
-# belief
-DF.surv2 %>% 
-  group_by(demand) %>% 
-  summarise(m.bel = mean(bel,
-                         na.rm = T))
-lm(bel ~ demand,
-   data = DF.surv2) %>% 
-  anova()
-
-lmer(happy ~ trial + block.num + bel + 
-            (trial : bel) +
-            (1 | sub),
-          data = DF.surv2) %>% 
-  anova()
-```
-
-
-Need to save these two columns:
-12_p_hap
-12_z_hap
