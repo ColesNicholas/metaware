@@ -651,29 +651,29 @@ PubBias = function(rho.val = .5){
   
   # 4a. funnel plot
   ########################
-  #par(mfrow=c(1,2))
+  par(mfrow=c(1,2))
   
   rma.uni(yi = es,
           vi = es.var,
           data = DF.es,
-          method = "REML")# %>%   
-   # metafor::funnel(hlines = "lightgray",
-                   # xlab = "Cohen's standardized d") 
+          method = "REML") %>%   
+  metafor::funnel(hlines = "lightgray",
+                  xlab = "Cohen's standardized d") 
   
   # 4b. funnel plot w/ aggregated dependencies
   ########################
-  funnel.plot <- rma.uni(yi = yi,
+  rma.uni(yi = yi,
           vi = vi,
           data = DF.agg,
-          method = "REML") #%>%   
-    #metafor::funnel(hlines = "lightgray",
-     #               xlab = "Cohen's standardized d (aggregated)")
+          method = "REML") %>%   
+    metafor::funnel(hlines = "lightgray",
+                    xlab = "Cohen's standardized d (aggregated)")
   
   # save funnel plot as object
-  #funnel.plot <- recordPlot()
+  funnel.plot <- recordPlot()
     
   # clear R environment
-  #plot.new()
+  plot.new()
   
   # 5. Organize results in list 
   ########################
@@ -722,12 +722,6 @@ Overall, publication bias analyses were inconclusive. For example, a funnel plot
 Precision-effect tests with 3LMA provided a non-significant estimate of publication bias that favored acquiescence effects, $\beta$ = `r pub.r$rho_0.5$pe.3l$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[2]`, `r pub.r$rho_0.5$pe.3l$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[2])`. The bias-corrected overall effect size estimate did not significantly differ from zero $d$ = `r pub.r$rho_0.5$pe.3l$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[1]`, `r pub.r$rho_0.5$pe.3l$ci.ub[1]`], $p$ `r printp(pub.r$rho_0.5$pe.3l$pval[1])`. Precision-effect tests with aggregated non-independent effect sizes, however, estimated the opposite: that there was a slightly (but not statistically significant) preference for non-significant or counter-acquiescence effects, $\beta$ = `r pub.r$rho_0.5$pe.a$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[2]`, `r pub.r$rho_0.5$pe.a$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[2])`. The bias-corrected overall effect size estimate was thus slightly adjusted upward, $d$ = `r pub.r$rho_0.5$pe.a$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[1]`, `r pub.r$rho_0.5$pe.a$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[1])`.
 
 The weight-function model suggested that better fit was achieved with a model indicating that publication bias favored non-significant or counter-acquiescence effects, $\chi^2$(1) = 10.80, $p$ = .001. The bias-corrected overall effect size was thus upward-adjusted, $d$ = 0.41, 95% CI [0.19, 0.62], $p$ \< .001. We did not, however, find evidence that effect sizes differed among unpublished ($d$ = `r mod.r$published$sub$b[1]`, 95% CI [`r mod.r$published$sub$ci.lb[1]`, `r mod.r$published$sub$ci.ub[1]`], $p$ = `r printp(mod.r$published$sub$pval[1])`) and published ($d$ = `r mod.r$published$sub$b[2]`, 95% CI [`r mod.r$published$sub$ci.lb[2]`, `r mod.r$published$sub$ci.ub[2]`], $p$ `r printp(mod.r$published$sub$pval[2])`) studies $F$(`r mod.r$published$mod$QMdf[1]`, `r mod.r$published$mod$QMdf[2]`) = `r mod.r$published$mod$QM`, $p$ = `r printp(mod.r$published$mod$QMp)`.
-
-```{r funnel, fig.cap = "Funnel plot of non-aggregated and aggregated effect sizes.", eval = F}
-pub.r$rho_0.5$funnel
-```
-
-# New pub bias plot
 
 ```{r funnel2, fig.cap = "Funnel plot of raw (A) or aggregated (B) effect sizes ploted against their corresponding standard errors."}
 ########## 
@@ -782,21 +776,28 @@ rm(tmp, ll95, ul95, se.seq, t.coord)
 ########## 
 # Funnel plot with aggregated dependencies
 ########## 
+# create a temporary dataset with standard error (se) values
 tmp <- pub.r$rho_0.5$DF.agg %>% 
   rowwise() %>% 
   mutate(es = yi,
          se = sqrt(vi)) %>% 
   ungroup()
 
+# calculate overall effect size
+tmp.meta <- rma.uni(yi = yi,
+                    vi = vi,
+                    data = tmp,
+                    method = "REML")
+
 # create temporary sequence of ses
 se.seq = seq(0, max(tmp$se), 
              length.out = nrow(tmp))
 
-ll95 = overall$b[1] - (1.96 * se.seq)
-ul95 = overall$b[1] + (1.96 * se.seq)
+ll95 = tmp.meta$b[1] - (1.96 * se.seq)
+ul95 = tmp.meta$b[1] + (1.96 * se.seq)
 
 # create coordinates for polygon
-t.coord <- rbind(cbind(x = pub.r$rho_0.5$funnel$b[1],
+t.coord <- rbind(cbind(x = tmp.meta$b[1],
                        y = 0),
                  
                  cbind(x = min(ll95),
@@ -819,7 +820,7 @@ b <- ggplot(data = tmp,
               fill = "dark grey",
               color = "dark grey") +
   scale_y_reverse() +
-  geom_vline(xintercept = pub.r$rho_0.5$funnel$b[1],
+  geom_vline(xintercept = tmp.meta$b[1],
              linetype = "dotted") +
   labs(x = "Cohen's d", 
        y = "Standard error")
@@ -1040,12 +1041,7 @@ mod.m %>% anova()
 ```
 
 # To-do
-
-[] Add markdown for study 3
-
 [] Add forest plot
-
-[] Need to streamline publication bias analysis figure (or just drop completely)
 
 [] F-value looks off here "Instances where a demand characteristic condition was compared to a control group allowed us to additional test whether participants respond more strongly to positive, nil, or negative demand characteristics."
 
