@@ -331,7 +331,6 @@ Third, we used weight-function modeling [@vevea1995general]. In weight-function 
 As a sensitivity analysis, we included publication status as a dummy-coded predictor to our overall-effect 3LMA. This allowed us to estimate the difference in the magnitude of published vs. unpublished effects.
 
 # Results
-
 ```{r overall, include = F}
 # estimate overall effect size
 overall <- 
@@ -346,6 +345,46 @@ overall <-
 #           method = "REML") %>% 
 #   robust(cluster = DF.es$id)
 ```
+
+```{r forest, include = F}
+tmp <- DF.es %>%
+  rowwise() %>% 
+  mutate(se = sqrt(es.var),
+         ub = es + (se * 1.96),
+         lb = es - (se * 1.96)) %>% 
+  ungroup() %>% 
+  arrange(es, id.study)
+
+
+ggplot(data= tmp, 
+       aes(y = rev(1: nrow(tmp)), 
+           x = es,
+           xmin = lb,
+           xmax = ub)) +
+  
+  # add points and error bars
+  geom_point(shape = "diamond",
+             size = 2,
+             colour = '#FFC000') +
+  geom_errorbarh(height = .5,
+                 colour = '#FFC000') +
+  
+  # add citation label
+  geom_text(aes(label = citation),
+            x = -2.5,
+            hjust = 0,
+            fontface = c("bold",
+                         rep(x= "plain",
+                             times = nrow(tmp) - 1)),
+            size = 1.3) +
+  
+  # increase plotting area
+  scale_x_continuous(limits = c(-2.9, 3), 
+                     expand = c(.01, .01)) +
+  scale_y_continuous(expand = c(.01, .01))
+
+```
+
 
 Results indicated that, overall, explicit manipulations of demand characteristics create a small acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis. For example, if participants were hypothetically told that an intervention should improve mood (positive demand), they would generally report slightly improved moods; if told that an intervention should worsen mood (negative demand), they would generally report slightly worsened moods.
 
