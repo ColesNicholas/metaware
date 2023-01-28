@@ -59,59 +59,75 @@ theme_set(theme_classic())
 
 Imagine that one day a mysterious person approaches you and begins telling you about a new method for understanding humans: Colesology. The person explains that Colesology is useful for estimating causal relationships---but adds that it can sometimes be thrown off by a *methodological artifact.* When you ask the Colesologist about this artifact, they explain that it sometimes causes researchers to detect an effect that's not real, and other times causes them to miss an effect that is real. They add that it sometimes causes relationships to be biased upward and other times causes them to be biased downward. And then they offer a confession: they don't understand how the artifact works. Because sometimes the artifact seems to matter and other times it doesn't.
 
-Like Colesology, experimental psychologists also deal with a mysterious methodological artifact: *demand characteristics*, or "cues which convey an experimental hypothesis to the subject" [@orne1962social, p. 779]. This artifact can be invoked in almost any study context. However, like the Colesologist, it is difficult for experimental psychologist to predict the direction, magnitude, and impact of this artifact in advance.
+If this scenario were real, you would reasonably question whether Colesology is a valid method of scientific inquiry. However, perhaps we should not be so quick to judge. Because, like the Colesologist, experimental psychologists deal with a difficult-to-understand methodological artifact: *demand characteristics*.
 
 ## Demand characteristics as a methodological artifact
 
-In 1962, Martin Orne published a seminal paper highlighting a view that challenged deeply-ingrained beliefs about experimental psychology. In this paper, Orne argued that research participants are not passive responders to the experimental context. Instead, he suggested that participants actively try to make sense of the situation based on their assumptions, beliefs, and motivations. One factor that Orne believed played a particularly powerful role were *demand characteristics*. This idea was controversial at first, with some researchers arguing that Orne's claims about demand characteristics were vague and/or overblown [e.g., @berkowitz1971weapons; @milgram1972interpreting; @kruglanski1975human]. Nonetheless, over the next 60 years, demand characteristics would become recognized as a literal textbook methodological concern in experimental psychology [@sharpe2016frightened].
+In 1962, Martin Orne published a seminal paper highlighting a view that challenged deeply-ingrained beliefs about experimental psychology. In this paper, Orne argued that research participants are not passive responders to the experimental context. Instead, he suggested that participants are perceptive to demand characteristics---"cues which convey an experimental hypothesis to the subject---and motivated to use these cues to help the experimenter confirm their hypothesis [@orne1962social, p. 779]. This idea was controversial at first, with some researchers suggesting that the concern was vague and/or overblown [e.g., @berkowitz1971weapons; @milgram1972interpreting; @kruglanski1975human]. Nonetheless, over the next 60 years, demand characteristics would become recognized as a literal textbook methodological concern in experimental psychology [@sharpe2016frightened].
 
 Orne initially focused on evidence that demand characteristics can lead to false positives---such as patients exhibiting sham symptoms of hypnosis [@orne1959nature]. Follow-up research, though, indicated that demand characteristics can also lead to false negatives. For example, @hayes1967two demonstrated that participants will ignore visual cues of depth when they believe that doing so is the purpose of the experiment. In addition to creating inferential errors, demand characteristics can bias estimates of causal relationships. For example, @coles2022fact found that the estimated effect of facial poses on self-reported emotion could be amplified *or* attenuated depending on whether the experimenter communicates expectations of positive or nil effects. However, not all researchers have found that demand characteristics matter. For example, in large replications of classic studies in behavioral economics, @mummolo2019demand consistently failed to find that manipulations of the communicated hypothesis impacted participants' responses.
 
-After over 60 years, experimental psychologists are left with an uncomfortable state of affairs: demand characteristics are a literal textbook methodological concern, but it is not clear when and how their effects emerge. The goal of the current paper is to use meta-analysis to take stock of what we know---and what we don't know---about this methodological artifact. In Study 1, we provide the first quantitative synthesis of strict experimental tests of the effects of demand characteristics, with a focus on the the direction, magnitude, and consistency of the effect. We then examine several study features (e.g., whether participants are paid) that researchers have specified as potential moderators. In Study 2, we collect ratings from a new set of participants that provide tests of three mechanisms that may drive demand effects: motivation to confirm the experimenter's hypothesis, perceived opportunity to adjust responses, and belief in the stated hypothesis. We also examine how well this new set of participants can predict the effects of demand characteristics. In Study 3, we present the results of a small replication study that re-examines motivation, opportunity, and belief as potential moderators of the effects of demand characteristics. We end with a discussion of the steps we believe are required to transform vague frameworks about demand characteristics into formal theories---theories we believe might help distinguish a valid experimental psychology from the invalid methods of Colesology.
+After over 60 years, experimental psychologists are left with an uncomfortable state of affairs. Demand characteristics are a literal textbook methodological concern. However, like the Colesologist, it is not clear when, how, and in what direction the effect of this artifact emerges.
 
-## Rosnow and Rosenthal's (1997) demand characteristics framework
+## How do demand characteristics bias participant responses?
 
-@rosnow1997people proposed that there are three key moderators of the effects of demand characteristic: (1) receptivity to cues, (2) motivation to provide hypothesis-consistent responses, and (3) opportunity to alter their responses (Figure \@ref(fig:framework)).
+Historically, theorists have conceptualized the effects of demand characteristics as *response biases* mediated by relatively deliberate changes that participants make to their responses [@orne1962social; @rosnow1973mediation; @strohmetz2008research]. In doing so, these theorists distinguished their ideas from conceptually similar work on *placebo effects*: changes in participants' responses that are mediated by the relatively automatic activation of pre-existing and/or conditioned responses [@zion2018mindsets]. As an example of this distinction, imagine that a participant knows that a researcher expects an intervention to boost mood. Response bias---the historical focus of the demand characteristics literature---would involve a change in participants' self-reported mood without a concomitant change in actual mood. Placebo effects, on the other hand, would entail an actual change in mood.
+
+As we review below, the most comprehensive demand characteristics framework conceptualizes the artifact as a response bias [@rosnow1997people]. However, this conceptualization was recently challenged by @coles2022fact and @corneille2022sixty, who argued that demand characteristics can lead to both response biases *and* placebo effects [@coles2022fact]. For example, after inferring that a researcher expects an intervention to boost mood, a participant may both (a) deliberately adjust their mood ratings (response bias) and (b) unintentionally experience a placebo-induced change in mood. We discuss these two mechanisms in greater detail below.
+
+### Response bias
+
+To date, the most influential framework for conceptualizing the effects of demand characteristics has been developed by @rosnow1997people. Like most researchers, @rosnow1997people suggested that demand characteristics produce response biases. As such, they proposed three key moderators: (1) receptivity to cues, (2) motivation to provide hypothesis-consistent responses, and (3) opportunity to alter responses (Figure \@ref(fig:framework)).
 
 ```{r framework, fig.cap = "Rosnow and Rosenthal’s (1997) and Coles et al.’s (2022) frameworks for conceptualizing the impact of demand characteristics on participants’ responses."}
 knitr::include_graphics("images/metaware_framework.png")
 ```
 
-### Receptivity to cues
+#### Receptivity to cues
 
-@rosnow1997people argued that participants must be perceptive to demand characteristics in order for them to impact downstream responses [see also @rosnow1973mediation; @strohmetz2008research]. As an extreme example, imagine that a researcher hands an infant participant a sheet of paper that precisely explains the researcher's hypothesis. Demand characteristics are certainly present, but they are not predicted to have an impact because the infant is not receptive to the cues (i.e., cannot read).
+@rosnow1997people argued that participants must be perceptive to demand characteristics in order for them to produce a response bias [see also @rosnow1973mediation; @strohmetz2008research]. As an extreme example, imagine that a researcher hands an infant participant a sheet of paper that precisely explains the study hypothesis. Demand characteristics are certainly present, but they are not predicted to have an impact because the infant is not receptive to the cues (i.e., cannot read).
 
-### Motivation to provide hypothesis-consistent responses
+#### Motivation to provide hypothesis-consistent responses
 
-Early in the history of research on demand characteristics, researchers debated which motivational forces typically underlie the effects of demand characteristics [for a review, see @weber1972subject]. @orne1962social originally characterized participants as "good subjects" who change their responses because they are altruistically motivated to help the researcher confirm their hypothesis. Others characterized participants as "apprehensive subjects" who are motivated to respond in a manner that will lead them to be evaluated positively [@riecken1962program; @rosenberg1969conditions; @sigall1970cooperative]. @masling1966role argued that participants sometimes interfere with the purpose of the study ["negativistic subjects", see also @cook1970demand], whereas @fillenbaun1970more argued that participants attempt to respond as naturally as possible ("faithful subjects"). Although seemingly divided, these early theorists agreed on one overarching principle: that participants' motivation to provide hypothesis-consistent responses drives the effects of demand characteristics.
+Early in the history of research on demand characteristics, researchers debated which motivational forces typically underlie its subsequent response bias [for a review, see @weber1972subject]. @orne1962social originally characterized participants as "good subjects" who change their responses because they are altruistically motivated to help the researcher confirm their hypothesis. Others characterized participants as "apprehensive subjects" who are motivated to respond in a manner that will lead them to be evaluated positively [@riecken1962program; @rosenberg1969conditions; @sigall1970cooperative]. @masling1966role argued that participants sometimes interfere with the purpose of the study ["negativistic subjects", see also @cook1970demand], whereas @fillenbaun1970more argued that participants attempt to respond as naturally as possible ("faithful subjects"). Although seemingly divided, these early theorists agreed on one overarching principle: that participants' motivation to provide hypothesis-consistent responses drives the response bias.
 
 Because early demand characteristic theorists often focused on a single predominant subject goal--such as the goal to help the experimenter, be evaluated positively, or respond faithfully--less attention was paid to the notion that participants may have multiple, sometimes competing motivations [@barbuto1998motivation; @boudreaux2013goal]. Indeed, when the idea of multiple motivations was examined, it was often done so to highlight the more prominent role of a specific goal [e.g., evaluation apprehension vs. motivation to help the experimenter, @sigall1970cooperative]. However, @rosnow1997people found that people have multiple goals in mind when they conceptualize their role as research participants. Participants describe their role as being similar to situations where one is being altruistic (e.g., giving to charity), being evaluated (e.g., being interviewed for a job), *and* obeying authority (e.g., obeying a no-smoking sign). All these goals may impact the extent to which participants are overall motivated to provide hypothesis-consistent responses. Furthermore, these goals can sometimes conflict. For example, imagine that an experimenter is friendly towards the participant and that the participant is thus motivated to help the experimenter. Now imagine that the participant learns that the experimenter hypothesizes that they will show a race-based preference for job applicants. In this scenario, the motivation to help the experimenter may conflict with the participant's desire to respond in a socially desirable manner.
 
 Based on the above observations and reasoning, @rosnow1997people suggested that participants can be characterized as being motivated to either (a) non-acquiesce (i.e., not change their responses), (b) acquiesce (i.e., provide hypothesis-consistent responses), or (c) counter-acquiesce (i.e., provide hypothesis-inconsistent responses). Of course, as we later discuss, motivation might also be conceptualized on a continuum ranging from highly motivated to counter-acquiesce to highly motivated to acquiesce.
 
-### Opportunity to alter responses
+#### Opportunity to alter responses
 
-No matter how motivated they are to confirm the hypothesis, @rosnow1997people reasoned that there is variability in the extent to which participants have the opportunity to alter the outcome-of-interest. Thus, they posited that demand characteristics can only impact outcomes that participants can readily alter.
+No matter how motivated they are to confirm the hypothesis, @rosnow1997people reasoned that there is variability in the extent to which participants have the opportunity to alter the outcome-of-interest. Thus, they posited that demand characteristics can only produce response biases when participants can alter the outcome of interest.
 
-Taken together, @rosnow1997people posited that demand characteristics only bias participants responses when they (1) notice the cues, (2) are motivated to adjust their responses, and (3) are capable of adjusting their responses.
+Taking the three moderators together, @rosnow1997people posited that demand characteristics only bias participants responses when they (1) notice the cues, (2) are motivated to adjust their responses, and (3) are capable of adjusting their responses.
 
-## Coles et al.'s (2022) framework
+### Response bias and placebo effects
 
-Demand characteristic theorists have traditionally conceptualized the effects of the methodological artifact as a *response bias* [@orne1962social; @rosnow1973mediation; @strohmetz2008research]. For example, demand characteristics that indicate the researcher expects an intervention to boost mood is posited to impact participants' mood *reports*--not necessarily their actual mood.
+Over the past half century, demand characteristics have been conceptually divorced from placebo effects. This distinction, however, has recently been challenged by @coles2022fact and @corneille2022sixty, who argued that that demand characteristics not only have the potential to lead to response biases, but also placebo effects (Figure \@ref(fig:framework)). Consistent with this reasoning, @coles2022fact found that participants' beliefs did not always match the hypothesis communicated to participants; furthermore, both the communicated hypothesis and measures of participants' beliefs moderated the effects of posed expressions on emotion. Contrary to @rosnow1997people, this work suggests that demand characteristics can produce both response biases and placebo effects---meaning that the artifact can bias still responses when participants have neither the motivation nor the opportunity to adjust their responses.
 
-@coles2022fact argued that demand characteristics not only have the potential to lead to response biases, but also placebo biases (Figure \@ref(fig:framework)). They defined (a) response biases as changes mediated by relatively deliberate changes that participants make to their responses, and (b) placebo effects as changes mediated by relatively automatic activation of beliefs or pre-existing conditioned responses [@zion2018mindsets]. Thus, unlike @rosnow1997people, @coles2022fact argued that demand characteristics can impact responses when participants have neither the motivation nor the opportunity to adjust their responses. @coles2022fact also provided preliminary evidence that demand characteristics and placebo effects have distinct mechanisms. They found that participants' beliefs did not always match the demand characteristics manipulation--and that both the demand characteristics manipulations and measures of participants' beliefs moderated the effects of posed expressions on emotion.
+## Goals
 
-# Methodology
+The goal of the current paper is to use meta-analysis to take stock of what we know---and what we don't know---about demand characteristics as a methodological artifact. In Study 1a, we report the results of the first quantitative synthesis of strict experimental tests of the effects of demand characteristics, with a focus on the the direction, magnitude, and consistency of the effect. We then examine several study features (e.g., whether participants are paid) that researchers have specified as potential moderators.
 
-The present meta-analysis was designed to (1) provide the first quantitative synthesis of strict experimental tests of demand effects, and (2) test predictions made by @rosnow1997people and @coles2022fact.
+In Study 1b, we review an extension of the meta-analysis that examines whether variability in observed effect sizes can be explained by factors theorized to underlie response biases (i.e., motivation and opportunity to adjust responses) and placebo effects (i.e., belief in the experimenter's hypothesis). To do so, we derived estimates of these factors from a new set of participants. These participants read descriptions of each study in the meta-analysis and then reported the extent to which they hypothetically (a) would have been motivated to confirm the experimenter's hypothesis, (b) could have adjusted their responses, and (c) would have believed the experimenter's hypothesis. We also examine how well this new set of participants could predict the effects of the demand characteristics manipulated in the studies included in the meta-analysis.
 
-We defined the scope of the meta-analysis using the Population, Intervention, Comparison, Outcome framework [@schardt2007utilization]. Our population-of-interest was human subjects participating in non-clinical research studies. We excluded clinical research studies so that we could focus on research that better isolated the mechanism most often discussed in the demand characteristics literature: response biases (as opposed to placebo effects). Given that there is a sizable literature on placebo effects, excluding clinical tests of demand characteristics also helped us improve the feasibility of the project.
+In Study 2, we review a small replication study that re-examines the the extent to which demand characteristic effects can be explained by response biases and placebo effects. In this replication study, we manipulated demand characteristics in the context of an experiment examining the effects of facial poses on self-reported emotion (i.e., facial feedback). We then examined whether the effect of demand characteristics could be explained by factors believed to underlie response biases (i.e., self-reported motivation and opportunity to adjust responses), and placebo effects (i.e., self-reported belief in the communicated hypothesis).
 
-The intervention-of-interest was explicit manipulations of the hypothesis communicated to participants---i.e., scenarios where a researcher tells participants about the effect of an independent variable on a dependent variable. @orne1962social more broadly defined demand characteristics as *any* cue that may impact participants' beliefs about the purpose of the study, including instructions, rumors, and experimenter behavior. However, such a definition creates a boundless and blurry conceptual space where any systematic change in a research design might be considered a test of demand characteristics. Thus, to bound and simplify the conceptual space, we focused on explicit manipulations of the hypothesis communicated to participants.
+We end the paper with discussion of the steps we believe are required to transform vague frameworks about demand characteristics into formal theories---theories we believe might help distinguish a valid experimental psychology from the invalid methods of Colesology.
+
+# Study 1a
+
+Study 1a was designed to provide the first quantitative synthesis of strict experimental tests of demand effects, with a focus on the the direction, magnitude, and consistency of the effect.
+
+## Methodology
+
+We defined the scope of the meta-analysis using the Population, Intervention, Comparison, Outcome framework [@schardt2007utilization]. Our population-of-interest was human subjects participating in non-clinical research studies. We excluded clinical research studies so that we could focus on research that better isolated the discipline (experimental psychology) and mechanism (response bias) most often discussed in the demand characteristics literature. Given that there is a sizable literature on placebo effects, excluding clinical tests of demand characteristics also helped us improve the feasibility of the project.
+
+The intervention-of-interest was explicit manipulations of the hypothesis communicated to participants---i.e., scenarios where a researcher tells participants about the effect of an independent variable on a dependent variable. @orne1962social more broadly defined demand characteristics as *any* cue that may impact participants' beliefs about the purpose of the study, including instructions, rumors, and experimenter behavior. However, such a definition creates a blurry and potentially boundless conceptual space where any systematic change in a research design might be considered a test of demand characteristics. Thus, to bound and simplify the conceptual space, we focused on explicit manipulations of the hypothesis communicated to participants.
 
 Our comparison-of-interest were conditions where either no hypothesis or a different hypothesis was communicated to participants. Our outcome-of-interest was the dependent variable described in the communicated hypothesis. For example, in a study that manipulated whether the intervention is described as "mood-boosting" or "mood-dampening", the outcome-of-interest would be any measure of mood.
 
-## Literature search
+### Literature search
 
 ```{r literature search, include = F}
 # open and process literature search data
@@ -142,7 +158,7 @@ Our literature search strategy was developed in consultation with a librarian at
 
 We searched APA PsycInfo using broad search terms: "demand characteristics" OR "hypothesis awareness". This yielded `r r.pi` records. We additionally released a call for unpublished studies on the Society for Personality and Social Psychology Open Forum; Twitter; the Facebook Psychological Methods Discussion group; and the Facebook PsychMAP group. This yielded `r nrow(DF.s) - r.pi` additional records. In total, `r r.unp` of the records were unpublished.
 
-## Screening
+### Screening
 
 ```{r final.df, include = F}
 # open clean effect size data
@@ -189,11 +205,11 @@ DF.es <- DF.es %>%
 rm(DF.s, r.pi, r.unp, num.s, num.p, outlier.es)
 ```
 
-## Effect size index
+### Effect size index
 
 We used standardized mean difference scores (Cohen's $d_{s}$ and $d_{rm}$) as our effect size index [@borenstein2009effect; @cohen1988statistical].
 
-In most scenarios, we estimated the main effect of demand characteristics. For example, @coles2022fact manipulated whether participants were told that posing smiles would increase happiness. Here, the main effect of demand characteristics can be computed by comparing happiness ratings from smiling participants who were either informed or not informed about its expected effect.
+In most scenarios, we estimated the main effect of demand characteristics. For example, @coles2022fact manipulated whether participants were told that posing smiles would increase happiness. Here, the main effect of demand characteristics can be computed by comparing happiness ratings from smiling participants who were either informed or not informed about its mood-boosting effect.
 
 In some scenarios, we estimated the *interactive* effect of demand characteristics. For example, in the same @coles2022fact study, participants provided happiness ratings both after smiling and scowling. Participants' mood generally improved when smiling vs. scowling (i.e., there was a main effect of facial pose). However, the difference was more pronounced when participants were told about the mood-boosting effects of smiling. In other words, there was an interaction between facial pose and demand characteristics. In this scenario, the interactive effect of demand characteristics was computed by calculating a standardized difference-in-differences score. These scores were computed similar to Cohen's $d_{s}$ and $d_{rm}$, but with mean-difference scores (as opposed to means).
 
@@ -261,57 +277,13 @@ mult.eff.per <- DF.es %>%
 
 `r mult.eff.per`% of studies contained multiple effect sizes of interest. For example, the full design in Coles et al. (2022) included a positive demand, nil demand, and control condition. Participants also completed several facial expression poses (happy, angry, and neutral) and self-reported several emotions (happiness and anger). To be comprehensive, we recorded all reported effect sizes and account for dependencies in our models (described later).
 
-## Types of demand characteristic comparisons
+### Moderators
 
 Cohen's $d$ represents a standardized difference between two groups. Often, this involved a single demand characteristic condition (positive, negative, or nil demand) compared to a control group. Sometimes, however, this comparison involved two demand characteristic conditions (e.g., positive demand vs. negative demand). We thus coded whether the comparison involved one vs. two demand characteristic conditions. In addition, we coded each type of comparison: positive demand vs. control, nil demand vs. control, negative demand vs. control, positive vs. nil demand , positive vs. negative demand, and nil vs. negative demand.
 
-## Post-hoc measures of motivation, opportunity, and belief
+We also coded several study feature moderators that researchers have speculated may moderate demand effects but for which we personally had no a-priori hypotheses. This included: (1) whether the sample was student, non-student (e.g., MTurk), or mixed, (2) whether the study was conducted online or in-person, (3) whether the comparison involved one (e.g., positive demand vs. control) or two demand conditions (e.g., positive vs. negative-demand), (4) in the former, whether a positive, nil, or negative demand manipulation was used, (5) whether demand characteristics were manipulated within- vs. between-subjects, (6) the year the record was completed or published, and (7) whether participants were paid or unpaid.
 
-```{r vig.desc, include = F}
-# identify total number of vignettes
-vig.n <- read.csv(file = "vig/metaware_VigCombined.csv") %>% 
-  nrow()
-```
-
-Both @rosnow1997people and @coles2022fact posited that the effects of demand characteristics are moderated by participants' (1) motivation to provide hypothesis-consistent responses, and (2) opportunity to adjust their responses (Figure \@ref(fig:framework)). @coles2022fact additionally predicted a third moderator: (3) participants' belief in the hypothesized effect. Unfortunately, these variables were rarely measured in the studies included in the meta-analysis.
-
-As an indirect measure of these moderators-of-interest, we estimated their values through a new set of participants. For each demand characteristic condition and dependent variable combination, we created vignettes that described key study details. For example, @standing2008demonstration had two demand characteristics manipulations (positive and negative demand) and two dependent variables (measures of verbal and spatial reasoning). Thus, we created four vignettes for this study (see Figure \@ref(fig:vig)).
-
-In total, there were `r vig.n` vignettes. We did not create vignettes for control conditions because participants were not given information about the experimenter's hypothesis. Because there were no explicit demand characteristics to act upon, we left motivation, belief, and opportunity values blank for this condition.
-
-```{r vig, fig.cap = "Vignettes for Standing et al., 2008."}
-knitr::include_graphics("images/metaware_vigs.png")
-```
-
-```{r survey.n, include = F}
-# identify number of participants who completed the survey
-survey.n <- read.csv("data/metaware_SurvData_raw.csv") %>% 
-  nrow()
-```
-
-`r survey.n` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) believe the experimenter's hypothesis (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed the actual participants would confirm the hypothesis, which we discuss later. These questions were presented in random order.
-
-For each vignette, ratings were removed if the rater did not correctly identify the communicated hypothesis. The remaining ratings were averaged across raters to provide mean estimates of motivation, opportunity, and belief.
-
-### Accounting for different demand comparisons
-
-```{r mods, fig.cap = "Hypothetical data from a study where a procedure is either described as mood-boosting (positive demand), described as mood-dampening (negative demand), or not described at all (control). Data provides examples of how the effects of demand characteristics (d) on self-reported mood are moderating by participants' reports of their motivation to confirm the stated hypothesis (m, Panel A), belief in the stated hypothesis (b, Panel B), and opportunity to adjust responses (c, Panel C). In each panel, separate examples are provided for scenarios where motivation is invariant (Column 1) and variant (Column 2) across levels of demand characteristics"}
-knitr::include_graphics("images/metaware_mods.png")
-```
-
-As we've mentioned above, Cohen's $d$ represents the standardized difference between *two* groups. Thus, for each effect size, we summed the motivation, opportunity, and belief ratings for the two groups being compared. Doing so allowed us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where participants are told a procedure will boost mood (positive demand), told a procedure will dampen mood (negative demand), or not told about an expected effect (control). Compared to a control condition, participants who are motivated to confirm the hypothesis will have upward-biased responses in the positive demand condition and downward-biased responses in the negative demand condition (see Figure \@ref(fig:mods), Panel A, Column 1). When comparing the two demand conditions, the size of the demand effect should be doubled because the motivational forces in the two conditions produce an additive effect. Alternatively, these motivational forces could hypothetically cancel each other out. This might happen if participants were (a) motivated to confirm the hypothesis in the positive demand condition, and (b) motivated to disconfirm the hypothesis in the negative demand condition (see Figure \@ref(fig:mods), Panel A, Column 2). Summing motivation scores allowed us to accommodate this possibility, and we used the same approach for belief (Figure \@ref(fig:mods), Panel B) and opportunity ratings (Figure \@ref(fig:mods), Panel C).
-
-We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in this condition. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil demand), and (b) is extremely motivated to disconfirm the hypothesis. Relative to a control condition, this participant could disconfirm the hypothesis by either increasing *or* decreasing their mood report. Thus, even if motivation does moderate the effects of demand characteristics, we would not expect a systematic pattern to emerge with our coding scheme.
-
-## Rater forecasts of demand effects
-
-Even if researchers cannot explain how demand characteristics work, it might be valuable to be able to predict their effects [@yarkoni2017choosing]. Orne suggested that one group that may be particularly good at predicting these effects is participants themselves [@orne1969demand]. To examine this, raters who reviewed the vignettes also predicted whether other participants would confirm vs. disconfirm the researcher's hypothesis (-3 = "extremely likely to adjust responses to be inconsistent" to 3 = "extremely likely to adjust responses to be consistent"). We processed these data using the same approach as the motivation, opportunity, and belief scores (e.g., summed ratings when comparing two demand conditions).
-
-## Other moderators
-
-We also coded several moderators that researchers have speculated may moderate demand effects but for which we personally had no a-priori hypotheses. This included: (1) whether the sample was student, non-student (e.g., MTurk), or mixed, (2) whether the study was conducted online or in-person, (3) whether the comparison involved one (e.g., positive demand vs. control) or two demand conditions (e.g., positive vs. negative-demand), (4) in the former, whether a positive, nil, or negative demand manipulation was used, (5) whether demand characteristics were manipulated within- vs. between-subjects, (6) the year the record was completed or published, and (7) whether participants were paid or unpaid.
-
-## Meta-analytic approach
+### Meta-analytic approach
 
 `r mult.eff.per`% of studies in our meta-analysis contained multiple effect sizes of interest. To model this nested structure, we used random-effect three-level meta-analysis (3LMA; also referred to as "multivariate" or "multilevel" meta-analysis). 3LMA accommodates nested effect sizes by modeling three sources of variability: the sampling error of individual studies (level 1), variability within studies (level 2), and variability between studies (level 3; often referred to as "random effect"). To estimate the overall effect size, we fit an intercept-only 3LMA model. For moderator analyses, continuous and dummy-coded categorical moderators were separately entered into the model. For categorical moderators, we used the models to estimate overall effect sizes within each subgroup of the moderator.
 
@@ -320,7 +292,7 @@ We also coded several moderators that researchers have speculated may moderate d
 rm(mult.eff.per, vig.n, survey.n, sens.range)
 ```
 
-### Publication bias analyses
+#### Publication bias analyses
 
 Publication bias refers to the well-documented propensity for hypothesis-inconsistent findings to be disproportionately omitted from the published scientific record [@franco2014publication]. When present, publication bias can lead to inaccurate effect size estimates and inferential errors. Consequently, we used three main approaches for assessing and correcting for potential publication bias in our overall effect size model.
 
@@ -332,7 +304,7 @@ Third, we used weight-function modeling [@vevea1995general]. In weight-function 
 
 As a sensitivity analysis, we included publication status as a dummy-coded predictor to our overall-effect 3LMA. This allowed us to estimate the difference in the magnitude of published vs. unpublished effects.
 
-# Results
+## Results
 
 ```{r overall, include = F}
 # estimate overall effect size
@@ -472,172 +444,15 @@ rm(mod.r.2)
 
 The observed effects of demand characteristics were highly heterogeneous. Indeed, the between-study ($\tau$ = `r sqrt(overall$sigma2[1])`) and within-study ($\sigma$ = `r sqrt(overall$sigma2[2])`) effect standard deviation was approximately the same size of the overall effect. This suggests that moderators (as opposed to mere sampling error) are producing meaningful shifts in the effects of demand characteristics.
 
-#### Motivation, opportunity, and belief
+Results indicated that the effects of demand characteristics were moderated by participant pool, $F$(`r mod.r$student$mod$QMdf[1]`, `r mod.r$student$mod$QMdf[2]`) = `r mod.r$student$mod$QM`, $p$ = `r printp(mod.r$student$mod$QMp)`. The effects were medium-to-large in studies with students ($d$ = `r mod.r$student$sub$b[3]`, 95% CI [`r mod.r$student$sub$ci.lb[3]`, `r mod.r$student$sub$ci.ub[3]`], $p$ `r printp(mod.r$student$sub$pval[3])`), extremely small in studies with a mix of students and non-students ($d$ = `r mod.r$student$sub$b[1]`, 95% CI [`r mod.r$student$sub$ci.lb[1]`, `r mod.r$student$sub$ci.ub[1]`], $p$ = `r printp(mod.r$student$sub$pval[1])`), and near-zero in studies with non-students ($d$ = `r mod.r$student$sub$b[2]`, 95% CI [`r mod.r$student$sub$ci.lb[2]`, `r mod.r$student$sub$ci.ub[2]`], $p$ = `r printp(mod.r$student$sub$pval[2])`).
 
-```{r mod.fig, fig.cap= "The effects of demand characteristics on participants' responses were not significantly moderated by motivation (Panel A) or opportunity (Panel B) ratings. They were, however, significantly moderated by belief (Panel C) and prediction (Panel D) ratings."}
-
-#################
-# motivation plot
-#################
-# get predicted and actual values into a single dataset
-mot.df <- predict(mod.r$mot$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$mot$mod$yi)
-
-# plot
-m <- ggplot(data = mot.df,
-            aes(x = X.mot,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .8,
-              fill = "dark grey",
-              color = "dark grey") +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "Cohen's d", 
-       x = "motivation ratings")
-
-rm(mot.df)
-
-#################
-# opportunity plot
-#################
-# get predicted and actual values into a single dataset
-opp.df <- predict(mod.r$opp$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$opp$mod$yi)
-
-# plot
-o <- ggplot(data = opp.df,
-            aes(x = X.opp,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .8,
-              fill = "dark grey",
-              color = "dark grey") +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "", 
-       x = "opportunity ratings")
-
-rm(opp.df)
-
-#################
-# belief plot
-#################
-# get predicted and actual values into a single dataset
-bel.df <- predict(mod.r$bel$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$bel$mod$yi)
-
-# plot
-b <- ggplot(data = bel.df,
-            aes(x = X.bel,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .8,
-              fill = "dark grey",
-              color = "dark grey") +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "Cohen's d", 
-       x = "belief ratings")
-
-rm(bel.df)
-
-#################
-# prediction plot
-#################
-# get predicted and actual values into a single dataset
-pre.df <- predict(mod.r$pre$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$pre$mod$yi)
-
-# plot
-p <- ggplot(data = pre.df,
-            aes(x = X.pre,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .8,
-              fill = "dark grey",
-              color = "dark grey") +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "", 
-       x = "prediction ratings")
-
-rm(pre.df)
-
-#################
-# merge plots
-#################
-plot_grid(m, o, b, p,
-          labels = c("A", "B", "C", "D"))
-
-rm(m, o, b, p)
-```
-
-Contrary to predictions made by @rosnow1997people and @coles2022fact, we did not find that the effects of demand characteristics were moderated by ratings of the extent to which participants would be motivated to confirm the experimenter's hypothesis, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])` (Figure \@ref(fig:mod.fig). We also did not find that demand characteristic effects were moderated by ratings of the extent to which participants could control the outcome of interest, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure \@ref(fig:mod.fig). Consistent with @coles2022fact, however, demand characteristic effects were larger when raters indicated that they believed the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:mod.fig).
-
-#### Other moderators
-
-Results indicated that the effects of demand characteristics were moderated by participant pool, $F$(`r mod.r$student$mod$QMdf[1]`, `r mod.r$student$mod$QMdf[2]`) = `r mod.r$student$mod$QM`, $p$ = `r printp(mod.r$student$mod$QMp)`. The effects were medium-to-large in studies with students ($d$ = `r mod.r$student$sub$b[3]`, 95% CI [`r mod.r$student$sub$ci.lb[3]`, `r mod.r$student$sub$ci.ub[3]`], $p$ `r printp(mod.r$student$sub$pval[3])`), extremely small in studies with a mix of students and non-students ($d$ = `r mod.r$student$sub$b[1]`, 95% CI [`r mod.r$student$sub$ci.lb[1]`, `r mod.r$student$sub$ci.ub[1]`], $p$ = `r printp(mod.r$student$sub$pval[1])`), and near-zero in studies with non-students ($d$ = `r mod.r$student$sub$b[2]`, 95% CI [`r mod.r$student$sub$ci.lb[2]`, `r mod.r$student$sub$ci.ub[2]`], $p$ = `r printp(mod.r$student$sub$pval[2])`). The effects of demand characteristics also tended to be larger for in-person ($d$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($d$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)`.
+The effects of demand characteristics also tended to be larger for in-person ($d$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($d$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)`.
 
 The effects of demand characteristics appeared to be additive. Compared to instances where a demand characteristic condition was compared to a control group ($d$ = `r mod.r$ref.r$sub$b[2]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[2]`, `r mod.r$ref.r$sub$ci.ub[2]`], $p$ = `r printp(mod.r$ref.r$sub$pval[2])`), effect sizes were approximately twice as large when two demand characteristic conditions were compared ($d$ = `r mod.r$ref.r$sub$b[1]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[1]`, `r mod.r$ref.r$sub$ci.ub[1]`], $p$ `r printp(mod.r$ref.r$sub$pval[1])`), $F$(`r mod.r$ref.r$mod$QMdf[1]`, `r mod.r$ref.r$mod$QMdf[2]`) = `r mod.r$ref.r$mod$QM`, $p$ = `r printp(mod.r$ref.r$mod$QMp)`. Instances where a demand characteristic condition was compared to a control group allowed us to additional test whether participants respond more strongly to positive, nil, or negative demand characteristics. Results indicated that they do, $F$(`r mod.r$ref.type$mod$QMdf[1]`, `r mod.r$ref.type$mod$QMdf[2]`) = `r mod.r$ref.type$mod$QM`, $p$ `r printp(mod.r$ref.type$mod$QMp)`. The effect of demand characteristics was nearly twice as large in the nil ($d$ = `r mod.r$ref.type$sub$b[2]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[2]`, `r mod.r$ref.type$sub$ci.ub[2]`], $p$ `r printp(mod.r$ref.type$sub$pval[2])`) vs. positive ($d$ = `r mod.r$ref.type$sub$b[1]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[1]`, `r mod.r$ref.type$sub$ci.ub[1]`], $p$ = `r printp(mod.r$ref.type$sub$pval[1])`), and negative demand conditions ($d$ = `r mod.r$ref.type$sub$b[3]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[3]`, `r mod.r$ref.type$sub$ci.ub[3]`], $p$ = `r printp(mod.r$ref.type$sub$pval[3])`).
 
-We did not find that the effects of demand characteristics were moderated by whether researchers manipulated demand characteristics within- ($d$ = `r mod.r$design$sub$b[1]`, 95% CI [`r mod.r$design$sub$ci.lb[1]`, `r mod.r$design$sub$ci.ub[1]`], $p$ `r printp(mod.r$design$sub$pval[1])`) vs. between-subjects ($d$ = `r mod.r$design$sub$b[2]`, 95% CI [`r mod.r$design$sub$ci.lb[2]`, `r mod.r$design$sub$ci.ub[2]`], $p$ = `r printp(mod.r$design$sub$pval[2])`), $F$(`r mod.r$design$mod$QMdf[1]`, `r mod.r$design$mod$QMdf[2]`) = `r mod.r$design$mod$QM`, $p$ = `r printp(mod.r$design$mod$QMp)`. We also did not find that the effects of demand characteristics were moderated by the year the record was completed or published, $\beta$ = `r mod.r$year$mod$b["year", ]`, 95% CI [`r mod.r$year$mod$ci.lb[2]`, `r mod.r$year$mod$ci.ub[2]`], $t$(`r sum(mod.r$year$mod$QMdf)`) = `r mod.r$year$mod$zval[2]`, $p$ = `r printp(mod.r$year$mod$pval[2])`. The effects of demand characteristics tended to be numerically larger in unpaid ($d$ = `r mod.r$paid$sub$b[1]`, 95% CI [`r mod.r$paid$sub$ci.lb[1]`, `r mod.r$paid$sub$ci.ub[1]`], $p$ `r printp(mod.r$paid$sub$pval[1])`) vs. paid ($d$ = `r mod.r$paid$sub$b[2]`, 95% CI [`r mod.r$paid$sub$ci.lb[2]`, `r mod.r$paid$sub$ci.ub[2]`], $p$ = `r printp(mod.r$paid$sub$pval[2])`) studies---but this difference was also not statistically significant, $F$(`r mod.r$paid$mod$QMdf[1]`, `r mod.r$paid$mod$QMdf[2]`) = `r mod.r$paid$mod$QM`, $p$ = `r printp(mod.r$paid$mod$QMp)`.
+We did not find that the effects of demand characteristics were moderated by whether researchers manipulated demand characteristics within- ($d$ = `r mod.r$design$sub$b[1]`, 95% CI [`r mod.r$design$sub$ci.lb[1]`, `r mod.r$design$sub$ci.ub[1]`], $p$ `r printp(mod.r$design$sub$pval[1])`) vs. between-subjects ($d$ = `r mod.r$design$sub$b[2]`, 95% CI [`r mod.r$design$sub$ci.lb[2]`, `r mod.r$design$sub$ci.ub[2]`], $p$ = `r printp(mod.r$design$sub$pval[2])`), $F$(`r mod.r$design$mod$QMdf[1]`, `r mod.r$design$mod$QMdf[2]`) = `r mod.r$design$mod$QM`, $p$ = `r printp(mod.r$design$mod$QMp)`. We also did not find that the effects of demand characteristics were moderated by the year the record was completed or published, $\beta$ = `r mod.r$year$mod$b["year", ]`, 95% CI [`r mod.r$year$mod$ci.lb[2]`, `r mod.r$year$mod$ci.ub[2]`], $t$(`r sum(mod.r$year$mod$QMdf)`) = `r mod.r$year$mod$zval[2]`, $p$ = `r printp(mod.r$year$mod$pval[2])`.
 
-### Forecasts
-
-Raters predictions about the effects of demand characteristics were associated with the observed effects, but this association was weak, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])` (Figure \@ref(fig:mod.fig).
+The effects of demand characteristics tended to be numerically larger in unpaid ($d$ = `r mod.r$paid$sub$b[1]`, 95% CI [`r mod.r$paid$sub$ci.lb[1]`, `r mod.r$paid$sub$ci.ub[1]`], $p$ `r printp(mod.r$paid$sub$pval[1])`) vs. paid ($d$ = `r mod.r$paid$sub$b[2]`, 95% CI [`r mod.r$paid$sub$ci.lb[2]`, `r mod.r$paid$sub$ci.ub[2]`], $p$ = `r printp(mod.r$paid$sub$pval[2])`) studies---but this difference was also not statistically significant, $F$(`r mod.r$paid$mod$QMdf[1]`, `r mod.r$paid$mod$QMdf[2]`) = `r mod.r$paid$mod$QM`, $p$ = `r printp(mod.r$paid$mod$QMp)`.
 
 ### Publication bias analyses
 
@@ -896,6 +711,243 @@ plot_grid(a, b,
 rm(a, b)
 ```
 
+## Discussion
+
+```{r}
+tmp <- rnorm(n = 10000,
+             mean = overall$b,
+             sd = sqrt(overall$sigma2[1])
+             )
+
+hist(tmp)
+
+
+pnorm(q = 0,
+      mean = overall$b,
+      sd = sqrt(overall$sigma2[1]),
+      )
+
+```
+
+Overall, explicit manipulations of demand characteristics lead to a small but highly heterogeneous acquiescence effect.
+
+Significant counteraqcquiesence effects were rarely observed in the studies in our sample. However, if we assume that our meta-analysis accurately estimated the true mean and standard deviation of a normal distribution of demand effects, 23% of these effects theoretically fall below zero. In other words, participants are three times more likely to acquiesence than counteracquiesence.
+
+What factors lead to stronger acquiesence effects?
+
+-   Working with students
+
+-   Telling participants you expect *no* effect to emerge
+
+-   Possibly paying participants
+
+Study 1 gives us some information about the consistency and situational moderators of demand effects. However, they do not address outstanding questions regarding the extent to which these  effects are driven by response bias vs. placebo effect. Students may be more likely to be motivated to help the experimenter (response bias), but they may also be more likely to believe the communicated hypothesis (placebo effect). Participants may be more motivated to exhibit no change in response (response bias); but it's also possible that telling participants that we expect *no* effect causes a more drastic shift in beliefs than communicating an expectation for a positive or negative effect (placebo effect).
+
+The purpose of Study 1b is to figure our why these effects are occuring.
+
+# Study 1b
+
+### Post-hoc measures of motivation, opportunity, and belief
+
+```{r vig.desc, include = F}
+# identify total number of vignettes
+vig.n <- read.csv(file = "vig/metaware_VigCombined.csv") %>% 
+  nrow()
+```
+
+Both @rosnow1997people and @coles2022fact posited that the effects of demand characteristics are moderated by participants' (1) motivation to provide hypothesis-consistent responses, and (2) opportunity to adjust their responses (Figure \@ref(fig:framework)). @coles2022fact additionally predicted a third moderator: (3) participants' belief in the hypothesized effect. Unfortunately, these variables were rarely measured in the studies included in the meta-analysis.
+
+As an indirect measure of these moderators-of-interest, we estimated their values through a new set of participants. For each demand characteristic condition and dependent variable combination, we created vignettes that described key study details. For example, @standing2008demonstration had two demand characteristics manipulations (positive and negative demand) and two dependent variables (measures of verbal and spatial reasoning). Thus, we created four vignettes for this study (see Figure \@ref(fig:vig)).
+
+In total, there were `r vig.n` vignettes. We did not create vignettes for control conditions because participants were not given information about the experimenter's hypothesis. Because there were no explicit demand characteristics to act upon, we left motivation, belief, and opportunity values blank for this condition.
+
+```{r vig, fig.cap = "Vignettes for Standing et al., 2008."}
+knitr::include_graphics("images/metaware_vigs.png")
+```
+
+```{r survey.n, include = F}
+# identify number of participants who completed the survey
+survey.n <- read.csv("data/metaware_SurvData_raw.csv") %>% 
+  nrow()
+```
+
+`r survey.n` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) believe the experimenter's hypothesis (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed the actual participants would confirm the hypothesis, which we discuss later. These questions were presented in random order.
+
+For each vignette, ratings were removed if the rater did not correctly identify the communicated hypothesis. The remaining ratings were averaged across raters to provide mean estimates of motivation, opportunity, and belief.
+
+#### Accounting for different demand comparisons
+
+```{r mods, fig.cap = "Hypothetical data from a study where a procedure is either described as mood-boosting (positive demand), described as mood-dampening (negative demand), or not described at all (control). Data provides examples of how the effects of demand characteristics (d) on self-reported mood are moderating by participants' reports of their motivation to confirm the stated hypothesis (m, Panel A), belief in the stated hypothesis (b, Panel B), and opportunity to adjust responses (c, Panel C). In each panel, separate examples are provided for scenarios where motivation is invariant (Column 1) and variant (Column 2) across levels of demand characteristics"}
+knitr::include_graphics("images/metaware_mods.png")
+```
+
+As we've mentioned above, Cohen's $d$ represents the standardized difference between *two* groups. Thus, for each effect size, we summed the motivation, opportunity, and belief ratings for the two groups being compared. Doing so allowed us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where participants are told a procedure will boost mood (positive demand), told a procedure will dampen mood (negative demand), or not told about an expected effect (control). Compared to a control condition, participants who are motivated to confirm the hypothesis will have upward-biased responses in the positive demand condition and downward-biased responses in the negative demand condition (see Figure \@ref(fig:mods), Panel A, Column 1). When comparing the two demand conditions, the size of the demand effect should be doubled because the motivational forces in the two conditions produce an additive effect. Alternatively, these motivational forces could hypothetically cancel each other out. This might happen if participants were (a) motivated to confirm the hypothesis in the positive demand condition, and (b) motivated to disconfirm the hypothesis in the negative demand condition (see Figure \@ref(fig:mods), Panel A, Column 2). Summing motivation scores allowed us to accommodate this possibility, and we used the same approach for belief (Figure \@ref(fig:mods), Panel B) and opportunity ratings (Figure \@ref(fig:mods), Panel C).
+
+We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in this condition. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil demand), and (b) is extremely motivated to disconfirm the hypothesis. Relative to a control condition, this participant could disconfirm the hypothesis by either increasing *or* decreasing their mood report. Thus, even if motivation does moderate the effects of demand characteristics, we would not expect a systematic pattern to emerge with our coding scheme.
+
+### Rater forecasts of demand effects
+
+Even if researchers cannot explain how demand characteristics work, it might be valuable to be able to predict their effects [@yarkoni2017choosing]. Orne suggested that one group that may be particularly good at predicting these effects is participants themselves [@orne1969demand]. To examine this, raters who reviewed the vignettes also predicted whether other participants would confirm vs. disconfirm the researcher's hypothesis (-3 = "extremely likely to adjust responses to be inconsistent" to 3 = "extremely likely to adjust responses to be consistent"). We processed these data using the same approach as the motivation, opportunity, and belief scores (e.g., summed ratings when comparing two demand conditions).
+
+#### Motivation, opportunity, and belief
+
+```{r mod.fig, fig.cap= "The effects of demand characteristics on participants' responses were not significantly moderated by motivation (Panel A) or opportunity (Panel B) ratings. They were, however, significantly moderated by belief (Panel C) and prediction (Panel D) ratings."}
+
+#################
+# motivation plot
+#################
+# get predicted and actual values into a single dataset
+mot.df <- predict(mod.r$mot$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$mot$mod$yi)
+
+# plot
+m <- ggplot(data = mot.df,
+            aes(x = X.mot,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "Cohen's d", 
+       x = "motivation ratings")
+
+rm(mot.df)
+
+#################
+# opportunity plot
+#################
+# get predicted and actual values into a single dataset
+opp.df <- predict(mod.r$opp$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$opp$mod$yi)
+
+# plot
+o <- ggplot(data = opp.df,
+            aes(x = X.opp,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "", 
+       x = "opportunity ratings")
+
+rm(opp.df)
+
+#################
+# belief plot
+#################
+# get predicted and actual values into a single dataset
+bel.df <- predict(mod.r$bel$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$bel$mod$yi)
+
+# plot
+b <- ggplot(data = bel.df,
+            aes(x = X.bel,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "Cohen's d", 
+       x = "belief ratings")
+
+rm(bel.df)
+
+#################
+# prediction plot
+#################
+# get predicted and actual values into a single dataset
+pre.df <- predict(mod.r$pre$mod,
+                  addx = T) %>% 
+  as.data.frame() %>% 
+  cbind(.,
+        yi = mod.r$pre$mod$yi)
+
+# plot
+p <- ggplot(data = pre.df,
+            aes(x = X.pre,
+                y = yi)) +
+  
+  # jittered raw data
+  geom_jitter(alpha = .8,
+              fill = "dark grey",
+              color = "dark grey") +
+  
+  # model derived prediction line
+  geom_line(aes(y = pred)) +
+  
+  # model derived CI
+  geom_ribbon(aes(ymin = ci.lb, 
+                  ymax = ci.ub), 
+              alpha = .10,
+              fill = "#3366FF") +
+  
+  # adjust labels
+  labs(y = "", 
+       x = "prediction ratings")
+
+rm(pre.df)
+
+#################
+# merge plots
+#################
+plot_grid(m, o, b, p,
+          labels = c("A", "B", "C", "D"))
+
+rm(m, o, b, p)
+```
+
+Contrary to predictions made by @rosnow1997people and @coles2022fact, we did not find that the effects of demand characteristics were moderated by ratings of the extent to which participants would be motivated to confirm the experimenter's hypothesis, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])` (Figure \@ref(fig:mod.fig). We also did not find that demand characteristic effects were moderated by ratings of the extent to which participants could control the outcome of interest, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure \@ref(fig:mod.fig). Consistent with @coles2022fact, however, demand characteristic effects were larger when raters indicated that they believed the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:mod.fig).
+
+### Forecasts
+
+Raters predictions about the effects of demand characteristics were associated with the observed effects, but this association was weak, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])` (Figure \@ref(fig:mod.fig).
+
 # Discussion
 
 Contrary to classic conceptualizations of the impact of demand characteristics and frameworks proposed by @rosnow1997people and @coles2022fact, we did not find evidence of two moderators that have been theorized to underlie response biases: motivation and opportunity to adjust responses. We did, however, find evidence that such effects are moderated by a measure of participants' belief in the communicated effect. This unexpected pattern of results is consistent with a more parsimonious view: that phenomena typically described by experimental psychologists as "demand effects" are actually *placebo effects*. Applied to classic work by Orne, maybe participants did not exhibit sham symptoms of hypnosis because they were motivated to please the experimenter; instead maybe they intentionally or unintentionally responded in a manner that was consistent with their personal beliefs (a self-fulfilling prophecy or placebo effect).
@@ -1099,7 +1151,11 @@ mod.m <- rma.mv(yi = es,
 mod.m %>% anova()
 ```
 
-# To-do
+# Graveyard and To-do
+
+and (2) test predictions made by @rosnow1997people and @coles2022fact.
+
+In Studies 1b and 2, we will examine the relative impact of these two mechanisms---raising puzzling questions about the validity of the historic divide between work on demand characteristics and placebo effects.
 
 [] Look into bug that's causing studies to only have one effect size
 
