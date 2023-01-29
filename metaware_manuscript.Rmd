@@ -57,17 +57,17 @@ r_refs("r-references.bib")
 theme_set(theme_classic())
 ```
 
-Imagine that one day a mysterious person approaches you and begins telling you about a new method for understanding humans: Colesology. The person explains that Colesology is useful for estimating causal relationships---but adds that it can sometimes be thrown off by a *methodological artifact.* When you ask the Colesologist about this artifact, they explain that it sometimes causes researchers to detect an effect that's not real, and other times causes them to miss an effect that is real. They add that it sometimes causes relationships to be biased upward and other times causes them to be biased downward. And then they offer a confession: they don't understand how the artifact works. Because sometimes the artifact seems to matter and other times it doesn't.
+Imagine that one day a mysterious person approaches you and begins telling you about a new method for understanding humans: Crankology. The person explains that Crankology is useful for estimating causal relationships---but adds that it can sometimes be thrown off by a *methodological artifact.* When you ask the Crankologist about this artifact, they explain that it sometimes causes researchers to detect an effect that's not real, and other times causes them to miss an effect that is real. They add that it sometimes causes relationships to be biased upward and other times causes them to be biased downward. And then they offer a confession: they don't understand how the artifact works. Because sometimes the artifact seems to matter and other times it doesn't.
 
-If this scenario were real, you would reasonably question whether Colesology is a valid method of scientific inquiry. However, perhaps we should not be so quick to judge. Because, like the Colesologist, experimental psychologists deal with a difficult-to-understand methodological artifact: *demand characteristics*.
+If this scenario were real, you would reasonably question whether Crankology is a valid method of scientific inquiry. However, perhaps we should not be so quick to judge. Because, like the Crankologist, experimental psychologists deal with a difficult-to-understand methodological artifact: *demand characteristics*.
 
 ## Demand characteristics as a methodological artifact
 
 In 1962, Martin Orne published a seminal paper highlighting a view that challenged deeply-ingrained beliefs about experimental psychology. In this paper, Orne argued that research participants are not passive responders to the experimental context. Instead, he suggested that participants are perceptive to demand characteristics---"cues which convey an experimental hypothesis to the subject---and motivated to use these cues to help the experimenter confirm their hypothesis [@orne1962social, p. 779]. This idea was controversial at first, with some researchers suggesting that the concern was vague and/or overblown [e.g., @berkowitz1971weapons; @milgram1972interpreting; @kruglanski1975human]. Nonetheless, over the next 60 years, demand characteristics would become recognized as a literal textbook methodological concern in experimental psychology [@sharpe2016frightened].
 
-Orne initially focused on evidence that demand characteristics can lead to false positives---such as patients exhibiting sham symptoms of hypnosis [@orne1959nature]. Follow-up research, though, indicated that demand characteristics can also lead to false negatives. For example, @hayes1967two demonstrated that participants will ignore visual cues of depth when they believe that doing so is the purpose of the experiment. In addition to creating inferential errors, demand characteristics can bias estimates of causal relationships. For example, @coles2022fact found that the estimated effect of facial poses on self-reported emotion could be amplified *or* attenuated depending on whether the experimenter communicates expectations of positive or nil effects. However, not all researchers have found that demand characteristics matter. For example, in large replications of classic studies in behavioral economics, @mummolo2019demand consistently failed to find that manipulations of the communicated hypothesis impacted participants' responses.
+Orne initially focused on evidence that demand characteristics can lead to false positives---such as patients exhibiting sham symptoms of hypnosis [@orne1959nature]. Follow-up research, though, indicated that demand characteristics can also lead to false negatives. For example, @hayes1967two demonstrated that participants will ignore visual cues of depth when they believe that doing so is the purpose of the experiment. Of course, in addition to creating inferential errors, demand characteristics can bias estimates of causal relationships. For example, @coles2022fact found that the estimated effect of facial poses on self-reported emotion could be amplified *or* attenuated depending on whether the experimenter communicates expectations of positive or nil effects. However, not all researchers have found that demand characteristics matter. For example, in large replications of classic studies in behavioral economics, @mummolo2019demand consistently failed to find that manipulations of the communicated hypothesis impacted participants' responses.
 
-After over 60 years, experimental psychologists are left with an uncomfortable state of affairs. Demand characteristics are a literal textbook methodological concern. However, like the Colesologist, it is not clear when, how, and in what direction the effect of this artifact emerges.
+After over 60 years, experimental psychologists are left with an uncomfortable state of affairs. Demand characteristics are a literal textbook methodological concern. However, like Crankology, the magnitude, direction, consistency, and mechanism of this artifact remains mysterious.
 
 ## How do demand characteristics bias participant responses?
 
@@ -85,13 +85,13 @@ knitr::include_graphics("images/metaware_framework.png")
 
 #### Receptivity to cues
 
-@rosnow1997people argued that participants must be perceptive to demand characteristics in order for them to produce a response bias [see also @rosnow1973mediation; @strohmetz2008research]. As an extreme example, imagine that a researcher hands an infant participant a sheet of paper that precisely explains the study hypothesis. Demand characteristics are certainly present, but they are not predicted to have an impact because the infant is not receptive to the cues (i.e., cannot read).
+To start, @rosnow1997people reasoned that participants must be perceptive to demand characteristics in order for them to produce a response bias [see also @rosnow1973mediation; @strohmetz2008research]. As an extreme example, imagine that a researcher hands an infant participant a sheet of paper that precisely explains the study hypothesis. Demand characteristics are certainly present, but they are not predicted to have an impact because the infant is not receptive to the cues (i.e., cannot read).
 
 #### Motivation to provide hypothesis-consistent responses
 
-Early in the history of research on demand characteristics, researchers debated which motivational forces typically underlie its subsequent response bias [for a review, see @weber1972subject]. @orne1962social originally characterized participants as "good subjects" who change their responses because they are altruistically motivated to help the researcher confirm their hypothesis. Others characterized participants as "apprehensive subjects" who are motivated to respond in a manner that will lead them to be evaluated positively [@riecken1962program; @rosenberg1969conditions; @sigall1970cooperative]. @masling1966role argued that participants sometimes interfere with the purpose of the study ["negativistic subjects", see also @cook1970demand], whereas @fillenbaun1970more argued that participants attempt to respond as naturally as possible ("faithful subjects"). Although seemingly divided, these early theorists agreed on one overarching principle: that participants' motivation to provide hypothesis-consistent responses drives the response bias.
+Early in the history of research on demand characteristics, researchers debated which motivational forces typically underlie its subsequent response bias [for a review, see @weber1972subject]. @orne1962social originally characterized participants as "good subjects" who change their responses because they are altruistically motivated to help the researcher confirm their hypothesis. Others characterized participants as "apprehensive subjects" who are motivated to respond in a manner that will lead them to be evaluated positively [@riecken1962program; @rosenberg1969conditions; @sigall1970cooperative]. @masling1966role argued that participants sometimes interfere with the purpose of the study ["negativistic subjects", see also @cook1970demand], whereas @fillenbaun1970more argued that participants attempt to respond as naturally as possible ("faithful subjects"). Although seemingly divided, these early theorists agreed on one overarching principle: response bias is driven by participants' motivation to provide hypothesis-consistent responses.
 
-Because early demand characteristic theorists often focused on a single predominant subject goal--such as the goal to help the experimenter, be evaluated positively, or respond faithfully--less attention was paid to the notion that participants may have multiple, sometimes competing motivations [@barbuto1998motivation; @boudreaux2013goal]. Indeed, when the idea of multiple motivations was examined, it was often done so to highlight the more prominent role of a specific goal [e.g., evaluation apprehension vs. motivation to help the experimenter, @sigall1970cooperative]. However, @rosnow1997people found that people have multiple goals in mind when they conceptualize their role as research participants. Participants describe their role as being similar to situations where one is being altruistic (e.g., giving to charity), being evaluated (e.g., being interviewed for a job), *and* obeying authority (e.g., obeying a no-smoking sign). All these goals may impact the extent to which participants are overall motivated to provide hypothesis-consistent responses. Furthermore, these goals can sometimes conflict. For example, imagine that an experimenter is friendly towards the participant and that the participant is thus motivated to help the experimenter. Now imagine that the participant learns that the experimenter hypothesizes that they will show a race-based preference for job applicants. In this scenario, the motivation to help the experimenter may conflict with the participant's desire to respond in a socially desirable manner.
+Because early demand characteristic theorists often focused on a single predominant subject goal--such as the goal to help the experimenter, be evaluated positively, or respond faithfully--less attention was paid to the notion that participants may have multiple, sometimes competing motivations [@barbuto1998motivation; @boudreaux2013goal]. Indeed, when the idea of multiple motivations was examined, it was often done so to highlight the more prominent role of a specific goal [e.g., evaluation apprehension vs. motivation to help the experimenter, @sigall1970cooperative]. However, @rosnow1997people found that people have *multiple* goals in mind when they conceptualize their role as research participants. Participants describe their role as being similar to situations where one is being altruistic (e.g., giving to charity), being evaluated (e.g., being interviewed for a job), *and* obeying authority (e.g., obeying a no-smoking sign). All these goals may impact the extent to which participants are overall motivated to provide hypothesis-consistent responses. Furthermore, these goals can sometimes conflict. For example, imagine that an experimenter is friendly towards the participant and that the participant is thus motivated to help the experimenter. Now imagine that the participant learns that the experimenter hypothesizes that they will show a race-based preference for job applicants. In this scenario, the motivation to help the experimenter may conflict with the participant's desire to respond in a socially desirable manner.
 
 Based on the above observations and reasoning, @rosnow1997people suggested that participants can be characterized as being motivated to either (a) non-acquiesce (i.e., not change their responses), (b) acquiesce (i.e., provide hypothesis-consistent responses), or (c) counter-acquiesce (i.e., provide hypothesis-inconsistent responses). Of course, as we later discuss, motivation might also be conceptualized on a continuum ranging from highly motivated to counter-acquiesce to highly motivated to acquiesce.
 
@@ -99,11 +99,11 @@ Based on the above observations and reasoning, @rosnow1997people suggested that 
 
 No matter how motivated they are to confirm the hypothesis, @rosnow1997people reasoned that there is variability in the extent to which participants have the opportunity to alter the outcome-of-interest. Thus, they posited that demand characteristics can only produce response biases when participants can alter the outcome of interest.
 
-Taking the three moderators together, @rosnow1997people posited that demand characteristics only bias participants responses when they (1) notice the cues, (2) are motivated to adjust their responses, and (3) are capable of adjusting their responses.
+Taking the three moderators into account, @rosnow1997people posited that demand characteristics only bias participants responses when they (1) notice the cues, (2) are motivated to adjust their responses, and (3) are capable of adjusting their responses. This framework maps onto common attempts for avoiding the impact of demand characteristics, such as deception, incentivizing honest reporting, and using difficult-to-control outcome measures.
 
 ### Response bias and placebo effects
 
-Over the past half century, demand characteristics have been conceptually divorced from placebo effects. This distinction, however, has recently been challenged by @coles2022fact and @corneille2022sixty, who argued that that demand characteristics not only have the potential to lead to response biases, but also placebo effects (Figure \@ref(fig:framework)). Consistent with this reasoning, @coles2022fact found that participants' beliefs did not always match the hypothesis communicated to participants; furthermore, both the communicated hypothesis and measures of participants' beliefs moderated the effects of posed expressions on emotion. Contrary to @rosnow1997people, this work suggests that demand characteristics can produce both response biases and placebo effects---meaning that the artifact can bias still responses when participants have neither the motivation nor the opportunity to adjust their responses.
+Over the past half century, demand characteristics have been conceptually divorced from placebo effects. This distinction, however, has recently been challenged by @coles2022fact and @corneille2022sixty, who argued that that demand characteristics not only have the potential to lead to response biases, but also placebo effects (Figure \@ref(fig:framework)). Consistent with this reasoning, @coles2022fact found that participants' beliefs did not always match the hypothesis communicated to participants; furthermore, both the communicated hypothesis and measures of participants' beliefs moderated the effects of posed expressions on emotion. Contrary to @rosnow1997people, this work provides preliminary evidence that demand characteristics can produce both response biases and placebo effects---meaning that the artifact can bias still responses when participants have neither the motivation nor the opportunity to adjust their responses.
 
 ## Goals
 
@@ -111,17 +111,17 @@ The goal of the current paper is to use meta-analysis to take stock of what we k
 
 In Study 1b, we review an extension of the meta-analysis that examines whether variability in observed effect sizes can be explained by factors theorized to underlie response biases (i.e., motivation and opportunity to adjust responses) and placebo effects (i.e., belief in the experimenter's hypothesis). To do so, we derived estimates of these factors from a new set of participants. These participants read descriptions of each study in the meta-analysis and then reported the extent to which they hypothetically (a) would have been motivated to confirm the experimenter's hypothesis, (b) could have adjusted their responses, and (c) would have believed the experimenter's hypothesis. We also examine how well this new set of participants could predict the effects of the demand characteristics manipulated in the studies included in the meta-analysis.
 
-In Study 2, we review a small replication study that re-examines the the extent to which demand characteristic effects can be explained by response biases and placebo effects. In this replication study, we manipulated demand characteristics in the context of an experiment examining the effects of facial poses on self-reported emotion (i.e., facial feedback). We then examined whether the effect of demand characteristics could be explained by factors believed to underlie response biases (i.e., self-reported motivation and opportunity to adjust responses), and placebo effects (i.e., self-reported belief in the communicated hypothesis).
+In Study 2, we review a small replication study that re-examines the the extent to which demand characteristic effects can be explained by response biases and placebo effects. In this replication study, we manipulated demand characteristics in an experiment examining the effects of facial poses on self-reported emotion (i.e., facial feedback). We then examined whether the effect of demand characteristics could be explained by factors believed to underlie response biases (i.e., self-reported motivation and opportunity to adjust responses), and placebo effects (i.e., self-reported belief in the communicated hypothesis).
 
-We end the paper with discussion of the steps we believe are required to transform vague frameworks about demand characteristics into formal theories---theories we believe might help distinguish a valid experimental psychology from the invalid methods of Colesology.
+We end the paper with discussion of the steps we believe are required to transform vague frameworks about demand characteristics into formal theories---theories we believe might help distinguish a valid experimental psychology from the invalid methods of Crankology.
 
 # Study 1a
 
-Study 1a was designed to provide the first quantitative synthesis of strict experimental tests of demand effects, with a focus on the the direction, magnitude, and consistency of the effect.
+Study 1a was designed to provide the first quantitative synthesis of strict experimental tests of demand effects, with a focus on the the direction, magnitude, and consistency of the effects.
 
 ## Methodology
 
-We defined the scope of the meta-analysis using the Population, Intervention, Comparison, Outcome framework [@schardt2007utilization]. Our population-of-interest was human subjects participating in non-clinical research studies. We excluded clinical research studies so that we could focus on research that better isolated the discipline (experimental psychology) and mechanism (response bias) most often discussed in the demand characteristics literature. Given that there is a sizable literature on placebo effects, excluding clinical tests of demand characteristics also helped us improve the feasibility of the project.
+We defined the scope of the meta-analysis using the Population, Intervention, Comparison, Outcome framework [@schardt2007utilization]. Our population-of-interest was human subjects participating in non-clinical research studies. We excluded clinical research studies so that we could focus on research that better isolated the discipline (experimental psychology) and mechanism (response bias) most often discussed in the demand characteristics literature. Given that there is a sizable literature on placebo effects, excluding clinical tests of demand characteristics also helped us improve the feasibility of the meta-analysis.
 
 The intervention-of-interest was explicit manipulations of the hypothesis communicated to participants---i.e., scenarios where a researcher tells participants about the effect of an independent variable on a dependent variable. @orne1962social more broadly defined demand characteristics as *any* cue that may impact participants' beliefs about the purpose of the study, including instructions, rumors, and experimenter behavior. However, such a definition creates a blurry and potentially boundless conceptual space where any systematic change in a research design might be considered a test of demand characteristics. Thus, to bound and simplify the conceptual space, we focused on explicit manipulations of the hypothesis communicated to participants.
 
@@ -313,13 +313,28 @@ overall <-
          V = es.var,
          data = DF.es,
          random = ~ 1 | id.study / id.es)
-# overall <-
-#   rma.uni(yi = es,
-#           vi = es.var,
-#           data = DF.es,
-#           method = "REML") %>% 
-#   robust(cluster = DF.es$id)
+
+# estimate proportion of counter-acquiesence effects
+c.acq.per <- pnorm(q = (-.10),
+                   mean = overall$b,
+                   sd = sqrt(overall$sigma2[1] + 
+                               overall$sigma2[2]) # rough est of tau
+                   )
+
+acq.per <- pnorm(q = .10,
+                 mean = overall$b,
+                 sd = sqrt(overall$sigma2[1] +
+                             overall$sigma2[2]), # rough est of tau
+                 lower.tail = F)
+
+rma.uni(yi = es,
+        vi = es.var,
+        data = DF.es)
 ```
+
+Results indicated that, overall, explicit manipulations of demand characteristics create a small acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis. For example, if participants were hypothetically told that an intervention should improve mood (positive demand), they would generally report slightly improved moods; if told that an intervention should worsen mood (negative demand), they would generally report slightly worsened moods.
+
+Although demand characteristics produce small acquiescence effects *on average*, the magnitude and direction of these effects is not consistent (Forest plot figure). Indeed, the between-study ($\tau$ = `r sqrt(overall$sigma2[1])`) and within-study ($\sigma$ = `r sqrt(overall$sigma2[2])`) effect size standard deviation was approximately the same size of the overall effect. This suggests that demand characteristic sometimes produce negligible shifts in participants responses. This also suggests that demand characteristics sometimes produce *counteracquiescence*: participants shifting their response in the *opposite* direction of the hypothesis. This is shown in Figure X, which visualizes the distribution of demand characteristics effects based on the meta-analytic mean and standard deviation. For the sake of example, we characterized any shift less than 0.10 standard deviation as "negligible". Based on this characterization, `r acq.per` % of demand characteristics manipulations produce non-negligible acquiesence and `r c.acq.per` % produce non-negligible counteracquiesence.
 
 ```{r forest, include = F}
 tmp <- DF.es %>%
@@ -377,8 +392,6 @@ ggplot(data= tmp,
                      expand = c(.01, .01)) +
   scale_y_continuous(expand = c(.01, .01))
 ```
-
-Results indicated that, overall, explicit manipulations of demand characteristics create a small acquiescence effect, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. In other words, when explicitly told a hypothesis, participants responses tend to shift in a manner consistent with that hypothesis. For example, if participants were hypothetically told that an intervention should improve mood (positive demand), they would generally report slightly improved moods; if told that an intervention should worsen mood (negative demand), they would generally report slightly worsened moods.
 
 ### Moderator analyses
 
@@ -729,21 +742,11 @@ pnorm(q = 0,
 
 ```
 
-Overall, explicit manipulations of demand characteristics lead to a small but highly heterogeneous acquiescence effect.
+Study 1 provides the first quantitative synthesis of strict experimental tests of demand effects. Overall, explicit manipulations of demand characteristics lead to a small acquiescence effect. However, significant heterogeneity was observed. Using arbitrary thresholds, we estimated that X% of demand characteristics manipulations produce significant acquiesence, X% produce significant counteracquiesence, and X% produce negligible shifts in participant responses.
 
-Significant counteraqcquiesence effects were rarely observed in the studies in our sample. However, if we assume that our meta-analysis accurately estimated the true mean and standard deviation of a normal distribution of demand effects, 23% of these effects theoretically fall below zero. In other words, participants are three times more likely to acquiesence than counteracquiesence.
+Moderator analyses revealed two study-level features that are associated with stronger acquiesence effects: (1) working with student participant populations, and (2) researchers communicating that they expect *no* shift in participant responses (i.e., "nil demand" manipulations). Demand characteristics also tended to produce larger acquiesence effects when participants were paid---although this difference was not statistically significant.
 
-What factors lead to stronger acquiesence effects?
-
--   Working with students
-
--   Telling participants you expect *no* effect to emerge
-
--   Possibly paying participants
-
-Study 1 gives us some information about the consistency and situational moderators of demand effects. However, they do not address outstanding questions regarding the extent to which these  effects are driven by response bias vs. placebo effect. Students may be more likely to be motivated to help the experimenter (response bias), but they may also be more likely to believe the communicated hypothesis (placebo effect). Participants may be more motivated to exhibit no change in response (response bias); but it's also possible that telling participants that we expect *no* effect causes a more drastic shift in beliefs than communicating an expectation for a positive or negative effect (placebo effect).
-
-The purpose of Study 1b is to figure our why these effects are occuring.
+Study 1 gives us some information about the consistency and potential contextual moderators of demand effects. However, they do not address outstanding questions regarding the extent to which these effects are driven by response bias vs. placebo effect. For example, consider our finding that students tended to acquiesence more than non-students. This may happen because students are more motivated to help the experimenter (response bias), but it may also happen because students are more likely to believe the communicated hypothesis (placebo effect). We turn our attention to this issue in Studies 1b and 2.
 
 # Study 1b
 
@@ -1129,6 +1132,8 @@ Our literature search was non-comprehensive.
 Publication bias analyses are problematic. Evidence of moderation is correlational. There may be confounding.
 
 # thoughts
+
+If we can't figure out and address concerns about demand characteristics, do we have any business calling ourselves a science?
 
 Compare average effect of demand to average effect in psychology. It suggest that it's plausible that these are driven by demand. When looking at the distribution, it's clear that no effect is too big to rule out concerns about demand.
 
