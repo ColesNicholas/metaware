@@ -470,6 +470,8 @@ surv.sum <- DF.surv %>%
             m.pre = mean(pre, na.rm = T)
             ) %>% 
    ungroup()
+
+surv.sum %>% arrange(desc(m.mot))
  
  DF.surv %>% 
    group_by(vig) %>% 
