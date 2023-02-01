@@ -781,7 +781,7 @@ b <- ggplot(data = tmp,
        y = "Standard error")
 
 # delete vestigial
-rm(tmp, ll95, ul95, se.seq, t.coord)
+rm(tmp, ll95, ul95, se.seq, t.coord, tmp.meta)
   
 ########## 
 # Plot funnels next to each other plot with aggregated dependencies
@@ -800,7 +800,7 @@ Although Study 1 provides information about the magnitude, consistency, and pote
 
 # Study 1b
 
-Study 1b was designed to examine whether variability in the effect sizes observed in the Study 1a meta-analysis can be explained by factors theorized to underlie response biases (i.e., motivation and opportunity to adjust responses) and placebo effects (i.e., belief in the experimenter's hypothesis; Figure \@ref(fig:framework)). Unfortunately, these factors were rarely measured in the studies included in the meta-analysis. (See Future Directions for our call for more direct tests of underlying mechanisms.) Thus, we (a) estimated the values of these factors through a new set of participants and then (b) tested their moderating role by entering these values into meta-regressions. Also through meta-regression, we also examined whether a new set of participants could retroactively predict the effect of the demand characteristic manipulations in our meta-analysis.
+Study 1b was designed to examine whether variability in the effect sizes observed in the Study 1a meta-analysis can be explained by factors theorized to underlie response biases (i.e., motivation and opportunity to adjust responses) and placebo effects (i.e., belief in the experimenter's hypothesis; Figure \@ref(fig:framework)). Unfortunately, these factors were rarely measured in the studies included in the meta-analysis. (See Future Directions for our call for more direct tests of underlying mechanisms.) Thus, we (a) estimated the values of these factors through a new set of participants and then (b) tested their moderating role by entering the values into meta-regressions. Also through meta-regression, we examined whether a new set of participants could retroactively predict the effect of the demand characteristic manipulations in our meta-analysis.
 
 ## Methodology
 
@@ -824,9 +824,9 @@ survey.n <- read.csv("data/metaware_SurvData_raw.csv") %>%
   nrow()
 ```
 
-`r survey.n` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) believe the experimenter's hypothesis (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed the actual participants would confirm the hypothesis, which we discuss later. These questions were presented in random order.
+`r survey.n` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving a different dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would (1) be motivated to provide hypothesis-consistent responses (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) believe the experimenter's hypothesis (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed participants would confirm the hypothesis, which we discuss later. These questions were presented in random order.
 
-For each vignette, ratings were removed if the rater did not correctly identify the communicated hypothesis. The remaining ratings were averaged across raters to provide mean estimates of motivation, opportunity, and belief.
+For each vignette, ratings were removed if the rater did not correctly identify the hypothesis communicated in the vignette. The remaining ratings were averaged across raters to provide mean estimates of motivation, opportunity, and belief.
 
 ### Accounting for different demand comparisons
 
@@ -995,7 +995,7 @@ plot_grid(m, o, b, p,
 rm(m, o, b, p)
 ```
 
-If demand effects are driven by response biases, their effects are expected to be moderated by participants' motivation and ability to adjust responses (Figure \@ref(fig:framework)). Inconsistent with this view, we did not find that the effects of demand characteristics were moderated by ratings of the extent to which participants would be motivated to confirm the experimenter's hypothesis, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])` (Figure @ref(fig:mod.fig) ). We also did not find that demand characteristic effects were moderated by ratings of the extent to which participants could control the outcome of interest, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure @ref(fig:mod.fig) ).
+If demand effects are driven by response biases, their effects are expected to be moderated by participants' motivation and opportunity to adjust responses (Figure \@ref(fig:framework)). Inconsistent with this view, we did not find that demand effects were moderated by motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])` (Figure @ref(fig:mod.fig) ) or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure @ref(fig:mod.fig) ).
 
 If demand effects are driven by placebo, their effects are expected to be moderated by participants' belief in the communicated hypothesis. Consistent with this view, demand characteristic effects were larger when raters indicated that they believed the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:mod.fig).
 
@@ -1003,17 +1003,35 @@ Raters predictions about the effects of demand characteristics were associated w
 
 ## Discussion
 
-Contrary to classic conceptualizations of the impact of demand characteristics and frameworks proposed by @rosnow1997people and @coles2022fact, we did not find evidence of two moderators that have been theorized to underlie response biases: motivation and opportunity to adjust responses. We did, however, find evidence that such effects are moderated by a measure of participants' belief in the communicated effect. This unexpected pattern of results is consistent with a more parsimonious view: that phenomena typically described by experimental psychologists as "demand effects" are actually *placebo effects*. Applied to classic work by Orne, maybe participants did not exhibit sham symptoms of hypnosis because they were motivated to please the experimenter; instead maybe they intentionally or unintentionally responded in a manner that was consistent with their personal beliefs (a self-fulfilling prophecy or placebo effect).
+Contrary to classic conceptualizations of the impact of demand characteristics and frameworks proposed by @rosnow1997people and @coles2022fact, we did not find evidence of two moderators that have been theorized to underlie a response bias mechanism: motivation and opportunity to adjust responses. We did, however, find evidence that such effects are moderated by a measure of participants' belief in the communicated effect, providing preliminary evidence of a placebo-based mechanism.
 
-### Moderator analysis limitations and converging evidence
+To test the moderating role of participants' motivation to adjust responses, opportunity to adjust responses, and belief in the experimenter's hypothesis, we had to rely on ratings from an new set of raters. This was necessary because researchers have rarely measured these proposed moderators, but it is not without limitations.
 
-To test the moderating role of participants' motivation to adjust responses, opportunity to adjust responses, and belief in the experimenter's hypothesis, we had to rely on ratings from an new set of raters. This was necessary because researchers have rarely measured these proposed moderators---but it is not without limitations.
-
-First, it is possible that raters did not have enough information to make an accurate prediction about participants' motivation, ability to adjust responses, and belief in the experimenter's communicated hypothesis. For the sake of feasibility, we gave participants a short summary of the hypothesis communicated by the researcher and the study set-up. However, it is not clear if participants could accurately imagine the reality of being in these studies based on this relatively short description. Indeed, when trying to gauge the impact of demand characteristics, @orne1969demand often would provide participants with extensive information about the study---perhaps even by running them through some of the procedures. It is thus possible that raters would have provided more valid ratings if more information was provided (e.g., video recordings of recreations of the study).
+First, it is possible that raters did not have enough information to make an accurate prediction about participants' motivation, opportunity to adjust responses, and belief in the experimenter's communicated hypothesis. For the sake of feasibility, we gave participants a short summary of the study set-up and hypothesis communicated by the researcher. However, it is not clear if participants could accurately imagine the reality of being in these studies based on their relatively short descriptions. Indeed, when trying to gauge the impact of demand characteristics, @orne1969demand often would provide participants with extensive information about the study---perhaps even by running them through some of the procedures. It is thus possible that raters would have provided more valid ratings if more information was provided (e.g., video recordings of recreations of the study).
 
 Second, it is possible that our specific sample of raters---or maybe even modern-day participants in general---are not representative of the participants sampled in previous research. In other words, maybe our 21th century Stanford University undergraduates have different study-related motivations, judgments, and beliefs than the participants who have completed previous studies on demand characteristics. This seems likely to be true. However, we do not believe it explain our pattern of results. To test it, we re-ran our motivation, opportunity, and belief moderator analyses focusing only studies completed in the *past decade*. Focusing on the past decade, we believe helped minimize differences between participants who completed the original studies and participants who completed our rating task. The pattern of results, though, were largely the same.
 
-Third, like in most meta-analysis, it is possible that our moderator analyses were underpowered, contained unidentified confounds, and/or were impacted by publication bias. To address these three limitations, we re-examined the moderators in a small replication of a demand characteristics experiment.
+```{r mod.sensitivity, include = F}
+# sensitivity analysis
+mod.year.sens <-
+  sapply(X = c("mot", "opp", "bel"),
+         simplify = F,
+         FUN = ModAnalysis,
+         df = DF.es %>% 
+               filter(year > 2012 & # only include studies from past decade
+                        ref.type != "cvz" &
+                        ref.type != "pvz"))
+
+# inspect results
+mod.year.sens$mot$mod
+mod.year.sens$opp$mod
+mod.year.sens$bel$mod
+
+# delete sensitivity analysis
+rm(mod.year.sens)
+```
+
+Third, like in most meta-analysis, it is possible that our moderator analyses were underpowered and/or contained unidentified confounds. To address these three limitations, we re-examined the moderators in a small replication of an experiment in the demand characteristics literature.
 
 ## Study 2
 
@@ -1033,7 +1051,7 @@ DF.s3 <-
             .funs = as.factor)
 ```
 
-After completing the Study 1b ratings, we told `r length(unique(DF.s3$sub))` participants that we hypothesized that posed smiles will either (a) increase (positive demand, n = `r length(unique(DF.s3[DF.s3$demand == "pos", ]$sub))`) or (b) not impact (nil demand, n = `r length(unique(DF.s3[DF.s3$demand == "nil", ]$sub))`) feelings of happiness. Participants than posed happy and neutral expressions across two blocks. For happy poses, participants were instructed to move the corner of their lips toward their ears, elevating their cheeks. For neutral poses, participants were instructed to maintain a blank expression. Participants held each pose for 5 seconds with the assistance of an on-screen timer. After each pose, participants self-reporting the extent to which they experienced happiness, satisfaction, and enjoyment (0 = "not at all" to 6 = "maximally"), which were averaged to form a happiness composite score. As filler items, participants also self-reported the extent to which they experienced fear (alarmed, scared, and fear) and anger (irritation, aggravation, and annoyance). Using similar items as Study 1b, participants at the end of the study reported the extent to which they were motivated to confirm the hypothesis, able to adjust responses, and believed the hypothesized effect. Altogether, the study used a 2 (facial pose: happy or neutral) × 2 (block: first or second) × 2 (demand characteristics: positive demand or nil demand) mixed design, with demand characteristics manipulated between subjects.
+After completing the Study 1b ratings, we told `r length(unique(DF.s3$sub))` participants that we hypothesized that posed smiles will either increase (positive demand, n = `r length(unique(DF.s3[DF.s3$demand == "pos", ]$sub))`) or not impact (nil demand, n = `r length(unique(DF.s3[DF.s3$demand == "nil", ]$sub))`) feelings of happiness. Participants than posed happy and neutral expressions across two blocks. For happy poses, participants were instructed to move the corner of their lips toward their ears, elevating their cheeks. For neutral poses, participants were instructed to maintain a blank expression. Participants held each pose for 5 seconds with the assistance of an on-screen timer. After each pose, participants self-reporting the extent to which they experienced happiness, satisfaction, and enjoyment (0 = "not at all" to 6 = "maximally"), which were averaged to form a happiness composite score. As filler items, participants also self-reported the extent to which they experienced fear (alarmed, scared, and fear) and anger (irritation, aggravation, and annoyance). Using similar items as Study 1b, participants at the end of the study reported the extent to which they were motivated to confirm the hypothesis, had the opportunity to adjust their responses, and believed the hypothesized effect. Altogether, the study used a 2 (facial pose: happy or neutral) × 2 (block: first or second) × 2 (demand characteristics: positive demand or nil demand) mixed design, with demand characteristics manipulated between subjects.
 
 ### Results
 
@@ -1043,6 +1061,7 @@ After completing the Study 1b ratings, we told `r length(unique(DF.s3$sub))` par
 m.d <- lmer(happy ~ trial * block.num * demand + 
             (1 | sub),
           data = DF.s3)
+
 ## omnibus tests
 m.d.aov <- anova(m.d)
 
@@ -1051,7 +1070,7 @@ m.d.joint <- emmeans(m.d, pairwise ~ trial | demand)$contrasts %>%
   as.data.frame()
 ```
 
-Replicating @coles2022fact, a mixed-effect regression with (a) facial pose, demand characteristics, and block number entered as effect-coded factors and (b) random-intercepts for participants, indicated that participants reported higher levels of happiness after posing happy vs. neutral expressions, *M~diff~* = `r -(m.d@beta[2])`, *F*(`r m.d.aov["trial",]$NumDF`, `r m.d.aov["trial",]$DenDF`) = `r m.d.aov["trial", 5]`, *p* `r printp(m.d.aov["trial", 6])`. Further, this effect was more pronounced in the positive (*M~diff~* = `r m.d.joint[m.d.joint$demand == "pos", ]$estimate`) vs. nil (*M~diff~* = `r m.d.joint[m.d.joint$demand == "nil", ]$estimate`) demand conditions, *F*(`r m.d.aov["trial:demand",]$NumDF`, `r m.d.aov["trial:demand",]$DenDF`) = `r m.d.aov["trial:demand", 5]`, *p =* `r printp(m.d.aov["trial:demand", 6])`.
+Replicating @coles2022fact, a mixed-effect regression with (a) facial pose, demand characteristics, and block number entered as effect-coded factors and (b) random-intercepts for participants, indicated that participants reported higher levels of happiness after posing happy vs. neutral expressions, *M~diff~* = `r -(m.d@beta[2])`, *F*(`r m.d.aov["trial",]$NumDF`, `r m.d.aov["trial",]$DenDF`) = `r m.d.aov["trial", 5]`, *p* `r printp(m.d.aov["trial", 6])`. Furthermore, this effect was more pronounced in the positive (*M~diff~* = `r m.d.joint[m.d.joint$demand == "pos", ]$estimate`) vs. nil (*M~diff~* = `r m.d.joint[m.d.joint$demand == "nil", ]$estimate`) demand conditions, *F*(`r m.d.aov["trial:demand",]$NumDF`, `r m.d.aov["trial:demand",]$DenDF`) = `r m.d.aov["trial:demand", 5]`, *p =* `r printp(m.d.aov["trial:demand", 6])`.
 
 ```{r s3.int.others, include = F}
 # delete vestigial from last moderator analysis
@@ -1191,6 +1210,8 @@ Our measures are face valid--but they're ad-hoc single item measures with unknow
 If we can't figure out and address concerns about demand characteristics, do we have any business calling ourselves a science?
 
 Compare average effect of demand to average effect in psychology. It suggest that it's plausible that these are driven by demand. When looking at the distribution, it's clear that no effect is too big to rule out concerns about demand.
+
+This unexpected pattern of results is consistent with a more parsimonious view: that phenomena typically described by experimental psychologists as "demand effects" are actually *placebo effects*. Applied to classic work by Orne, maybe participants did not exhibit sham symptoms of hypnosis because they were motivated to please the experimenter; instead maybe they intentionally or unintentionally responded in a manner that was consistent with their personal beliefs (a self-fulfilling prophecy or placebo effect).
 
 ### Exploratory stuff
 
