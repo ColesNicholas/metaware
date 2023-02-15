@@ -472,8 +472,10 @@ surv.sum <- DF.surv %>%
    ungroup()
 
 surv.sum %>% arrange(desc(m.mot))
+
+surv.sum$m.mot %>% mean()
  
- DF.surv %>% 
+DF.surv %>% 
    group_by(vig) %>% 
    summarise(m.mot = mean(mot, na.rm = T),
              sd.mot = sd(mot, na.rm = T),
