@@ -1,20 +1,10 @@
----
-title: Process effect size data
-author: "Nicholas A. Coles and Morgan Wyatt"
-editor_options: 
-  chunk_output_type: console
----
-This code processes and merges the raw data contained in "metaware_ESData_raw.xlsx" and "metaware_SurvData_raw.csv"
-
-# Prep environment
-```{r setup and load packages, include = FALSE}
+## ----setup and load packages, include = FALSE----------------------------------------------------------------------------------------------------
 # load libraries
 library("tidyverse")
 library("readxl")
-```
 
-# Open and clean ES data
-```{r open/clean data, message = FALSE, warning = FALSE}
+
+## ----open/clean data, message = FALSE, warning = FALSE-------------------------------------------------------------------------------------------
 # import data
 DF <- read_xlsx(path = "data/metaware_EsData_raw.xlsx",
                 sheet = "coding",
@@ -55,13 +45,9 @@ DF <- DF %>%
 # Cohen's d functions (defined later) to work
 DF$es <- NA
 DF$es.var <- NA
-```
 
-## Calculate Cohen's *d* and variance
-### For between-subjects data
-#### Functions for calculating *d* 
-##### When *M*'s and *SD*'s are provided
-```{r define function EsBetwMean}
+
+## ----define function EsBetwMean------------------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 226
 EsBetwMean <- function(n.1, m.1, sd.1, 
                        n.2, m.2, sd.2){
@@ -72,30 +58,27 @@ EsBetwMean <- function(n.1, m.1, sd.1,
     es <- (m.1 - m.2) / sd.within;
     return(es)
 }
-```
 
-##### When t-values are provided
-```{r define function EsBetwTval}
+
+## ----define function EsBetwTval------------------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsBetwTval <- function(n.1, n.2, tval){
     es <- tval * sqrt((n.1 + n.2) / 
                       (n.1 * n.2));
     return(es)
 }
-```
 
-##### When F-values are provided
-```{r define function EsBetwFval}
+
+## ----define function EsBetwFval------------------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsBetwFval <- function(n.1, n.2, fval){
   es <- sqrt((fval * (n.1 + n.2)) / 
              (n.1 * n.2)); 
     return(es)
   }
-```
 
-##### When p-values are provided
-```{r define function EsBetwPval}
+
+## ----define function EsBetwPval------------------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsBetwPval <- function(n.1, n.2, pval){
   # calculate the inverse of the cumulative distribution function of t
@@ -107,20 +90,18 @@ EsBetwPval <- function(n.1, n.2, pval){
                      (n.1 * n.2));
   return(es)
 }
-```
 
-#### Function for calculating variance of *d* with continuous data
-```{r define function EsVarBetw}
+
+## ----define function EsVarBetw-------------------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsVarBetw <- function(n.1, n.2, es){       
    es.var <- ((n.1 + n.2) / (n.1 * n.2)) +
              ((es^2) / (2 * (n.1 + n.2)));
    return(es.var)
 }
-```
 
-#### Functions for calculating *d* and variance of *d* with count data
-```{r define functions EsBetwCount and EsVarBetwCount}
+
+## ----define functions EsBetwCount and EsVarBetwCount---------------------------------------------------------------------------------------------
 # cohen's d
 EsBetwCount <- function(n.1, n.2, count.1, count.2){
   # calculate odds ratio
@@ -152,10 +133,9 @@ EsVarBetwCount <- function(n.1, n.2, count.1, count.2){
   es.var = log.or.var * (3 / pi^2);
   return(es.var)
 }
-```
 
-#### Call functions to calculate d and variance of *d*
-```{r b: call functions to calculate d}
+
+## ----b: call functions to calculate d------------------------------------------------------------------------------------------------------------
 for (i in 1:nrow(DF)) {
   if (DF$design[i] == "between"){
     
@@ -210,19 +190,16 @@ for (i in 1:nrow(DF)) {
     }
     }
 }
-```
 
-### For within-subjects data
-```{r assumed correlation}
+
+## ----assumed correlation-------------------------------------------------------------------------------------------------------------------------
 # if no correlation is defined, set it at .5
 if(!exists("corr")){
   corr <- .5
 }
-```
 
-#### Functions for calculating d
-##### When M's and SD's are provided 
-```{r EsWitnMean}
+
+## ----EsWitnMean----------------------------------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 229
 # formula for imputing sd.diff:
 # http://handbook.cochrane.org/chapter_16/16_4_6_1_mean_differences.htm
@@ -233,28 +210,25 @@ EsWitnMean <- function(m.1, sd.1, m.2, sd.2, corr){
   es <- ((m.1 - m.2) / sd.diff) * sqrt(2 * (1- corr));
   return(es)
 }
-```
 
-##### When t-values are provided
-```{r EsWitnTval}
+
+## ----EsWitnTval----------------------------------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 229
 EsWitnTval <- function(n.1, tval, corr){
   es <- tval * sqrt((2 * (1 - corr)) / n.1);
   return(es)
 }
-```
 
-##### When F-values are provided
-```{r EsWitnFval}
+
+## ----EsWitnFval----------------------------------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 229
 EsWitnFval <- function(n.1, fval, corr){
   es <- sqrt((2 * fval * (1- corr)) / n.1);
   return(es)
 }
-```
 
-#### Function for calculating variance of d
-```{r EsVarWitn}
+
+## ----EsVarWitn-----------------------------------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 229
 EsVarWitn <- function(n.1, es){
   es.var <- ((1 / n.1) + 
@@ -262,10 +236,9 @@ EsVarWitn <- function(n.1, es){
             2 * (1 - corr);
   return(es.var)
 }
-```
 
-#### Call functions to calculate d and variance of d
-```{r w: call functions to calculate d}
+
+## ----w: call functions to calculate d------------------------------------------------------------------------------------------------------------
 for (i in 1:nrow(DF)) {
   if (DF$design[i] == "within"){
     
@@ -298,20 +271,18 @@ for (i in 1:nrow(DF)) {
     }
   }
   
-```
 
-```{r del var}
+
+## ----del var-------------------------------------------------------------------------------------------------------------------------------------
 # delete unnecessary variables
 rm(corr, i,
    EsBetwFval, EsBetwMean, EsBetwTval,
    EsBetwPval, EsVarBetw, EsVarWitn,
    EsWitnFval, EsWitnMean, EsWitnTval,
    EsBetwCount, EsVarBetwCount)
-```
 
-## Specify direction
-This direction of the effect was coded for in the raw database, and this code ensures that all effects are in the correct direction.
-```{r specify es direction}
+
+## ----specify es direction------------------------------------------------------------------------------------------------------------------------
 DF <- DF %>% 
   # specify direction of the effect size
   rowwise() %>% 
@@ -320,16 +291,14 @@ DF <- DF %>%
                       false = abs(es) * -1)
          ) %>% 
   ungroup()
-```
 
-## Remove unnecessary variables
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 DF <- DF %>% 
   select(-c(es.calc : pval))
-```
 
-# Open and clean survey data
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 # import data
 DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>%
   
@@ -390,12 +359,9 @@ DF.surv <- DF.surv %>%
   # convert columns to correct class
   mutate_at(c("awr", "mot", "opp", "bel", "pre"),
             as.numeric)
-```
 
-## Process attention checks
-Specify whether participants correctly identified the communicated hypothesis
-Note: awr should be 1, 2, and 3 for pos, neg, and nil respectively
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 DF.surv <- DF.surv %>% 
   
   # identify whether the demand condition was pos, neg, or nil
@@ -429,10 +395,9 @@ DF.surv[DF.surv$vig == "28_p_dis" &
           DF.surv$awr == 2, ]$att.chk = 1
 
 ## re-examination of 36_n_won suggested it was poorly worded (we meant to convey that it would hinder performance, but many people thought we meant it would improve performance)
-```
 
-Examine attention check data
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 # overall
 DF.surv %>%
   summarise(m = mean(att.chk,
@@ -451,16 +416,14 @@ DF.surv %>%
   summarise(n = n(),
             m = mean(att.chk)) %>% 
   arrange(m)
-```
 
-Limit to observations where attention check was passed
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 DF.surv <- DF.surv %>% 
   filter(att.chk == 1)
-```
 
-## Calculate summary statistics
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 surv.sum <- DF.surv %>% 
   group_by(vig) %>% 
   summarise(m.mot = mean(mot, na.rm = T),
@@ -488,10 +451,9 @@ DF.surv %>%
    ungroup()
 
 rm(DF.surv)
-```
 
-# Combine ES and survey data
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 # connect summary data to ES dataframe
 DF <- DF %>% 
   # rename vig.1 to vig to enable join
@@ -547,10 +509,9 @@ DF <- DF %>%
          citation : ref.r, 
          es, es.var,
          mot : pre)
-```
 
-# Prep dataset for second part of survey
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 # import data
 DF.surv2 <- 
   read_csv(file = "data/metaware_SurvData_raw.csv")
@@ -683,28 +644,24 @@ DF.surv2 <- DF.surv2 %>%
                        mot * (-1),
                        mot)) %>% 
   ungroup()
-```
 
-# Export
-When sensitivity analyses are performed, there will be a token variable created called "sens". If this variable does not exist (i.e., it isn't a sensitivity analysis) export the main data as the official clean version.
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 if(!exists("sens")){
   write.csv(DF, 
             "data/metaware_data_clean.csv", 
             row.names = F)
 }
-```
 
-Export second survey dataset
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 write.csv(DF.surv2,
           "data/metaware_survey2_clean.csv",
           row.names = F)
-```
 
-Export vignette summary scores
-```{r}
+
+## ------------------------------------------------------------------------------------------------------------------------------------------------
 write.csv(surv.sum,
           "data/metaware_vignette_clean.csv",
           row.names = F)
-```
+

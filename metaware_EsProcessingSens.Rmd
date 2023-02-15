@@ -41,4 +41,7 @@ for (c in corr.list){
             row.names = F
             )
 }
+
+# clean up
+rm(list = ls())
 ```
