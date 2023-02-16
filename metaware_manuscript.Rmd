@@ -1142,141 +1142,19 @@ Although our results are most consistent with the placebo account, it seems like
 
 ## Recommendations for researchers and future directions
 
-Integrating both work on demand characteristics *and* placebo effects, it is clear that beliefs can come into play in at least two ways: (1) participants' may enter the experiment with *pre-existing* beliefs about the studied phenomena, and (2) experimental cues may prime and/or change these beliefs. Studying the impact of these factors is interesting in its own right---but attention to the factors is especially important when experimental psychologists seek unbiased estimates of causal relationships and their underlying mechanisms.
+In work originally published in 1969, @mcguire2009suspiciousness suggested that there are three stages to a methodological artifact: ignorance, coping, and understanding/exploitation. At that same time, McGuire suggested that demand characteristics were entering that third stage. Unfortunately, over 50 years since these ideas were initially published, it would seem that only limited progress through this third stage has been made. There have been very few direct tests of the mechanisms believed to underlie demand effects; furthermore, our attempts to test these mechanisms through external ratings and a small replication study largely failed to support pre-existing demand characteristic frameworks. If researchers hope to progress through this third and final stage theories will have to be refined, mechanisms will have to be directly tested, and reform for increasing the trustworthiness of the results will have to be implemented.
 
-As an example of how experimental psychologists can grapple with these concerns, we use research on the effects of posed expressions on emotion as a working example. In the Figure X causal graph, we present an experimental context confounded by demand characteristics. Here, we assume that the experimental manipulation---asking participants to pose happy and neutral expressions---impacts participants' mood through a psychologically-interesting mechanism (e.g., by activating other emotion-related physiological responses, like increases in heart rate). We further assume that these changes in mood subsequently impact the the dependent variable: self-reported mood. Importantly, we assume that facial poses activate *pre-existing* beliefs about their effects, which can lead to naturalistic placebo effects on mood [@coles2022fact]. In other words, posing a happy expression may not only activate theory-relevant mechanisms but also prime my belief that the pose will make me feel happy. Last, we add that the experimental context can readily lead participants to infer that the experimenter expects smiling to increase mood---i.e., there are demand characteristics. We suggest that this information can *shape* participants' pre-existing beliefs about the impact of facial poses, which can modify the placebo-induced changes in mood.
+Theoretically, it is no longer tenable to keep demand characteristics conceptually divorced from related work on placebo effects. Consistent with recently proposed extensions of demand characteristic frameworks [@coles2022fact, @corneille2022sixty], our meta-analysis and replication study most strongly supported participants’ beliefs as a driver of demand effects. This may occur because demand characteristics activate pre-existing beliefs about a phenomenon being investigated—but it is also possible that these demand characteristics cause participants to update pre-existing or form new beliefs [@coles2022fact]. If true, research on how beliefs are formed, are adjusted, and subsequently impact participant responses may help explain the unreliable effects of demand characteristics. For example, if beliefs are governed by Bayesian principles [for a review, see @kube2021beliefs], demand characteristics should exert smaller effects in contexts where participants’ possess relatively strong pre-existing beliefs.
 
-By developing a causal graph that attempts to grapple with concerns about demand characteristics, it becomes clear that there are challenges to obtaining an unbiased estimate of the effect of the theory-relevant mechanism. Demand characteristics should be eliminated because the confound this estimate---but doing so will not eliminate the confounding effect of participants' pre-existing beliefs. Such an insight is precisely what led @coles2022fact to estimate and control for pre-existing beliefs in their eventual demonstrating of a theory-relevant effect of facial feedback on emotional experience.
+Methodologically, mechanisms will have to be more directly probed through measurement and manipulation. For instance, similar to Study 2, researchers investigating demand characteristics could measure the extent to which participants believe the hypothesized effect and are motivated to help the experimenter, secure a positive evaluation, and/or adjust their responses. These potential mechanisms could also be manipulated. For example, researchers could manipulate participants’ motivation to help the experimenter by indicating that doing so will confer a financial reward [@mummolo2019demand]. 
 
-[STUCKKKKKKKKKKK]
-
-A common question one may hear at the end of a research talk in experimental psychology is "Are these findings merely driven by demand characteristics?" We believe it is more fruitful to focus not on the variable (demand characteristics), but its mechanism. For example, if we believe that participants do attempt to confirm the experimenter's hypothesis---a mechanism we argue has yet to receive substantiation---we might wish to evaluate the extent to which the experimental context provided participants with the conditions necessary for that motivation to emerge and impact responses. If we believe that participants act in accordance with their personal beliefs---a mechanism we believe is well-supported by the balance of evidence---we might wish to examine ways in which the experimental context may artificially shape those beliefs.
-
-Based on our current understanding of the mechanisms underlying demand effects, it seems that researchers may be able to sidestep these concerns altogether if they employ deception, run experiments covertly (e.g., without users knowledge cite Facebook), or replicate experimental findings in naturalistic contexts. We believe there are many reasons why researchers may rightfully choose to avoid those approaches. If this is the case, researchers need to develop, test, and refine a more sophisticated theory of demand characteristics. We present one such framework here, using research on the effects of posed expressions on emotion as a working example.
+Implementation-wise, we urge future demand characteristics researchers to engage in open science practices. Records of unpublished or “file-drawered” studies would help address our outstanding concerns about publication bias; Access to open materials would better enable researchers to resolve discrepancies between previous studies through replication [@coles2018costs, @zwaan2018making]. Last, open data and code will allow better allow researchers to verify published results, reproduce analytic workflows, and explore new questions through secondary analyses.
 
 # Conclusion
 
 We began our paper by mocking Crankology: a fictitious discipline plagued by a methodological artifact that could bias results in any direction, had unreliable effects, and had poorly understood mechanisms of action. However, our examination of a textbook methodological concern in experimental psychology---demand characteristics---raises humblingquestions about the superiority of our own discipline. After all, an examination of all available evidence indicates that demand characteristics too can bias participant responses in any direction, have extremely heterogeneous effects, and have somewhat unclear mechanisms of action. Contrary to existing frameworks, the preponderance of evidence currently suggests that demand effects may be driven by placebo-based mechanisms. However, such conclusions are preliminary given the high heterogeneity, inconclusive publication bias analyses, and primitive nature of the measures of potential underlying mechanisms.
 
 After taking stock of what we know about demand characteristics, we are convinced that the experimental psychology can be at least somewhat distinguished from the clearly invalid methods of Crankology. Yet, for experimental psychologists to earn and maintain that reputation, one thing is clear: more work is needed to understand the textbook methodological issue of demand characteristics.
-
-### Can a "demand as placebo" account explain discrepancies in the literature?
-
-Despite the allure of the parsimonious "demand characteristics as placebo effects" account, belief ratings did not fully explain observed discrepancies in the demand characteristics literature. For example, the mean belief ratings in the largest demonstration [@coles2022fact] and largest failure-to-demonstrate demand effects were quite similar [@mummolo2019demand]: M = X, and M = Y respectively. That being said, there are several limitations to our approach to testing these potential moderators (see Limitation sections). Thus, we believe future research should examine this question through replications of the @coles2022fact and @mummolo2019demand procedures. Like our own replication, of @coles2022fact, this may involve asking participants questions about their motivation to confirm the experimenter's hypothesis, perceived ability to adjust their responses, and belief in the hypothesized effect at some point in the experiment. Alternatively, future researchers may find it useful to *manipulate* these proposed moderators. This may involve, for instance, providing incentives to increase participants motivation, relying on indirect and difficult-to-control measures of the dependent variables, and providing participants with information that make the communicated hypothesis more or less believable.
-
-## Can participants help us predict the effects of demand characteristics?
-
-Even in the continued absence of a clear explanation of how demand characteristics work, it would certainly be valuable to be able to predict their effects [@yarkoni2017choosing]. Orne suggested that participants themselves may be particularly adept at making these predictions---but we did not find much evidence in support of this assertion.
-
-It is certainly possible that participants are unaware of how and why demand characteristics impact their responses in experiments. Alternatives:
-
--   They didn't have enough information to make a good judgment. We only gave them a short summary of the hypothesis communicated and experimental set-up. Maybe if they had more information---such as a video recording of the actual experiment---they could make good predictions. This is more similar to what Orne did.
-
--   There's a history effect. Modern-day participants' motivations and belief are different than the people that Orne worked with a half-century ago. Modern day participants may be able to predict the results of modern-day experiments--but not historical ones. Intriguingly, when we [arbitrarily] limited analyses to observations made in the past 10 years, the patterns of results were similar.
-
--   Could be a statistical power issue. These data are really messy. But one should then still expect to see it when working with the cleaner replication data, which we didn't
-
-```{r}
-# pre
-mod.r[["pre"]][["modern"]] <- 
-  ModAnalysis(m = "pre",
-              df = DF.es %>% 
-               filter(ref.type != "cvz" &
-                        ref.type != "pvz" &
-                        year > 2012)
-              )
-
-mod.r[["pre"]][["modern"]][["mod"]]
-
-# mot
-mod.r[["mot"]][["modern"]] <- 
-  ModAnalysis(m = "mot",
-              df = DF.es %>% 
-               filter(ref.type != "cvz" &
-                        ref.type != "pvz" &
-                        year > 2012)
-              )
-
-mod.r[["mot"]][["modern"]][["mod"]]
-
-# opp
-mod.r[["opp"]][["modern"]] <- 
-  ModAnalysis(m = "opp",
-              df = DF.es %>% 
-               filter(ref.type != "cvz" &
-                        ref.type != "pvz" &
-                        year > 2012)
-              )
-
-mod.r[["opp"]][["modern"]][["mod"]]
-
-# bel
-mod.r[["bel"]][["modern"]] <- 
-  ModAnalysis(m = "bel",
-              df = DF.es %>% 
-               filter(ref.type != "cvz" &
-                        ref.type != "pvz" &
-                        year > 2012)
-              )
-
-mod.r[["bel"]][["modern"]][["mod"]]
-
-
-mod.r[["pre"]][["modern"]]
-```
-
-not good at predicting
-
-Although participants' failure to predict responses to demand characteristics manipulations may be due to issues with our approach to testing this moderator (see Limitations section), it is possible that participants do not correctly guage
-
-suggested that one group that may be particularly good at predicting these effects is participants themselves [@orne1969demand].
-
-of belief
-
-This still doesn't make sense when explaining why Mummolo didn't find the effect. Had above average belief ratings
-
-```{r}
-DF.es %>% 
-  filter(name == "Demand effects in survey experiments: An empirical assessment") %>%  
-  summarise(m.bel = mean(bel))
-
-DF.es %>% 
-  filter(id.study == 11 | id.study == 12 | id.study == 13) %>%
-  summarise(m.bel = mean(bel))
-```
-
-# Limitations
-
-Our literature search was non-comprehensive.
-
--   For our literature review, we focused on identifying a workable conceptual space, focusing on explicit experimental manipulations of the communicated hypothesis. These may be a somewhat strange and unique
-
--   But demand characteristics is a broad--and some might even argue vague--construct. Anything that potentially influences participants beliefs about the experimenter's hypothesis can be considered demand characteristics, including the text in informed consents and study materials, the experimenter's delivery, etc.
-
--   Furthermore, Orne's writings on demand characteristics often included discussions of even broader (but difficult to measure) aspects of the social situations, including social norms about participant behavior, pacts of ignorance about admitting awareness of the true purpose of the study, etc.
-
-Our measures are face valid--but they're ad-hoc single item measures with unknown statistical properties. - This was necessary because the measures we need simply don't exist. - It's possible that different results will emerge once measures of the mechanisms underlying demand characteristics are refined. - Once those measures exist, our data, materials, and code can be openly re-used to re-test the claims in this paper.
-
-# thoughts
-
-Based on the belief that demand characteristics is a response bias moderated by motivation and opportunity to adjust responses, two recommendations have been proposed to combat demand characteristics: lower participants' (1) motivation to adjust responses (e.g., by emphasizing the importance of natural responding), and/or (2) ability to adjust responses (e.g., by using difficult-to-control measures, like implicit or physiological measures). The "demand-as-placebo" account, however, suggests that these approaches are likely to be ineffective. Regardless of whether participants are motivated or able to adjust responses, knowledge of the experimenter's hypothesis can create placebo-induced changes in their responses.
-
-### Exploratory stuff
-
-```{r}
-df <- DF.es %>% 
-               filter(ref.type != "cvz" &
-                        ref.type != "pvz")
-
-mod.m <- rma.mv(yi = es,
-                  V = es.var,
-                  data = df,
-                  random = ~ 1 | id.study / id.es,
-                  mods = ~ opp * bel,
-                  test= "t")
-
-mod.m %>% anova()
-```
 
 # Graveyard and To-do
 
