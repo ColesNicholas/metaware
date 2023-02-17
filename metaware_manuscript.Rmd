@@ -15,13 +15,13 @@ affiliation:
 authornote: |
   All materials, data, and code are available at <insert OSF link>. 
 abstract: |
-  Demand characteristics are a fundamental methodological concern in experimental psychology. However, little is known about the direction, magnitude, consistency, and mechanisms underlying their effects. In the first meta-analysis on the topic, we conducted a three-level meta-analysis of 195 effect sizes from 40 studies that provided strict experimental tests of demand effects by manipulating the hypothesis communicated to participants. Results indicated that these demand characteristics tend to produce small increases in hypothesis-consistent responding. However, these effects were extremely heterogeneous, and we estimated that many demand characteristics manipulations create increases in hypothesis-**in**consistent responding. Contrary to virtually every existing demand characteristic framework, we found little evidence that the effects were driven by participants’ motivation and opportunity to adjust their responses (a response bias). Instead, we found that such effects were driven by participants’ beliefs—i.e., placebo effects. These findings were subsequently replicated in a direct replication of a study included in the meta-analysis. Taken together, results challenge conventional distinctions between demand characteristics and placebo effects—and they highlight the need for future research on the mysterious nature of demand characteristics.
+  Demand characteristics are a fundamental methodological concern in experimental psychology. However, little is known about the direction, magnitude, consistency, and mechanisms underlying their effects. In the first meta-analysis on the topic, we conducted a three-level meta-analysis of 195 effect sizes from 40 studies that provided strict experimental tests of demand effects by manipulating the hypothesis communicated to participants. Results indicated that these demand characteristics tend to produce small increases in hypothesis-consistent responding. However, these effects were extremely heterogeneous, and we estimated that many demand characteristics manipulations create increases in hypothesis-*in*consistent responding. Contrary to virtually every existing demand characteristic framework, we found little evidence that the effects were driven by participants’ motivation and opportunity to adjust their responses (a response bias). Instead, we found that such effects were driven by participants’ beliefs—i.e., placebo effects. These findings were subsequently replicated in a direct replication of a study included in the meta-analysis. Taken together, results challenge conventional distinctions between demand characteristics and placebo effects—and they highlight the need for future research on the mysterious nature of demand characteristics.
   
 keywords          : "demand characteristics, hypothesis awareness, placebo effect, research methods, meta-analysis"
 wordcount         : "TBD"
 bibliography      : "r-references.bib"
 floatsintext      : no
-linenumbers       : yes
+linenumbers       : no
 draft             : no
 mask              : no
 figurelist        : no
@@ -429,7 +429,7 @@ table(DF.es$student, DF.es$ref.type) %>% prop.table()
 
 Results indicated that, overall, explicit manipulations of demand characteristics cause participants' responses tend to shift in a manner consistent with the communicated hypothesis, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. For example, if participants were hypothetically told that an intervention should improve mood (positive demand), they would generally report slightly improved moods; if told that an intervention should worsen mood (negative demand), they would generally report slightly worsened moods.
 
-```{r forest, fig.cap = "Forest plot of effect sizes (Cohen's d) included in the Study 1 meta-analysis. The rightmost column includes each effect size citation. The center and right columns contain the estimated effect sizes (black diamonds) and their 95% confidence intervals (black error bars).", fig.height = 7.8, fig.width = 6.5}
+```{r forest_old, fig.cap = "Forest plot of effect sizes (Cohen's d) included in the Study 1 meta-analysis. The rightmost column includes each effect size citation. The center and right columns contain the estimated effect sizes (black diamonds) and their 95% confidence intervals (black error bars).", fig.height = 7.8, fig.width = 6.5, eval = F}
 # create a temporary dataset containing effect sizes and 95% CI's
 tmp <- DF.es %>%
   rowwise() %>% 
@@ -491,7 +491,7 @@ ggplot(data= tmp,
   scale_y_continuous(expand = c(.01, 0))
 ```
 
-```{r fig.height = 7.8, fig.width = 6.5}
+```{r forest, fig.cap = "Forest plot of estimated effect sizes (black diamonds), their 95% confidence intervals (black error bars), and their citations (left). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; d > 0.10), more hypothesis-inconsistent responding (red; d < -0.10), or negligible shifts in responding (grey; |d| < 0.10).", fig.height = 7, fig.width = 6.5, warning = F}
 # create a temporary dataset containing effect sizes and 95% CI's
 tmp <- DF.es %>%
   rowwise() %>% 
@@ -544,7 +544,7 @@ ggplot(data= tmp,
   # create dotted line at d = 0
   geom_vline(xintercept = 0, 
              color = "black", 
-             linetype = "dashed", 
+             linetype = "dotted", 
              alpha = .5, 
              size =.5)  +
 
@@ -587,8 +587,7 @@ ggplot(data= tmp,
   scale_y_continuous(expand = c(.005, 0))
 ```
 
-
-```{r overall.dist}
+```{r overall.dist, eval = F}
 # create plot of effect size distribution
 ggplot(NULL,
        aes(c(-1.2, 1.5))) +
@@ -655,7 +654,7 @@ ggplot(NULL,
         )
 ```
 
-Although demand characteristics produce more hypothesis-consistent responding *on average*, demand effects are not consistent (between-study $\tau$ = `r sqrt(overall$sigma2[1])`; within-study $\sigma$ = `r sqrt(overall$sigma2[2])`; Figure \@ref(fig:forest))). Based on the meta-analytic mean and standard deviation (between-study $\tau$ + within-study $\sigma$), the estimated distribution of effects suggests that demand characteristics (a) sometimes produce negligible shifts in responding and (b) other times cause participants' responses to shift in the *opposite* direction of the communicated hypothesis (Figure X). For the sake of example, we arbitrarily classified any effect size less than 0.10 standard deviation in either direction as "negligible". Based on this classification, `r h.c` % of demand characteristics manipulations produce hypothesis-consistent shifts in responding, `r h.i` % produce hypothesis-inconsistent shifts, and `r 1 - h.c - h.i`% produce negligible shifts in either direction.
+Although demand characteristics produce more hypothesis-consistent responding *on average*, demand effects are not consistent (between-study $\tau$ = `r sqrt(overall$sigma2[1])`; within-study $\sigma$ = `r sqrt(overall$sigma2[2])`; Figure \@ref(fig:forest)). Based on the meta-analytic mean and standard deviation (between-study $\tau$ + within-study $\sigma$), the estimated distribution of effects suggests that demand characteristics (a) sometimes produce negligible shifts in responding and (b) other times cause participants' responses to shift in the *opposite* direction of the communicated hypothesis (Figure \@ref(fig:forest)). For the sake of example, we arbitrarily classified any effect size less than 0.10 standard deviation in either direction as "negligible". Based on this classification, `r h.c` % of demand characteristics manipulations produce hypothesis-consistent shifts in responding, `r h.i` % produce hypothesis-inconsistent shifts, and `r 1 - h.c - h.i`% produce negligible shifts in either direction.
 
 ### Moderator analyses
 
@@ -919,7 +918,9 @@ a <- ggplot(data = tmp,
   geom_jitter(alpha = .8,
               fill = "dark grey",
               color = "dark grey") +
-  scale_y_reverse() +
+  scale_y_reverse(expand = c(.01, 0)) +
+  scale_x_continuous(limits = c(-1.5, 2.1),
+                     expand = c(.01, .01)) +
   geom_vline(xintercept = overall$b[1],
              linetype = "dotted") +
   labs(x = "Cohen's d", 
@@ -974,11 +975,13 @@ b <- ggplot(data = tmp,
   geom_jitter(alpha = .8,
               fill = "dark grey",
               color = "dark grey") +
-  scale_y_reverse() +
+  scale_y_reverse(expand = c(.01, 0)) +
+  scale_x_continuous(limits = c(-1.5, 2.1),
+                     expand = c(.01, .01)) +
   geom_vline(xintercept = tmp.meta$b[1],
              linetype = "dotted") +
-  labs(x = "Cohen's d", 
-       y = "Standard error")
+  labs(x = "Cohen's d",
+       y = "")
 
 # delete vestigial
 rm(tmp, ll95, ul95, se.seq, t.coord, tmp.meta)
@@ -1044,7 +1047,7 @@ Even if researchers cannot explain how demand characteristics work, it might be 
 
 ## Results
 
-```{r mod.fig, fig.cap= "The effects of demand characteristics on participants' responses were not significantly moderated by motivation (Panel A) or opportunity (Panel B) ratings. They were, however, significantly moderated by belief (Panel C) and prediction (Panel D) ratings."}
+```{r modfig, fig.cap= "The effects of demand characteristics on participants' responses were not significantly moderated by motivation (Panel A) or opportunity (Panel B) ratings. They were, however, significantly moderated by belief (Panel C) and prediction (Panel D) ratings.", fig.height = 4.5, fig.width = 6.5}
 
 #################
 # motivation plot
@@ -1195,11 +1198,11 @@ plot_grid(m, o, b, p,
 rm(m, o, b, p)
 ```
 
-If demand effects are driven by response biases, their effects are expected to be moderated by participants' motivation and opportunity to adjust responses (Figure \@ref(fig:framework)). Inconsistent with this view, we did not find that demand effects were moderated by motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])` (Figure \@ref(fig:mod.fig) ) or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure @\ref(fig:mod.fig) ).
+If demand effects are driven by response biases, their effects are expected to be moderated by participants' motivation and opportunity to adjust responses (Figure \@ref(fig:framework)). Inconsistent with this view, we did not find that demand effects were moderated by motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])` (Figure \@ref(fig:modfig) ) or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure @\ref(fig:modfig) ).
 
-If demand effects are driven by placebo, their effects are expected to be moderated by participants' belief in the communicated hypothesis. Consistent with this view, demand characteristic effects were larger when raters indicated that they believed the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:mod.fig).
+If demand effects are driven by placebo, their effects are expected to be moderated by participants' belief in the communicated hypothesis. Consistent with this view, demand characteristic effects were larger when raters indicated that they believed the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:modfig).
 
-Raters' predictions about the effects of demand characteristics were associated with the observed effects, but this association was weak, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])` (Figure \@ref(fig:mod.fig).
+Raters' predictions about the effects of demand characteristics were associated with the observed effects, but this association was weak, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])` (Figure \@ref(fig:modfig).
 
 ## Discussion
 
