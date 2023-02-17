@@ -15,7 +15,7 @@ affiliation:
 authornote: |
   All materials, data, and code are available at <insert OSF link>. 
 abstract: |
-  MARS guidelines: The problem of relation(s) under investigation; Study eligibility criteria; Type(s) of participants included in primary studies; Meta‐analysis methods (indicating whether a fixed‐effects or random‐effects model was used); Main results (including the more important effect sizes and any important moderators of these effect sizes); Conclusion (including limitations); Implications for theory, policy, and/or practice
+  Demand characteristics are a fundamental methodological concern in experimental psychology. However, little is known about the direction, magnitude, consistency, and mechanisms underlying their effects. In the first meta-analysis on the topic, we conducted a three-level meta-analysis of 195 effect sizes from 40 studies that provided strict experimental tests of demand effects by manipulating the hypothesis communicated to participants. Results indicated that these demand characteristics tend to produce small increases in hypothesis-consistent responding. However, these effects were extremely heterogeneous, and we estimated that many demand characteristics manipulations create increases in hypothesis-**in**consistent responding. Contrary to virtually every existing demand characteristic framework, we found little evidence that the effects were driven by participants’ motivation and opportunity to adjust their responses (a response bias). Instead, we found that such effects were driven by participants’ beliefs—i.e., placebo effects. These findings were subsequently replicated in a direct replication of a study included in the meta-analysis. Taken together, results challenge conventional distinctions between demand characteristics and placebo effects—and they highlight the need for future research on the mysterious nature of demand characteristics.
   
 keywords          : "demand characteristics, hypothesis awareness, placebo effect, research methods, meta-analysis"
 wordcount         : "TBD"
@@ -491,6 +491,103 @@ ggplot(data= tmp,
   scale_y_continuous(expand = c(.01, 0))
 ```
 
+```{r fig.height = 7.8, fig.width = 6.5}
+# create a temporary dataset containing effect sizes and 95% CI's
+tmp <- DF.es %>%
+  rowwise() %>% 
+  mutate(se = sqrt(es.var),
+         ub = es + (se * 1.96),
+         ub = round(ub, 2),
+         lb = es - (se * 1.96),
+         lb = round(lb, 2),
+         es = round(es, 2)) %>% 
+  ungroup() %>% 
+  arrange(es, id.study)
+
+# create a forest plot w/ distribution overlay
+ggplot(data= tmp, 
+       aes(y = rev(1: nrow(tmp)) * 0.007692308, 
+           x = es,
+           xmin = lb,
+           xmax = ub)) +
+  
+  #hypothesis inconsistent effects
+  ## area
+  geom_area(stat = "function", 
+            fun = dnorm,
+            args = list(mean = overall$b, 
+                        sd = tau),
+            fill = "#F8766D", 
+            alpha = .25,
+            xlim = c(-2, -.10)) +
+  
+  # negligible effects
+  ## area
+  geom_area(stat = "function", 
+            fun = dnorm,
+            args = list(mean = overall$b, 
+                        sd = tau),
+            fill = "grey80", 
+            alpha = .25,
+            xlim = c(-.10, .10)) +
+  
+  # hypothesis consistent effects
+  ## area
+  geom_area(stat = "function", 
+            fun = dnorm,
+            args = list(mean = overall$b, 
+                        sd = tau),
+            fill = "#00998a", 
+            alpha = .25,
+            xlim = c(.10, 2)) +
+  
+  # create dotted line at d = 0
+  geom_vline(xintercept = 0, 
+             color = "black", 
+             linetype = "dashed", 
+             alpha = .5, 
+             size =.5)  +
+
+  # add points and error bars
+  geom_point(shape = "diamond",
+             size = 1,
+             colour = "black",
+             alpha = .75) +
+  geom_errorbarh(height = .005,
+                 colour = 'black',
+                 size = .1,
+                 alpha = .75) +
+  
+  # add citation label
+  geom_text(aes(label = citation),
+            x = -2.7,
+            hjust = 0,
+            size = 1) +
+  
+  # add CI label
+  geom_text(aes(label = paste0(es,
+                               " [", lb, ", ", ub, "]")),
+            x = 3.9,
+            size = 1,
+            hjust = 1) +  
+  
+  # remove y-axis and fix x-axis name
+  # theme(axis.title.y = element_blank(),
+  #       axis.text.y = element_blank(),
+  #       axis.ticks.y = element_blank(),
+  #       axis.line.y = element_blank()) +
+  
+  labs(x = "Cohen's d",
+       y = "density") +
+  
+  # increase plotting area
+  scale_x_continuous(limits = c(-2.7, 4),
+                     breaks = seq(from = -2, to = 3, by = 1),
+                     expand = c(.01, .01)) +
+  scale_y_continuous(expand = c(.005, 0))
+```
+
+
 ```{r overall.dist}
 # create plot of effect size distribution
 ggplot(NULL,
@@ -544,7 +641,9 @@ ggplot(NULL,
             y = .075,
             size = 4) +
   
+  
   # aesthetics
+  ylim(c(0,1))
   labs(x = "Cohen's d") +
   
   scale_y_continuous(expand = c(0, 0)) +
@@ -1239,7 +1338,7 @@ Implementation-wise, we urge future demand characteristic researchers to engage 
 
 # Conclusion
 
-We began our paper by mocking Crankology: a fictitious discipline plagued by a methodological artifact that could bias results in any direction, had unreliable effects, and had poorly understood mechanisms of action. However, our comprehensive examination of a textbook methodological concern in experimental psychology---demand characteristics---raises humbling questions about the superiority of our own discipline. After all, an examination of all available evidence indicates that demand characteristics too can bias participant responses in any direction, have extremely heterogeneous effects, and have somewhat unclear mechanisms of action. Contrary to leading ideas in the demand characteristics literature, our results provide evidence that placebo-based mechanisms may play a much larger role than previously believed. However, such conclusions are ultimately preliminary given the high heterogeneity, inconclusive publication bias analyses, and primitive nature of the measures of potential underlying mechanisms.
+We began our paper by mocking Crankology: a fictitious discipline plagued by a methodological artifact that could bias results in any direction, had unreliable effects, and had poorly understood mechanisms of action. However, our comprehensive examination of a textbook methodological concern in experimental psychology---demand characteristics---raises humbling questions about the superiority of our own discipline. After all, an examination of all available evidence indicates that demand characteristics too can bias participant responses in any direction, have extremely heterogeneous effects, and have somewhat unclear mechanisms of action. Contrary to leading ideas in the demand characteristics literature, our results provide evidence that placebo-based mechanisms may play a much larger role than previously believed. However, such conclusions are ultimately preliminary given the high heterogeneity, inconclusive publication bias analyses, and primitive the measures of potential underlying mechanisms.
 
 After taking stock of what we know---and don't know---about demand characteristics, we are convinced that experimental psychology can be at least somewhat distinguished from the clearly invalid methods of Crankology. Yet, for experimental psychologists to maintain that reputation, one thing is clear: more work is needed to understand the textbook methodological issue of demand characteristics.
 
