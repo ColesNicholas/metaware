@@ -614,7 +614,7 @@ DF.surv2 <- DF.surv2 %>%
                      hap2_bl2_att == "5" &
                      neu2_bl2_att == "5",
                    true = 1,
-                   false = 1)
+                   false = 0)
          ) %>% 
   
   # create separate rows for each trial 
@@ -683,6 +683,14 @@ DF.surv2 <- DF.surv2 %>%
                        mot * (-1),
                        mot)) %>% 
   ungroup()
+# center motivation, opportunity, and belief scores
+DF.surv2$mot.c = scale(DF.surv2$mot,
+                       scale = F) %>% as.numeric()
+DF.surv2$opp.c = scale(DF.surv2$opp,
+                       scale = F) %>% as.numeric()
+DF.surv2$bel.c = scale(DF.surv2$bel,
+                       scale = F) %>% as.numeric()
+
 ```
 
 # Export

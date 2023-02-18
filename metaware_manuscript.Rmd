@@ -1304,7 +1304,10 @@ DF.s2 <-
   # fix variable class
   mutate_at(.vars = c("sub", "demand",
                       "trial", "block.num"),
-            .funs = as.factor)
+            .funs = as.factor) %>% 
+  
+  # NEW TMP
+  filter(att.chk == 1)
 ```
 
 After completing the Study 1b ratings, we told `r length(unique(DF.s2$sub))` participants that we hypothesized that posed smiles will either increase (positive demand, n = `r length(unique(DF.s2[DF.s2$demand == "pos", ]$sub))`) or not impact (nil demand, n = `r length(unique(DF.s2[DF.s2$demand == "nil", ]$sub))`) feelings of happiness. Participants than posed happy and neutral expressions across two blocks. For happy poses, participants were instructed to move the corner of their lips toward their ears, elevating their cheeks. For neutral poses, participants were instructed to maintain a blank expression. Participants held each pose for 5 seconds with the assistance of an on-screen timer. After each pose, participants self-reported the extent to which they experienced happiness, satisfaction, and enjoyment (0 = "not at all" to 6 = "maximally"), which were averaged to form a happiness composite score. As filler items, participants also self-reported the extent to which they experienced fear (alarmed, scared, and fear) and anger (irritation, aggravation, and annoyance). Using similar items as Study 1b, participants at the end of the study reported the extent to which they were motivated to confirm the hypothesis, had the opportunity to adjust their responses, and believed the communicated effect. Altogether, the study used a 2 (facial pose: happy or neutral) × 2 (block: first or second) × 2 (demand characteristics: positive demand or nil demand) mixed design, with demand characteristics manipulated between subjects.
@@ -1312,6 +1315,9 @@ After completing the Study 1b ratings, we told `r length(unique(DF.s2$sub))` par
 ## Results
 
 ```{r s2.d.int, include = F}
+# allow for Type III Sums of Square
+options(contrasts = c('contr.sum', 'contr.poly'))
+
 # test facial feedback by demand interaction
 ## fit mixed-effects model
 m.d <- lmer(happy ~ trial * block.num * demand + 
@@ -1333,6 +1339,12 @@ Following @coles2022fact, we fit a mixed-effect regression with (a) facial pose,
 rm(m.d, m.d.aov, m.d.joint)
 
 # moderation by motivation
+m.m.aov <- lmer(happy ~ trial + block.num + mot.c + 
+                  (trial : mot.c) +
+                  (1 | sub),
+                data = DF.s2) %>% 
+  anova()
+
 m.m.aov <- lmer(happy ~ trial + block.num + mot + 
                   (trial : mot) +
                   (1 | sub),
@@ -1340,6 +1352,12 @@ m.m.aov <- lmer(happy ~ trial + block.num + mot +
   anova()
 
 # moderation by opportunity
+m.o.aov <- lmer(happy ~ trial + block.num + opp.c + 
+                  (trial : opp.c) +
+                  (1 | sub),
+                data = DF.s2) %>% 
+  anova()
+
 m.o.aov <- lmer(happy ~ trial + block.num + opp + 
                   (trial : opp) +
                   (1 | sub),
@@ -1347,8 +1365,8 @@ m.o.aov <- lmer(happy ~ trial + block.num + opp +
   anova()
 
 # moderation by belief
-m.b <- lmer(happy ~ trial + block.num + bel + 
-              (trial : bel) +
+m.b <- lmer(happy ~ trial + block.num + bel.c + 
+              (trial : bel.c) +
               (1 | sub),
             data = DF.s2)
 
@@ -1405,7 +1423,9 @@ The estimated range of demand effects covers the span of almost every conceivabl
 
 # To-do
 [] Double check prediction scores.
+
 [] Rosnow and Rosenthal were right that there can be counter and regular acquiesence.
+
 [] can placebo account for superiority of nil demand manips?
 
 [] You need to put parameter estimates into Study 2 and make it clear that it's very possible that more evidence would have been found with a larger sample
