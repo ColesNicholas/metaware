@@ -606,15 +606,130 @@ We did not find that the effects of demand characteristics tended to differ depe
 The effects of demand characteristics tended to be *numerically* larger in unpaid ($d$ = `r mod.r$paid$sub$b[1]`, 95% CI [`r mod.r$paid$sub$ci.lb[1]`, `r mod.r$paid$sub$ci.ub[1]`], $p$ `r printp(mod.r$paid$sub$pval[1])`) vs. paid ($d$ = `r mod.r$paid$sub$b[2]`, 95% CI [`r mod.r$paid$sub$ci.lb[2]`, `r mod.r$paid$sub$ci.ub[2]`], $p$ = `r printp(mod.r$paid$sub$pval[2])`) studies---but this difference was not statistically significant, $F$(`r mod.r$paid$mod$QMdf[1]`, `r mod.r$paid$mod$QMdf[2]`) = `r mod.r$paid$mod$QM`, $p$ = `r printp(mod.r$paid$mod$QMp)`.
 
 #### Exploratory attempt to reduce confounding
+```{r anticonfound, eval = F}
+# calculate percentage of online effect sizes that had students vs. non-students
+in.s <- DF.es[DF.es$online == "no", ]$student %>% 
+  table() %>% 
+  prop.table() %>% 
+  as.data.frame() %>% 
+  .[3, 2] %>% 
+  round(2) * 100
 
-The above moderator analyses indicated that demand effects tend to be positive in studies with student populations, in-person procedures, and no compensation. However, an exploratory inspection of the data revealed that these variables may be confounded. For example, students were more likely to be participants in in-person (61% student samples) vs. online (14% student samples) studies. Students were also more likely to be participants in unpaid (65% student samples) vs. paid (11% student samples) studies. In hindsight, this confounding seems obvious---but it was not anticipated when we pre-registered our analysis plan.
+on.s <- DF.es[DF.es$online == "yes", ]$student %>% 
+  table() %>% 
+  prop.table() %>% 
+  as.data.frame() %>% 
+  .[2, 2] %>% 
+  round(2) * 100
 
-As an exploratory analysis, we fit a three-level meta-analysis with student status, data collection medium, and payment status entered as effect-coded factors. The results should be interpreted with some skepticism because the model may be overfit. Nonetheless, this exploratory analysis indicated that student status---but not data collection medium or payment status---was a significant moderator of demand effects. In other words, only student status was robustly associated with differences in demand effects when we attempted to reduce confounding.
+# calculate percentage of paid effect sizes with students vs. non-students
+v.s <- DF.es[DF.es$paid == "no", ]$student %>% 
+  table() %>% 
+  prop.table() %>% 
+  as.data.frame() %>% 
+  .[3, 2] %>% 
+  round(2) * 100
+
+p.s <- DF.es[DF.es$paid == "yes", ]$student %>% 
+  table() %>% 
+  prop.table() %>% 
+  as.data.frame() %>% 
+  .[2, 2] %>% 
+  round(2) * 100
+
+# unconfounded analysis
+## set Type 3 SS
+options(contrasts = c('contr.sum',
+                      'contr.poly'))
+
+m.sens <- rma.mv(yi = es,
+                 V = es.var,
+                 data = DF.es,
+                 random = ~ 1 | id.study / id.es,
+                 mods = ~ student + paid + online,
+                 test= "t")
+
+m.sens.student <- anova(m.sens, btt = c(2, 3))
+m.sens.online <- anova(m.sens, btt = c(5))
+m.sens.pay <- anova(m.sens, btt = c(4))
+```
+
+The above moderator analyses indicated that demand effects tend to be positive in studies with student populations, in-person procedures, and no compensation. However, an exploratory inspection of the data revealed that these variables may be confounded. For example, effect size estimates were more likely to be based on student samples for in-person (`r in.s`%) vs. online (`r on.s`%) studies. Effect size estimates were also more likely to be based on student samples for unpaid (`r v.s`%) vs. paid (`r p.s`%) studies. In hindsight, this confounding seems obvious---but it was not anticipated when we pre-registered our analysis plan.
+
+As an exploratory analysis, we fit a three-level meta-analysis with student status, data collection medium, and payment status entered as effect-coded factors. The results should be interpreted with some skepticism because the model may be overfit. Nonetheless, this exploratory analysis indicated that student status---but not data collection medium (*F*(`r m.sens.online$QMdf[1]`, `r m.sens.online$QMdf[2]`) = `r m.sens.online$QM`, *p* = `r printp(m.sens.online$QMp)`) or payment status (*F*(`r m.sens.pay$QMdf[1]`, `r m.sens.pay$QMdf[2]`) = `r m.sens.pay$QM`, *p* = `r printp(m.sens.pay$QMp)`)---was a significant moderator of demand effects, *F*(`r m.sens.student$QMdf[1]`, `r m.sens.student$QMdf[2]`) = `r m.sens.student$QM`, *p* = `r printp(m.sens.student$QMp)`. In other words, only student status was robustly associated with differences in demand effects when we attempted to reduce confounding.
+
+```{r forest2, eval = F}
+m <- rma.mv(yi = es,
+            V = es.var,
+            data = DF.es,
+            random = ~ 1 | id.study / id.es,
+            mods = ~ student + paid + online + ref.type,
+            test = "t")
+
+# create annoying dataframe
+student <- 
+  cbind(mod = "student",
+        b = mod.r$student$sub$beta,
+        lb = mod.r$student$sub$ci.lb,
+        ub = mod.r$student$sub$ci.ub)
+
+paid <-
+  cbind(mod = "paid",
+        b = mod.r$paid$sub$beta,
+        lb = mod.r$paid$sub$ci.lb,
+        ub = mod.r$paid$sub$ci.ub)
+
+online <-
+  cbind(mod = "online",
+        b = mod.r$online$sub$beta,
+        lb = mod.r$online$sub$ci.lb,
+        ub = mod.r$online$sub$ci.ub)
+
+design <- 
+  cbind(mod = "design",
+        b = mod.r$design$sub$beta,
+        lb = mod.r$design$sub$ci.lb,
+        ub = mod.r$design$sub$ci.ub)
+
+ref.type <- 
+  cbind(mod = "ref.type",
+        b = mod.r$ref.type$sub$beta,
+        lb = mod.r$ref.type$sub$ci.lb,
+        ub = mod.r$ref.type$sub$ci.ub) %>%
+  as.data.frame() %>% 
+  rownames_to_column(var = "level")
+
+# write function to extract beta and CI's from subgroup analyses
+## list of moderators
+mod.list <- c("student", "paid", "online", 
+              "ref.type", "design")
+
+## function for extraction
+ModFunnelFun <- function(x){
+  cbind(mod = x,
+        b = mod.r[[x]]$sub$beta,
+        lb = mod.r[[x]]$sub$ci.lb,
+        ub = mod.r[[x]]$sub$ci.ub)
+}
+
+## lapply
+mod.df <- sapply(X = mod.list,
+                FUN = ModFunnelFun)
+
+?lapply
+
+
+mod.df %>% as.data.frame()
+```
+
 
 ### Publication bias analyses
 
 ```{r pub.bias, include = F}
-##########################
+# delete vestigial
+rm(in.s, on.s, v.s, p.s,
+   m.sens, m.sens.student, m.sens.online, m.sens.pay)
+
 # Define publication bias analysis that
 # 1. Mathur and VanderWeele 2020 sensitivity analyses
 # 2. Fits three-level precision-effect test
