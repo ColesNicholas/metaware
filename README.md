@@ -1,6 +1,4 @@
 # Github repo for demand characteristics meta-analysis
-
-## Main folder
 - metaware_manuscript.Rmd: RMarkdown version of manuscript
 - metaware_manuscript.docx: Word version of manuscript (knitted from metaware_manuscript.Rmd)
 - r-references.bib: List of manuscript references
@@ -9,7 +7,7 @@
 - MFfeedback_NCresponse.docx: Temporary document containing feedback from Mike Frank
 - README.md: Readme file
 
-### data
+## data folder
 - metaware_csv_codebooks.xlsx: contains codebooks for every .csv file used in this project
 - metaware_EsData_raw.xlsx: contains information for record screening and effect size/moderator coding
 - metaware_SurvData_raw.csv: contains responses to a survey where participants (1) reviewed vignettes from the meta-analysis, and (2) completed a close replication of a demand characteristics study
@@ -17,22 +15,22 @@
 - metaware_survey2_clean.csv: contains responses to the close replication of a demand characteristic study
 - metaware_vignette_clean.csv: contains average ratings of motivation, opportunity, and belief for each vignette reviewed in metaware_SurvData_raw.csv
 
-#### r_sensitivity
+### r_sensitivity folder
 - contains copies of metaware_data_clean.csv where different correlations were assumed. File name convention is "metaware_data_clean_r" + assumed correlation + ".csv"
 
-### metaware_manuscript_files
+## metaware_manuscript_files folder
 Contains a variety of images that are auto-saved when metaware_manuscript.Rmd is knitted
 
-### images
+## images folder
 - metaware_figures.drawio: Drawio program file used to create a few manuscript figures (described below)
 - metaware_framework.png: Image showing frameworks for conceptualizing demand effects
 - metaware_mods.png: Image showing how motivation, opportunity, and belief scores were summed
 - metaware_vigs.png: Image showing how vignettes were created
 
-### admin
+## admin folder
 Contains various files used for project admin
 
-#### irb
+### irb folder
 - metaware22a_IRBApproval.pdf: Copy of IRB approval notice
 - metaware22a_eprotocol.docx: Copy of document submitted to IRB
 - metaware22a_Debriefing.docx: Copy of debriefing form submitted to IRB
@@ -40,16 +38,16 @@ Contains various files used for project admin
 - metaware22a_scenarios.csv: Copy of vignettes provided to IRB
 - metaware22a_Survey.pdf: Copy of survey provided to IRB
 
-#### prereg
+### prereg folder
 Contains copies of pre-registered analysis plan in .docx and .pdf format
 
-#### survey
+### survey folder
 Contains copy of vignette survey and replication of demand study in .docx and .qsf (Qualtrics) format
 
-#### unpublished data
+### unpublished data folder
 Contains copies of files that we used to extract unpublished information about effect sizes. Folder probably needs to be cleaned
 
-#### vig
+### vig folder
 metaware_CombineVigs.Rmd: File used to combine information about vignettes into a single csv (metaware_VigCombined.csv)
 metaware_VigCombined.csv: Contains vignette information used in the survey
 
