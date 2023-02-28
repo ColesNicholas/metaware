@@ -1,6 +1,6 @@
 # Github repo for demand characteristics meta-analysis
-- metaware_manuscript.Rmd: RMarkdown version of manuscript
-- metaware_manuscript.docx: Word version of manuscript (knitted from metaware_manuscript.Rmd)
+- **metaware_manuscript.Rmd**: RMarkdown version of manuscript
+- **metaware_manuscript.docx**: Word version of manuscript (knitted from metaware_manuscript.Rmd)
 - r-references.bib: List of manuscript references
 - metaware_EsProcessing.Rmd: R code for processing the effect size (metaware_EsData_raw.xlsx) and survey (metaware_SurvData_raw.csv) data. Produces clean copies of the effect size data (metaware_data_clean.csv), survey data (metaware_survey2_clean.csv) and vignette data (metaware_vignette_clean.csv)
 - metaware_EsProcessingSens.Rmd: R code that runs metaware_EsProcessing.Rmd with different assumed correlations (used for sensitivity analyses in metaware_manuscript.Rmd)
