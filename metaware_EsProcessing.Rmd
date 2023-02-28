@@ -617,6 +617,17 @@ DF.surv2 <- DF.surv2 %>%
                    false = 0)
          ) %>% 
   
+  # identify whether participants correctly identified the hypothesis
+  mutate(manip.chk =
+           if_else(condition =
+                     demand == "pos" & awr == 1,
+                   true = 1,
+                   false = 
+                     if_else(condition = 
+                               demand == "nil" & awr == 2,
+                             true = 1,
+                             false = 0))) %>% 
+  
   # create separate rows for each trial 
     # 1. Gather emotion reports into a single column
     gather(key = "dv", 
@@ -672,10 +683,9 @@ DF.surv2 <- DF.surv2 %>%
   # organize dataframe
   arrange(sub, block.num, trial) %>% 
   select(sub, demand, trial, block.num, happy, 
-         att.chk, awr,
+         att.chk, manip.chk,
          mot : mot_gen,
-         indiv_gend_var : ethnicity,
-         pos_awr : nil_opp) %>% 
+         indiv_gend_var : ethnicity) %>% 
   
   # recode (flip) motivation for the nil hypothesis condition
   rowwise() %>% 
@@ -683,6 +693,7 @@ DF.surv2 <- DF.surv2 %>%
                        mot * (-1),
                        mot)) %>% 
   ungroup()
+
 # center motivation, opportunity, and belief scores
 DF.surv2$mot.c = scale(DF.surv2$mot,
                        scale = F) %>% as.numeric()
@@ -690,7 +701,6 @@ DF.surv2$opp.c = scale(DF.surv2$opp,
                        scale = F) %>% as.numeric()
 DF.surv2$bel.c = scale(DF.surv2$bel,
                        scale = F) %>% as.numeric()
-
 ```
 
 # Export

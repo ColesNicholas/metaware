@@ -424,7 +424,6 @@ anova(m)
 table(DF.es$student, DF.es$online) %>% prop.table()
 table(DF.es$student, DF.es$paid) %>% prop.table()
 table(DF.es$student, DF.es$ref.type) %>% prop.table()
-
 ```
 
 Results indicated that, overall, explicit manipulations of demand characteristics cause participants' responses to shift in a manner consistent with the communicated hypothesis, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. For example, if participants were hypothetically told that the researcher hypothesizes that an intervention will improve mood (positive demand), they would generally report slightly improved moods; if told that the researcher hypothesizes that an intervention will worsen mood (negative demand), they would generally report slightly worsened moods.
@@ -585,7 +584,7 @@ rm(mod.r.2)
 
 The observed variability in demand effects drastically exceeded what would be expected from sampling error alone, $Q$(`r overall$k - 1`) = `r overall$QE`, $p$ `r printp(overall$QEp)`. This suggests the existence of moderators.
 
-```{r modforest, fig.cap = "Forest plot of selected moderator subgroup (left) effect sizes (grey diamonds) and their 95% confidence intervals (grey error bars). Forest plot also contains model-derived estimates of the demand effects in two common research scenarios (italicized text). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; d > 0.10), more hypothesis-inconsistent responding (red; d < -0.10), or negligible shifts in responding (grey; |d| < 0.10).", fig.height = 4, fig.width = 6.5, warning = F}
+```{r modforest, fig.cap = "Forest plot of selected moderator subgroup (left) effect sizes (grey diamonds) and their 95% confidence intervals (grey error bars). Forest plot also contains model-derived estimates of demand effects in two common research scenarios (italicized text). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; d > 0.10), more hypothesis-inconsistent responding (red; d < -0.10), or negligible shifts in responding (grey; |d| < 0.10).", fig.height = 4, fig.width = 6.5, warning = F}
 ########################
 # 1. Use models to derive estimated effects in two common research scenarios
 ########################
@@ -811,7 +810,7 @@ The effects of demand characteristics tended to be *numerically* larger in unpai
 
 #### Exploratory attempt to reduce confounding
 
-```{r anticonfound}
+```{r anticonfound, include = F}
 # calculate percentage of online effect sizes that had students vs. non-students
 in.s <- DF.es[DF.es$online == "no", ]$student %>% 
   table() %>% 
@@ -874,6 +873,7 @@ First, we estimated the overall impact of demand characteristics in what we call
 ```{r pub.bias, include = F}
 # delete vestigial
 rm(in.s, on.s, v.s, p.s,
+   m.s1, m.s2,
    m.sens, m.sens.student, m.sens.online, m.sens.pay)
 
 # Define publication bias analysis that
@@ -1420,7 +1420,7 @@ To address these two major limitations, we re-examined the moderators in a small
 
 # Study 2
 
-After Study 1b participants completed the vignette ratings task, we had them complete an exploratory close replication of @coles2022fact.
+In addition to the vignette rating task, Study 1b participants completed also completed an exploratory close replication of @coles2022fact. The ordering of these tasks were randomized.
 
 ## Methodology
 
@@ -1440,7 +1440,7 @@ DF.s2 <-
                          levels = c("pos", "nil")))
 ```
 
-After completing the Study 1b ratings, we told `r length(unique(DF.s2$sub))` participants that we hypothesized that posed smiles will either increase (positive demand, n = `r length(unique(DF.s2[DF.s2$demand == "pos", ]$sub))`) or not impact (nil demand, n = `r length(unique(DF.s2[DF.s2$demand == "nil", ]$sub))`) feelings of happiness. Participants then posed happy and neutral expressions across two blocks. For happy poses, participants were instructed to move the corner of their lips toward their ears, elevating their cheeks. For neutral poses, participants were instructed to maintain a blank expression. Participants held each pose for 5 seconds with the assistance of an on-screen timer. After each pose, participants self-reported the extent to which they experienced happiness, satisfaction, and enjoyment (0 = "not at all" to 6 = "maximally"), which were averaged to form a happiness composite score. As filler items, participants also self-reported the extent to which they experienced fear (alarmed, scared, and fear) and anger (irritation, aggravation, and annoyance). Participants also completed several attention check items that instructed them to a choose a specific response option (e.g., "please choose 'slightly' as your response to this question"). Following @coles2022fact, we excluded participants who failed an attention check (final n = `r length(unique(DF.s2[DF.s2$att.chk == 1, ]$sub))`). In the results section below, we report two instances where this exclusion rule impacted our inferences.
+We told `r length(unique(DF.s2$sub))` participants that we hypothesized that posed smiles will either increase (positive demand, n = `r length(unique(DF.s2[DF.s2$demand == "pos", ]$sub))`) or not impact (nil demand, n = `r length(unique(DF.s2[DF.s2$demand == "nil", ]$sub))`) feelings of happiness. Participants then posed happy and neutral expressions across two blocks. For happy poses, participants were instructed to move the corner of their lips toward their ears, elevating their cheeks. For neutral poses, participants were instructed to maintain a blank expression. Participants held each pose for 5 seconds with the assistance of an on-screen timer. After each pose, participants self-reported the extent to which they experienced happiness, satisfaction, and enjoyment (0 = "not at all" to 6 = "maximally"), which were averaged to form a happiness composite score. As filler items, participants also self-reported the extent to which they experienced fear (alarmed, scared, and fear) and anger (irritation, aggravation, and annoyance). Participants also completed several attention check items that instructed them to a choose a specific response option (e.g., "please choose 'slightly' as your response to this question"). Following @coles2022fact, we excluded participants who failed an attention check (final n = `r length(unique(DF.s2[DF.s2$att.chk == 1, ]$sub))`). In the results section below, we report two instances where this exclusion rule impacted our inferences.
 
 Using similar items as Study 1b, participants at the end of the study reported the extent to which they were motivated to confirm the hypothesis, had the opportunity to adjust their responses, and believed in facial feedback effects. Altogether, the study used a 2 (facial pose: happy or neutral) × 2 (block: first or second) × 2 (demand characteristics: positive demand or nil demand) mixed design, with demand characteristics manipulated between subjects.
 
@@ -1455,7 +1455,8 @@ options(contrasts = c('contr.sum', 'contr.poly'))
 m.d <- lmer(happy ~ trial * block.num * demand + 
             (1 | sub),
           data = DF.s2,
-          subset = att.chk == 1)
+          #subset = att.chk == 1,
+          subset = manip.chk == 1)
 
 ## omnibus tests
 m.d.aov <- anova(m.d)
@@ -1476,7 +1477,8 @@ m.m <- lmer(happy ~ trial + block.num + mot.c +
               (trial:mot.c) +
               (1 | sub),
             data = DF.s2,
-            subset = att.chk == 1) %>% 
+            #subset = att.chk == 1) %>% 
+            subset = manip.chk == 1) %>% 
   summary()
 
 m.m.sens <- lmer(happy ~ trial + block.num + mot.c +
@@ -1490,7 +1492,8 @@ m.o <- lmer(happy ~ trial + block.num + opp.c +
               (trial:opp.c) +
               (1 | sub),
             data = DF.s2,
-            subset = att.chk == 1) %>% 
+            #subset = att.chk == 1) %>% 
+            subset = manip.chk == 1) %>% 
   summary()
 
 # moderation by belief
@@ -1498,7 +1501,8 @@ m.b <- lmer(happy ~ trial + block.num + bel.c +
               (trial : bel.c) +
               (1 | sub),
             data = DF.s2,
-            subset = att.chk == 1) %>% 
+            #subset = att.chk == 1) %>%
+            subset = manip.chk == 1) %>% 
   summary()
 ```
 
@@ -1512,7 +1516,8 @@ rm(m.b, m.m, m.m.sens, m.o)
 m.m <- lmer(happy ~ trial * demand * mot.c +
               (1 | sub),
             data = DF.s2,
-            subset = att.chk == 1) %>% 
+            #subset = att.chk == 1) %>% 
+            subset = manip.chk == 1) %>% 
   summary()
 
 ## sensitivity analysis
@@ -1525,14 +1530,16 @@ m.m.sens <- lmer(happy ~ trial * demand * mot.c +
 m.o <- lmer(happy ~ trial * demand * opp.c +
               (1 | sub),
             data = DF.s2,
-            subset = att.chk == 1) %>% 
+            #subset = att.chk == 1) %>%
+            subset = manip.chk == 1) %>% 
   summary()
 
 # belief
 m.b <- lmer(happy ~ trial * demand * bel.c +
               (1 | sub),
             data = DF.s2,
-            subset = att.chk == 1) %>% 
+            #subset = att.chk == 1) %>% 
+            subset = manip.chk == 1) %>% 
   summary()
 
 ```
@@ -1543,12 +1550,21 @@ We did not find evidence of a three-way interaction between facial poses, demand
 
 To summarize, Study 2 provided mixed evidence that the effect of demand characteristics was driven by response bias. We found some evidence that facial feedback and demand effects are moderated by self-reported motivation to provide hypothesis-consistent responses---but this finding was less robust across different analysis strategies. Furthermore, we consistently failed to find evidence that these effects were moderated by self-reported opportunity to adjust responses. We did, however, find consistent evidence that facial feedback and demand effects are moderated by self-reported belief in the communicated hypothesis.
 
+```{r clean.env.3, include = F}
+# delete vestigial
+rm(m.b, m.m, m.m.sens, m.o)
+```
+
 # General Discussion
 
 A comprehensive examination of strict experimental manipulations of demand characteristics reveal that they typically lead participants to slightly shift their responses in the direction of the communicated hypothesis. However, publication bias analyses are inconclusive, and the estimated effects are heterogeneous. Using admittedly arbitrary thresholds, we estimated that `r h.c`% of demand characteristics manipulations produce hypothesis-consistent shifts in participants' responses ($d$ \> 0.10), `r h.i`% produce hypothesis-*in*consistent shifts in participants' responses ($d$ \< -0.10), and `r 100 - h.c - h.i`% produce negligible shifts in either direction (-0.10 \< $d$ \> 0.10). Most worrisome, the current estimated distribution of demand effects suggests that they can range from approximately $d$ = `r dist.min` to $d$ = `r dist.max`. *This range covers the magnitude of almost every conceivable effect in experimental psychology.* Thus, in order to distinguish theory-relevant effects from artifactual demand effects, it is essential that experimental psychologists better understand how the latter work.
 
-```{r Nickplay, eval = F}
-tmp <- DF.es %>% 
+```{r r2, include = F}
+# calculate a pseudo-R2
+
+## pairwise delete observations where we don't have information for moderator analyses
+## this is to ensure that the two models we are comparing have the same observations
+DF.cmplt <- DF.es %>% 
   filter(!is.na(student),
          !is.na(paid),
          !is.na(online),
@@ -1557,44 +1573,29 @@ tmp <- DF.es %>%
          !is.na(mot),
          !is.na(opp))
 
+## fit intercept-only model
 m.1 <- rma.mv(yi = es,
               V = es.var,
-              data = tmp,
+              data = DF.cmplt,
               random = ~ 1 | id.study / id.es,
               test = "t")
 
+## fit model containing all the moderators
 m.2 <- rma.mv(yi = es,
               V = es.var,
-              data = tmp,
+              data = DF.cmplt,
               random = ~ 1 | id.study / id.es,
               mods = ~ student + paid + online + ref.type +
                 bel + mot + opp,
               test = "t")
 
-m.1$sigma2
-m.2$sigma2
+## calculate quasi-R2
+r2 <- (sum(m.1$sigma2) - sum(m.2$sigma2)) / sum(m.1$sigma2) 
 
-(sum(m.1$sigma2) - sum(m.2$sigma2)) / sum(m.1$sigma2) 
-
-
-
-
-### s2
-
-m.1 <- lmer(happy ~ trial * demand + (1 | sub), 
-            data = DF.s2) %>% summary()
-
-m.2 <- lmer(happy ~ trial * demand * bel * mot +
-              (1 | sub), 
-            data = DF.s2) %>% summary()
-
-m.3 <- lmer(happy ~ trial * demand * bel * mot +
-              (1 | sub), 
-            data = DF.s2,
-            subset = att.chk == 1) %>% summary()
+rm(DF.cmplt, m.1, m.2)
 ```
 
-Participants themselves appeared to have little-to-no ability to predict the impact of demand characteristics, although it is possible that their performance would improve if they were provided with more information, given better measures of beliefs, and/or better incentivized to provide accurate predictions. Unfortunately, it does not seem that our meta-analysis allows us to make much better predictions. Moderator analyses provided preliminary evidence that some methodological decisions---such as sampling students, running studies in-person, and not offering payment---are associated with increases in hypothesis-consistent responding. However, only results concerning student status were robust across sensitivity analyses designed to reduce confounding. We also found that demand characteristics tended to be more impactful when a nil (as opposed to negative or positive) hypothesis was communicated. Nonetheless, most of the variability we observed in the meta-analysis is currently unaccounted for.
+Participants themselves appeared to have little-to-no ability to predict the impact of demand characteristics of studies they reviewed, although it is possible that their performance would improve if they were provided with more information, given better measures of beliefs, and/or better incentivized to provide accurate predictions. Unfortunately, it does not seem that our meta-analysis allows us to make much better predictions. Moderator analyses provided preliminary evidence that some methodological decisions---such as sampling students, running studies in-person, and not offering payment---are associated with increases in hypothesis-consistent responding. However, only results concerning student status were robust across sensitivity analyses designed to reduce confounding. We also found that demand characteristics tended to be more impactful when a nil (as opposed to negative or positive) hypothesis was communicated. Nonetheless, most of the variability we observed in the meta-analysis is currently unaccounted for. Specifically, a
 
 Of course, demand effects would become easier to predict if we could understand how they operate. Fortunately, the evidence we were able to synthesize provides some clues. Specifically, we found robust evidence that such effects are at least partly driven by participants' beliefs (@coles2022fact; @corneille2022sixty). This challenges historical distinctions made between placebo effects and demand characteristics---the later which have been conventionally conceptualized as a relatively deliberate response bias driven by participants' motivation and ability to adjust their responses (@rosnow1997people; @orne1962social; @riecken1962program; @rosenberg1969conditions; @sigall1970cooperative; @cook1970demand). Contrary to these conventional conceptualizations, we did not find robust evidence that demand characteristics are driven by response bias. In the Study 1b meta-analysis, we did not find that external ratings of two factors theorized to underlie response biases---motivation and opportunity to adjust responses---moderated demand effects. However, we did find some evidence in Study 2 that motivation (but not opportunity) ratings moderated the effects of demand characteristics in a specific experimental context.
 
@@ -1625,10 +1626,21 @@ DF.s2.1r <- DF.s2 %>%
 b.m.cor.s2 <- cor.test(DF.s2.1r$bel.c, DF.s2.1r$mot.c)
 
 ## delete vestigial
-rm(DF.s2, DF.s2.1r)
+rm(DF.s2.1r)
+
+# look at Study 2 general belief ratings
+## calculate percentage of participants who said that others shouldn't be motivated to change responses
+p.m.0 <- 
+  nrow(DF.s2[DF.s2$mot_gen == 0, ]) / nrow(DF.s2) * 100 %>% 
+  round(2)
+
+DF.s2$mot_gen %>% mean(na.rm = T)
+DF.s2$mot_gen %>% table %>% prop.table
 ```
 
-In his pioneering work on demand characteristics, @orne1962social characterized participants as "good subjects" who are motivated to help the researcher confirm their hypothesis. Our results---although not without their limitations---do not suggest that this is a prominent participant goal. Across all experimental contexts reviewed by Study1b participants, the estimated mean motivation to help confirm the study hypothesis was near zero (*M* = `r mean(vig.DF$m.mot)`, *SD* = `r sd(vig.DF$m.mot)`). To be sure, there were some study contexts in which participants tended to report slight motivation to confirm the experimenter's hypothesis, such as when they were told the researcher expected them to (a) prefer a news article that favors their political party (*M* = `r vig.DF[vig.DF$vig == "16_p_new", ]$m.mot`), (b) avoid perceiving a shift in an optical illusion (*M* = `r vig.DF[vig.DF$vig == "03_n_swi", ]$m.mot`), and (c) feel moved by happy and sad music (*M* = `r vig.DF[vig.DF$vig == "25_p_sad", ]$m.mot`). However, this can alternatively be interpreted as participants' motivation to respond in a manner that is consistent with their beliefs---not motivation to help the experimenter. Our results provide mixed evidence for this explanation. One one hand, the Study 1b meta-analysis indicated that there was a modest-sized correlation between study-level estimates of participants' (a) motivation to confirm the hypothesis, and (b) belief in the hypothesis, $r$ = `r b.m.cor.s1$estimate %>% as.numeric %>% round(2)`, 95% CI [`r b.m.cor.s1$conf.int[1] %>% as.numeric %>% round(2)`, `r b.m.cor.s1$conf.int[2] %>% as.numeric %>% round(2)`], $p$ `r printp(b.m.cor.s1$p.value)`. This suggest that, across all study contexts, participants were generally more motivated to confirm the hypothesis when it conformed with their own beliefs. However, this was not replicated in the specific experimental context examined in Study 2, where there was little-to-no correlation between motivation and belief ratings, $r$ = `r b.m.cor.s2$estimate %>% as.numeric %>% round(2)`, 95% CI [`r b.m.cor.s2$conf.int[1] %>% as.numeric %>% round(2)`, `r b.m.cor.s2$conf.int[2] %>% as.numeric %>% round(2)`], $p$ = `r printp(b.m.cor.s2$p.value)`.
+In his pioneering work on demand characteristics, @orne1962social characterized participants as "good subjects" who are motivated to help the researcher confirm their hypothesis. Our results---although not without their limitations---do not suggest that this is a prominent participant goal. At the end of Study 2, we asked participants to rate the extent to which they believe subjects *in general* should be motivated to adjust their responses to fit the researchers' stated hypothesis (-3 = should be motivated to adjust responses in hypothesis *in*-consistent manner; 0 = should not be motivated; 3 = should be motivated to adjust responses in hypothesis consistent manner). Most (`r p.m.0`%) indicated that they believed that participants should *not* be motivated to adjust their responses (*M* = `r mean(DF.s2$mot_gen, na.rm = T)`, *SD* = `r sd(DF.s2$mot_gen, na.rm = T)`). Across all experimental contexts reviewed by Study1b participants, the estimated mean motivation to help confirm the study hypothesis was near zero (*M* = `r mean(vig.DF$m.mot)`, *SD* = `r sd(vig.DF$m.mot)`). To be sure, there were some study contexts in which participants tended to report slight motivation to confirm the experimenter's hypothesis, such as when they were told the researcher expected them to (a) prefer a news article that favors their political party (*M* = `r vig.DF[vig.DF$vig == "16_p_new", ]$m.mot`), (b) avoid perceiving a shift in an optical illusion (*M* = `r vig.DF[vig.DF$vig == "03_n_swi", ]$m.mot`), and (c) feel moved by happy and sad music (*M* = `r vig.DF[vig.DF$vig == "25_p_sad", ]$m.mot`). However, this can alternatively be interpreted as participants' motivation to respond in a manner that is consistent with their beliefs---not motivation to help the experimenter.
+
+Our results provide mixed evidence for the idea that participants' motivation to provide hypothesis-consistent responses is soley driven by their beliefs about the hypothesized effect. One one hand, the Study 1b meta-analysis indicated that there was a modest-sized correlation between study-level estimates of participants' (a) motivation to confirm the hypothesis, and (b) belief in the hypothesis, $r$ = `r b.m.cor.s1$estimate %>% as.numeric %>% round(2)`, 95% CI [`r b.m.cor.s1$conf.int[1] %>% as.numeric %>% round(2)`, `r b.m.cor.s1$conf.int[2] %>% as.numeric %>% round(2)`], $p$ `r printp(b.m.cor.s1$p.value)`. This suggest that, across all study contexts, participants were generally more motivated to confirm the hypothesis when it conformed with their own beliefs. However, this was not replicated in the specific experimental context examined in Study 2, where there was little-to-no correlation between motivation and belief ratings, $r$ = `r b.m.cor.s2$estimate %>% as.numeric %>% round(2)`, 95% CI [`r b.m.cor.s2$conf.int[1] %>% as.numeric %>% round(2)`, `r b.m.cor.s2$conf.int[2] %>% as.numeric %>% round(2)`], $p$ = `r printp(b.m.cor.s2$p.value)`.
 
 A placebo account---if true---could accommodate findings from many classic studies that seemingly demonstrated participants' motivation to (a) help the experimenter, or (b) secure positive evaluations. For instance, when participants exhibited sham symptoms of hypnosis, @orne1962social concluded that the participants did so to please the experimenter. However, an alternative explanation is that these participants were merely acting in accordance with their beliefs about the [sham] symptoms of hypnosis. Similarly, when participants reduced performance on a simple task after being told that high performance was indicative of an obsessive-compulsive personality, @sigall1970cooperative concluded that participants did so to secure a positive evaluation. Once again, though, an alternative explanation is that these participants simply believed they did not possess a personality disorder and behaved accordingly.
 
@@ -1662,13 +1674,9 @@ Notably, the estimated range of demand effects covers the span of almost every c
 
 # To-do
 
-[] Double check the meta-analysis distribution logic
-
 [] See if R2 can be computed
 
 [] Add overfit refs
-
-[] Ask around about testing mediated moderation
 
 [] Clean up folder structure
 
