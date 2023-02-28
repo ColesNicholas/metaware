@@ -1,5 +1,5 @@
 ---
-title: Process effect size data
+title: Process data
 author: "Nicholas A. Coles and Morgan Wyatt"
 editor_options: 
   chunk_output_type: console
@@ -51,7 +51,7 @@ DF <- DF %>%
          )
 
 # create blank columns for effect size and effect size variance
-# Note: these pre-exisiting columns are necessary for the 
+# Note: these pre-existing columns are necessary for the 
 # Cohen's d functions (defined later) to work
 DF$es <- NA
 DF$es.var <- NA
@@ -408,16 +408,16 @@ DF.surv$att.chk = 0
 
 ## set att.chk to 1 when hypothesis is correctly identified
 DF.surv[DF.surv$dem == "p" & 
-      !is.na(DF.surv$awr) &
-      DF.surv$awr == 1, ]$att.chk = 1
+          !is.na(DF.surv$awr) &
+          DF.surv$awr == 1, ]$att.chk = 1
 
 DF.surv[DF.surv$dem == "n" & 
-      !is.na(DF.surv$awr) &
-      DF.surv$awr == 2, ]$att.chk = 1
+          !is.na(DF.surv$awr) &
+          DF.surv$awr == 2, ]$att.chk = 1
 
 DF.surv[DF.surv$dem == "z" & 
-      !is.na(DF.surv$awr) &
-      DF.surv$awr == 3, ]$att.chk = 1
+          !is.na(DF.surv$awr) &
+          DF.surv$awr == 3, ]$att.chk = 1
 
 ## if participants did not specify a  hypothesis, set att.chk to NA
 DF.surv[is.na(DF.surv$awr), ]$att.chk = NA
@@ -427,8 +427,6 @@ DF.surv[is.na(DF.surv$awr), ]$att.chk = NA
 DF.surv[DF.surv$vig == "28_p_dis" &
           !is.na(DF.surv$awr) &
           DF.surv$awr == 2, ]$att.chk = 1
-
-## re-examination of 36_n_won suggested it was poorly worded (we meant to convey that it would hinder performance, but many people thought we meant it would improve performance)
 ```
 
 Examine attention check data
@@ -459,7 +457,7 @@ DF.surv <- DF.surv %>%
   filter(att.chk == 1)
 ```
 
-## Calculate summary statistics
+## Calculate survey summary statistics
 ```{r}
 surv.sum <- DF.surv %>% 
   group_by(vig) %>% 
@@ -469,28 +467,9 @@ surv.sum <- DF.surv %>%
             m.pre = mean(pre, na.rm = T)
             ) %>% 
    ungroup()
- 
-DF.surv %>% 
-   group_by(vig) %>% 
-   summarise(m.mot = mean(mot, na.rm = T),
-             sd.mot = sd(mot, na.rm = T),
-             
-             m.opp = mean(opp, na.rm = T),
-             sd.opp = sd(opp, na.rm = T),
-             
-             m.bel = mean(bel, na.rm = T),
-             sd.bel = sd(bel, na.rm = T),
-             
-             m.pre = mean(pre, na.rm = T),
-             sd.pre = sd(pre, na.rm = T)
-             
-             ) %>% 
-   ungroup()
-
-rm(DF.surv)
 ```
 
-# Combine ES and survey data
+# Combine ES and survey summary statistics
 ```{r}
 # connect summary data to ES dataframe
 DF <- DF %>% 

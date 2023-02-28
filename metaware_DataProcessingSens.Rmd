@@ -23,14 +23,14 @@ corr.list <- seq(from = .1,
 # Create sensitivity analysis databases
 ```{r}
 # for each correlation, 
-# (1) compute effect sizes by sourcing 'metaware_EsProcessing.Rmd'
+# (1) compute effect sizes by sourcing 'metaware_DataProcessing.Rmd'
 # (2) save results in data/r_sensitivity
 for (c in corr.list){
   # set corr
   corr <- c
   
   # source script
-  source(knitr::purl("metaware_EsProcessing.Rmd", quiet=TRUE), 
+  source(knitr::purl("metaware_DataProcessing.Rmd", quiet=TRUE), 
          local = knitr::knit_global())
   
   # export dataframe

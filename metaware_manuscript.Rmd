@@ -34,7 +34,7 @@ editor_options:
 ---
 
 ```{r setup, include = F}
-# load packages writing and data processing packages
+# load writing and data processing packages
 library("papaja")
 library("tidyverse")
 library("readxl")
@@ -349,81 +349,6 @@ dist.max <- rnorm(n = 1000000,
   round(digits = 2)
 ```
 
-```{r Mike.play, eval = F}
-# type 3 SS / effect coding
-options(contrasts = c('contr.sum',
-                      'contr.poly'))
-library(emmeans)
-
-# super-fitted model
-
-DF.es <- DF.es %>% 
-  mutate(student = factor(student),
-         paid = factor(paid),
-         online = factor(online),
-         ref.type = factor(ref.type)) %>%
-  filter(!is.na(student),
-         !is.na(paid),
-         !is.na(online))
-
-m <- rma.mv(yi = es,
-            V = es.var,
-            data = DF.es,
-            random = ~ 1 | id.study / id.es,
-            mods = ~ student + paid + online + ref.type,
-            test= "t")
-
-m <- rma.mv(yi = es,
-            V = es.var,
-            data = DF.es,
-            random = ~ 1 | id.study / id.es,
-            mods = ~ student + paid + online,
-            test= "t")
-
-rg <- qdrg(object = m, data = DF.es)
-
-emmeans(rg, 
-        pairwise ~ student,
-        adjust = "none")
-
-emmeans(rg, #  odd flip
-        pairwise ~ paid,
-        adjust = "none")
-
-emmeans(rg, "paid")
-
-emmeans(rg,
-        pairwise ~ online,
-        adjust = "none")
-
-emmeans(rg,
-        pairwise ~ ref.type,
-        adjust = "none")
-
-
-rma.mv(yi = es,
-       V = es.var,
-       data = DF.es,
-       random = ~ 1 | id.study / id.es,
-       mods = ~ student,
-       test= "t")
-
-rma.mv(yi = es,
-       V = es.var,
-       data = DF.es,
-       random = ~ 1 | id.study / id.es,
-       mods = ~ online,
-       test= "t")
-
-anova(m)
-
-# look at cross tabs
-## students are more likely to be in studies that are in-person, unpaid, and positive
-table(DF.es$student, DF.es$online) %>% prop.table()
-table(DF.es$student, DF.es$paid) %>% prop.table()
-table(DF.es$student, DF.es$ref.type) %>% prop.table()
-```
-
 Results indicated that, overall, explicit manipulations of demand characteristics cause participants' responses to shift in a manner consistent with the communicated hypothesis, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. As a hypothetical example, if participants were told that the researcher hypothesizes that an intervention will improve mood (positive demand), they would generally report slightly improved moods; if told that the researcher hypothesizes that an intervention will worsen mood (negative demand), they would generally report slightly worsened moods.
 
 ```{r forest, fig.cap = "Forest plot of estimated effect sizes (grey diamonds), their 95% confidence intervals (grey error bars), and their citations (left). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; d > 0.10), more hypothesis-inconsistent responding (red; d < -0.10), or negligible shifts in responding (grey; |d| < 0.10).", fig.height = 7, fig.width = 6.5, warning = F}
@@ -683,6 +608,7 @@ mod.df <- mod.df %>%
 # manually add output from the models that estimated effects in two common research scenarios
 mod.df <- 
   rbind(mod.df,
+        
         cbind(level = "in-person study; student sample; no payment; positive demand",
               mod = "custom",
               beta = m.s1$beta[1] %>% 
@@ -695,6 +621,7 @@ mod.df <-
                 as.numeric %>% 
                 round(2),
               style = 3), # set style to 3 so you can italicize text later
+        
         cbind(level = "online study; non-student sample; payment; positive demand",
               mod = "custom",
               beta = m.s2$beta[1] %>% 
@@ -1181,54 +1108,6 @@ We did not include nil-hypothesis comparisons in our analyses because our coding
 
 Even if researchers cannot explain how demand characteristics work, it might be valuable to be able to predict their effects [@yarkoni2017choosing]. @orne1969demand suggested that one group that may be particularly good at predicting these effects is participants themselves. To examine this, raters also predicted whether other participants would confirm vs. disconfirm the researcher's hypothesis (-3 = "extremely likely to adjust responses to be inconsistent" to 3 = "extremely likely to adjust responses to be consistent"). We processed these data using the same approach as the motivation, opportunity, and belief scores (e.g., summed ratings when comparing two demand conditions).
 
-```{r testfig, eval = F}
-rm(list = ls())
-
-library(ggpubr)
-
-tmp <- cbind(mood = c(4, .075, -4),
-             moti = c("m = 4", "", "m = 4"),
-             cond = c("1.positive", "2.control", "3.negative")) %>% 
-  as.data.frame() %>% 
-  mutate(mood = as.numeric(mood))
-
-cond = c("1.positive", "2.control", "3.negative")
-
-tmp <- 
-  rbind(
-    # motivation invariant
-    cbind(mood = c(4, .075, -4),
-          mod = c("m = 4", "", "m = 4"),
-          cond = cond,
-          mod.desc = rep("Motivation ratings invariant across conditions", 3)),
-    
-    # motivation variant
-    cbind(mood = c(4, .075, 4),
-          mod = c("m = 4", "", "m = -4"),
-          cond = cond,
-          mod.desc = rep("Motivation ratings variant across conditions", 3))
-  ) %>% 
-  as.data.frame() %>% 
-  mutate(mood = as.numeric(mood))
-
-ggplot(data = tmp,
-       aes(x = cond,
-           y = mood)) +
-  # facet by mod.desc
-  facet_grid(cols = vars(mod.desc)) +
-  
-  # add bar and moderator scores
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = mod),
-            position = position_stack(vjust=0.5),
-            color = "white") +
-  # add brackets
-  geom_bracket(xmin = "1.positive", xmax = "2.control",
-               label = "test",
-               y.position = 5)
-  ylim(c(-10, 10))
-```
-
 ## Results
 
 ```{r modfig, fig.cap= "The effects of demand characteristics on participants' responses were not significantly moderated by motivation (Panel A) or opportunity (Panel B) ratings. They were, however, significantly moderated by belief (Panel C) and prediction (Panel D) ratings.", fig.height = 4.5, fig.width = 6.5}
@@ -1557,6 +1436,8 @@ A comprehensive examination of strict experimental manipulations of demand chara
 
 ```{r r2, include = F}
 # calculate a pseudo-R2
+## see this page for a discussion of the method:
+## https://stackoverflow.com/questions/22356450/getting-r-squared-from-a-mixed-effects-multilevel-model-in-metafor
 
 ## pairwise delete observations where we don't have information for moderator analyses
 ## this is to ensure that the two models we are comparing have the same observations
