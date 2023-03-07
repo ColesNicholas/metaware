@@ -1,0 +1,89 @@
+---
+title: Process data
+author: "Nicholas A. Coles and Morgan Wyatt"
+editor_options: 
+  chunk_output_type: console
+---
+# Prep environment
+```{r setup and load packages, include = FALSE}
+# load libraries
+library("tidyverse")
+library("readxl")
+library("metafor")
+```
+
+# Open data from Lovakov and Agadullin
+```{r}
+l.DF <- read.csv(file = "./play_data/mean_diff_data.csv") %>% 
+  # remove observations that aren't Cohen d, don't have n's, or don't have info about nested structure 
+  filter(!is.na(d),
+         !is.na(n1),
+         !is.na(study.id)) %>% 
+  rowwise() %>% 
+  
+  # clean up variable class
+  mutate(study.id = factor(study.id),
+         es.id = factor(es.id),
+         n1 = as.numeric(n1),
+         n2 = as.numeric(n2)) %>% 
+
+  # make negative effects negative
+  mutate(d = if_else(condition = sign.dir == "neg",
+                     true = d * -1,
+                     false = d)) %>% 
+  
+  # calculate var.d
+  mutate(var.d = 
+           ((n1 + n2) / (n1 * n2)) +
+             ((d^2) / (2 * (n1 + n2)))) %>% 
+  ungroup()
+
+l.meta <-  
+  rma.mv(yi = d,
+         V = var.d,
+         data = l.DF,
+         random = ~ 1 | study.id / es.id)
+
+l.tau <- sqrt(l.meta$sigma2[1] + l.meta$sigma2[2])
+```
+
+Open data from metaware
+```{r}
+DF.es <- 
+  read_csv(file = "data/metaware_data_clean.csv") %>% 
+  
+  # follow data processing
+  filter(id.study != 18) %>% 
+  mutate(id.study = factor(id.study),
+         id.es = factor(id.es))
+
+m.meta <- 
+  rma.mv(yi = es,
+         V = es.var,
+         data = DF.es,
+         random = ~ 1 | id.study / id.es)
+
+m.tau <- sqrt(m.meta$sigma2[1] + m.meta$sigma2[2])
+
+```
+
+Plots
+```{r}
+ggplot(data.frame(x = c(-2, 2)),
+       aes(x = x)) +
+  
+  # social psych dist
+  stat_function(fun = dnorm,
+                args = list(mean = l.meta$b %>% as.numeric, 
+                            sd = l.tau),
+                colour = "blue") +
+  
+  # metaware dist
+  stat_function(fun = dnorm,
+                args = list(mean = m.meta$b %>% as.numeric, 
+                            sd = m.tau),
+                colour = "red") +
+  labs(x = "Cohen's d",
+       y = "density")
+```
+
