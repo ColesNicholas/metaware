@@ -44,7 +44,7 @@ Contains copies of pre-registered analysis plan in .docx and .pdf format
 Contains copy of vignette survey and replication of demand study in .docx and .qsf (Qualtrics) format
 
 ### unpublished data folder
-Contains copies of files that we used to extract unpublished information about effect sizes. Folder probably needs to be cleaned
+Contains copies of files that we used to extract unpublished information about effect sizes.
 
 ### vig folder
 - **metaware_CombineVigs.Rmd**: File used to combine information about vignettes into a single csv (metaware_VigCombined.csv)
