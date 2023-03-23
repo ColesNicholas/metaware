@@ -1,0 +1,35 @@
+# Introduction
+We want to understand demand characteristics.
+
+# Overview of framework w/ DAG
+
+# Predictions from framework
+- Naturalistically, mechanisms are confounded with beliefs
+- Experiments can create demand characteristics, which can both (a) activate/change beliefs, and (b) produce response bias
+- Response bias depends on motivation and opportunity to adjust responses
+- To conclude that an effect is driven by a mechanism, you either (1) need to produce evidence of that mechanism (e.g., by measuring or manipulating it), or (2) control for belief and response bias.
+	- This could mean: 
+		- No demand characteristics are present and beliefs are measured/controlled/logically eliminated
+		- Demand characteristics are present and motivation/opportunity is measured/controlled/logically eliminated
+
+# Overview of what we knew from previous resech
+- Demand characteristics *can* impact participant responses, although the effects are inconsistent
+- Demand characteristics *can* change beliefs, although the evidence is somewhat preliminary
+- Evidence for motivation is mixed. Sigall finds that there are ways of demotivating people. But paying people to increase motivation doesn't seem to work.
+- Beliefs can impact participant responses
+
+# Overview of what we don't know
+- Strength and consistency of the effects of demand characteristics
+- Relative importance of the belief and response bias mechanisms
+- Whether they're typically a problem
+
+# What we learned
+- Demand characteristics do matter. Their effect on participant responses is distributed similarly to other social psychological pheomenon
+- Evidence for response bias continues to be shaky, but it shouldn't be dismissed
+- Beliefs do matter
+- Motivation to provide hypothesis-consistent responses tends to be quite low. The idea of "good subjects" just isn't supported by the evidence
+
+# What would we need to do to solve the rest of the puzzle?
+- We need to understand placebo effects. How do beliefs impact response and to what extent is salience and strenght of belief a factor?
+- To a lesser extent, we probably need to understand motivated responding. When are participants motivated to adjust their responses and how does that transalte into actual changes in their responses?
+
