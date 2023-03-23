@@ -48,8 +48,17 @@ Contains copy of vignette survey and replication of demand study in .docx and .q
 Contains copies of files that we used to extract unpublished information about effect sizes. Folder probably needs to be cleaned
 
 ### vig folder
-metaware_CombineVigs.Rmd: File used to combine information about vignettes into a single csv (metaware_VigCombined.csv)
-metaware_VigCombined.csv: Contains vignette information used in the survey
+- metaware_CombineVigs.Rmd: File used to combine information about vignettes into a single csv (metaware_VigCombined.csv)
+- metaware_VigCombined.csv: Contains vignette information used in the survey
 
 ##### vignettes subfolder
-Contains a text file for each study, which contains the information needed to make the vignettes. Title = title of study; Developed by = initials of person who created first draft of file; Checked by = initials of person who checked the file; Details = place where notes about the study details were kept; Non-control demand levels: Descriptions of all non-control levels of the demand characteristic manipulations; Fake demand scenarios = list of fake demand scenarios used as an attention check in the survey; Procedure = notes about the study procedure; DVs = list of dependent variables coded; Vignettes = Following each line starting with a #, a vignette describing the key details of the condition
+Contains a text file for each study, which contains the information needed to make the vignettes. 
+- Title = title of study
+- Developed by = initials of person who created first draft of file 
+- Checked by = initials of person who checked the file
+- Details = place where notes about the study details were kept 
+- Non-control demand levels: Descriptions of all non-control levels of the demand characteristic manipulations
+- Fake demand scenarios = list of fake demand scenarios used as an attention check in the survey
+- Procedure = notes about the study procedure
+- DVs = list of dependent variables coded
+- Vignettes = Following each line starting with a #, a vignette describing the key details of the condition
