@@ -1,4 +1,4 @@
-# Github repo for demand characteristics meta-analysis
+# Github repo for demand characteristics quantitative review
 - **metaware_manuscript.Rmd**: RMarkdown version of manuscript
 - **metaware_manuscript.docx**: Word version of manuscript (knitted from metaware_manuscript.Rmd)
 - **r-references.bib**: List of manuscript references
