@@ -15,12 +15,11 @@ affiliation:
   - id            : "2"
     institution   : "Department of Psychology, Stanford University"
 authornote: |
-  All materials, data, and code are available at http://github.com/ColesNicholas/metaware. We thank Morgan H. Wyatt for his assistance on the project. This work was supported by the John Templeton Foundation (grant # 62295). The funder had no role in the preparation of the manuscript or decision to publish. 
+  All materials, data, code, and pre-registrations (for Studies 1 and 2) are available at http://github.com/ColesNicholas/metaware. We thank Morgan H. Wyatt for his assistance on the project. This work was supported by the John Templeton Foundation (grant # 62295). The funder had no role in the preparation of the manuscript or decision to publish. 
 abstract: |
   Demand characteristics are a fundamental methodological concern in experimental psychology. Yet, little is known about the direction, magnitude, consistency, and mechanisms underlying their effects. We conducted a meta-analysis of 195 effect sizes from 40 studies that provided strict experimental tests of demand effects by manipulating the hypothesis communicated to participants. Demand characteristics tended to produce small increases in hypothesis-consistent responding (*d* = 0.22, 95% CI [0.11, 0.33]). However, these effects were extremely heterogeneous (between-study $\tau$ = 0.30; within-study $\sigma$ = 0.20), with the estimated distribution of true effects ranging from *d* = 1.91 (a large increase in hypothesis-consistent responding) to *d* = -1.67 (a large increase in hypothesis-*in*consistent responding). Contra prior predictions, we did not find evidence that demand effects were driven participants’ motivation and opportunity to adjust their responses. We did, however, find robust evidence that such effects are driven by participants’ beliefs, as in placebo effects. Similar findings emerged in a direct replication of a study included in the meta-analysis. Taken together, results challenge conventional distinctions between demand characteristics and placebo effects. Furthermore, they underscore the importance of controlling for both response bias and placebo effects in experimental work.
   
 keywords          : "demand characteristics, hypothesis awareness, placebo effect, research methods, meta-analysis"
-wordcount         : "TBD"
 bibliography      : "r-references.bib"
 floatsintext      : yes
 linenumbers       : no
@@ -48,9 +47,9 @@ library("weightr")
 library("PublicationBias")
 
 # load mixed-effect regression packages
-library(lme4)
-library(lmerTest)
-library(emmeans)
+library("lme4")
+library("lmerTest")
+library("emmeans")
 
 # identify refs
 r_refs("r-references.bib")
@@ -145,7 +144,7 @@ r.unp <- DF.s %>%
 
 Our literature search strategy was developed in consultation with a librarian at Stanford University. Given the broad nature of the demand characteristics construct, we determined that a truly comprehensive strategy was not feasible. Thus, we sought to design a strategy that best balanced comprehensiveness and feasibility.
 
-We searched APA PsycInfo using broad search terms: "demand characteristics" OR "hypothesis awareness". This yielded `r r.pi` records. We also released a call for unpublished studies on the Society for Personality and Social Psychology Open Forum; Twitter; the Facebook Psychological Methods Discussion group; and the Facebook PsychMAP group. This yielded `r nrow(DF.s) - r.pi` additional records. In total, `r r.unp` of the records were unpublished.
+On January 12, 2022, we searched APA PsycInfo (coverage years: 1840 - present) using broad search terms: "demand characteristics" OR "hypothesis awareness". This yielded `r r.pi` records. We also released a call for unpublished studies on the Society for Personality and Social Psychology Open Forum; Twitter; the Facebook Psychological Methods Discussion group; and the Facebook PsychMAP group. This yielded `r nrow(DF.s) - r.pi` additional records. In total, `r r.unp` of the records were unpublished.
 
 ### Screening
 
@@ -282,7 +281,9 @@ We coded several study feature moderators that may help explain variability in d
 
 ### Meta-analytic approach
 
-We used three-level meta-analysis (3LMA; also referred to as "multilevel" meta-analysis), which accommodates nested effect sizes by modeling three sources of variability: sampling error of individual studies (level 1), variability within studies (level 2), and variability between studies (level 3; often referred to as "random effects"). To estimate the overall effect size, we fit an intercept-only 3LMA model. Unless otherwise specified, we conducted moderator analyses by separately entering dummy-coded categorical factors, which were used to estimate the moderating relationship and the effect size within each subgroup of the moderator. Our pre-registration plan and documented amendments are available at <https://osf.io/3hkre/>.
+We used three-level meta-analysis (3LMA; also referred to as "multilevel" meta-analysis), which accommodates nested effect sizes by modeling three sources of variability: sampling error of individual studies (level 1), variability within studies (level 2), and variability between studies (level 3; often referred to as "random effects").
+
+We fit all models using the metafor R package (citation). To estimate the overall effect size, we fit an intercept-only 3LMA model. Unless otherwise specified, we conducted moderator analyses by separately entering dummy-coded categorical factors, which were used to estimate the moderating relationship and the effect size within each subgroup of the moderator. All models used inverse-variance weighting.
 
 ```{r clean.env.2, include = F}
 # delete vestigial
@@ -293,7 +294,7 @@ rm(mult.eff.per, vig.n, survey.n, sens.range)
 
 Publication bias refers to the well-documented propensity for hypothesis-inconsistent findings to be disproportionately omitted from the published scientific record [@franco2014publication]. When present, publication bias can lead to inaccurate effect size estimates and inferential errors in meta-analysis. Consequently, we used three main approaches for assessing and correcting for potential publication bias in our estimation of the overall effect of demand characteristics.
 
-First, we visually examined *funnel plots,* wherein observed effect sizes are plotted against a measure of their precision (e.g., standard error). In the absence of publication bias, the distribution typically resembles a funnel; relatively large studies estimate the effect with high precision, and effect sizes fan out in *both* directions as the studies become smaller. If, however, non-significant findings are disproportionately omitted from the scientific record (i.e., there is publication bias), the distribution is often asymmetric/sloped. Funnel plots traditionally contain one effect size per study, but many of our studies produced multiple effect sizes. Thus, we examined two funnel plots: one with all effect sizes and one with the dependent effect sizes aggregated[^2].
+First, we visually examined *funnel plots,* wherein observed effect sizes are plotted against a measure of their precision (e.g., standard error). In the absence of publication bias, the distribution typically resembles a funnel; relatively large studies estimate the effect with high precision, and effect sizes fan out in *both* directions as the studies become smaller. If, however, non-significant findings are disproportionately omitted from the scientific record (i.e., there is publication bias), the distribution is often asymmetric/sloped. Funnel plots traditionally contain one effect size per study, but many of our studies produced multiple effect sizes. Thus, we examined two funnel plots: one with all effect sizes and one with the dependent effect sizes aggregated using the weightr R package (citation)[^2].
 
 [^2]: For effect size aggregation, we assumed a default dependent effect size correlation of $r$ = .50 but performed sensitivity analysis with $r$ = .10, .30, .50, .70, and .90. These sensitivity analyses did not change our overall conclusion about publication bias, so we do not discuss them further.
 
@@ -302,6 +303,9 @@ Second, we conducted precision-effect tests [@stanley2014meta]. In precision-eff
 Third, we used weight-function modeling [@vevea1995general]. In weight-function modeling, weighted distribution theory is used to model biased selection based on the significance of observed effects. If the adjusted model provides increased fit, publication bias is a concern and the model can be used to estimate the bias-corrected overall effect size. Once again, weight-function modeling was designed for independent effect sizes. Nonetheless, it has fairly good statistical properties when non-independent effect sizes are aggregated, which we did here [@rodgers2021evaluating].
 
 As a sensitivity analysis, we included publication status (published or unpublished) as a dummy-coded predictor to our overall-effect 3LMA. This allowed us to estimate the difference in the magnitude of published vs. unpublished effects.
+
+### Transparency and openness
+All materials, data, and code are openly available at <https://osf.io/3hkre/>. This link also contains our pre-registration plan and documented amendments.
 
 ## Results
 
@@ -1011,14 +1015,32 @@ knitr::include_graphics("images/metaware_vigs.png")
 ```
 
 ```{r survey.n, include = F}
+# Note to Nick: there is incomplete data. But I guess we still include them?
+
 # identify number of participants who completed the survey
-survey.n <- read.csv("data/metaware_SurvData_raw.csv") %>% 
-  nrow()
+survey.DF <- read.csv("data/metaware_SurvData_raw.csv") #%>% 
+  # select demographic variables
+  #select(indiv_gend_var, indiv_agee_var, ethnicity)
+
+# remove rows containing unnecessary variable details
+survey.DF <- survey.DF[-(1 : 2), ]
+
+survey.DF <- survey.DF %>% arrange(as.numeric(Progress))
+
+tmp <- read.csv("data/metaware_survey2_clean.csv")
+
+# gender demographics
+tmp %>% 
+  distinct(sub,
+           .keep_all = T) %>% 
+  group_by(indiv_gend_var) %>% 
+  summarise(n = n())
+tmp$indiv_gend_var %>% table() %>% prop.table()
 ```
 
-Using a web-based survey, `r survey.n` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving an irrelevant dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would hypothetically (1) be motivated to adjust responses based on the hypothesis (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) believe the experimenter's hypothesis (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed participants would change their responses to confirm the hypothesis. These questions were presented in random order.
+Using a web-based survey, `r nrow(survey.DF)` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving an irrelevant dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would hypothetically (1) be motivated to adjust responses based on the hypothesis (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) believe the experimenter's hypothesis (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed participants would change their responses to confirm the hypothesis. These questions were presented in random order.
 
-Ratings were removed in instances where the rater did not correctly identify the hypothesis communicated in the vignette. The remaining ratings were averaged across raters to provide mean estimates of motivation, opportunity, and belief.
+Ratings were removed in instances where the rater (a) did not respond, or (b) did not correctly identify the hypothesis communicated in the vignette. The remaining ratings were averaged across raters to provide mean estimates of motivation, opportunity, and belief.
 
 ```{r mods, fig.cap = "Hypothetical data from a study where a procedure is either described as mood-boosting (positive demand), described as mood-dampening (negative demand), or not described at all (control). Data provides examples of how the effects of demand characteristics (d) on self-reported mood are moderating by participants' reports of their motivation to confirm the stated hypothesis (m, Panel A), belief in the stated hypothesis (b, Panel B), and opportunity to adjust responses (o, Panel C). In each panel, separate examples are provided for scenarios where motivation is invariant (Column 1) and variant (Column 2) across demand characteristic manipulations"}
 knitr::include_graphics("images/metaware_mods.png")
@@ -1033,6 +1055,9 @@ We did not include nil-hypothesis comparisons in our analyses because our coding
 ### Rater forecasts of demand effects
 
 Even if researchers cannot explain how demand characteristics work, it might be valuable to be able to predict their effects [@yarkoni2017choosing]. @orne1969demand suggested that one group that may be particularly good at predicting these effects is participants themselves. To examine this, raters also predicted whether other participants would confirm vs. disconfirm the researcher's hypothesis (-3 = "extremely likely to adjust responses to be inconsistent" to 3 = "extremely likely to adjust responses to be consistent"). We processed these data using the same approach as the motivation, opportunity, and belief scores (e.g., summed ratings when comparing two demand conditions).
+
+### Transparency and openness
+All materials, data, and code are openly available at <https://osf.io/3hkre/>. This link also contains our pre-registration plan and documented amendments.
 
 ## Results
 
@@ -1293,6 +1318,9 @@ We told `r length(unique(DF.s2$sub))` participants that we hypothesized posed sm
 
 Using a similar procedure as Study 2, participants were excluded if they did not correctly identify the stated hypothesis at the end of the study (final n = `r length(unique(DF.s2[DF.s2$manip.chk == 1, ]$sub))`). Almost all participants correctly inferred that we were interested in links between facial poses and emotional experience. However, particularly in the nil hypothesis condition (`r manip.fail[2] %>% round(2) * 100`% of exclusion), they did not correct specify whether we expected a positive or nil effect. Afterwards, participants reported the extent to which they were motivated to confirm the hypothesis, had the opportunity to adjust their responses, and believed in facial feedback effects. These measures were similar to those used in Study 2. Altogether, the study used a 2 (facial pose: happy or neutral) × 2 (block: first or second) × 2 (demand characteristics: positive demand or nil demand) mixed design, with demand characteristics manipulated between subjects.
 
+### Transparency and openness
+All materials, data, and code are openly available at <https://osf.io/3hkre/>. Because the study was exploratory, there was no pre-registration.
+
 ## Results
 
 ```{r s2.d.int, include = F}
@@ -1315,7 +1343,9 @@ m.d.joint <- emmeans(m.d, pairwise ~ trial | demand)$contrasts %>%
   as.data.frame()
 ```
 
-Following @coles2022fact, we fit a mixed-effect regression with (a) facial pose, demand characteristics, and block number entered as effect-coded factors and (b) random-intercepts for participants. We used model-derived contrasts to estimate mean differences scores. *F*-values were estimated through ANOVA tables with Type 3 Sums of Squares and Satterthwaite degrees of freedom. Results indicated that participants reported higher levels of happiness after posing happy vs. neutral expressions, *M~diff~* = `r m.d@beta[2] * 2`, *F*(`r m.d.aov["trial",]$NumDF`, `r m.d.aov["trial",]$DenDF`) = `r m.d.aov["trial", 5]`, *p* `r printp(m.d.aov["trial", 6])`. Furthermore, this effect was more pronounced in the positive (*M~diff~* = `r m.d.joint[m.d.joint$demand == "pos", ]$estimate`) vs. nil (*M~diff~* = `r m.d.joint[m.d.joint$demand == "nil", ]$estimate`) demand conditions, *F*(`r m.d.aov["trial:demand",]$NumDF`, `r m.d.aov["trial:demand",]$DenDF`) = `r m.d.aov["trial:demand", 5]`, *p =* `r printp(m.d.aov["trial:demand", 6])`.
+Following @coles2022fact, we fit a mixed-effect regression with (a) facial pose, demand characteristics, and block number entered as effect-coded factors and (b) random-intercepts for participants. We fit our models using the lme4 R package (citation), and used the emmeans R package (citation) to estimate mean-difference scores.*F*-values were estimated through ANOVA tables with Type 3 Sums of Squares and Satterthwaite degrees of freedom. 
+
+Results indicated that participants reported higher levels of happiness after posing happy vs. neutral expressions, *M~diff~* = `r m.d@beta[2] * 2`, *F*(`r m.d.aov["trial",]$NumDF`, `r m.d.aov["trial",]$DenDF`) = `r m.d.aov["trial", 5]`, *p* `r printp(m.d.aov["trial", 6])`. Furthermore, this effect was more pronounced in the positive (*M~diff~* = `r m.d.joint[m.d.joint$demand == "pos", ]$estimate`) vs. nil (*M~diff~* = `r m.d.joint[m.d.joint$demand == "nil", ]$estimate`) demand conditions, *F*(`r m.d.aov["trial:demand",]$NumDF`, `r m.d.aov["trial:demand",]$DenDF`) = `r m.d.aov["trial:demand", 5]`, *p =* `r printp(m.d.aov["trial:demand", 6])`.
 
 ```{r s2.t.mod, include = F}
 # delete vestigial from last moderator analysis

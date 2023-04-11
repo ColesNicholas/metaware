@@ -1,6 +1,6 @@
 ---
 title: Process data
-author: "Nicholas A. Coles and Morgan Wyatt"
+author: "Nicholas A. Coles"
 editor_options: 
   chunk_output_type: console
 ---
@@ -536,6 +536,34 @@ DF.surv2 <-
 
 # remove rows containing unnecessary variable details
 DF.surv2 <- DF.surv2[-(1 : 2), ]
+
+# hand recode gender
+## list as unknown if they did not answer (or said they'd prefer not to answer)
+DF.surv2[is.na(DF.surv2$indiv_gend_var), ]$indiv_gend_var = "unknown"
+DF.surv2[DF.surv2$indiv_gend_var == "7", ]$indiv_gend_var = "unknown"
+
+## recode rest
+DF.surv2[DF.surv2$indiv_gend_var == "1", ]$indiv_gend_var = "female"
+DF.surv2[DF.surv2$indiv_gend_var == "2", ]$indiv_gend_var = "male"
+DF.surv2[DF.surv2$indiv_gend_var == "3", ]$indiv_gend_var = "trans_female"
+DF.surv2[DF.surv2$indiv_gend_var == "4", ]$indiv_gend_var = "trans_male"
+DF.surv2[DF.surv2$indiv_gend_var == "5", ]$indiv_gend_var = "gender_nonconforming"
+
+# hand recode ethnicity
+DF.surv2[is.na(DF.surv2$ethnicity), ]$ethnicity = "unknown"
+DF.surv2[DF.surv2$ethnicity == "1", ]$ethnicity = "white_caucasian"
+DF.surv2[DF.surv2$ethnicity == "2", ]$ethnicity = "black_african_american"
+DF.surv2[DF.surv2$ethnicity == "3", ]$ethnicity = "american_indian"
+DF.surv2[DF.surv2$ethnicity == "4", ]$ethnicity = "asian"
+DF.surv2[DF.surv2$ethnicity == "5", ]$ethnicity = "native_pacific_islander"
+DF.surv2[DF.surv2$ethnicity == "6", ]$ethnicity = "native_pacific_islander"
+DF.surv2[DF.surv2$ethnicity == "6" | 
+           DF.surv2$ethnicity == "1,6" |
+           DF.surv2$ethnicity == "1,2" |
+           DF.surv2$ethnicity == "1,4" |
+           DF.surv2$ethnicity == "2,6" |
+           DF.surv2$ethnicity == "7" |
+           DF.surv2$ethnicity == "1,3", ]$ethnicity = "other"
 
 # process data
 DF.surv2 <- DF.surv2 %>%

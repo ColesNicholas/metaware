@@ -1,6 +1,6 @@
 ---
 title: Sensitivity analysis for effect size processing
-author: "Nicholas A. Coles and Morgan Wyatt"
+author: "Nicholas A. Coles"
 editor_options: 
   chunk_output_type: console
 ---
