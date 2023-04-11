@@ -29,7 +29,7 @@ figurelist        : no
 tablelist         : no
 footnotelist      : no
 classoption       : "man"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_docx
 editor_options: 
   chunk_output_type: console
 --- 
@@ -1014,31 +1014,54 @@ In total, there were `r vig.n` vignettes. We did not create vignettes for contro
 knitr::include_graphics("images/metaware_vigs.png")
 ```
 
-```{r survey.n, include = F}
-# Note to Nick: there is incomplete data. But I guess we still include them?
-
-# identify number of participants who completed the survey
-survey.DF <- read.csv("data/metaware_SurvData_raw.csv") #%>% 
-  # select demographic variables
-  #select(indiv_gend_var, indiv_agee_var, ethnicity)
-
-# remove rows containing unnecessary variable details
-survey.DF <- survey.DF[-(1 : 2), ]
-
-survey.DF <- survey.DF %>% arrange(as.numeric(Progress))
-
-tmp <- read.csv("data/metaware_survey2_clean.csv")
-
-# gender demographics
-tmp %>% 
+```{r survey.dem, include = F}
+# describe participant demographics
+survey.DF <- 
+  # open survey
+  read.csv("data/metaware_survey2_clean.csv") %>% 
+  
+  # get one observation per participant
   distinct(sub,
-           .keep_all = T) %>% 
-  group_by(indiv_gend_var) %>% 
-  summarise(n = n())
-tmp$indiv_gend_var %>% table() %>% prop.table()
+           .keep_all = T)
+
+# get participant demographics
+survey.n <- nrow(survey.DF)
+
+survey.gend <- 
+  survey.DF$indiv_gend_var %>% 
+  table() %>% 
+  prop.table() %>% 
+  round(2) * 100
+
+survey.eth <-
+  survey.DF$ethnicity %>% 
+  table() %>% 
+  prop.table() %>% 
+  round(2) * 100
+
+survey.age.m <- mean(survey.DF$indiv_agee_var,
+                     na.rm = T) %>% 
+  round(2)
+
+survey.age.sd <- sd(survey.DF$indiv_agee_var,
+                    na.rm = T) %>% 
+  round(2)
+
+# put demographics into table
+survey.dem = list(n = survey.n,
+                  gend = survey.gend,
+                  ethnicity = survey.eth,
+                  age.m = survey.age.m,
+                  age.sd = survey.age.sd)
+
+# remove vestigial
+rm(survey.DF, survey.n, survey.gend,
+   survey.eth, survey.age.m, survey.age.sd)
 ```
 
-Using a web-based survey, `r nrow(survey.DF)` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit. For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving an irrelevant dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would hypothetically (1) be motivated to adjust responses based on the hypothesis (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) believe the experimenter's hypothesis (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed participants would change their responses to confirm the hypothesis. These questions were presented in random order.
+Using a web-based survey, `r survey.dem$n` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit (`r survey.dem$gend[1]`% female; `r survey.dem$gend[3]`% male, `r survey.dem$gend[6]`% did not report gender; `r survey.dem$gend[2] + survey.dem$gend[4] + survey.dem$gend[5]`% transgender or gender  non-conforming). `r survey.dem$ethnicity[7]`% of participants reported they were White/Caucasian, `r survey.dem$ethnicity[2]`% Asian, `r survey.dem$ethnicity[3]`% Black/African American, and `r survey.dem$ethnicity[4]`% Native Hawaiian or Other Pacific Islander. `r survey.dem$ethnicity[5]`% of participants indicated that there ethnicity could not be described by any single provided category,  and  `r survey.dem$ethnicity[6]`% did not report ethnicity. The average participant age was `r survey.dem$age.m` ($SD$ =  `r survey.dem$age.sd`). 
+
+For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving an irrelevant dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would hypothetically (1) be motivated to adjust responses based on the hypothesis (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) believe the experimenter's hypothesis (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed participants would change their responses to confirm the hypothesis. These questions were presented in random order.
 
 Ratings were removed in instances where the rater (a) did not respond, or (b) did not correctly identify the hypothesis communicated in the vignette. The remaining ratings were averaged across raters to provide mean estimates of motivation, opportunity, and belief.
 
