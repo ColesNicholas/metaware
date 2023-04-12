@@ -57,7 +57,7 @@ r_refs("r-references.bib")
 # turn scientific notation off
 options(scipen = 999)
 
-# set seed to year of greatest unfinished album of all time, SMiLE
+# set seed to year of Nick's favorite [unfinished] album, SMiLE
 set.seed(1967)
 
 # set theme
