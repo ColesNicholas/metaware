@@ -1,10 +1,10 @@
 ---
 title: Sensitivity analysis for effect size processing
-author: "Nicholas A. Coles"
+author: "Nicholas A. Coles (not yet checked)"
 editor_options: 
   chunk_output_type: console
 ---
-This code processes the effect size and survey data with different assumed correlations for within-subject effect sizes
+This code processes the effect size and survey data with different assumed correlations for within-subject effect sizes computations.
 
 # Prep environment
 ```{r setup and load packages, include = FALSE}
