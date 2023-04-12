@@ -747,16 +747,9 @@ When sensitivity analyses are performed, there will be a token variable created 
 ```{r}
 if(!exists("sens")){
   write.csv(DF, 
-            "data/metaware_data_clean.csv", 
+            "data/metaware_meta_clean.csv", 
             row.names = F)
 }
-```
-
-Export vignette summary scores
-```{r}
-write.csv(surv.sum,
-          "data/metaware_vignette_clean.csv",
-          row.names = F)
 ```
 
 Export replication study dataset

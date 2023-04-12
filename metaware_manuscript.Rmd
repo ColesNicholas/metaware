@@ -161,7 +161,7 @@ On January 12, 2022, we searched APA PsycInfo using broad search terms: "demand 
 ```{r final.df, include = F}
 # open clean effect size data
 DF.es <- 
-  read_csv(file = "data/metaware_data_clean.csv")
+  read_csv(file = "data/metaware_meta_clean.csv")
 
 # identify total number of studies (denoted by id.study column)
 num.s <- DF.es$id.study %>% 

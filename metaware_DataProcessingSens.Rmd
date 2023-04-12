@@ -35,7 +35,7 @@ for (c in corr.list){
   
   # export dataframe
   write.csv(DF,
-            paste0("data/r_sensitivity/metaware_data_clean_r", 
+            paste0("data/r_sensitivity/metaware_meta_clean_r", 
                    c, 
                    ".csv"),
             row.names = F

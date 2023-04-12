@@ -2,8 +2,9 @@
 - **metaware_manuscript.Rmd**: RMarkdown version of manuscript
 - **metaware_manuscript.docx**: Word version of manuscript (knitted from metaware_manuscript.Rmd)
 - **r-references.bib**: List of manuscript references
-- **metaware_EsProcessing.Rmd**: R code for processing the effect size (metaware_EsData_raw.xlsx) and survey (metaware_SurvData_raw.csv) data. Produces clean copies of the effect size data (metaware_data_clean.csv), survey data (metaware_survey2_clean.csv) and vignette data (metaware_vignette_clean.csv)
+- **metaware_EsProcessing.Rmd**: R code for processing the effect size (metaware_EsData_raw.xlsx) and survey (metaware_SurvData_raw.csv) data. Produces clean copies of the effect size data (metaware_meta_clean.csv) and replication study data (metaware_replication_clean.csv) and vignette data (metaware_vignette_clean.csv)
 - **metaware_EsProcessingSens.Rmd**: R code that runs metaware_EsProcessing.Rmd with different assumed correlations (used for sensitivity analyses in metaware_manuscript.Rmd)
+- **metaware_FileOrganizationHelper.png**: Image explaining how the most essential files interface in order to create the final manuscript
 - **README.md**: Readme file
 - **sessionInfo.txt**: sessionInfo for the R code used in the project.
 
@@ -11,12 +12,11 @@
 - **metaware_csv_codebooks.xlsx**: contains codebooks for every .csv file used in this project
 - **metaware_EsData_raw.xlsx**: contains information for record screening and effect size/moderator coding
 - **metaware_SurvData_raw.csv**: contains responses to a survey where participants (1) reviewed vignettes from the meta-analysis, and (2) completed a close replication of a demand characteristics study
-- **metaware_data_clean.csv**: cleaned data for meta-analysis
+- **metaware_meta_clean.csv**: cleaned data for meta-analysis
 - **metaware_replication_clean.csv**: contains responses to the close replication of a demand characteristic study
-- **metaware_vignette_clean.csv**: contains average ratings of motivation, opportunity, and belief for each vignette reviewed in metaware_SurvData_raw.csv
 
 ### r_sensitivity folder
-Contains copies of metaware_data_clean.csv where different correlations were assumed. File name convention is "metaware_data_clean_r" + assumed correlation + ".csv"
+Contains copies of metaware_data_clean.csv where different correlations were assumed. File name convention is "metaware_metaa_clean_r" + assumed correlation + ".csv"
 
 ## metaware_manuscript_files folder
 Contains a variety of images that are auto-saved when metaware_manuscript.Rmd is knitted.
