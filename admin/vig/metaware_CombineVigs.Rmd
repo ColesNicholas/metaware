@@ -1,13 +1,21 @@
 ---
 title: Combine vignettes into single data file
-author: "Nicholas A. Coles and Morgan Wyatt"
+author: "Nicholas A. Coles (checked by Morgan H. Wyatt)"
 editor_options: 
   chunk_output_type: console
 ---
-This code creates a .csv file containing (1) a unique vignette identifier, (2) 3 columns containing extracted lines of text for each vignette, (3) 3 columns containing estimated reading times for each line of text, and (4) four columns containing extracted hypotheses for each vignette.
+For each study in the meta-analysis, we created vignettes for each demand characteristic condition and dependent variable combination. (E.g., if there were two demand characteristic conditions and two dependent variables, we created four vignettes.) These vignettes are stored in study-specific text files.
+
+Each vignette contains three blocks of text that describe (1) the study context, (2) the researcher's stated hypothesis, and (3) the study procedures. To check whether [a future set of] raters understand the researcher's stated hypothesis, the vignette also contains a list of real and fake hypotheses.
+
+This code compiles the vignettes into a single .csv file (metaware_VigCombined.csv), which was later imported into Qualtrics so that it could be reviewed and rated by a separate set of participants. This .csv file contains:
+1. A unique vignette identifier, 
+2. 3 columns containing 3 extracted blocks of text for each vignette,
+3. 3 columns containing estimated reading times for each block of text, 
+4. 4 columns containing real and fake hypotheses for each vignette.
 
 # Prep environment
-```{r setup and load packages, include = FALSE}
+```{r}
 # clean environment
 rm(list = ls())
 
@@ -15,19 +23,24 @@ rm(list = ls())
 library("tidyverse")
 ```
 
-# Extract vignette lines of text and estimate reading time
-Get list of all vignette files
+# Extract vignette blocks of text and estimate reading time
+Get list of all vignette text files
 ```{r}
 f.list <- list.files(path = "./vignettes",
                      pattern = ".txt")
 ```
 
-Create blank dataframe to paste results in
+Create blank dataframe to paste vignette info into
 ```{r}
 v.DF <- data.frame()
 ```
 
-Open each vignette file, extract relevant information, and append to v.DF
+Open each vignette file:
+1. Extract vignette blocks of information
+2. Compute reading time
+3. Append to vignette info dataframe (v.DF)
+
+If you want to follow this code, it helps to open a vignette text file to see how they were structured. id36_Demand2007.txt is a relatively simple one to reference.
 ```{r}
 for (f in f.list){
  # open and process vignette file
@@ -67,7 +80,7 @@ for (f in f.list){
     # add sentence number column
     mutate(sent = seq.int(nrow(.))) %>% 
     
-    # pivot long
+    # pivot longer
     pivot_longer(cols = -sent) %>% 
     
     # estimate reading time in milliseconds (400 words per minute)
@@ -98,7 +111,7 @@ Create blank dataframe to paste results in
 h.DF <- data.frame()
 ```
 
-Open each vignette file, extract relevant information, and append to v.DF
+Open each vignette file, extract hypotheses and append to h.DF
 ```{r}
 for (f in f.list){
   h <- 
@@ -122,9 +135,9 @@ for (f in f.list){
 rm(f, f.list, h)
 ```
 
-# Merge dataframe containing hypotheses (h.DF) and vignette text (v.DF)
+# Merge dataframes containing hypotheses (h.DF) and vignette text/reading times (v.DF)
 ```{r}
-# prep h.DF for merge
+# prep h.DF for merge (needs to be formatted similarly to v.DF)
 h.DF <- h.DF %>% 
   mutate(id = substr(x = name,
                      start = 2,
@@ -136,7 +149,7 @@ h.DF <- h.DF %>%
   pivot_wider(names_from = dir,
               values_from = hypothesis)
 
-# prep v.DF for merge
+# prep v.DF for merge (needs to be formatted similarly to h.DF)
 v.DF <- v.DF %>% 
   mutate(id = substr(x = name,
                      start = 2,
