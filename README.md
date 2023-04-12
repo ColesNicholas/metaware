@@ -5,6 +5,7 @@
 - **metaware_EsProcessing.Rmd**: R code for processing the effect size (metaware_EsData_raw.xlsx) and survey (metaware_SurvData_raw.csv) data. Produces clean copies of the effect size data (metaware_data_clean.csv), survey data (metaware_survey2_clean.csv) and vignette data (metaware_vignette_clean.csv)
 - **metaware_EsProcessingSens.Rmd**: R code that runs metaware_EsProcessing.Rmd with different assumed correlations (used for sensitivity analyses in metaware_manuscript.Rmd)
 - **README.md**: Readme file
+- **sessionInfo.txt**: sessionInfo for the R code used in the project.
 
 ## data folder
 - **metaware_csv_codebooks.xlsx**: contains codebooks for every .csv file used in this project
