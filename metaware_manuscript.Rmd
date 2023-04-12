@@ -1,6 +1,6 @@
 --- 
 title             : "A quantitative review of demand characteristics and their underlying mechanisms"
-shorttitle        : "Demand characteristics meta-analysis"
+shorttitle        : "Demand characteristics quantitative review"
 author: 
   - name          : "Nicholas A. Coles"
     affiliation   : "1"
@@ -15,7 +15,7 @@ affiliation:
   - id            : "2"
     institution   : "Department of Psychology, Stanford University"
 authornote: |
-  This work was supported by the John Templeton Foundation (grant # 62295). The funder had no role in the preparation of the manuscript or decision to publish. We thank Morgan H. Wyatt for his assistance on the project.
+  This work was supported by the John Templeton Foundation (grant # 62295). The funder had no role in the preparation of the manuscript or decision to publish. We thank Morgan H. Wyatt for his assistance on the meta-analysis and Anjie Cao for reviewing project code. 
 abstract: |
   Demand characteristics are a fundamental methodological concern in experimental psychology. Yet, little is known about the direction, magnitude, consistency, and mechanisms underlying their effects. We conducted a meta-analysis of 195 effect sizes from 40 studies that provided strict experimental tests of demand effects by manipulating the hypothesis communicated to participants. Demand characteristics tended to produce small increases in hypothesis-consistent responding (*d* = 0.22, 95% CI [0.11, 0.33]). However, these effects were extremely heterogeneous (between-study $\tau$ = 0.30; within-study $\sigma$ = 0.20), with the estimated distribution of true effects ranging from *d* = 1.90 (a large increase in hypothesis-consistent responding) to *d* = -1.46 (a large increase in hypothesis-*in*consistent responding). Contra prior frameworks, we did not find evidence that demand effects were driven participants’ motivation or opportunity to adjust their responses. We did, however, find robust evidence that such effects are driven by participants’ beliefs, as in placebo effects. Similar findings emerged in a direct replication of a study included in the meta-analysis. Taken together, results challenge conventional distinctions between demand characteristics and placebo effects. Furthermore, they underscore the importance of controlling for both response bias and placebo effects when estimating causal relationships.
   
@@ -51,11 +51,14 @@ library("lme4")
 library("lmerTest")
 library("emmeans")
 
-# identify refs
+# identify paper references
 r_refs("r-references.bib")
 
 # turn scientific notation off
 options(scipen = 999)
+
+# set seed to year of greatest unfinished album of all time, SMiLE
+set.seed(1967)
 
 # set theme
 theme_set(theme_classic())
@@ -504,7 +507,6 @@ rm(mod.r.2)
 ```
 
 ```{r modforest, fig.cap = "Selected moderator subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 3.5, fig.width = 3.5, warning = F}
-
 ## list of moderators
 mod.list <- c("student", "paid", "online", "ref.type", "design")
 
@@ -556,14 +558,14 @@ ggplot(mod.df,
   xlab("") + 
   ylab("Estimated subgroup mean (Cohen's standardized d)") + 
   
-  # clean up aes
+  # clean up aesthetics
   coord_flip() + 
   facet_grid(mod ~ . , scales = "free_y") + 
   theme_classic() + 
   theme(axis.text.x = element_text(angle = 90, vjust = .5,  hjust=1))
 
 # delete vestigial
-# rm(mod.df)
+rm(mod.df)
 ```
 
 The observed variability in demand effects dramatically exceeded what would be expected from sampling error alone, $Q$(`r overall$k - 1`) = `r overall$QE`, $p$ `r printp(overall$QEp)`. This heterogeneity suggests the existence of moderators.
@@ -575,7 +577,6 @@ The effects of demand characteristics were additive. Compared to instances where
 We did not find that the effects of demand characteristics tended to differ depending on whether they were manipulated within- ($d$ = `r mod.r$design$sub$b[1]`, 95% CI [`r mod.r$design$sub$ci.lb[1]`, `r mod.r$design$sub$ci.ub[1]`], $p$ `r printp(mod.r$design$sub$pval[1])`) vs. between-subjects ($d$ = `r mod.r$design$sub$b[2]`, 95% CI [`r mod.r$design$sub$ci.lb[2]`, `r mod.r$design$sub$ci.ub[2]`], $p$ = `r printp(mod.r$design$sub$pval[2])`), $F$(`r mod.r$design$mod$QMdf[1]`, `r mod.r$design$mod$QMdf[2]`) = `r mod.r$design$mod$QM`, $p$ = `r printp(mod.r$design$mod$QMp)` (Figure \@ref(fig:modforest)). The effects of demand characteristics tended to be larger in unpaid ($d$ = `r mod.r$paid$sub$b[1]`, 95% CI [`r mod.r$paid$sub$ci.lb[1]`, `r mod.r$paid$sub$ci.ub[1]`], $p$ `r printp(mod.r$paid$sub$pval[1])`) vs. paid ($d$ = `r mod.r$paid$sub$b[2]`, 95% CI [`r mod.r$paid$sub$ci.lb[2]`, `r mod.r$paid$sub$ci.ub[2]`], $p$ = `r printp(mod.r$paid$sub$pval[2])`) studies -- but this difference was not statistically significant, $F$(`r mod.r$paid$mod$QMdf[1]`, `r mod.r$paid$mod$QMdf[2]`) = `r mod.r$paid$mod$QM`, $p$ = `r printp(mod.r$paid$mod$QMp)` (Figure \@ref(fig:modforest)).
 
 ### Exploratory robustness checks
-
 ```{r robust.chk, include = F}
 # calculate percentage of online effect sizes that had students vs. non-students
 in.s <- DF.es[DF.es$online == "no", ]$student %>% 
@@ -1225,7 +1226,7 @@ rm(pre.df)
 plot_grid(m, o, b, p,
           labels = c("A", "B", "C", "D"))
 
-rm(m, o, b, p)
+rm(m, o, b, p, survey.dem)
 ```
 
 If demand effects are driven by response biases, their effects are expected to be moderated by participants' motivation and opportunity to adjust responses (Figure \@ref(fig:framework)). Inconsistent with this view, we did not find that demand effects were moderated by ratings of motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`, or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure \@ref(fig:modfig), Panels A and B).
