@@ -11,7 +11,7 @@
 - **metaware_EsData_raw.xlsx**: contains information for record screening and effect size/moderator coding
 - **metaware_SurvData_raw.csv**: contains responses to a survey where participants (1) reviewed vignettes from the meta-analysis, and (2) completed a close replication of a demand characteristics study
 - **metaware_data_clean.csv**: cleaned data for meta-analysis
-- **metaware_survey2_clean.csv**: contains responses to the close replication of a demand characteristic study
+- **metaware_replication_clean.csv**: contains responses to the close replication of a demand characteristic study
 - **metaware_vignette_clean.csv**: contains average ratings of motivation, opportunity, and belief for each vignette reviewed in metaware_SurvData_raw.csv
 
 ### r_sensitivity folder

@@ -1,10 +1,13 @@
 ---
 title: Process data
-author: "Nicholas A. Coles"
+author: "Nicholas A. Coles (not yet checked)"
 editor_options: 
   chunk_output_type: console
 ---
-This code processes and merges the raw data contained in "metaware_ESData_raw.xlsx" and "metaware_SurvData_raw.csv"
+This code processes and merges:
+1. metaware_ESData_raw.xlsx: contains information about each study in the meta-analysis (as well as statistics needed to calculate Cohen's d)
+
+2. metaware_SurvData_raw.csv: contains ratings of vignettes describing studies in the meta-analysis. Also contains ratings from a replication of Coles et al. 2022.
 
 # Prep environment
 ```{r setup and load packages, include = FALSE}
@@ -13,7 +16,7 @@ library("tidyverse")
 library("readxl")
 ```
 
-# Open and clean ES data
+# Open and clean metaware_ESData_raw.xlsx
 ```{r open/clean data, message = FALSE, warning = FALSE}
 # import data
 DF <- read_xlsx(path = "data/metaware_EsData_raw.xlsx",
@@ -25,15 +28,17 @@ DF[DF$ref.type == "pvc", ]$ref.type = "cvp"
 
 DF <- DF %>% 
   
-  # remove reference columns
+  # remove reference columns (these are for documentation purposes only)
   select(-ends_with("ref")) %>% 
   
   # remove variables we won't include in any analyses
   select(-c(dv, note, outcome)) %>% 
   
   # create ref.r var that indicates whether there were one or two demand conditions
+  ## if the ref.type variable included a "c", it means that
+  ## there was one demand condition compared to a control group 
   mutate(ref.r = 
-           if_else(ref.type == "cvp" |
+           if_else(condition = ref.type == "cvp" |
                      ref.type == "nvc" |
                      ref.type == "cvz",
                    true = "single",
@@ -43,7 +48,7 @@ DF <- DF %>%
   rename(id.study = id) %>% 
   mutate(id.es = 1 : nrow(DF)) %>% 
   
-  # convert factors to factors
+  # where appropriate, convert variables to factors
   mutate(across(.cols = c(id.study, id.es, published, student,
                           paid, online, ref.type,
                           ref.r),
@@ -154,7 +159,7 @@ EsVarBetwCount <- function(n.1, n.2, count.1, count.2){
 }
 ```
 
-#### Call functions to calculate d and variance of *d*
+#### Call functions to calculate *d* and variance of *d*
 ```{r b: call functions to calculate d}
 for (i in 1:nrow(DF)) {
   if (DF$design[i] == "between"){
@@ -215,6 +220,7 @@ for (i in 1:nrow(DF)) {
 ### For within-subjects data
 ```{r assumed correlation}
 # if no correlation is defined, set it at .5
+# Note: there is sensitivity analysis code that will set a correlation and then re-execute this script (metaware_DataProcessingSens.Rmd)
 if(!exists("corr")){
   corr <- .5
 }
@@ -301,7 +307,7 @@ for (i in 1:nrow(DF)) {
 ```
 
 ```{r del var}
-# delete unnecessary variables
+# delete objects we no longer need
 rm(corr, i,
    EsBetwFval, EsBetwMean, EsBetwTval,
    EsBetwPval, EsVarBetw, EsVarWitn,
@@ -322,13 +328,18 @@ DF <- DF %>%
   ungroup()
 ```
 
-## Remove unnecessary variables
+## Remove objects we no longer need
 ```{r}
 DF <- DF %>% 
   select(-c(es.calc : pval))
 ```
 
-# Open and clean survey data
+# Open and clean vignette rating data
+metaware_SurvData_raw.csv contains vignette rating data (as well as data from a replication of Coles et al., 2022)
+
+This part of the code focuses only on the vignette rating data. This part of the dataset is structured awkwardly, so it warrants its own data processing code.
+
+By the end of the code chunk, we will have one row for each participants' rating of each vignette (i.e., very long data)
 ```{r}
 # import data
 DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>%
@@ -347,31 +358,33 @@ DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>%
   mutate(ss = 1 : nrow(.),
          ss = as.character(ss)) %>%  
   
-  # select vignettes columns
+  # select columns containing information from the vignettes
   select(`1_awr` : `119_opp`, ss) %>% 
   
-  # extract key from first row
+  # extract vignette identifier from the first row of data
+  # note: I warned you the data structure is awkward
   mutate_all(~if_else(condition = grepl("#", .),
                       true = substr(x = .,
                                     start = 2,
                                     stop = 9),
                       false = .))
 
-# append first row to column name
+# append first row (containing vignette identifiers) to the column name
 ## append name
 colnames(DF.surv) <- paste(sep = "##",
                            colnames(DF.surv),
                            as.character(unlist(DF.surv[1, ]))
                            )
 
-## remove first row
+## remove the first row
+### now that the vignette identifier has been added to the column name, we don't need this row anymore
 DF.surv <- DF.surv[-1, ]
 
-## fix ss variable naming
+## fix ss (subject identifier) variable naming
 DF.surv <- DF.surv %>% 
   rename("ss" = "ss##1")
 
-# prep dataframe for summary statistics calculation
+# pivot data so that there is one row for each participants' rating of each vignette
 DF.surv <- DF.surv %>% 
   # pivot longer
   pivot_longer(cols = contains("##"),
@@ -394,55 +407,61 @@ DF.surv <- DF.surv %>%
 
 ## Process attention checks
 Specify whether participants correctly identified the communicated hypothesis
-Note: awr should be 1, 2, and 3 for pos, neg, and nil respectively
+
+Note: participants either read about a positive (pos), negative (neg), or nil (nil) researcher hypothesis. If they correctly understood the communicated hypothesis, their awr rating should be 1, 2, and 3 for pos, neg, and nil respectively
 ```{r}
 DF.surv <- DF.surv %>% 
   
-  # identify whether the demand condition was pos, neg, or nil
+  # identify whether the researcher hypothesis was pos, neg, or nil
   mutate(dem = substr(x = vig,
                       start = 4,
                       stop = 4))
   
-## set att.chk to 0 (false) by default
+## set att.chk to 0 (failed attention check) by default
 DF.surv$att.chk = 0
 
 ## set att.chk to 1 when hypothesis is correctly identified
+### positive hypothesis (dem == p)
 DF.surv[DF.surv$dem == "p" & 
           !is.na(DF.surv$awr) &
           DF.surv$awr == 1, ]$att.chk = 1
 
+### negative hypothesis (dem == n)
 DF.surv[DF.surv$dem == "n" & 
           !is.na(DF.surv$awr) &
           DF.surv$awr == 2, ]$att.chk = 1
 
+### nil hypothesis (dem == z)
 DF.surv[DF.surv$dem == "z" & 
           !is.na(DF.surv$awr) &
           DF.surv$awr == 3, ]$att.chk = 1
 
-## if participants did not specify a  hypothesis, set att.chk to NA
+## if participants did not respond to the attention check item, set the att.chk variable to NA
 DF.surv[is.na(DF.surv$awr), ]$att.chk = NA
 
-## manually fix 28_p_dis
+## manually fix 28_p_dis vignette attention check
 ## there were some oddities in how we created this vignette--but the correct hypothesis would be 2 (not 1)
 DF.surv[DF.surv$vig == "28_p_dis" &
           !is.na(DF.surv$awr) &
           DF.surv$awr == 2, ]$att.chk = 1
 ```
 
-Examine attention check data
-```{r}
-# overall
+[optional] if you would like to examine the attention check data, the code below is useful
+```{r eval = F}
+# proportion of participants who passed the attention check
 DF.surv %>%
   summarise(m = mean(att.chk,
                      na.rm = T))
 
-# split by demand type
+# proportion of participants who passed the attention check (split by type of hypothesis communicated)
+## Note: although they did far better than chance, raters struggled the most to correctly understand nil hypotheses
 DF.surv %>%
   group_by(dem) %>%
   summarise(m = mean(att.chk,
                      na.rm = T))
 
-# split by vignette
+# proportion of participants who passed the attention check (split by vignette)
+## Note: participants had the most trouble understanding the 36_n_won vignette.
 DF.surv %>% 
   group_by(vig) %>% 
   filter(!is.na(att.chk)) %>% 
@@ -458,6 +477,11 @@ DF.surv <- DF.surv %>%
 ```
 
 ## Calculate survey summary statistics
+For each vignette, we want the average of participants ratings of the extent to which they would:
+1. Be motivated to adjust their responses to fit the communicated hypothesis (m.mot)
+2. Have the opportunity to adjust their responses (m.opp)
+3. Believe the communicated hypothesis (m.bel)
+4. Predict that others will adjust their responses to fit the hypothesis (m.pre)
 ```{r}
 surv.sum <- DF.surv %>% 
   group_by(vig) %>% 
@@ -467,36 +491,43 @@ surv.sum <- DF.surv %>%
             m.pre = mean(pre, na.rm = T)
             ) %>% 
    ungroup()
+
+# remove old survey dataframe (not needed anymore)
+rm(DF.surv)
 ```
 
-# Combine ES and survey summary statistics
+# Join the summary statistics (surv.sum) to the effect size dataframe (DF)
+Note: some effect sizes involved a comparison between two demand characteristic manipulations. In these scenarios, the first demand characteristic condition is "vig.1" and the second is "vig.2". In these scenarios, we sum the summary statistics scores, for reasons we describe in the paper.
 ```{r}
-# connect summary data to ES dataframe
+# connect summary data to effect size dataframe
 DF <- DF %>% 
-  # rename vig.1 to vig to enable join
+  # join vig.1 data
+  ## rename vig.1 to vig to enable join
   rename(vig = vig.1) %>% 
   
-  # connect summary data to vig.1
+  ## connect summary data to vig.1
   left_join(x = ., 
             y = surv.sum,
             by = "vig") %>% 
   
-  # rename vig.1 summary columns
+  ## rename vig.1 summary columns
   rename(v1.mot = m.mot, 
          v1.opp = m.opp, 
          v1.bel = m.bel, 
          v1.pre = m.pre) %>% 
   
-  # rename vig.2 to vig to prep for join
+  
+  # join vig.2 data
+  ## rename vig.2 to vig to prep for join
   rename(vig.1 = vig,
          vig = vig.2) %>% 
   
-  # connect summary data to vig.2
+  ## connect summary data to vig.2
   left_join(x = .,
             y = surv.sum,
             by = "vig") %>% 
   
-  # rename vig.2 summary columns
+  ## rename vig.2 summary columns
   rename(v2.mot = m.mot, 
          v2.opp = m.opp, 
          v2.bel = m.bel, 
@@ -514,13 +545,14 @@ DF <- DF %>%
                    na.rm = T)) %>% 
   ungroup()
 
-# set id 18 (not coded because it was massive outlier) scores to zero 
+# set motivation, opportunity, belief, and prediction scores blank for id 18
+# we did not create vignettes for id 18 because it was a *massive* outlier that we removed from all analyses 
 DF[DF$id.study == 18, ]$mot = NA
 DF[DF$id.study == 18, ]$opp = NA
 DF[DF$id.study == 18, ]$bel = NA
 DF[DF$id.study == 18, ]$pre = NA
 
-# arrange variables
+# organize ordering of variables
 DF <- DF %>% 
   select(id.study, id.es, 
          citation : ref.r, 
@@ -528,7 +560,7 @@ DF <- DF %>%
          mot : pre)
 ```
 
-# Prep dataset for second part of survey
+# Prep dataset for replication of Coles et al. 2022
 ```{r}
 # import data
 DF.surv2 <- 
@@ -720,16 +752,16 @@ if(!exists("sens")){
 }
 ```
 
-Export second survey dataset
-```{r}
-write.csv(DF.surv2,
-          "data/metaware_survey2_clean.csv",
-          row.names = F)
-```
-
 Export vignette summary scores
 ```{r}
 write.csv(surv.sum,
           "data/metaware_vignette_clean.csv",
+          row.names = F)
+```
+
+Export replication study dataset
+```{r}
+write.csv(DF.surv2,
+          "data/metaware_replication_clean.csv",
           row.names = F)
 ```

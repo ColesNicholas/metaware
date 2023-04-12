@@ -1012,7 +1012,7 @@ knitr::include_graphics("images/metaware_vigs.png")
 # describe participant demographics
 survey.DF <- 
   # open survey
-  read.csv("data/metaware_survey2_clean.csv") %>% 
+  read.csv("data/metaware_replication_clean.csv") %>% 
   
   # get one observation per participant
   distinct(sub,
@@ -1314,7 +1314,7 @@ In addition to the vignette rating task, Study 2 participants also completed an 
 # open and clean data
 DF.s2 <- 
   # open data
-  read_csv(file = "data/metaware_survey2_clean.csv") %>% 
+  read_csv(file = "data/metaware_replication_clean.csv") %>% 
   
   # fix variable class
   mutate_at(.vars = c("sub", "demand",
