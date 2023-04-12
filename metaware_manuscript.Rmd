@@ -64,6 +64,15 @@ set.seed(1967)
 theme_set(theme_classic())
 ```
 
+```{r session.info, eval = F}
+# note: this code is set to not evaluate. 
+# for computational reproducibility purposes, the code exports package version info to a text file
+# this will help others see which package versions were used when the code was written
+writeLines(text = sessionInfo() %>% 
+             capture.output(), 
+           con = "sessionInfo.txt")
+```
+
 Imagine that a mysterious person approached you and began telling you about a new method they invented for understanding humans. They explain that their method is useful for estimating causal relationships, but add that it can sometimes be thrown off by a methodological artifact. They explain that this artifact sometimes causes researchers to detect an effect that’s not real, and other times causes them to miss an effect that is real. They add it that it sometimes biases relationships upward and other times downward. They then offer a confession: the artifact doesn’t always appear, and they don’t understand why. Sometimes the artifact seems to matter, other times it doesn’t – and its underlying mechanisms are poorly understood. If this scenario were real, these concerns would likely call their whole method into question. However, perhaps experimental psychologists should not be so quick to judge. After all, we too deal with a difficult-to-understand methodological artifact: *demand characteristics*.
 
 In a seminal paper, Martin @orne1962social challenged a common assumption in early experimental psychology by arguing that human subjects are *active* responders to the experimental context. In particular, Orne argued that participants are perceptive to demand characteristics -- "cues which convey an experimental hypothesis" -- and are motivated to use these cues to help the experimenter confirm their hypothesis [-@orne1962social, p. 779]. This idea was controversial at first, with some researchers suggesting that the concern was vague and/or overblown [e.g., @berkowitz1971weapons; @milgram1972interpreting; @kruglanski1975human]. Nonetheless, over the next 60 years, demand characteristics have become a literal textbook methodological concern in experimental psychology [@sharpe2016frightened].
