@@ -315,7 +315,7 @@ Third, we deployed weight-function modeling using the weightR package [@R-weight
 As a sensitivity analysis, we included publication status (published or unpublished) as a dummy-coded moderator. This allowed us to estimate the difference in the magnitude of published vs. unpublished effects.
 
 ### Transparency and openness
-All materials, data, and code are openly available at <https://osf.io/3hkre/>. This link also contains analysis pre-registration plan, as well as documented amendments. All code (including the script used to generate a computationally-reproducible manuscript) has been checked for reproducibility.
+All materials, data, and code are openly available at <https://osf.io/3hkre/>. This link also contains analysis pre-registration plan, as well as documented amendments. Sample size was determined by the availability of relevant records. All code (including the script used to generate a computationally-reproducible manuscript) has been checked for reproducibility. Ethics approval was not requested for this study because no new data were collected.
 
 ## Results
 
@@ -1086,7 +1086,7 @@ We did not include nil-hypothesis comparisons in our analyses because our coding
 Even if researchers cannot explain how demand characteristics work, it might be valuable to be able to predict their effects [@yarkoni2017choosing]. @orne1969demand suggested that one group that may be particularly good at predicting these effects is participants themselves. To examine this, raters also predicted whether other participants would confirm vs. disconfirm the researcher's hypothesis (-3 = "extremely likely to adjust responses to be inconsistent" to 3 = "extremely likely to adjust responses to be consistent"). We processed these data using the same approach as the motivation, opportunity, and belief scores (e.g., summed ratings when comparing two demand conditions).
 
 ### Transparency and openness
-All materials, data, and code are openly available at <https://osf.io/3hkre/>. This link also contains analysis pre-registration plan, as well as documented amendments. All code has been checked for reproducibility.
+All materials, data, and code are openly available at <https://osf.io/3hkre/>. This link also contains analysis pre-registration plan, as well as documented amendments. Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester). All code has been checked for reproducibility. The study was reviewed and approved by the Stanford University IRB (protocol #: 67335; protocol title: “Research participant experiences”).
 
 ## Results
 
@@ -1348,7 +1348,7 @@ We told `r length(unique(DF.s2$sub))` participants that we hypothesized posed sm
 Using a similar procedure as Study 2, participants were excluded if they did not fully complete the experiment or correctly identify the stated hypothesis at the end of the study (final n = `r length(unique(DF.s2[DF.s2$manip.chk == 1, ]$sub))`). Almost all participants who completed the experiment correctly inferred that we were interested in links between facial poses and emotional experience. However, particularly in the nil hypothesis condition (`r manip.fail[2] %>% round(2) * 100`% of manipulation check exclusions), they did not correct specify whether we expected a positive or nil effect. Afterwards, participants reported the extent to which they were motivated to confirm the hypothesis, had the opportunity to adjust their responses, and believed in facial feedback effects. These measures were similar to those used in Study 2. Altogether, the study used a 2 (facial pose: happy or neutral) × 2 (block: first or second) × 2 (demand characteristics: positive demand or nil demand) mixed design, with demand characteristics manipulated between subjects.
 
 ### Transparency and openness
-All materials (including exploratory items not described in the manuscript), data, and code are openly available at <https://osf.io/3hkre/>. Because the study was exploratory, there was no pre-registration. All code has been checked for reproducibility.
+All materials (including exploratory items not described in the manuscript), data, and code are openly available at <https://osf.io/3hkre/>. Because the study was exploratory, there was no pre-registration. All code has been checked for reproducibility. The study was reviewed and approved by the Stanford University IRB (protocol #: 67335; protocol title: “Research participant experiences”).
 
 ## Results
 
