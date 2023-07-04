@@ -1,6 +1,6 @@
 ---
 title: Process data
-author: "Nicholas A. Coles (not yet checked)"
+author: "Nicholas A. Coles (checked by Anjie Cao)"
 editor_options: 
   chunk_output_type: console
 ---
