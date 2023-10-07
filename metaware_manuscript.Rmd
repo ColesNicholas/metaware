@@ -1171,7 +1171,7 @@ All materials, data, and code are openly available at <https://osf.io/3hkre/>. T
 
 ## Results
 
-```{r modfig, fig.cap= "The effects of demand characteristics on participants' responses were not significantly associated with motivation (Panel A), opportunity (Panel B), or prediction (Panel D) ratings. They were, however, significantly associated with belief  ratings (Panel C).", fig.height = 4.5, fig.width = 6.5}
+```{r modfig, fig.cap= "Scatterplots of relationships between the observed effects of demand characteristics (y-axis) and motivation (Panel A), opportunity (Panel B), belief (Panel C), and prediction (Panel D) ratings (x-axis). Grey dots represent jittered observations, black lines represent estimated linear relationships, and blue ribbons represent 95% confidence intervals for estimated linear relationships.", fig.height = 4.5, fig.width = 6.5}
 #################
 # motivation plot
 #################
@@ -1323,7 +1323,7 @@ rm(m, o, b, p, survey.dem)
 
 If demand effects are driven by response biases, their effects are expected to be moderated by participants' motivation and opportunity to adjust responses (Figure \@ref(fig:framework)). Inconsistent with this view, we did not find that demand effects were moderated by ratings of motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`, or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure \@ref(fig:modfig), Panels A and B).
 
-If demand effects are driven by placebo, their effects should be moderated by participants' belief in the communicated hypothesis. Consistent with this view, demand characteristic effects were positively associated with ratings of belief in the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:modfig), Panel C). Last, we did find that raters' predictions were significantly associated with observed demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])` (Figure \@ref(fig:modfig), Panel D).
+If demand effects are driven by placebo, their effects should be moderated by participants' belief in the communicated hypothesis. Consistent with this view, demand characteristic effects were positively associated with ratings of belief in the experimenter's hypothesis, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:modfig), Panel C). Last, we did not find that raters' predictions were significantly associated with observed demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])` (Figure \@ref(fig:modfig), Panel D).
 
 ### Residual variability
 
