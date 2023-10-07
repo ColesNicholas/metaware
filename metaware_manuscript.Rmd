@@ -380,7 +380,7 @@ dist.max <- dist %>%
 rm(dist)
 ```
 
-```{r lovakov, include = F}
+```{r lovakov, include = F, eval = F}
 # open and process Cohen's d data from Lovakov & Agadullina, 2021; EJSP
 ## file and codebook available at https://osf.io/8cgfe/
 DF.la <- read.csv(file = 'https://osf.io/download/sk4qz/') %>% 
@@ -1430,7 +1430,7 @@ Using a similar procedure as Study 2, participants were excluded if they did not
 
 ### Transparency and openness
 
-All materials (including exploratory items not described in the manuscript), data, and code are openly available at <https://osf.io/3hkre/>. Because the study was exploratory, there was no pre-registration. All code has been checked for reproducibility. The study was reviewed and approved by the Stanford University IRB (protocol #: 67335; protocol title: "Research participant experiences").
+All materials (including exploratory items not described in the manuscript), data, and code are openly available at <https://osf.io/3hkre/>. Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester). Because the study was exploratory, there was no pre-registration. All code has been checked for reproducibility. The study was reviewed and approved by the Stanford University IRB (protocol #: 67335; protocol title: "Research participant experiences").
 
 ## Results
 
@@ -1443,98 +1443,143 @@ options(contrasts = c('contr.sum', 'contr.poly'))
 m.d <- lmer(happy ~ trial * block.num * demand + 
             (1 | sub),
           data = DF.s2,
-          #subset = att.chk == 1,
           subset = manip.chk == 1)
+
+m.d.main <- emmeans(m.d,
+                    pairwise ~ trial,
+                    infer = c(T, F))$contrasts %>% 
+  as.data.frame()
 
 ## omnibus tests
 m.d.aov <- anova(m.d)
 
 # simple effect of pose within each level of demand
-m.d.joint <- emmeans(m.d, pairwise ~ trial | demand)$contrasts %>% 
+m.d.joint <- emmeans(m.d, 
+                     pairwise ~ trial | demand,
+                     infer = c(T, F))$contrasts %>% 
   as.data.frame()
 ```
 
 Following @coles2022fact, we used the lme4 R package [@R-lme4] to fit a mixed-effect regression with (a) facial pose, demand characteristics, and block number entered as effect-coded factors and (b) random-intercepts for participants. *F*-values were estimated through ANOVA tables with Type 3 Sums of Squares and Satterthwaite degrees of freedom. Mean-difference scores were estimated using the emmeans R package [@R-emmeans].
 
-Replicating @coles2022fact, participants reported higher levels of happiness after posing happy vs. neutral expressions, *M~diff~* = `r m.d@beta[2] * 2`, *F*(`r m.d.aov["trial",]$NumDF`, `r m.d.aov["trial",]$DenDF`) = `r m.d.aov["trial", 5]`, *p* `r printp(m.d.aov["trial", 6])`. Furthermore, this effect was more pronounced in the positive (*M~diff~* = `r m.d.joint[m.d.joint$demand == "pos", ]$estimate`) vs. nil (*M~diff~* = `r m.d.joint[m.d.joint$demand == "nil", ]$estimate`) demand conditions, *F*(`r m.d.aov["trial:demand",]$NumDF`, `r m.d.aov["trial:demand",]$DenDF`) = `r m.d.aov["trial:demand", 5]`, *p =* `r printp(m.d.aov["trial:demand", 6])`.
+Replicating @coles2022fact, participants reported higher levels of happiness after posing happy vs. neutral expressions, *M~diff~* = `r m.d.main$estimate`, 95% CI [`r m.d.main$lower.CL`, `r m.d.main$upper.CL`], *F*(`r m.d.aov["trial",]$NumDF`, `r m.d.aov["trial",]$DenDF`) = `r m.d.aov["trial", 5]`, *p* `r printp(m.d.aov["trial", 6])`. Furthermore, this effect was more pronounced in the positive (*M~diff~* = `r m.d.joint[m.d.joint$demand == "pos", ]$estimate`, 95% CI [`r m.d.joint[m.d.joint$demand == "pos", ]$lower.CL`, `r m.d.joint[m.d.joint$demand == "pos", ]$upper.CL`]) vs. nil (*M~diff~* = `r m.d.joint[m.d.joint$demand == "nil", ]$estimate`, 95% CI [`r m.d.joint[m.d.joint$demand == "nil", ]$lower.CL`, `r m.d.joint[m.d.joint$demand == "nil", ]$upper.CL`]) demand conditions, *F*(`r m.d.aov["trial:demand",]$NumDF`, `r m.d.aov["trial:demand",]$DenDF`) = `r m.d.aov["trial:demand", 5]`, *p =* `r printp(m.d.aov["trial:demand", 6])`.
 
 ```{r s2.t.mod, include = F}
 # delete vestigial from last moderator analysis
-rm(m.d, m.d.aov, m.d.joint)
+rm(m.d, m.d.aov, m.d.joint, m.d.main)
 
 # moderation by motivation
 m.m <- lmer(happy ~ trial + block.num + mot.c +
               (trial:mot.c) +
               (1 | sub),
             data = DF.s2,
-            #subset = att.chk == 1) %>% 
-            subset = manip.chk == 1) %>% 
-  summary()
+            subset = manip.chk == 1)
 
+m.m.conf <- confint(m.m) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var = "param") %>% 
+  rename(lb = '2.5 %', ub = '97.5 %')
+
+m.m <- m.m %>% summary()
+
+## sensitivty analysis
 m.m.sens <- lmer(happy ~ trial + block.num + mot.c +
                    (trial:mot.c) +
                    (1 | sub),
-                 data = DF.s2) %>% 
-  summary()
+                 data = DF.s2)
+
+m.m.sens.conf <- confint(m.m.sens) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var = "param") %>% 
+  rename(lb = '2.5 %', ub = '97.5 %')
+
+m.m.sens <- summary(m.m.sens)
 
 # moderation by opportunity
 m.o <- lmer(happy ~ trial + block.num + opp.c +
               (trial:opp.c) +
               (1 | sub),
-            data = DF.s2,
-            #subset = att.chk == 1) %>% 
-            subset = manip.chk == 1) %>% 
-  summary()
+            data = DF.s2, 
+            subset = manip.chk == 1)
+
+m.o.conf <- confint(m.o) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var = "param") %>% 
+  rename(lb = '2.5 %', ub = '97.5 %')
+
+m.o <- summary(m.o)
 
 # moderation by belief
 m.b <- lmer(happy ~ trial + block.num + bel.c + 
               (trial : bel.c) +
               (1 | sub),
             data = DF.s2,
-            #subset = att.chk == 1) %>%
-            subset = manip.chk == 1) %>% 
-  summary()
+            subset = manip.chk == 1)
+
+m.b.conf <- confint(m.b) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var = "param") %>% 
+  rename(lb = '2.5 %', ub = '97.5 %')
+
+m.b <- summary(m.b)
 ```
 
-Next, we examined the role of motivation, opportunity, and belief. For each of these potential moderators, we fit mixed-effect regressions containing (a) facial pose and block number as effect-coded factors, (b) the moderator entered mean-centered as a continuous variable, (c) a higher-order facial pose by moderator interaction term, and (d) random intercepts for participants. Results indicated that the effect of facial poses on happiness tended to be *slightly* larger among participants who reported being more motivated to confirm the hypothesis, $\beta$ = `r m.m[["coefficients"]]["trial1:mot.c", "Estimate"]`. However, the estimation of this moderating relationship was not significant, *t*(`r m.m[["coefficients"]]["trial1:mot.c", "df"] %>% round(2)`) = `r m.m[["coefficients"]]["trial1:mot.c", "t value"] %>% round(2)`, *p* = `r printp(m.m[["coefficients"]]["trial1:mot.c", "Pr(>|t|)"])`. Furthermore, the estimation of this moderating relationship was less robust when including participants who did not correctly identify the communicated hypothesis, $\beta$ = `r m.m.sens[["coefficients"]]["trial1:mot.c", "Estimate"]`, *t*(`r m.m.sens[["coefficients"]]["trial1:mot.c", "df"] %>% round(2)`) = `r m.m.sens[["coefficients"]]["trial1:mot.c", "t value"] %>% round(2)`, *p =* `r printp(m.m.sens[["coefficients"]]["trial1:mot.c", "Pr(>|t|)"])`. For ratings of perceived opportunity to adjust responses, we did not find evidence that they moderated the facial pose effect, $\beta$ = `r m.o[["coefficients"]]["trial1:opp.c", "Estimate"]`, *t*(`r m.o[["coefficients"]]["trial1:opp.c", "df"] %>% round(2)`) = `r m.o[["coefficients"]]["trial1:opp.c", "t value"] %>% round(2)`, *p* = `r printp(m.o[["coefficients"]]["trial1:opp.c", "Pr(>|t|)"])`. However, consistent with previous evidence of placebo effects in facial feedback research [@coles2022multi; @coles2022fact], the effect of facial poses tended to be larger among participants who reported believing in the effect, $\beta$ = `r m.b[["coefficients"]]["trial1:bel.c", "Estimate"]`, *t*(`r m.b[["coefficients"]]["trial1:bel.c", "df"] %>% round(2)`) = `r m.b[["coefficients"]]["trial1:bel.c", "t value"] %>% round(2)`, *p* = `r printp(m.b[["coefficients"]]["trial1:bel.c", "Pr(>|t|)"])`.
+Next, we examined the role of motivation, opportunity, and belief. For each of these potential moderators, we fit mixed-effect regressions containing (a) facial pose and block number as effect-coded factors, (b) the moderator entered mean-centered as a continuous variable, (c) a higher-order facial pose by moderator interaction term, and (d) random intercepts for participants. Results indicated that the effect of facial poses on happiness tended to be *slightly* larger among participants who reported being more motivated to confirm the hypothesis, $\beta$ = `r m.m[["coefficients"]]["trial1:mot.c", "Estimate"]`, 95% CI [`r m.m.conf[m.m.conf$param == 'trial1:mot.c', ]$lb`, `r m.m.conf[m.m.conf$param == 'trial1:mot.c', ]$ub`]. However, the estimation of this moderating relationship was not significant, *t*(`r m.m[["coefficients"]]["trial1:mot.c", "df"]`) = `r m.m[["coefficients"]]["trial1:mot.c", "t value"]`, *p* = `r printp(m.m[["coefficients"]]["trial1:mot.c", "Pr(>|t|)"])`. Furthermore, the estimation of this moderating relationship was less robust when including participants who did not correctly identify the communicated hypothesis, $\beta$ = `r m.m.sens[["coefficients"]]["trial1:mot.c", "Estimate"]`, 95% CI [`r m.m.sens.conf[m.m.sens.conf$param == 'trial1:mot.c', ]$lb`, `r m.m.sens.conf[m.m.sens.conf$param == 'trial1:mot.c', ]$ub`], *t*(`r m.m.sens[["coefficients"]]["trial1:mot.c", "df"]`) = `r m.m.sens[["coefficients"]]["trial1:mot.c", "t value"]`, *p =* `r printp(m.m.sens[["coefficients"]]["trial1:mot.c", "Pr(>|t|)"])`. For ratings of perceived opportunity to adjust responses, we did not find evidence that they moderated the facial pose effect, $\beta$ = `r m.o[["coefficients"]]["trial1:opp.c", "Estimate"]`, 95% CI [`r m.o.conf[m.o.conf$param == 'trial1:opp.c', ]$lb`, `r m.o.conf[m.o.conf$param == 'trial1:opp.c', ]$ub`], *t*(`r m.o[["coefficients"]]["trial1:opp.c", "df"] %>% round(2)`) = `r m.o[["coefficients"]]["trial1:opp.c", "t value"] %>% round(2)`, *p* = `r printp(m.o[["coefficients"]]["trial1:opp.c", "Pr(>|t|)"])`. However, consistent with previous evidence of placebo effects in facial feedback research [@coles2022multi; @coles2022fact], the effect of facial poses tended to be larger among participants who reported believing in the effect, $\beta$ = `r m.b[["coefficients"]]["trial1:bel.c", "Estimate"]`, 95% CI[`r m.b.conf[m.b.conf$param == 'trial1:bel.c', ]$lb`, `r m.b.conf[m.b.conf$param == 'trial1:bel.c', ]$ub`], *t*(`r m.b[["coefficients"]]["trial1:bel.c", "df"] %>% round(2)`) = `r m.b[["coefficients"]]["trial1:bel.c", "t value"] %>% round(2)`, *p* = `r printp(m.b[["coefficients"]]["trial1:bel.c", "Pr(>|t|)"])`.
 
 ```{r s2.t.d.mod, include = F}
 # delete vestigial
-rm(m.b, m.m, m.m.sens, m.o)
+rm(m.b, m.b.conf, m.m, m.m.conf, 
+   m.m.sens, m.m.sens.conf, 
+   m.o, m.o.conf)
 
 # motivation
 m.m <- lmer(happy ~ trial * demand * mot.c +
               (1 | sub),
             data = DF.s2,
-            #subset = att.chk == 1) %>% 
-            subset = manip.chk == 1) %>% 
-  summary()
+            subset = manip.chk == 1)
 
-## sensitivity analysis
-m.m.sens <- lmer(happy ~ trial * demand * mot.c +
-                   (1 | sub),
-                 data = DF.s2) %>% 
-  summary()
+m.m.conf <- confint(m.m) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var = "param") %>% 
+  rename(lb = '2.5 %', ub = '97.5 %')
+
+m.m <- m.m %>% summary()
 
 # opportunity
 m.o <- lmer(happy ~ trial * demand * opp.c +
               (1 | sub),
             data = DF.s2,
             #subset = att.chk == 1) %>%
-            subset = manip.chk == 1) %>% 
-  summary()
+            subset = manip.chk == 1)
+
+m.o.conf <- confint(m.o) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var = "param") %>% 
+  rename(lb = '2.5 %', ub = '97.5 %')
+
+m.o <- m.o %>% summary()
+
+m.o.conf[m.o.conf$param == 'trial1:demand1:opp.c', ]$lb
 
 # belief
 m.b <- lmer(happy ~ trial * demand * bel.c +
               (1 | sub),
             data = DF.s2,
-            #subset = att.chk == 1) %>% 
-            subset = manip.chk == 1) %>% 
-  summary()
+            subset = manip.chk == 1)
 
+m.b.conf <- confint(m.b) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var = "param") %>% 
+  rename(lb = '2.5 %', ub = '97.5 %')
+
+m.b <- m.b %>% summary()
+
+m.b.conf[m.b.conf$param == 'trial1:demand1:bel.c', ]$lb
 ```
 
-The previous analyses provide preliminary evidence that participants' beliefs -- and potentially also their motivation to provide hypothesis consistent responses -- moderate facial feedback effects. They do not, however, test whether these factors drive the effects of *demand characteristics*. In other words, are there three-way interactions between (1) facial poses, (2) demand characteristics, and (3) ratings of motivation, opportunity, and/or belief? For each of these potential moderators, we fit separate mixed-effect regressions containing (a) facial pose and demand characteristics as effect-coded factors, (b) the potential moderator entered mean-centered as a continuous variable, (c) all higher-order interactions, and (d) random intercepts for participants. Results did not indicate that that there was a three-way interaction between facial poses, demand characteristics, and participants' self-reported motivation to provide hypothesis-consistent responses, $\beta$ = `r m.m[["coefficients"]]["trial1:demand1:mot.c", "Estimate"]`, *t*(`r m.m[["coefficients"]]["trial1:demand1:mot.c", "df"] %>% round(2)`) = `r m.m[["coefficients"]]["trial1:demand1:mot.c", "t value"] %>% round(2)`, *p* = `r printp(m.m[["coefficients"]]["trial1:demand1:mot.c", "Pr(>|t|)"])`. We also did not find evidence of a three-way interaction between facial poses, demand characteristics, and participants' self-reported opportunity to adjust responses, $\beta$ = `r m.o[["coefficients"]]["trial1:demand1:opp.c", "Estimate"]`, *t*(`r m.o[["coefficients"]]["trial1:demand1:opp.c", "df"] %>% round(2)`) = `r m.o[["coefficients"]]["trial1:demand1:opp.c", "t value"] %>% round(2)`, *p* = `r printp(m.o[["coefficients"]]["trial1:demand1:opp.c", "Pr(>|t|)"])`. We did, however, find robust evidence of a three-way interaction involving self-reported belief in facial feedback effects. Specifically, the interaction between facial poses and demand characteristics ($\beta$ = `r m.b[["coefficients"]]["trial1:demand1", "Estimate"]`, *t*(`r m.b[["coefficients"]]["trial1:demand1", "df"] %>% round(2)`) = `r m.b[["coefficients"]]["trial1:demand1", "t value"] %>% round(2)`, *p* = `r printp(m.b[["coefficients"]]["trial1:demand1", "Pr(>|t|)"])`) tended to be larger among participants with higher belief ratings, $\beta$ = `r m.b[["coefficients"]]["trial1:demand1:bel.c", "Estimate"]`, *t*(`r m.b[["coefficients"]]["trial1:demand1:bel.c", "df"] %>% round(2)`) = `r m.b[["coefficients"]]["trial1:demand1:bel.c", "t value"] %>% round(2)`, *p* `r printp(m.b[["coefficients"]]["trial1:demand1:bel.c", "Pr(>|t|)"])`.
+The previous analyses provide evidence that participants' beliefs -- and potentially also their motivation to provide hypothesis consistent responses -- moderate facial feedback effects. They do not, however, test whether these factors drive the effects of *demand characteristics*. In other words, are there three-way interactions between (1) facial poses, (2) demand characteristics, and (3) ratings of motivation, opportunity, and/or belief? For each of these potential moderators, we fit separate mixed-effect regressions containing (a) facial pose and demand characteristics as effect-coded factors, (b) the potential moderator entered mean-centered as a continuous variable, (c) all higher-order interactions, and (d) random intercepts for participants. 
+
+Results did not indicate that that there was a three-way interaction between facial poses, demand characteristics, and participants' self-reported motivation to provide hypothesis-consistent responses, $\beta$ = `r m.m[["coefficients"]]["trial1:demand1:mot.c", "Estimate"]`, 95% CI [`r m.m.conf[m.m.conf$param == 'trial1:demand1:mot.c', ]$lb`, `r m.m.conf[m.m.conf$param == 'trial1:demand1:mot.c', ]$ub`], *t*(`r m.m[["coefficients"]]["trial1:demand1:mot.c", "df"]`) = `r m.m[["coefficients"]]["trial1:demand1:mot.c", "t value"]`, *p* = `r printp(m.m[["coefficients"]]["trial1:demand1:mot.c", "Pr(>|t|)"])`. We also did not find evidence of a three-way interaction between facial poses, demand characteristics, and participants' self-reported opportunity to adjust responses, $\beta$ = `r m.o[["coefficients"]]["trial1:demand1:opp.c", "Estimate"]`, 95% CI [`r m.o.conf[m.o.conf$param == 'trial1:demand1:opp.c', ]$lb`, `r m.o.conf[m.o.conf$param == 'trial1:demand1:opp.c', ]$ub`], *t*(`r m.o[["coefficients"]]["trial1:demand1:opp.c", "df"]`) = `r m.o[["coefficients"]]["trial1:demand1:opp.c", "t value"]`, *p* = `r printp(m.o[["coefficients"]]["trial1:demand1:opp.c", "Pr(>|t|)"])`. We did, however, find robust evidence of a three-way interaction involving self-reported belief in facial feedback effects. Specifically, the interaction between facial poses and demand characteristics ($\beta$ = `r m.b[["coefficients"]]["trial1:demand1", "Estimate"]`, 95% CI[`r m.b.conf[m.b.conf$param == 'trial1:demand1', ]$lb`, `r m.b.conf[m.b.conf$param == 'trial1:demand1', ]$ub`], *t*(`r m.b[["coefficients"]]["trial1:demand1", "df"]`) = `r m.b[["coefficients"]]["trial1:demand1", "t value"] %>% round(2)`, *p* = `r printp(m.b[["coefficients"]]["trial1:demand1", "Pr(>|t|)"])`) tended to be larger among participants with higher belief ratings, $\beta$ = `r m.b[["coefficients"]]["trial1:demand1:bel.c", "Estimate"]`, 95% CI [`r m.b.conf[m.b.conf$param == 'trial1:demand1:bel.c', ]$lb`, `r m.b.conf[m.b.conf$param == 'trial1:demand1:bel.c', ]$ub`], *t*(`r m.b[["coefficients"]]["trial1:demand1:bel.c", "df"]`) = `r m.b[["coefficients"]]["trial1:demand1:bel.c", "t value"]`, *p* `r printp(m.b[["coefficients"]]["trial1:demand1:bel.c", "Pr(>|t|)"])`.
 
 To summarize, Study 3 provided little evidence that demand effects are driven by response bias. We found some evidence that facial feedback effects are moderated by self-reported motivation to provide hypothesis-consistent responses -- but this finding was not robust. Furthermore, we consistently failed to find evidence that these effects were moderated by self-reported opportunity to adjust responses. We did, however, find consistent evidence that facial feedback and demand effects are moderated by self-reported belief in the communicated hypothesis.
 
