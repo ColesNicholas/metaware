@@ -380,6 +380,67 @@ dist.max <- dist %>%
 rm(dist)
 ```
 
+```{r lovakov, include = F}
+# open and process Cohen's d data from Lovakov & Agadullina, 2021; EJSP
+## file and codebook available at https://osf.io/8cgfe/
+DF.la <- read.csv(file = 'https://osf.io/download/sk4qz/') %>% 
+  
+  # correct class of variables
+  ## Note: you will lose observations where there are no values here
+  mutate(n1 = as.numeric(n1),
+         n2= as.numeric(n2),
+         study.id = factor(study.id),
+         es.id = factor(es.id)) %>% 
+
+  # limit to observations where you can compute d and var.d
+  filter(!is.na(d),
+         !is.na(n1),
+         !is.na(n2)) %>% 
+  
+  # limit to observations where you can identify study
+  filter(!is.na(study.id)) %>% 
+  
+  # correct sign of cohen's d
+  mutate(d = if_else(condition = sign.dir == 'neg',
+                     true = d * -1,
+                     false = d)) %>% 
+  
+  # calculate variance of d
+  mutate(d.var = 
+           ((n1 + n2) / (n1 * n2)) +
+           (d^2 / (2 * (n1 + n2)))
+         )
+
+# perform 3LMA on Lovakov & Agadullina data
+overall.la <- 
+  rma.mv(yi = d,
+         V = d.var,
+         data = DF.la,
+         random = ~ 1 | study.id / es.id)
+
+
+tau.la <- sqrt(overall.la$sigma2[1] + overall.la$sigma2[2])
+
+# quick viz
+ggplot() +
+  
+  # demand distribution
+  stat_function(fun = dnorm, 
+                n = 1000000, 
+                args = list(mean = overall$b, 
+                            sd = tau),
+                xlim = c(-2, 2)) +
+  
+  # nondemand dist
+  stat_function(fun = dnorm,
+                n = 1000000,
+                args = list(mean = overall.la$b,
+                            sd = tau.la),
+                xlim = c(-2, 2)
+  )
+
+```
+
 Overall, explicit manipulations of demand characteristics cause participants' responses to shift in a manner consistent with the communicated hypothesis, $d$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. As a hypothetical example, if participants were told that the researcher hypothesizes that an intervention will improve mood (positive demand), they would generally report slightly improved moods; if told that the researcher hypothesizes that an intervention will worsen mood (negative demand), they would generally report slightly worsened moods.
 
 ```{r forest, fig.cap = "Forest plot of estimated effect sizes (grey diamonds), their 95% confidence intervals (grey error bars), and their citations (left). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; d > 0.10), more hypothesis-inconsistent responding (red; d < -0.10), or negligible shifts in responding (grey; |d| < 0.10).", fig.height = 7, fig.width = 6.5, warning = F}
