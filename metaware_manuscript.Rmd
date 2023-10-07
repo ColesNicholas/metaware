@@ -1175,7 +1175,7 @@ All materials, data, and code are openly available at <https://osf.io/3hkre/>. T
 #################
 # motivation plot
 #################
-# get predicted and actual values into a single dataset
+# get predicted (for the regression line) and actual values into a single dataset
 mot.df <- predict(mod.r$mot$mod,
                   addx = T) %>% 
   as.data.frame() %>% 
@@ -1200,6 +1200,13 @@ m <- ggplot(data = mot.df,
                   ymax = ci.ub), 
               alpha = .10,
               fill = "#3366FF") +
+  # 
+  # # add summary statistics
+  # geom_label(aes(x = max(X.mot) - 1, 
+  #                y = 1.5),
+  #            label = substitute(paste0(beta, " = ",
+  #                                      round(as.numeric(mod.r$mo$mod$beta['mot', ]), 2)))
+  #            ) + 
   
   # adjust labels
   labs(y = "Cohen's d", 
