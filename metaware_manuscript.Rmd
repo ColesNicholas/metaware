@@ -309,7 +309,7 @@ We coded several study feature moderators that may help explain variability in d
 
 ### Meta-analytic approach
 
-We used three-level meta-analysis (3LMA; also referred to as "multilevel" meta-analysis), which accommodates nested effect sizes by modeling three sources of variability: sampling error of individual studies (level 1), variability within studies (level 2), and variability between studies (level 3; often referred to as "random effects").
+For our meta-analytic approach, we used three-level meta-analysis (3LMA; also referred to as "multilevel" meta-analysis). Rather than assume that there is a single true effect of demand characteristics, 3LMA assumes that there are *multiple true effects*. To separate variability in these true effects from mere sampling error, 3LMA models three sources of variability: sampling error of individual studies (level 1), variability within studies (level 2), and variability between studies (level 3; often referred to as "random effects").
 
 We fit all models using the metafor package [@R-metafor] in R [version 4.1.2, @R-base]. To estimate the overall effect size, we fit an intercept-only 3LMA model. Unless otherwise specified, we conducted moderator analyses by separately entering dummy-coded categorical factors into the model, which was used to estimate the moderating relationship and the effect size within each subgroup of the moderator. Effect sizes were weighted based on their inverse-variance.
 
@@ -523,7 +523,7 @@ ggplot(data= tmp,
             size = 1,
             hjust = 1) +
   
-  labs(x = "Cohen's d",
+  labs(x = expression(paste("Cohen's ", italic("d"))),
        y = "density") +
   
   # increase plotting area
@@ -533,7 +533,7 @@ ggplot(data= tmp,
   scale_y_continuous(expand = c(.005, 0))
 ```
 
-Although demand characteristics produce more hypothesis-consistent responding *on average*, these effects are not consistent (between-study $\tau$ = `r sqrt(overall$sigma2[1])`; within-study $\sigma$ = `r sqrt(overall$sigma2[2])`; Figure \@ref(fig:forest)). Based on the meta-analytic mean and standard deviation (between-study $\tau$ + within-study $\sigma$), we estimated that *true* demand effects can range from approximately $d$ = `r dist.min` to $d$ = `r dist.max`. For the sake of example, we arbitrarily classified any effect size less than 0.10 standard deviation in either direction as "negligible". Based on this classification, our results indicate that demand characteristics most often produce hypothesis-consistent shifts (`r h.c`%), but sometimes produce negligible shifts (`r 100 - h.c - h.i`%) or shifts in the *opposite* direction of the communicated hypothesis (`r h.i`%).
+As a reminder, rather than assume that there is a single true effect of demand characteristics, our 3LMA approach assumes that there are multiple true effects. Consistent with this assumption, the observed variability in demand effects dramatically exceeded what would be expected from sampling error alone (between-study $\tau$ = `r sqrt(overall$sigma2[1])`; within-study $\sigma$ = `r sqrt(overall$sigma2[2])`; $Q$(`r overall$k - 1`) = `r overall$QE`, $p$ `r printp(overall$QEp)`). 3LMA assumes that the multiple true effects form a normal distribution, which we recreated based on estimates of the average effect size and variability attributed to sources other than sampling error (between-study $\tau$ + within-study $\sigma$). As shown in Figure \@ref(fig:forest), this estimated distribution suggests that demand effects can range from approximately $d$ = `r dist.min` to $d$ = `r dist.max` --- covering the range of most conceivable effects in psychology. For the sake of example, we arbitrarily classified any effect size less than 0.10 standard deviation in either direction as "negligible". Based on this classification, our results indicate that demand characteristics most often produce hypothesis-consistent shifts (`r h.c`%), but sometimes produce negligible shifts (`r 100 - h.c - h.i`%) or shifts in the *opposite* direction of the communicated hypothesis (`r h.i`%).
 
 ### Moderator analyses
 
@@ -597,7 +597,7 @@ mod.r = c(mod.r, mod.r.2)
 rm(mod.r.2)
 ```
 
-```{r modforest, fig.cap = "Selected moderator subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 5.6, fig.width = 5, warning = F}
+```{r modforest, fig.cap = "Selected moderator subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 5.6, fig.width = 6.5, warning = F}
 ## list of moderators
 mod.list <- c("student", "paid", "online", "ref.type", "design")
 
@@ -647,8 +647,8 @@ ggplot(mod.df,
 
   # update labels
   xlab("") + 
-  ylab("Estimated subgroup mean (Cohen's standardized d)") + 
-  
+  ylab(expression(paste("Estimated subgroup mean (Cohen's ", italic("d"), ")"))) +
+
   # clean up aesthetics
   coord_flip() + 
   facet_grid(mod ~ . , scales = "free_y") + 
@@ -659,9 +659,9 @@ ggplot(mod.df,
 rm(mod.df)
 ```
 
-The observed variability in demand effects dramatically exceeded what would be expected from sampling error alone, $Q$(`r overall$k - 1`) = `r overall$QE`, $p$ `r printp(overall$QEp)`. This heterogeneity suggests the existence of moderators.
+When variability in effect sizes exceed what would be expected from sampling error alone, it suggests the presence of moderators. Next, we examine six potential study-level moderators.
 
-The effects of demand characteristics tended to differ by participant pool, $F$(`r mod.r$student$mod$QMdf[1]`, `r mod.r$student$mod$QMdf[2]`) = `r mod.r$student$mod$QM`, $p$ = `r printp(mod.r$student$mod$QMp)`. As shown in Figure \@ref(fig:modforest), effects were generally positive and medium-to-large in studies with students ($d$ = `r mod.r$student$sub$b[3]`, 95% CI [`r mod.r$student$sub$ci.lb[3]`, `r mod.r$student$sub$ci.ub[3]`], $p$ `r printp(mod.r$student$sub$pval[3])`), and near-zero in studies with non-students ($d$ = `r mod.r$student$sub$b[2]`, 95% CI [`r mod.r$student$sub$ci.lb[2]`, `r mod.r$student$sub$ci.ub[2]`], $p$ = `r printp(mod.r$student$sub$pval[2])`) or a mix of students and non-students ($d$ = `r mod.r$student$sub$b[1]`, 95% CI [`r mod.r$student$sub$ci.lb[1]`, `r mod.r$student$sub$ci.ub[1]`], $p$ = `r printp(mod.r$student$sub$pval[1])`). The effects of demand characteristics also tended to be slightly more positive for in-person ($d$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($d$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies; however, this difference was not significant, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)` (Figure \@ref(fig:modforest)).
+Results indicated that the effects of demand characteristics tended to differ by participant pool, $F$(`r mod.r$student$mod$QMdf[1]`, `r mod.r$student$mod$QMdf[2]`) = `r mod.r$student$mod$QM`, $p$ = `r printp(mod.r$student$mod$QMp)`. As shown in Figure \@ref(fig:modforest), effects were generally positive and medium-to-large in studies with students ($d$ = `r mod.r$student$sub$b[3]`, 95% CI [`r mod.r$student$sub$ci.lb[3]`, `r mod.r$student$sub$ci.ub[3]`], $p$ `r printp(mod.r$student$sub$pval[3])`), and near-zero in studies with non-students ($d$ = `r mod.r$student$sub$b[2]`, 95% CI [`r mod.r$student$sub$ci.lb[2]`, `r mod.r$student$sub$ci.ub[2]`], $p$ = `r printp(mod.r$student$sub$pval[2])`) or a mix of students and non-students ($d$ = `r mod.r$student$sub$b[1]`, 95% CI [`r mod.r$student$sub$ci.lb[1]`, `r mod.r$student$sub$ci.ub[1]`], $p$ = `r printp(mod.r$student$sub$pval[1])`). The effects of demand characteristics also tended to be slightly more positive for in-person ($d$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($d$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies; however, this difference was not significant, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)` (Figure \@ref(fig:modforest)).
 
 The effects of demand characteristics were additive. Compared to instances where a demand characteristic condition was compared to a control group ($d$ = `r mod.r$ref.r$sub$b[2]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[2]`, `r mod.r$ref.r$sub$ci.ub[2]`], $p$ = `r printp(mod.r$ref.r$sub$pval[2])`), effect sizes were approximately twice as large when two demand characteristic conditions were compared ($d$ = `r mod.r$ref.r$sub$b[1]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[1]`, `r mod.r$ref.r$sub$ci.ub[1]`], $p$ `r printp(mod.r$ref.r$sub$pval[1])`), $F$(`r mod.r$ref.r$mod$QMdf[1]`, `r mod.r$ref.r$mod$QMdf[2]`) = `r mod.r$ref.r$mod$QM`, $p$ `r printp(mod.r$ref.r$mod$QMp)`. Instances where a demand characteristic condition was compared to a control group allowed us to additionally test whether participants respond more strongly to positive, nil, or negative demand characteristics. Results indicated that they do, $F$(`r mod.r$ref.type$mod$QMdf[1]`, `r mod.r$ref.type$mod$QMdf[2]`) = `r mod.r$ref.type$mod$QM`, $p$ = `r printp(mod.r$ref.type$mod$QMp)`. As shown in Figure \@ref(fig:modforest), the effect of demand characteristics tended to be nearly twice as large in the nil ($d$ = `r mod.r$ref.type$sub$b[2]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[2]`, `r mod.r$ref.type$sub$ci.ub[2]`], $p$ `r printp(mod.r$ref.type$sub$pval[2])`) vs. positive ($d$ = `r mod.r$ref.type$sub$b[1]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[1]`, `r mod.r$ref.type$sub$ci.ub[1]`], $p$ = `r printp(mod.r$ref.type$sub$pval[1])`), and negative demand conditions ($d$ = `r mod.r$ref.type$sub$b[3]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[3]`, `r mod.r$ref.type$sub$ci.ub[3]`], $p$ = `r printp(mod.r$ref.type$sub$pval[3])`). In other words, participants' responses most strongly shift when researchers communicate that *no* effect is expected.
 
@@ -719,11 +719,11 @@ m.sens.pay <- anova(m.sens, btt = c(4))
 
 The above moderator analyses indicated that demand characteristics tend to produce larger increases in hypothesis-consistent responding when students are sampled, studies are run in-person, and participants are uncompensated. However, an exploratory inspection of the data revealed that these variables are correlated. For example, effect size estimates were more likely to be based on student samples for in-person (`r in.s`%) vs. online (`r on.s`%) studies. Effect size estimates were also more likely to be based on student samples for unpaid (`r v.s`%) vs. paid (`r p.s`%) studies.
 
-As an exploratory robustness check, we fit a 3LMA with student status, data collection medium, and payment status entered as effect-coded factors. This exploratory analysis indicated that student status -- but not data collection medium (*F*(`r m.sens.online$QMdf[1]`, `r m.sens.online$QMdf[2]`) = `r m.sens.online$QM`, *p* = `r printp(m.sens.online$QMp)`) or payment status (*F*(`r m.sens.pay$QMdf[1]`, `r m.sens.pay$QMdf[2]`) = `r m.sens.pay$QM`, *p* = `r printp(m.sens.pay$QMp)`) -- was a significant moderator of demand effects, *F*(`r m.sens.student$QMdf[1]`, `r m.sens.student$QMdf[2]`) = `r m.sens.student$QM`, *p* = `r printp(m.sens.student$QMp)`. In other words, only student status was robustly associated with differences in demand effects in a more complex model.
+As an exploratory robustness check, we fit a 3LMA with student status, data collection medium, and payment status simultaneously entered as effect-coded factors. Doing so allowed us to estimate the moderating effect of each factor while holding the effects of the other factors constant. This exploratory analysis indicated that student status -- but not data collection medium (*F*(`r m.sens.online$QMdf[1]`, `r m.sens.online$QMdf[2]`) = `r m.sens.online$QM`, *p* = `r printp(m.sens.online$QMp)`) or payment status (*F*(`r m.sens.pay$QMdf[1]`, `r m.sens.pay$QMdf[2]`) = `r m.sens.pay$QM`, *p* = `r printp(m.sens.pay$QMp)`) -- was a significant moderator of demand effects, *F*(`r m.sens.student$QMdf[1]`, `r m.sens.student$QMdf[2]`) = `r m.sens.student$QM`, *p* = `r printp(m.sens.student$QMp)`. In other words, when attempting to isolate the unique effect of these three factors, only student status was robustly associated with differences in demand effects.
 
 ### Estimating demand effects in specific study contexts
 
-```{r predplot, fig.cap = "Estimated overall effect of positive demand characteristics in a  classic experimental setting (in-person studies testing positive effects with volunteer student samples) and an online worker setting (online studies testing positive effects with paid non-student samples).", fig.height = 5, fig.width = 5, warning = F}
+```{r predplot, fig.cap = "Estimated overall effects (dot) and 95% confidence intervals (error bars) of positive demand characteristics in a classic experimental setting (in-person studies testing positive effects with volunteer student samples) and an online worker setting (online studies testing positive effects with paid non-student samples).", fig.height = 3, fig.width = 6.5, warning = F}
 # set R back to default contrasts
 options(contrasts = c("contr.treatment", "contr.poly"))
 
@@ -798,7 +798,7 @@ ggplot(pred_df, aes(x = level, y = beta)) +
   # aes
   xlab("") + 
   coord_flip() + 
-  ylab("Estimated overall effect (Cohen's standardized d)") + 
+  ylab(expression(paste("Estimated overall effect (Cohen's ", italic("d"), ")"))) +
   theme_classic() + 
   theme(axis.text.x = element_text(angle = 90, vjust = .5,  hjust=1))
 ```
@@ -1000,7 +1000,7 @@ a <- ggplot(data = tmp,
                      expand = c(.01, .01)) +
   geom_vline(xintercept = overall$b[1],
              linetype = "dotted") +
-  labs(x = "Cohen's d", 
+  labs(x = expression(paste("Cohen's ", italic("d"))), 
        y = "Standard error")
 
 # delete vestigial
@@ -1057,7 +1057,7 @@ b <- ggplot(data = tmp,
                      expand = c(.01, .01)) +
   geom_vline(xintercept = tmp.meta$b[1],
              linetype = "dotted") +
-  labs(x = "Cohen's d",
+  labs(x = expression(paste("Cohen's ", italic("d"))),
        y = "")
 
 # delete vestigial
@@ -1145,7 +1145,7 @@ rm(survey.DF, survey.n, survey.gend,
    survey.eth, survey.age.m, survey.age.sd)
 ```
 
-Using a web-based Qualtrics survey, a convenience sample of `r survey.dem$n` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit (`r survey.dem$gend[1]`% female; `r survey.dem$gend[3]`% male, `r survey.dem$gend[6]`% did not report gender; `r survey.dem$gend[2] + survey.dem$gend[4] + survey.dem$gend[5]`% transgender or gender non-conforming). `r survey.dem$ethnicity[7]`% of participants reported they were White/Caucasian, `r survey.dem$ethnicity[2]`% Asian, `r survey.dem$ethnicity[3]`% Black/African American, and `r survey.dem$ethnicity[4]`% Native Hawaiian or Other Pacific Islander. `r survey.dem$ethnicity[5]`% of participants indicated that there ethnicity could not be described by any single provided category, and `r survey.dem$ethnicity[6]`% did not report ethnicity. The average participant age was `r survey.dem$age.m` ($SD$ = `r survey.dem$age.sd`). Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester).
+Using a web-based Qualtrics survey, a convenience sample of `r survey.dem$n` undergraduates from Stanford University reviewed 10 randomly-selected vignettes in exchange for course credit (`r survey.dem$gend[1]`% female; `r survey.dem$gend[3]`% male, `r survey.dem$gend[6] %>% round(0)`% did not report gender; `r survey.dem$gend[2] + survey.dem$gend[4] + survey.dem$gend[5]`% transgender or gender non-conforming). `r survey.dem$ethnicity[7]`% of participants reported they were White/Caucasian, `r survey.dem$ethnicity[2] %>% round(0)`% Asian, `r survey.dem$ethnicity[3]`% Black/African American, and `r survey.dem$ethnicity[4] %>% round(0)`% Native Hawaiian or Other Pacific Islander. `r survey.dem$ethnicity[5]`% of participants indicated that there ethnicity could not be described by any single provided category, and `r survey.dem$ethnicity[6] %>% round(0)`% did not report ethnicity. The average participant age was `r survey.dem$age.m` ($SD$ = `r survey.dem$age.sd`). Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester).
 
 For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving an irrelevant dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would hypothetically (1) be motivated to adjust responses based on the researcher's hypothesis (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) believe the experimenter's hypothesis (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed participants would change their responses to confirm the hypothesis. These questions were presented in random order.
 
@@ -1200,16 +1200,9 @@ m <- ggplot(data = mot.df,
                   ymax = ci.ub), 
               alpha = .10,
               fill = "#3366FF") +
-  # 
-  # # add summary statistics
-  # geom_label(aes(x = max(X.mot) - 1, 
-  #                y = 1.5),
-  #            label = substitute(paste0(beta, " = ",
-  #                                      round(as.numeric(mod.r$mo$mod$beta['mot', ]), 2)))
-  #            ) + 
   
   # adjust labels
-  labs(y = "Cohen's d", 
+  labs(y = expression(paste("Cohen's ", italic("d"))), 
        x = "motivation ratings")
 
 rm(mot.df)
@@ -1584,7 +1577,7 @@ m.b <- m.b %>% summary()
 m.b.conf[m.b.conf$param == 'trial1:demand1:bel.c', ]$lb
 ```
 
-The previous analyses provide evidence that participants' beliefs -- and potentially also their motivation to provide hypothesis consistent responses -- moderate facial feedback effects. They do not, however, test whether these factors drive the effects of *demand characteristics*. In other words, are there three-way interactions between (1) facial poses, (2) demand characteristics, and (3) ratings of motivation, opportunity, and/or belief? For each of these potential moderators, we fit separate mixed-effect regressions containing (a) facial pose and demand characteristics as effect-coded factors, (b) the potential moderator entered mean-centered as a continuous variable, (c) all higher-order interactions, and (d) random intercepts for participants. 
+The previous analyses provide evidence that participants' beliefs -- and potentially also their motivation to provide hypothesis consistent responses -- moderate facial feedback effects. They do not, however, test whether these factors drive the effects of *demand characteristics*. In other words, are there three-way interactions between (1) facial poses, (2) demand characteristics, and (3) ratings of motivation, opportunity, and/or belief? For each of these potential moderators, we fit separate mixed-effect regressions containing (a) facial pose and demand characteristics as effect-coded factors, (b) the potential moderator entered mean-centered as a continuous variable, (c) all higher-order interactions, and (d) random intercepts for participants.
 
 Results did not indicate that that there was a three-way interaction between facial poses, demand characteristics, and participants' self-reported motivation to provide hypothesis-consistent responses, $\beta$ = `r m.m[["coefficients"]]["trial1:demand1:mot.c", "Estimate"]`, 95% CI [`r m.m.conf[m.m.conf$param == 'trial1:demand1:mot.c', ]$lb`, `r m.m.conf[m.m.conf$param == 'trial1:demand1:mot.c', ]$ub`], *t*(`r m.m[["coefficients"]]["trial1:demand1:mot.c", "df"]`) = `r m.m[["coefficients"]]["trial1:demand1:mot.c", "t value"]`, *p* = `r printp(m.m[["coefficients"]]["trial1:demand1:mot.c", "Pr(>|t|)"])`. We also did not find evidence of a three-way interaction between facial poses, demand characteristics, and participants' self-reported opportunity to adjust responses, $\beta$ = `r m.o[["coefficients"]]["trial1:demand1:opp.c", "Estimate"]`, 95% CI [`r m.o.conf[m.o.conf$param == 'trial1:demand1:opp.c', ]$lb`, `r m.o.conf[m.o.conf$param == 'trial1:demand1:opp.c', ]$ub`], *t*(`r m.o[["coefficients"]]["trial1:demand1:opp.c", "df"]`) = `r m.o[["coefficients"]]["trial1:demand1:opp.c", "t value"]`, *p* = `r printp(m.o[["coefficients"]]["trial1:demand1:opp.c", "Pr(>|t|)"])`. We did, however, find robust evidence of a three-way interaction involving self-reported belief in facial feedback effects. Specifically, the interaction between facial poses and demand characteristics ($\beta$ = `r m.b[["coefficients"]]["trial1:demand1", "Estimate"]`, 95% CI[`r m.b.conf[m.b.conf$param == 'trial1:demand1', ]$lb`, `r m.b.conf[m.b.conf$param == 'trial1:demand1', ]$ub`], *t*(`r m.b[["coefficients"]]["trial1:demand1", "df"]`) = `r m.b[["coefficients"]]["trial1:demand1", "t value"] %>% round(2)`, *p* = `r printp(m.b[["coefficients"]]["trial1:demand1", "Pr(>|t|)"])`) tended to be larger among participants with higher belief ratings, $\beta$ = `r m.b[["coefficients"]]["trial1:demand1:bel.c", "Estimate"]`, 95% CI [`r m.b.conf[m.b.conf$param == 'trial1:demand1:bel.c', ]$lb`, `r m.b.conf[m.b.conf$param == 'trial1:demand1:bel.c', ]$ub`], *t*(`r m.b[["coefficients"]]["trial1:demand1:bel.c", "df"]`) = `r m.b[["coefficients"]]["trial1:demand1:bel.c", "t value"]`, *p* `r printp(m.b[["coefficients"]]["trial1:demand1:bel.c", "Pr(>|t|)"])`.
 
