@@ -1,10 +1,10 @@
-## ----setup and load packages, include = FALSE------------------------------
+## ----setup and load packages, include = FALSE-------------------------------------------------------------------------
 # load libraries
 library("tidyverse")
 library("readxl")
 
 
-## ----open/clean data, message = FALSE, warning = FALSE---------------------
+## ----open/clean data, message = FALSE, warning = FALSE----------------------------------------------------------------
 # import data
 DF <- read_xlsx(path = "data/metaware_EsData_raw.xlsx",
                 sheet = "coding",
@@ -49,7 +49,7 @@ DF$es <- NA
 DF$es.var <- NA
 
 
-## ----define function EsBetwMean--------------------------------------------
+## ----define function EsBetwMean---------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 226
 EsBetwMean <- function(n.1, m.1, sd.1, 
                        n.2, m.2, sd.2){
@@ -62,7 +62,7 @@ EsBetwMean <- function(n.1, m.1, sd.1,
 }
 
 
-## ----define function EsBetwTval--------------------------------------------
+## ----define function EsBetwTval---------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsBetwTval <- function(n.1, n.2, tval){
     es <- tval * sqrt((n.1 + n.2) / 
@@ -71,7 +71,7 @@ EsBetwTval <- function(n.1, n.2, tval){
 }
 
 
-## ----define function EsBetwFval--------------------------------------------
+## ----define function EsBetwFval---------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsBetwFval <- function(n.1, n.2, fval){
   es <- sqrt((fval * (n.1 + n.2)) / 
@@ -80,7 +80,7 @@ EsBetwFval <- function(n.1, n.2, fval){
   }
 
 
-## ----define function EsBetwPval--------------------------------------------
+## ----define function EsBetwPval---------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsBetwPval <- function(n.1, n.2, pval){
   # calculate the inverse of the cumulative distribution function of t
@@ -94,7 +94,7 @@ EsBetwPval <- function(n.1, n.2, pval){
 }
 
 
-## ----define function EsVarBetw---------------------------------------------
+## ----define function EsVarBetw----------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 228
 EsVarBetw <- function(n.1, n.2, es){       
    es.var <- ((n.1 + n.2) / (n.1 * n.2)) +
@@ -103,7 +103,7 @@ EsVarBetw <- function(n.1, n.2, es){
 }
 
 
-## ----define functions EsBetwCount and EsVarBetwCount-----------------------
+## ----define functions EsBetwCount and EsVarBetwCount------------------------------------------------------------------
 # cohen's d
 EsBetwCount <- function(n.1, n.2, count.1, count.2){
   # calculate odds ratio
@@ -137,7 +137,7 @@ EsVarBetwCount <- function(n.1, n.2, count.1, count.2){
 }
 
 
-## ----b: call functions to calculate d--------------------------------------
+## ----b: call functions to calculate d---------------------------------------------------------------------------------
 for (i in 1:nrow(DF)) {
   if (DF$design[i] == "between"){
     
@@ -194,7 +194,7 @@ for (i in 1:nrow(DF)) {
 }
 
 
-## ----assumed correlation---------------------------------------------------
+## ----assumed correlation----------------------------------------------------------------------------------------------
 # if no correlation is defined, set it at .5
 # Note: there is sensitivity analysis code that will set a correlation and then re-execute this script (metaware_DataProcessingSens.Rmd)
 if(!exists("corr")){
@@ -202,7 +202,7 @@ if(!exists("corr")){
 }
 
 
-## ----EsWitnMean------------------------------------------------------------
+## ----EsWitnMean-------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 229
 # formula for imputing sd.diff:
 # http://handbook.cochrane.org/chapter_16/16_4_6_1_mean_differences.htm
@@ -215,7 +215,7 @@ EsWitnMean <- function(m.1, sd.1, m.2, sd.2, corr){
 }
 
 
-## ----EsWitnTval------------------------------------------------------------
+## ----EsWitnTval-------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 229
 EsWitnTval <- function(n.1, tval, corr){
   es <- tval * sqrt((2 * (1 - corr)) / n.1);
@@ -223,7 +223,7 @@ EsWitnTval <- function(n.1, tval, corr){
 }
 
 
-## ----EsWitnFval------------------------------------------------------------
+## ----EsWitnFval-------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 229
 EsWitnFval <- function(n.1, fval, corr){
   es <- sqrt((2 * fval * (1- corr)) / n.1);
@@ -231,7 +231,7 @@ EsWitnFval <- function(n.1, fval, corr){
 }
 
 
-## ----EsVarWitn-------------------------------------------------------------
+## ----EsVarWitn--------------------------------------------------------------------------------------------------------
 # formula: Cooper, Hedges, & Valentine, 2009; p. 229
 EsVarWitn <- function(n.1, es){
   es.var <- ((1 / n.1) + 
@@ -241,7 +241,7 @@ EsVarWitn <- function(n.1, es){
 }
 
 
-## ----w: call functions to calculate d--------------------------------------
+## ----w: call functions to calculate d---------------------------------------------------------------------------------
 for (i in 1:nrow(DF)) {
   if (DF$design[i] == "within"){
     
@@ -276,7 +276,7 @@ for (i in 1:nrow(DF)) {
   
 
 
-## ----del var---------------------------------------------------------------
+## ----del var----------------------------------------------------------------------------------------------------------
 # delete objects we no longer need
 rm(corr, i,
    EsBetwFval, EsBetwMean, EsBetwTval,
@@ -285,7 +285,7 @@ rm(corr, i,
    EsBetwCount, EsVarBetwCount)
 
 
-## ----specify es direction--------------------------------------------------
+## ----specify es direction---------------------------------------------------------------------------------------------
 DF <- DF %>% 
   # specify direction of the effect size
   rowwise() %>% 
@@ -296,12 +296,12 @@ DF <- DF %>%
   ungroup()
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------
 DF <- DF %>% 
   select(-c(es.calc : pval))
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------
 # import data
 DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>%
   
@@ -366,7 +366,7 @@ DF.surv <- DF.surv %>%
             as.numeric)
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------
 DF.surv <- DF.surv %>% 
   
   # identify whether the researcher hypothesis was pos, neg, or nil
@@ -403,7 +403,7 @@ DF.surv[DF.surv$vig == "28_p_dis" &
           DF.surv$awr == 2, ]$att.chk = 1
 
 
-## ----eval = F--------------------------------------------------------------
+## ----eval = F---------------------------------------------------------------------------------------------------------
 ## # proportion of participants who passed the attention check
 ## DF.surv %>%
 ##   summarise(m = mean(att.chk,
@@ -426,12 +426,12 @@ DF.surv[DF.surv$vig == "28_p_dis" &
 ##   arrange(m)
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------
 DF.surv <- DF.surv %>% 
   filter(att.chk == 1)
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------
 surv.sum <- DF.surv %>% 
   group_by(vig) %>% 
   summarise(m.mot = mean(mot, na.rm = T),
@@ -445,7 +445,7 @@ surv.sum <- DF.surv %>%
 rm(DF.surv)
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------
 # connect summary data to effect size dataframe
 DF <- DF %>% 
   # join vig.1 data
@@ -507,7 +507,7 @@ DF <- DF %>%
          mot : pre)
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------
 # import data
 DF.surv2 <- 
   read_csv(file = "data/metaware_SurvData_raw.csv")
@@ -688,7 +688,7 @@ DF.surv2$bel.c = scale(DF.surv2$bel,
                        scale = F) %>% as.numeric()
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------
 if(!exists("sens")){
   write.csv(DF, 
             "data/metaware_meta_clean.csv", 
@@ -696,7 +696,7 @@ if(!exists("sens")){
 }
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------
 write.csv(DF.surv2,
           "data/metaware_replication_clean.csv",
           row.names = F)
