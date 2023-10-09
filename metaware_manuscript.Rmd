@@ -1092,7 +1092,7 @@ vig.n <- read.csv(file = "admin/vig/metaware_VigCombined.csv") %>%
   nrow()
 ```
 
-For each study in the meta-analysis, we created vignettes that described the key details for each demand characteristic condition and dependent variable combination. For example, @standing2008demonstration had two demand characteristic manipulations (positive and negative demand) and two dependent variables (measures of verbal and spatial reasoning). Thus, we created four vignettes for this study (see Figure \@ref(fig:vig)).
+For each study in the meta-analysis, we created vignettes that described the key details for each demand characteristic condition and dependent variable combination [for a similar approach, see @corneille2023instruction]. For example, @standing2008demonstration had two demand characteristic manipulations (positive and negative demand) and two dependent variables (measures of verbal and spatial reasoning). Thus, we created four vignettes for this study (see Figure \@ref(fig:vig)).
 
 In total, there were `r vig.n` vignettes. We did not create vignettes for control conditions because participants were not given information about the experimenter's hypothesis. Because there were no explicit demand characteristics to act upon, we left motivation, belief, and opportunity values blank for this condition.
 
