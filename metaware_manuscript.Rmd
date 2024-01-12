@@ -39,9 +39,9 @@ affiliation:
 authornote: |
   All materials, data, code, and pre-registrations (for Studies 1 and 2) are openly available at https://osf.io/3hkre/. This work was supported by the John Templeton Foundation (grant # 62295). The funder had no role in the preparation of the manuscript or decision to publish. We thank (1) Morgan H. Wyatt for assistance with the meta-analysis and code review, (2) Anjie Cao for assistance with code review, and (3) John Borghi for assistance developing the literature search strategy.
 abstract: |
-  Demand characteristics are a fundamental methodological concern in experimental psychology. Yet, little is known about the direction, magnitude, consistency, and mechanisms underlying their effects. We conducted a meta-analysis of 195 effect sizes from 40 studies that provided experimental tests of demand effects by manipulating the hypothesis communicated to participants. Results indicated that demand characteristics tend to produce small overall increases in hypothesis-consistent responding (*d* = 0.22, 95% CI [0.11, 0.33]). However, these effects were extremely heterogeneous (between-study $\tau$ = 0.31; within-study $\sigma$ = 0.20), with the estimated distribution of true effects ranging from *d* = 1.98 (a massive increase in hypothesis-consistent responding) to *d* = -1.44 (a massive increase in hypothesis-*in*consistent responding). Contrary to conventional motivation accounts, we did not find evidence that demand effects were driven by participants’ motivation or opportunity to adjust their responses. We did, however, find robust evidence for accounts that emphasize the role of participants’ expectancies about the hypothesized effects. Similar findings emerged in a direct replication of one recent study included in the meta-analysis. Taken together, results underscore the importance of considering expectancy-based artifacts in experimental design.
+  Demand characteristics are a fundamental methodological concern in experimental psychology. Yet, little is known about the direction, magnitude, consistency, and mechanisms underlying their effects. We conducted a meta-analysis of 195 effect sizes from 40 studies that provided experimental tests of demand effects by manipulating the hypothesis communicated to participants. Results indicated that demand characteristics tend to produce small overall increases in hypothesis-consistent responding (*d* = 0.22, 95% CI [0.11, 0.33]). However, these effects were extremely heterogeneous (between-study $\tau$ = 0.31; within-study $\sigma$ = 0.20), with the estimated distribution of true effects ranging from *d* = 1.98 (a massive increase in hypothesis-consistent responding) to *d* = -1.44 (a massive increase in hypothesis-*in*consistent responding). Contrary to conventional motivation accounts, we did not find evidence that demand effects were driven by participants’ motivation or opportunity to adjust their responses. We did, however, find robust evidence for accounts that emphasize the role of participants’ expectancies about the hypothesized effects. Similar findings emerged in a direct replication of one recent study included in the meta-analysis. Taken together, results underscore the importance -- and challenges-- of understanding and controlling for demand characteristics in experimental design.
   
-keywords          : "demand characteristics, expectancies, placebo, research methods, meta-analysis"
+keywords          : "demand characteristics, expectancies, placebo, confounds, research methods, meta-analysis"
 bibliography      : "r-references.bib"
 floatsintext      : yes
 linenumbers       : no
@@ -111,9 +111,9 @@ Historically, there has been little agreement about how demand characteristics a
 
 Broadly speaking, *motivation accounts* posit that demand effects are mediated by participants' motivation (or lack thereof) to provide hypothesis-consistent responses [@rosnow1973mediation; @strohmetz2008research]. One of the most influential motivation accounts of demand characteristics was developed by @rosnow1997people, who proposed three key moderators: (1) receptivity to cues, (2) motivation to provide hypothesis-consistent responses, and (3) opportunity to alter responses (Figure \@ref(fig:framework)). To start, @rosnow1997people reasoned that participants must be receptive to demand characteristics for there to be response bias [see also @rosnow1973mediation; @strohmetz2008research]. As an extreme example, imagine that a researcher hands an infant a sheet of paper that precisely explains the study hypothesis. Demand characteristics are certainly present, but they are not predicted to have an impact because the infant is not receptive to the cues. We mention this moderator for the sake of comprehensiveness, but we will largely focus the rest of the paper on the two other proposed moderators: motivation and opportunity.
 
-If and when participants noticed demand characteristics, @rosnow1997people theorized that subsequent changes in participants' responses would then be driven by their motivation (or lack thereof) to provide hypothesis-consistent responses. Early work on demand characteristics focused on different characterizations of participants' motivation, debating the extent to which they are motivated to adjust their responses to (a) help the researcher confirm their hypothesis [@orne1962social], (b) receive positive evaluations [@riecken1962program; @rosenberg1969conditions; @sigall1970cooperative], (c) interfere with the purpose of the study [@cook1970demand; @masling1966role], or (d) follow directions as closely as possible [@fillenbaun1970more]. @rosnow1997people, however, advanced these ideas by demonstrating that participants have multiple shifting motivations in mind when they conceptualize their roles as subjects [@rosnow1997people]. For example, participants appear to be motivated to increase performance on simple tasks when told that this is the experimenter's expectation -- but not when the experimenter adds that this increase in performance will be indicative of a negative personality trait [@sigall1970cooperative]. @rosnow1997people, thus, suggested that participants in any given context can be characterized as being overall motivated to either: (a) non-acquiesce (i.e., not change their responses based on knowledge about the hypothesis), (b) acquiesce (i.e., provide hypothesis-consistent responses), or (c) counter-acquiesce (i.e., provide hypothesis-inconsistent responses).
+If and when participants noticed demand characteristics, @rosnow1997people theorized that subsequent changes in participants' responses would then be driven by their motivation (or lack thereof) to provide hypothesis-consistent responses. Early work on demand characteristics was marked by diebates about whether participants are motivated to adjust their responses to (a) help the researcher confirm their hypothesis [@orne1962social], (b) receive positive evaluations [@riecken1962program; @rosenberg1969conditions; @sigall1970cooperative], (c) interfere with the purpose of the study [@cook1970demand; @masling1966role], or (d) follow directions as closely as possible [@fillenbaun1970more]. @rosnow1997people, however, advanced these ideas by demonstrating that participants have *multiple* shifting motivations in mind when they conceptualize their roles as subjects [@rosnow1997people]. For example, participants appear to be motivated to increase performance on simple tasks when told that this is the experimenter's expectation -- but not when the experimenter adds that the increase in performance will be indicative of a negative personality trait [@sigall1970cooperative]. @rosnow1997people, thus, suggested that participants in any given context can be characterized as being overall motivated to either: (a) non-acquiesce (i.e., not change their responses based on knowledge about the hypothesis), (b) acquiesce (i.e., provide hypothesis-consistent responses), or (c) counter-acquiesce (i.e., provide hypothesis-inconsistent responses).
 
-If participants are motivated to adjust their response, @rosnow1997people theorized that subsequent changes in participants' responses would then be driven by their ability to alter the outcome of interest. For example, participants can more readily alter responses to self-report measures of prejudice, as opposed to reaction-time-based measures like the Implicit Association Test [@greenwald1998measuring]. Taking this third moderator -- opportunity -- into account, Rosnow and Rosenthal concluded that demand characteristics only produce response biases when participants (1) notice the cues, (2) are motivated to adjust their responses, and (3) can adjust their responses.[^1] This framework directly maps onto psychologists' playbook for avoiding the impact of demand characteristics: use deception (reduce receptivity), incentivize honest reporting (reduce motivation), and/or deploy difficult-to-control outcome measures (reduce opportunity to adjust responses). However, we next turn our attention to a mechanism that is more challenging to eliminate: expectancies.
+If participants are motivated to adjust their response, @rosnow1997people theorized that subsequent changes in participants' responses would then be driven by their ability to alter the outcome of interest. For example, participants can more readily alter responses to self-report measures of prejudice, as opposed to reaction-time-based measures like the Implicit Association Test [@greenwald1998measuring]. Taking this third moderator -- opportunity -- into account, Rosnow and Rosenthal concluded that demand characteristics only produce response biases when participants (1) notice the cues, (2) are motivated to adjust their responses, and (3) can adjust their responses.[^1] This influential framework directly maps onto psychologists' playbook for avoiding the impact of demand characteristics: use deception (reduce receptivity), incentivize honest reporting (reduce motivation), and/or deploy difficult-to-control outcome measures (reduce opportunity to adjust responses). However, we next turn our attention to a mechanism that is more challenging to eliminate: expectancies.
 
 [^1]: Although outside the scope of our review, it is worth noting that some theorists believe that motivation-based mechanisms can produce demand effects even when participants do not have the opportunity to adjust their responses. For example, @corneille2022sixty suggested that motivated participants can exhibit motivation-driven changes in responses by imagining the hypothesized effect. They also raise the possibility that participants can sometimes be unaware that they produced the effect via imagination, an idea referred to as phenomenological control.
 
@@ -121,11 +121,11 @@ If participants are motivated to adjust their response, @rosnow1997people theori
 
 Whereas motivation accounts emphasize the role of participants' motivation to provide hypothesis-consistent responses, *expectancy accounts* developed in related work on placebo [@stewart2004placebo] and mindset [@zion2018mindsets] effects raise a different possibility: demand effects may be mediated by the extent to which participants expect the hypothesized effect to emerge. As an example of this distinction, imagine that a participant knows that a researcher expects an intervention to boost mood. On one hand, a motivation account might predict that participants will intentionally adjust their mood reports because they are motivated to help the experimenter confirm their hypothesis (an idea sometimes referred to as a "good subject effect"). On the other hand, an expectancy account might predict that participants will unintentionally experience a change in mood due to the activation and/or shaping of expectancies.
 
-In a review on placebo effects, @stewart2004placebo provided a framework that can be extended to demand effects. In this framework, they suggested that placebo effects can be driven both by previously-learned associations (e.g., via classical conditioning) and newly presented information (e.g., demand characteristics). Although @stewart2004placebo never mentioned demand characteristics, demand effects are conceptually similar to what they describe as "nonpharmacological placebo effects in humans," which they hypohesized are "mediated entirely by expectancies" (p. 338).
+In a review on placebo effects, @stewart2004placebo provided a framework that can be extended to demand effects. In this framework, they suggested that placebo effects can be driven both by previously-learned associations (e.g., via classical conditioning) and newly presented information (e.g., demand characteristics). Although @stewart2004placebo never mentioned demand characteristics, demand effects are conceptually similar to what they describe as "nonpharmacological placebo effects in humans," which they hypothesized are "mediated entirely by expectancies" (p. 338).
 
 ## Hybrid accounts
 
-@coles2022fact recently revisited arguments that demand characteristics can impact participants' responses via *both* motivation- and expectancy-based mechanisms. Consistent with this reasoning, @coles2022fact found that participants' expectations about facial feedback effects did not always match the hypothesis communicated in the demand characteristics manipulation; Some participants, for example, said they believed facial feedback effects were real despite being told that the researcher hypothesized the opposite. Furthermore, both the communicated hypothesis and measures of participants' expectations moderated the effects of posed expressions on emotion. This finding bolstered claims that demand characteristics can impact participants responses via both motivation- and expectancy-based mechanisms, the latter which may operate even when participants have neither the motivation nor the opportunity to adjust their responses.
+A third possibility recently discussed by @coles2022fact is that demand effects are mediated by *both* motivation- and expectancy-based mechanisms. Consistent with this reasoning, @coles2022fact found that participants' expectations about facial feedback effects did not always match the hypothesis communicated in the demand characteristics manipulation; Some participants, for example, said they believed facial feedback effects were real despite being told that the researcher hypothesized the opposite. Furthermore, both the communicated hypothesis and measures of participants' expectations moderated the effects of posed expressions on emotion. This finding bolsters claims that demand characteristics can impact participants responses via both motivation- and expectancy-based mechanisms, the latter which may operate even when participants have neither the motivation nor the opportunity to adjust their responses.
 
 ```{r framework, fig.cap = "Examples of expectancy (Stewart-Williams & Podd, 2004), motivation (Rosnow and Rosenthal, 1997) and hybrid (Coles, Gaertner, et al., 2022) frameworks for conceptualizing how demand characteristics can lead to increases (green), decreases (red), or no shift (light grey) in hypothesis-consistent responding."}
 knitr::include_graphics("images/metaware_framework.png")
@@ -133,9 +133,9 @@ knitr::include_graphics("images/metaware_framework.png")
 
 ## The current paper
 
-The goal of the current paper is to take stock of the literature on demand characteristics: what is the overall expected effect, how reliable is the effect, and what types of study features and psychological processes may moderate the effect? In Study 1, we report a meta-analysis of strict experimental tests of the effects of demand characteristics. We then examine several study features (e.g., whether participants are paid) that may moderate these effects. In Study 2, we report an extension of the meta-analysis that examines whether observed effect size variability can be explained by factors commonly discussed in motivation accounts (i.e., motivation and opportunity to adjust responses) and expectancy accounts (i.e., expectations about the hypothesized effect). To conduct this moderation analysis, we derived estimates of these factors from a new set of raters. These raters read descriptions of each study in the meta-analysis and then reported the extent to which they hypothetically would have (a) been motivated to confirm the experimenter's hypothesis, (b) had the opportunity to adjust their responses, and (c) believed the hypothesized effect would occur. We also examined how well these raters could predict the effects of demand characteristic manipulations in the meta-analysis.
+The goal of the current paper is to take stock of the literature on demand characteristics: what is the overall expected effect, how reliable is the effect, and what types of study features and psychological processes moderate the effect? In Study 1, we report a meta-analysis of strict experimental tests of the effects of demand characteristics. We then examine several study features (e.g., whether participants are paid) that may moderate these effects. In Study 2, we report an extension of the meta-analysis that examines whether observed effect size variability can be explained by factors commonly discussed in motivation accounts (i.e., motivation and opportunity to adjust responses) and expectancy accounts (i.e., expectations about the hypothesized effect). To conduct this moderation analysis, we derived estimates of these factors from a new set of raters. These raters read descriptions of each study in the meta-analysis and then reported the extent to which they hypothetically would have (a) been motivated to confirm the experimenter's hypothesis, (b) had the opportunity to adjust their responses, and (c) believed the hypothesized effect would occur. We also examined how well these raters could predict the effects of demand characteristic manipulations in the meta-analysis.
 
-Although meta-analysis allows us to bring a large body of data to bear on the question, it is limited in its ability to address our key research questions, both by the heterogeneity of the literature and by our inability to measure moderators directly [@simonsohn2022above]. Thus, in Study 3, we report a replication experiment that re-examines motivation and expectancy accounts. In this replication, we manipulated demand characteristics in an experiment on the effects of facial poses on emotional experience [@coles2019meta; @coles2022multi]. We then examined the extent to which the effect was moderated by motivation to adjust responses, opportunity to adjust responses, and expectations about the hypothesized effect -- allowing us to gather measurements directly related to the general theoretical accounts of interest.
+Although meta-analysis allows us to bring a large body of data to bear on questions about demand characteristics, heterogeneity and an inability to directly measure motivation and expectations in the existing literature limit any conclusions [@simonsohn2022above]. Thus, in Study 3, we report a replication experiment that re-examines motivation and expectancy accounts. In this replication, we manipulated demand characteristics in an experiment on the effects of facial poses on emotional experience [@coles2019meta; @coles2022multi]. We then examined the extent to which the effect was moderated by motivation to adjust responses, opportunity to adjust responses, and expectations about the hypothesized effect -- allowing us to gather measurements directly related to motivation and expectancy accounts of demand effects.
 
 # Study 1
 
@@ -143,7 +143,7 @@ Study 1 was designed to provide a quantitative synthesis of demand effects via m
 
 ## Methodology
 
-We defined the scope of the meta-analysis using the Population, Intervention, Comparison, Outcome framework [@schardt2007utilization]. Our population-of-interest was human subjects participating in non-clinical studies. We excluded clinical studies so that we could focus on research that better isolates the discipline (experimental psychology) and mechanisms (motivation accounts) most conventionally discussed in the demand characteristics literature. Given that there is a sizable literature on placebo effects, excluding clinical studies also improved the feasibility of the meta-analysis.
+We defined the scope of the meta-analysis using the Population, Intervention, Comparison, Outcome framework [@schardt2007utilization]. Our population-of-interest was human subjects participating in non-clinical studies. We excluded clinical studies so that we could focus on research that better isolates the discipline (experimental psychology) and mechanisms (motivation accounts) most *conventionally* discussed in the demand characteristics literature. Given that there is a sizable literature on placebo effects, excluding clinical studies also improved the feasibility of the meta-analysis.
 
 The intervention-of-interest was explicit manipulations of the hypothesis communicated to participants -- i.e., scenarios where a researcher tells participants about the effect of an independent variable on a dependent variable. Demand characteristics are sometimes defined as *any* cue that may impact participants' beliefs about the purpose of the study, including instructions, rumors, and experimenter behavior [@orne1962social]. However, such a definition creates a potentially boundless conceptual space where any systematic change in a research design might be considered a test of demand characteristics. To bound and simplify the conceptual space, we focused on explicit manipulations of the hypothesis communicated to participants.
 
@@ -317,7 +317,7 @@ We coded several study feature moderators that may help explain variability in d
 
 For our meta-analytic approach, we used three-level meta-analysis (3LMA; also referred to as "multilevel" meta-analysis). Rather than assume that there is a single true effect of demand characteristics, 3LMA assumes that there is a distribution containing *multiple true effects*. To separate variability in these true effects from mere sampling error, 3LMA models three sources of variability: sampling error of individual studies (level 1), variability within studies (level 2), and variability between studies (level 3; often referred to as "random effects").
 
-We fit all models using the metafor package [@R-metafor] in R [version 4.1.2, @R-base], with effect sizes weighted based on their inverse-variance. To estimate the overall effect size, we fit an intercept-only 3LMA model. Unless otherwise specified, we conducted moderator analyses by separately entering dummy-coded categorical factors into a new model. Doing so allowed us to avoid issues of collinearity.To test the significance of each moderators, we used model comparison *F*-tests. To estimate effect sizes within each subgroup of the moderator, we used model-derived estimates.
+We fit all models using the metafor package [@R-metafor] in R [version 4.1.2, @R-base], with effect sizes weighted based on their inverse-variance. To estimate the overall effect size, we fit an intercept-only 3LMA model. Unless otherwise specified, we conducted moderator analyses by separately entering dummy-coded categorical factors into a new model. Doing so allowed us to avoid issues of collinearity. To test the significance of each moderators, we used model comparison *F*-tests. To estimate effect sizes within each subgroup of the moderator, we used model-derived estimates.
 
 ```{r clean.env.2, include = F}
 # delete vestigial
@@ -604,7 +604,7 @@ mod.r = c(mod.r, mod.r.2)
 rm(mod.r.2)
 ```
 
-```{r modforest, fig.cap = "For each moderator (a selection pictured here), we fit a separate 3LMA and subsequently derived subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 3.75, fig.width = 6.5, warning = F}
+```{r modforest, fig.cap = "For each moderator, we fit a separate 3LMA and subsequently derived subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 3.75, fig.width = 6.5, warning = F}
 ## list of moderators
 mod.list <- c("student", "paid", "online", "ref.type", "design")
 
@@ -670,7 +670,7 @@ When variability in effect sizes exceeds what would be expected from sampling er
 
 Results indicated that the effects of demand characteristics tended to differ by participant pool, $F$(`r mod.r$student$mod$QMdf[1]`, `r mod.r$student$mod$QMdf[2]`) = `r mod.r$student$mod$QM`, $p$ = `r printp(mod.r$student$mod$QMp)`. As shown in Figure \@ref(fig:modforest), effects were generally positive and medium-to-large in studies with students ($d$ = `r mod.r$student$sub$b[3]`, 95% CI [`r mod.r$student$sub$ci.lb[3]`, `r mod.r$student$sub$ci.ub[3]`], $p$ `r printp(mod.r$student$sub$pval[3])`), and near-zero in studies with non-students ($d$ = `r mod.r$student$sub$b[2]`, 95% CI [`r mod.r$student$sub$ci.lb[2]`, `r mod.r$student$sub$ci.ub[2]`], $p$ = `r printp(mod.r$student$sub$pval[2])`) or a mix of students and non-students ($d$ = `r mod.r$student$sub$b[1]`, 95% CI [`r mod.r$student$sub$ci.lb[1]`, `r mod.r$student$sub$ci.ub[1]`], $p$ = `r printp(mod.r$student$sub$pval[1])`). The effects of demand characteristics also tended to be slightly more positive for in-person ($d$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($d$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies; however, this difference was not significant, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)` (Figure \@ref(fig:modforest)).
 
-The effects of demand characteristics were additive. Compared to instances where a demand characteristic condition was compared to a control group ($d$ = `r mod.r$ref.r$sub$b[2]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[2]`, `r mod.r$ref.r$sub$ci.ub[2]`], $p$ = `r printp(mod.r$ref.r$sub$pval[2])`), effect sizes were approximately twice as large when two demand characteristic conditions were compared ($d$ = `r mod.r$ref.r$sub$b[1]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[1]`, `r mod.r$ref.r$sub$ci.ub[1]`], $p$ `r printp(mod.r$ref.r$sub$pval[1])`), $F$(`r mod.r$ref.r$mod$QMdf[1]`, `r mod.r$ref.r$mod$QMdf[2]`) = `r mod.r$ref.r$mod$QM`, $p$ `r printp(mod.r$ref.r$mod$QMp)`. Instances where a demand characteristic condition was compared to a control group allowed us to additionally test whether participants respond more strongly to positive, nil, or negative demand characteristics. Results indicated that they do, $F$(`r mod.r$ref.type$mod$QMdf[1]`, `r mod.r$ref.type$mod$QMdf[2]`) = `r mod.r$ref.type$mod$QM`, $p$ = `r printp(mod.r$ref.type$mod$QMp)`. As shown in Figure \@ref(fig:modforest), the effect of demand characteristics tended to be nearly twice as large in the nil ($d$ = `r mod.r$ref.type$sub$b[2]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[2]`, `r mod.r$ref.type$sub$ci.ub[2]`], $p$ `r printp(mod.r$ref.type$sub$pval[2])`) vs. positive ($d$ = `r mod.r$ref.type$sub$b[1]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[1]`, `r mod.r$ref.type$sub$ci.ub[1]`], $p$ = `r printp(mod.r$ref.type$sub$pval[1])`), and negative demand conditions ($d$ = `r mod.r$ref.type$sub$b[3]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[3]`, `r mod.r$ref.type$sub$ci.ub[3]`], $p$ = `r printp(mod.r$ref.type$sub$pval[3])`). In other words, participants' responses most strongly shift (towards a null effect) when researchers communicate that *no* effect is expected.
+The effects of demand characteristics were additive. Compared to instances where a demand characteristic condition was compared to a control group ($d$ = `r mod.r$ref.r$sub$b[2]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[2]`, `r mod.r$ref.r$sub$ci.ub[2]`], $p$ = `r printp(mod.r$ref.r$sub$pval[2])`), effect sizes were approximately twice as large when two demand characteristic conditions were compared ($d$ = `r mod.r$ref.r$sub$b[1]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[1]`, `r mod.r$ref.r$sub$ci.ub[1]`], $p$ `r printp(mod.r$ref.r$sub$pval[1])`), $F$(`r mod.r$ref.r$mod$QMdf[1]`, `r mod.r$ref.r$mod$QMdf[2]`) = `r mod.r$ref.r$mod$QM`, $p$ `r printp(mod.r$ref.r$mod$QMp)`. Instances where a demand characteristic condition was compared to a control group allowed us to additionally test whether participants respond more strongly to positive, nil, or negative demand characteristics. Results indicated that they do, $F$(`r mod.r$ref.type$mod$QMdf[1]`, `r mod.r$ref.type$mod$QMdf[2]`) = `r mod.r$ref.type$mod$QM`, $p$ = `r printp(mod.r$ref.type$mod$QMp)`. As shown in Figure \@ref(fig:modforest), the effect of demand characteristics tended to be nearly twice as large in the nil ($d$ = `r mod.r$ref.type$sub$b[2]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[2]`, `r mod.r$ref.type$sub$ci.ub[2]`], $p$ `r printp(mod.r$ref.type$sub$pval[2])`) vs. positive ($d$ = `r mod.r$ref.type$sub$b[1]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[1]`, `r mod.r$ref.type$sub$ci.ub[1]`], $p$ = `r printp(mod.r$ref.type$sub$pval[1])`), and negative demand conditions ($d$ = `r mod.r$ref.type$sub$b[3]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[3]`, `r mod.r$ref.type$sub$ci.ub[3]`], $p$ = `r printp(mod.r$ref.type$sub$pval[3])`). In other words, participants' responses most strongly shift when researchers communicate that they hypothesize *no* change in response
 
 We did not find that the effects of demand characteristics tended to differ depending on whether they were manipulated within- ($d$ = `r mod.r$design$sub$b[1]`, 95% CI [`r mod.r$design$sub$ci.lb[1]`, `r mod.r$design$sub$ci.ub[1]`], $p$ `r printp(mod.r$design$sub$pval[1])`) vs. between-subjects ($d$ = `r mod.r$design$sub$b[2]`, 95% CI [`r mod.r$design$sub$ci.lb[2]`, `r mod.r$design$sub$ci.ub[2]`], $p$ = `r printp(mod.r$design$sub$pval[2])`), $F$(`r mod.r$design$mod$QMdf[1]`, `r mod.r$design$mod$QMdf[2]`) = `r mod.r$design$mod$QM`, $p$ = `r printp(mod.r$design$mod$QMp)` (Figure \@ref(fig:modforest)). We also did not find that the effects of demand characteristics differed depending on whether participants were unpaid ($d$ = `r mod.r$paid$sub$b[1]`, 95% CI [`r mod.r$paid$sub$ci.lb[1]`, `r mod.r$paid$sub$ci.ub[1]`], $p$ `r printp(mod.r$paid$sub$pval[1])`) vs. paid ($d$ = `r mod.r$paid$sub$b[2]`, 95% CI [`r mod.r$paid$sub$ci.lb[2]`, `r mod.r$paid$sub$ci.ub[2]`], $p$ = `r printp(mod.r$paid$sub$pval[2])`), $F$(`r mod.r$paid$mod$QMdf[1]`, `r mod.r$paid$mod$QMdf[2]`) = `r mod.r$paid$mod$QM`, $p$ = `r printp(mod.r$paid$mod$QMp)` (Figure \@ref(fig:modforest)).
 
@@ -756,7 +756,7 @@ ggplot(pred_df, aes(x = level, y = beta)) +
   theme(axis.text.x = element_text(angle = 90, vjust = .5,  hjust=1))
 ```
 
-Our models allow us to estimate the effects of demand characteristics in various study contexts. To demonstrate this functionality, we fit a 3LMA with student status, data collection medium, payment status, and type of demand characteristic comparison entered as dummy-coded factors. By changing the reference level of these dummy-coded factors, we were able to derive estimates of demand effects in two common scenarios described below.
+Our openly-available data allow researchers to estimate the effects of demand characteristics in various study contexts. To demonstrate this functionality, we fit a 3LMA with student status, data collection medium, payment status, and type of demand characteristic comparison entered as dummy-coded factors. By changing the reference level of these dummy-coded factors, we were able to derive estimates of demand effects in two common scenarios described below.
 
 First, we estimated the overall impact of demand characteristics in what we call a "classic experimental setting": studies that (a) are run in-person, (b) sample students, (c) do not offer participant payment, and (d) are testing for a positive effect (i.e., positive demand). In this context, demand characteristics are estimated to produce, on average, a small increase in hypothesis-consistent responding, $d$ = `r m.s1$beta[1]`, 95% CI [`r m.s1$ci.lb[1]`, `r m.s1$ci.ub[1]`, $p$ = `r printp(m.s1$pval[1])`] (Figure \@ref(fig:predplot)). Second, we estimated the overall impact of demand characteristics in an "online worker experimental context": studies that (a) are run online, (b) sample non-students, (c) offer participant payment, and (d) test for a positive effect. Here, we did not find that demand characteristics, on average, produce changes in participants' responses, $d$ = `r m.s2$beta[1]`, 95% CI [`r m.s2$ci.lb[1]`, `r m.s2$ci.ub[1]`], $p$ = `r m.s2$pval[1]` (Figure \@ref(fig:predplot)).
 
@@ -1031,11 +1031,11 @@ Overall, explicit manipulations of demand characteristics caused participants' r
 
 More practically, we estimated that demand characteristics produce small increases in hypothesis-consistent responding in "classic experimental settings": in-person studies testing positive effects with unpaid student samples. In contrast, when these studies are run online with paid workers -- an "online worker experimental setting" -- we estimated that demand effects are near zero. However, these results are ultimately preliminary given the high heterogeneity and inconsistent evidence of the direction and impact of publication bias.
 
-Study 1 provides preliminary insights on the magnitude, consistency, and contextual moderators of demand effects. However, it was not designed to examine mechanisms often discussed in motivation and expectancy accounts of demand characteristics. For example, consider our finding that demand characteristics tend to produce more hypothesis-consistent shifts in responses when students (vs. workers) are sampled. If this is true, it may occur because students are more motivated to help the experimenter confirm their hypothesis (motivation account). Alternatively, it may occur because students are more likely to *believe* the communicated hypothesis (expectancies account). In other words, although we have preliminary evidence of contextual modifiers of demand effects, we still lack an explanation of why these contexts matter and how demand effects work more broadly. In Study 2, we begin investigating this outstanding issue through an extension of the meta-analysis.
+Study 1 provides preliminary insights on the magnitude, consistency, and contextual moderators of demand effects. However, it was not designed to examine mechanisms often discussed in motivation and expectancy accounts of demand characteristics. For example, consider our finding that demand characteristics tend to produce more hypothesis-consistent shifts in responses when students (vs. workers) are sampled. If this is true, it may occur because students are more motivated to help the experimenter confirm their hypothesis (motivation account). Alternatively, it may occur because students are more likely to *believe* the communicated hypothesis (expectancy account). In other words, although we have preliminary evidence of contextual modifiers of demand effects, we still lack an explanation of why these contexts matter and how demand effects work more broadly. In Study 2, we begin investigating this outstanding issue through an extension of the meta-analysis.
 
 # Study 2
 
-Study 2 was designed to examine whether observed variability in effect sizes can be explained by mechanisms often discussed in motivation accounts (i.e., motivation and opportunity to adjust responses) and expectancy accounts (i.e., expectations about the hypothesized effect; Figure \@ref(fig:framework)). Unfortunately, these factors were rarely measured in the studies included in the meta-analysis. We thus estimated their values by soliciting judgments from a set of naïve raters. Using these measurements, we then tested their moderating role by entering the values into meta-regressions. Also through meta-regression, we examined whether this new set of raters could retroactively predict the effects of the demand characteristic manipulations in the Study 1 meta-analysis.
+Study 2 was designed to examine whether observed variability in effect sizes can be explained by mechanisms often discussed in motivation accounts (i.e., motivation and opportunity to adjust responses) and expectancy accounts (i.e., expectations about the hypothesized effect; Figure \@ref(fig:framework)). Unfortunately, these factors were rarely measured in the studies included in the meta-analysis. We thus estimated their values by soliciting judgments from a set of naïve raters. Using these measurements, we then tested their moderating role by entering them separately into new meta-regression models. Also through meta-regression, we examined whether this new set of raters could retroactively predict the effects of the demand characteristic manipulations in the Study 1 meta-analysis.
 
 ## Methodology
 
@@ -1276,7 +1276,9 @@ plot_grid(m, o, b, p,
 rm(m, o, b, p, survey.dem)
 ```
 
-We did not find that raters' predictions were significantly associated with observed demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])` (Figure \@ref(fig:modfig), Panel D). In other words, in the absence of theory, it is challenging to predict the impact of demand characteristics. Thus, we next turned our attention to two popular mechanistic accounts. Inconsistent with motivation accounts, we did not find that demand effects were moderated by ratings of motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`, or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure \@ref(fig:modfig), Panels A and B). However, consistent with expectancy accounts, demand effects were positively associated with expectations about whether the hypothesized effect will occur, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:modfig), Panel C).
+We did not find that raters' predictions were significantly associated with observed demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$ddf[["pre"]]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])` (Figure \@ref(fig:modfig), Panel D). In other words, in the absence of theory, it is challenging to predict the impact of demand characteristics. Thus, we next turned our attention to the motivation and expectancy accounts. 
+
+Inconsistent with motivation accounts, we did not find that demand effects were moderated by ratings of motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$ddf[["mot"]]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`, or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$ddf[["opp"]]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])` (Figure \@ref(fig:modfig), Panels A and B). However, consistent with expectancy accounts, demand effects were positively associated with expectations about whether the hypothesized effect will occur, $\beta$ = `r mod.r$bel$mod$b["bel", ]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$ddf[["bel"]]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])` (Figure \@ref(fig:modfig), Panel C).
 
 ```{r}
 # evaluate whether the difference in significance is significant
@@ -1299,12 +1301,11 @@ dif.in.sig.df.m <- rma.mv(yi = es,
                           test= "t")
 ```
 
-The above results provide evidence of an association between demand effects and expectancies -- but fails to provide evidence of an association with motivation. However, follow-up exploratory analyses did not indicate that expectancies are a significantly *stronger* predictor of demand effects. 3LMA with (1) the type of mechanism (i.e., motivation or belief) entered as a factor, and (2) the value of the mechanism (e.g., motivation or belief ratings) entered as continuous predictor, did not provide significant evidence a two-way interaction between the value and type of mechanism, *t*(`r dif.in.sig.df.m[["ddf"]][['mech.value:mechmot']]`) = , `r dif.in.sig.df.m[["zval"]][4]`, $p$ = `r printp(dif.in.sig.df.m$pval[4])`. In other words, the difference in significance was not itself statistically significant [@gelman2006difference].
+The above results provide evidence of an association between demand effects and expectancies -- but fails to provide evidence of an association with motivation. However, follow-up exploratory analyses did not indicate that expectancies are a significantly *stronger* predictor of demand effects. To examine this, we fit a 3LMA with (1) the type of mechanism (i.e., motivation or belief) entered as a factor, (2) the value of the mechanism (e.g., motivation or belief ratings), and (3) their higher-order interaction. Results did not indicate that the two-way interaction was significant, *t*(`r dif.in.sig.df.m[["ddf"]][['mech.value:mechmot']]`) = `r dif.in.sig.df.m[["zval"]][4]`, $p$ = `r printp(dif.in.sig.df.m$pval[4])`. In other words, the difference in significance was not itself statistically significant [@gelman2006difference].
 
 ```{r}
 rm(dif.in.sig.df, dif.in.sig.df.m)
 ```
-
 
 ### Residual variability
 
@@ -1325,54 +1326,60 @@ DF.cmplt <- DF.es %>%
          !is.na(opp))
 
 ## fit intercept-only model
-m.1 <- rma.mv(yi = es,
-              V = es.var,
-              data = DF.cmplt,
-              random = ~ 1 | id.study / id.es,
-              test = "t")
+m.int <- rma.mv(yi = es,
+                V = es.var,
+                data = DF.cmplt,
+                random = ~ 1 | id.study / id.es,
+                test = "t")
 
-## fit model containing all the moderators
-m.2 <- rma.mv(yi = es,
-              V = es.var,
-              data = DF.cmplt,
-              random = ~ 1 | id.study / id.es,
-              mods = ~ student + paid + online + ref.type +
-                bel + mot + opp,
-              test = "t")
+# fit study 1 moderator model and calculate r2
+m.s1 <- rma.mv(yi = es,
+               V = es.var,
+               data = DF.cmplt,
+               random = ~ 1 | id.study / id.es,
+               mods = ~ student + online + ref.type + design + paid,
+               test = "t")
 
-## calculate quasi-R2
-r2 <- (sum(m.1$sigma2) - sum(m.2$sigma2)) / sum(m.1$sigma2) 
+s1.r2 <- (sum(m.int$sigma2) - sum(m.s1$sigma2)) / sum(m.int$sigma2) 
 
-## [new] fit model containing study 2 and 3 moderators separately
-m.3 <- rma.mv(yi = es,
-              V = es.var,
-              data = DF.cmplt,
-              random = ~ 1 | id.study / id.es,
-              mods = ~ student + paid + online + ref.type,
-              test = "t")
 
-(sum(m.1$sigma2) - sum(m.3$sigma2)) / sum(m.1$sigma2)
+# fit study 2 moderator model and calculate r2
+m.s2 <- rma.mv(yi = es,
+               V = es.var,
+               data = DF.cmplt,
+               random = ~ 1 | id.study / id.es,
+               mods = ~ bel + mot + opp,
+               test = "t")
 
-m.4 <- rma.mv(yi = es,
-              V = es.var,
-              data = DF.cmplt,
-              random = ~ 1 | id.study / id.es,
-              mods = ~ bel + mot + opp,
-              test = "t")
+s2.r2 <- (sum(m.int$sigma2) - sum(m.s2$sigma2)) / sum(m.int$sigma2)
 
-anova(m.3, m.4)
+# fit full moderator model and calculate r2
+m.full <- rma.mv(yi = es,
+                 V = es.var,
+                 data = DF.cmplt,
+                 random = ~ 1 | id.study / id.es,
+                 mods = ~ student + paid + online + ref.type +
+                   bel + mot + opp,
+                 test = "t")
 
-(sum(m.1$sigma2) - sum(m.4$sigma2)) / sum(m.1$sigma2)
+full.r2 <- (sum(m.int$sigma2) - sum(m.full$sigma2)) / sum(m.int$sigma2)
 
-rm(DF.cmplt, m.1, m.2)
-rm(m.3, m.4)
+# compile into list
+r2 <- list(s1.r2 = s1.r2, 
+           s2.r2 = s2.r2, 
+           full.r2 = full.r2)
+
+rm(s1.r2, s2.r2, full.r2)
+rm(DF.cmplt, m.int, m.s1, m.s2, m.full)
 ```
 
-To evaluate how much variability in demand effects is currently accounted for by the moderators examined in Studies 1 and 2, we calculated a pseudo-$R^2$ statistic. We did so by comparing the sum of the variance components (between-study $\tau^2$ + within-study $\sigma^2$) in two 3LMA models: one that contained only an intercept and the other that contained student status, payment status, mode of data collection, type of demand manipulation, motivation, opportunity, and expectations as predictors. These results indicated that these moderators accounted for `r round(r2 * 100, 2)`% of the observed variability in demand effects.
+To evaluate how much variability in demand effects is currently accounted for by the moderators examined in Studies 1 and 2, we calculated a pseudo-$R^2$ statistic. We did so by comparing the sum of the variance components (between-study $\tau^2$ + within-study $\sigma^2$) in a model containing only an intercept and (1) a model containing Study 1 moderators (type of demand characteristics manipulation, participant pool, setting, study design, and payment), (2) a model containing Study 2 moderators (motivation, opportunity, and expectations), and (3) a model containing both Study 1 and 2 moderators. To ensure comparability, all models included the same set of observations (e.g., any incomplete observations were removed). Results indicated that the Study 1 and 2 moderators respectively accounted for `r round(r2$s1.r2 * 100, 2)`% and `r round(r2$s2.r2 * 100, 2)`% of observed variability in demand effects. This might suggest that study features are more powerful predictors of demand effects than the theorized underlying psychological mechanisms; however, we caution against such interpretations given the imperfect ad-hoc measurement of motivations and expectations.
+
+Including all moderators increased the pseudo-$R^2$ to `r round(r2$full.r2 * 100, 2)`%, indicating that the majority of observed variability in demand effects is still unaccounted.
 
 ## Discussion
 
-Contrary to a motivation account of demand characteristics [e.g., @rosnow1997people], we did not find evidence that demand effects are moderated by ratings of participants' motivation and opportunity to adjust responses. However, consistent with an expectancy account, we did find that such effects are moderated by participants' expectations about the hypothesized effect.
+Contrary to a motivation account of demand characteristics [e.g., @rosnow1997people], we did not find evidence that demand effects are moderated by ratings of participants' motivation and opportunity to adjust responses. However, consistent with an expectancy account, we did find that such effects are moderated by participants' expectations about the hypothesized effect. The difference in significance was not itself statistically significant, bt hte pattern of results was subsequently replicated in Study 3 (described below).
 
 In the current study, we estimated motivation, opportunity, and expectation scores using a naïve set of raters. This strategy was necessary because researchers have rarely measured these proposed moderators. However, the approach has several limitations. First, raters may not have had enough information to make an accurate estimate of these factors. For the sake of feasibility, we gave participants a short summary of the study; however, we don't know how well participants could imagine the reality of being in these studies. Indeed, to gauge the impact of demand characteristics, other researchers have provided participants with extensive information about the study -- even running them through the full procedure [@orne1969demand]. Thus, participants might have provided more valid ratings if they had more information about the studies (e.g., video recreations of the procedures).
 
@@ -1402,7 +1409,7 @@ To address the two aforementioned limitations via a different strategy, we re-ex
 
 # Study 3
 
-In addition to the vignette rating task, Study 2 participants also completed an exploratory close replication of an experiment in the meta-analysis [@coles2022fact]. This experiment examined the extent to which demand characteristics moderate the effect of facial poses on feelings of happiness. The order in which participants completed Studies 2 and 3 were randomized.
+In addition to the vignette rating task, Study 2 participants also completed an exploratory close replication of an experiment in the meta-analysis [@coles2022fact]. This experiment examined the extent to which demand characteristics moderate the effect of facial poses on feelings of happiness. The order in which participants completed Studies 2 and 3 was randomized.
 
 ## Methodology
 
@@ -1525,20 +1532,21 @@ m.b.conf <- confint(m.b) %>%
   rename(lb = '2.5 %', ub = '97.5 %')
 
 m.b <- summary(m.b)
-```
 
-```{r}
-# tmp code for evaluating whether the difference in sig is sig
-tmp <- DF.s2 %>% 
+# difference in difference analysis
+diff.DF <- DF.s2 %>% 
   pivot_longer(cols = c('mot.c', 'bel.c'),
                names_to = 'mech',
                values_to = 'mech.val')
 
-tmp.m <- lmer(happy ~ trial + mech.val + 
-                (trial : mech.val) + (trial : mech.val : mech) +
-                (1 | sub),
-              data = tmp,
-              subset = manip.chk == 1)
+diff.m <- lmer(happy ~ trial + mech.val + 
+                 (trial : mech.val) + (trial : mech.val : mech) +
+                 (1 | sub),
+               data = diff.DF,
+               subset = manip.chk == 1) %>% 
+  anova()
+
+ # Like Study 2, though, the difference in the significance of the moderating effects of motivation and expectations was not statistically significant, *F*(`r diff.m$NumDF[4]`, `r diff.m$DenDF[4]`) = `r diff.m[4,5]`, *p* = `r printp(diff.m[4,6])`. This suggests that we still cannot conclude that expectations are stronger moderators than motivations.
 ```
 
 Next, we examined the role of motivation, opportunity, and expectations. For each of these potential moderators, we fit mixed-effect regressions containing (a) facial pose and block number as effect-coded factors, (b) the moderator entered mean-centered as a continuous variable, (c) a higher-order facial pose by moderator interaction term, and (d) random intercepts for participants. Results indicated that the effect of facial poses on happiness tended to be *slightly* larger among participants who reported being more motivated to confirm the hypothesis, $\beta$ = `r m.m[["coefficients"]]["trial1:mot.c", "Estimate"]`, 95% CI [`r m.m.conf[m.m.conf$param == 'trial1:mot.c', ]$lb`, `r m.m.conf[m.m.conf$param == 'trial1:mot.c', ]$ub`]. However, the estimated moderating relationship was not statistically significant, *t*(`r m.m[["coefficients"]]["trial1:mot.c", "df"]`) = `r m.m[["coefficients"]]["trial1:mot.c", "t value"]`, *p* = `r printp(m.m[["coefficients"]]["trial1:mot.c", "Pr(>|t|)"])`, and was less robust when including participants who did not correctly identify the communicated hypothesis, $\beta$ = `r m.m.sens[["coefficients"]]["trial1:mot.c", "Estimate"]`, 95% CI [`r m.m.sens.conf[m.m.sens.conf$param == 'trial1:mot.c', ]$lb`, `r m.m.sens.conf[m.m.sens.conf$param == 'trial1:mot.c', ]$ub`], *t*(`r m.m.sens[["coefficients"]]["trial1:mot.c", "df"]`) = `r m.m.sens[["coefficients"]]["trial1:mot.c", "t value"]`, *p =* `r printp(m.m.sens[["coefficients"]]["trial1:mot.c", "Pr(>|t|)"])`. For ratings of perceived opportunity to adjust responses, we did not find evidence that they moderated the facial pose effect, $\beta$ = `r m.o[["coefficients"]]["trial1:opp.c", "Estimate"]`, 95% CI [`r m.o.conf[m.o.conf$param == 'trial1:opp.c', ]$lb`, `r m.o.conf[m.o.conf$param == 'trial1:opp.c', ]$ub`], *t*(`r m.o[["coefficients"]]["trial1:opp.c", "df"] %>% round(2)`) = `r m.o[["coefficients"]]["trial1:opp.c", "t value"] %>% round(2)`, *p* = `r printp(m.o[["coefficients"]]["trial1:opp.c", "Pr(>|t|)"])`. However, consistent with previous evidence of expectancy effects in facial feedback research [@coles2022multi; @coles2022fact], the effect of facial poses tended to be larger among participants who expected the effect to emerge, $\beta$ = `r m.b[["coefficients"]]["trial1:bel.c", "Estimate"]`, 95% CI[`r m.b.conf[m.b.conf$param == 'trial1:bel.c', ]$lb`, `r m.b.conf[m.b.conf$param == 'trial1:bel.c', ]$ub`], *t*(`r m.b[["coefficients"]]["trial1:bel.c", "df"] %>% round(2)`) = `r m.b[["coefficients"]]["trial1:bel.c", "t value"] %>% round(2)`, *p* = `r printp(m.b[["coefficients"]]["trial1:bel.c", "Pr(>|t|)"])`.
@@ -1547,7 +1555,7 @@ Next, we examined the role of motivation, opportunity, and expectations. For eac
 # delete vestigial
 rm(m.b, m.b.conf, m.m, m.m.conf, 
    m.m.sens, m.m.sens.conf, 
-   m.o, m.o.conf)
+   m.o, m.o.conf, diff.DF, diff.m)
 
 # motivation
 m.m <- lmer(happy ~ trial * demand * mot.c +
@@ -1607,7 +1615,7 @@ rm(m.b, m.m, m.m.sens, m.o, r2, manip.fail, tau)
 
 # General Discussion
 
-Demand characteristics are a puzzling methodological artifact in experimental psychology. Using primarily meta-analysis, we sought to consolidate knowledge about the magnitude, reliability, and mechanisms underlying these effects. The meta-analysis revealed that demand characteristics typically led participants to slightly shift their responses in the direction of the communicated hypothesis. However, publication bias analyses were inconclusive, and the estimated effects were heterogeneous. This heterogeneity led us to estimate the true *distribution* of demand effects. This distribution suggests that approximately `r h.c`% of demand characteristic manipulations produce hypothesis-consistent shifts in participants' responses ($d$ \> 0.10), `r h.i`% produce hypothesis-*in*consistent shifts in participants' responses ($d$ \< -0.10), and `r 100 - h.c - h.i`% produce negligible shifts in either direction (-0.10 \< $d$ \> 0.10). Most worrisome, the estimated distribution of demand effects ranges from approximately $d$ = `r dist.min` to $d$ = `r dist.max` -- remarkable similar to the distribution of theory-relevant effects in experimental psychology [@lovakov2021empirically]. Thus, to distinguish theory-relevant effects from artifactual demand effects, it is essential that experimental psychologists better understand the latter [@boot2013pervasive; @corneille2022sixty; @sharpe2016frightened].
+Demand characteristics are a puzzling methodological artifact in experimental psychology. Using meta-analysis and a replication of a recent study, we sought to consolidate knowledge about the magnitude, reliability, and mechanisms underlying these effects. The meta-analysis revealed that demand characteristics typically led participants to slightly shift their responses in the direction of the communicated hypothesis. However, publication bias analyses were inconclusive, and the estimated effects were heterogeneous. This heterogeneity led us to estimate the true *distribution* of demand effects. This distribution suggests that approximately `r h.c`% of demand characteristic manipulations produce hypothesis-consistent shifts in participants' responses ($d$ \> 0.10), `r h.i`% produce hypothesis-*in*consistent shifts in participants' responses ($d$ \< -0.10), and `r 100 - h.c - h.i`% produce negligible shifts in either direction (-0.10 \< $d$ \> 0.10). Most worrisome, the estimated distribution of demand effects ranges from approximately $d$ = `r dist.min` to $d$ = `r dist.max` -- remarkable similar to the distribution of theory-relevant effects in experimental psychology [@lovakov2021empirically]. Thus, to distinguish theory-relevant effects from artifactual demand effects, it is essential that experimental psychologists better understand the latter [@boot2013pervasive; @corneille2022sixty; @sharpe2016frightened].
 
 Participants themselves appeared to have little ability to predict the impact of demand characteristics in the studies they reviewed, although it is possible that their performance would improve if they were provided with more information, given better measures, and/or better incentivized to provide accurate predictions. Fortunately, our meta-analysis allows us to make some predictions. Moderator analyses provided preliminary evidence that some methodological factors -- such as student samples -- are associated with increases in hypothesis-consistent responding. We also found that demand characteristics tended to be more impactful when a nil (as opposed to negative or positive) hypothesis was communicated. Nonetheless, most of the variability we observed in the meta-analysis was not explained.
 
