@@ -2,8 +2,8 @@
 - **metaware_manuscript.Rmd**: RMarkdown version of manuscript
 - **metaware_manuscript.docx**: Word version of manuscript (knitted from metaware_manuscript.Rmd)
 - **r-references.bib**: List of manuscript references
-- **metaware_EsProcessing.Rmd**: R code for processing the effect size (metaware_EsData_raw.xlsx) and survey (metaware_SurvData_raw.csv) data. Produces clean copies of the effect size data (metaware_meta_clean.csv) and replication study data (metaware_replication_clean.csv) and vignette data (metaware_vignette_clean.csv)
-- **metaware_EsProcessingSens.Rmd**: R code that runs metaware_EsProcessing.Rmd with different assumed correlations (used for sensitivity analyses in metaware_manuscript.Rmd)
+- **metaware_DataProcessing.Rmd**: R code for processing the effect size (metaware_EsData_raw.xlsx) and survey (metaware_SurvData_raw.csv) data. Produces clean copies of the effect size data (metaware_meta_clean.csv) and replication study data (metaware_replication_clean.csv) and vignette data (metaware_vignette_clean.csv)
+- **metaware_DataProcessingSens.Rmd**: R code that runs metaware_EsProcessing.Rmd with different assumed correlations (used for sensitivity analyses in metaware_manuscript.Rmd)
 - **metaware_FileOrganizationHelper.png**: Image explaining how the most essential files interface in order to create the final manuscript
 - **README.md**: Readme file
 - **sessionInfo.txt**: sessionInfo for the R code used in the project.
@@ -31,10 +31,10 @@ Contains a variety of images that are auto-saved when metaware_manuscript.Rmd is
 Contains various files used for project admin
 
 ### irb folder
-- **metaware22a_IRBApproval.pdf**: Copy of IRB approval notice
-- **metaware22a_eprotocol.docx**: Copy of document submitted to IRB
-- **metaware22a_Debriefing.docx**: Copy of debriefing form submitted to IRB
-- **metaware22a_ResearchInformationSheet.docx**: Copy of Research Information Sheet (i.e,. consent form) submitted to IRB
+- **metaware22a_IRBApproval.pdf**: Copy of IRB approval notice for studies 2 and 3
+- **metaware22a_eprotocol.docx**: Copy of document submitted to IRB for studies 2 and 3
+- **metaware22a_Debriefing.docx**: Copy of debriefing form submitted to IRB for studies 2 and 3
+- **metaware22a_ResearchInformationSheet.docx**: Copy of Research Information Sheet (i.e,. consent form) submitted to IRB for studies 2 and 3
 - **metaware22a_scenarios.csv**: Copy of vignettes provided to IRB
 - **metaware22a_Survey.pdf**: Copy of survey provided to IRB
 
