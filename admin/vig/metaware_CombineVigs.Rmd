@@ -1,6 +1,6 @@
 ---
 title: Combine vignettes into single data file
-author: "Nicholas A. Coles (checked by Morgan H. Wyatt)"
+author: "Anonymous for peer review; NAC (checked by MW)"
 editor_options: 
   chunk_output_type: console
 ---
