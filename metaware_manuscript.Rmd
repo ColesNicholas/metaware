@@ -47,7 +47,6 @@ keywords          : "demand characteristics, expectancies, placebo, confounds, m
 bibliography      : "r-references.bib"
 nocite: | 
   @orne1964contribution;@kersbergen2019hypothesis;@martin2018attention;@hoogeveen2018did;@rose2014choice;@durgin2012social;@busch2007follow;@cramer2005effect;@kanter2004experimental;@terhune2006induction;@cramer1995effect;@barabasz1991effects;@veitch1991demand;@smith1986influence;@siegel1982influence;@lamberth1971similarity;@polivy1980laboratory;@earn1979experimental;@perry1978demand;@mcginley1975subject;@mcglynn1972experimental;@verpaelst2007demand;@lana1971subject;@schauer1969demand;@cramer2004effect;@isager2022student
-  
 floatsintext      : yes
 linenumbers       : no
 draft             : no
