@@ -2,11 +2,11 @@
 title             : "A quantitative review of demand characteristics and their underlying mechanisms"
 shorttitle        : "Demand characteristics quantitative review"
 author: 
-  - name          : "Nicholas A. Coles"
+  - name          : "Anonymous for peer review (NAC)"
     affiliation   : "1"
     corresponding : yes
-    address       : "Cordura Hall, 210 Panama St, Stanford, CA 94305" 
-    email         : "ncoles@stanford.edu"
+    address       : "Anonymous for peer review" 
+    email         : "Anonymous for peer review"
     role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
       - Conceptualization
       - Data Curation
@@ -19,7 +19,7 @@ author:
       - Visualization
       - Writing - Original Draft Preparation
       - Writing - Review & Editing
-  - name          : "Michael C. Frank"
+  - name          : "Anonymous for peer review (MCF)"
     affiliation   : "2"
     role:
       - Formal Analysis
@@ -33,13 +33,13 @@ author:
       - Writing - Review & Editing
 affiliation:
   - id            : "1"
-    institution   : "Center for the Study of Language and Information, Stanford University"
+    institution   : "Anonymous for peer review"
   - id            : "2"
-    institution   : "Department of Psychology, Stanford University"
+    institution   : "Anonymous for peer review"
 authornote: |
   Public significance statement: A fundamental methodological concern in research with human participants is that their responses are biased by their beliefs about the researcher’s hypothesis (i.e., demand characteristics). In a meta-analysis, we combined evidence from 40 studies that experimentally tested this concern by manipulating the hypothesis communicated to participants. Results suggested that information about the researcher’s hypothesis can produce biases in participants’ responses that can be potentially large – but are troublingly unreliable and difficult to explain.
   
-  All materials, data (raw and processed), code, and pre-registrations (for Studies 1 and 2) are openly available at https://osf.io/3hkre/?view_only=2dc92af53f194e5eab0d7aecafaf01c2. This work was supported by the John Templeton Foundation (grant # 62295). The funder had no role in the preparation of the manuscript or decision to publish. We thank (1) Morgan H. Wyatt for assistance with the meta-analysis and code review, (2) Anjie Cao for assistance with code review, and (3) John Borghi for assistance developing the literature search strategy.
+  All materials, data (raw and processed), code, and pre-registrations (for Studies 1 and 2) are openly available at https://osf.io/3hkre/?view_only=2dc92af53f194e5eab0d7aecafaf01c2. This work was supported by the John Templeton Foundation (grant # anonymous for peer review). The funder had no role in the preparation of the manuscript or decision to publish. We thank (1) (anonymous for peer review; MHW) for assistance with the meta-analysis and code review, (2) (anonymous for peer review; AC)  for assistance with code review, and (3) (anonymous for peer review; JB) for assistance developing the literature search strategy.
 abstract: |
   Demand characteristics are a fundamental methodological concern in experimental psychology. Yet, little is known about the direction, magnitude, consistency, and mechanisms underlying their effects. We conducted a three-level meta-analysis of 195 effect sizes from 40 studies that provided experimental tests of demand effects by manipulating the hypothesis communicated to participants. Results indicated that demand characteristics tend to produce small overall increases in hypothesis-consistent responding (*d* = 0.22, 95% CI [0.11, 0.33]). However, these effects were extremely heterogeneous (between-study $\tau$ = 0.31; within-study $\sigma$ = 0.20), with the estimated distribution of true effects ranging from *d* = 1.98 (a massive increase in hypothesis-consistent responding) to *d* = -1.44 (a massive increase in hypothesis-*in*consistent responding). Contrary to conventional motivation accounts, we did not find evidence that demand effects were driven by post-hoc measures of participants’ motivation or opportunity to adjust their responses. We did, however, find robust evidence for accounts that emphasize the role of participants’ expectancies about the hypothesized effects. Similar findings emerged in a direct replication of one recent study included in the meta-analysis. Taken together, results underscore the importance -- and challenges -- of understanding and controlling for demand characteristics in experimental design.
   
@@ -84,7 +84,7 @@ r_refs("r-references.bib")
 # turn scientific notation off
 options(scipen = 999)
 
-# set seed to year of Nicholas' favorite [unfinished] album, SMiLE
+# set seed to year of lead author's favorite [unfinished] album, SMiLE
 set.seed(1967)
 
 # set theme
@@ -181,7 +181,7 @@ r.unp <- DF.s %>%
   nrow()
 ```
 
-Our literature search strategy was developed in consultation with a librarian at Stanford University. Given the broad nature of the demand characteristics construct, we determined that a truly comprehensive strategy was not feasible. Thus, we sought to design a strategy that best balanced comprehensiveness with feasibility.
+Our literature search strategy was developed in consultation with a librarian at (anonymous for peer review). Given the broad nature of the demand characteristics construct, we determined that a truly comprehensive strategy was not feasible. Thus, we sought to design a strategy that best balanced comprehensiveness with feasibility.
 
 On January 12, 2022, we searched APA PsycInfo using broad search terms: "demand characteristics" OR "hypothesis awareness". Our search did not have language restrictions and went as far back as 1840, which yielded `r r.pi` records. We also released a call for unpublished studies on the Society for Personality and Social Psychology Open Forum; Twitter; the Facebook Psychological Methods Discussion group; and the Facebook PsychMAP group. This call yielded `r nrow(DF.s) - r.pi` additional records. In total, `r r.unp` of the records were unpublished.
 
@@ -1105,7 +1105,7 @@ rm(survey.DF, survey.n, survey.gend,
    survey.eth, survey.age.m, survey.age.sd)
 ```
 
-Using a web-based Qualtrics survey, a convenience sample of `r survey.dem$n` undergraduates from Stanford University reviewed 10 randomly selected vignettes in exchange for course credit (`r survey.dem$gend[1]`% female; `r survey.dem$gend[3]`% male, `r survey.dem$gend[6] %>% round(0)`% did not report gender; `r survey.dem$gend[2] + survey.dem$gend[4] + survey.dem$gend[5]`% transgender or gender non-conforming). `r survey.dem$ethnicity[7]`% of participants reported they were White/Caucasian, `r survey.dem$ethnicity[2] %>% round(0)`% Asian, `r survey.dem$ethnicity[3]`% Black/African American, and `r survey.dem$ethnicity[4] %>% round(0)`% Native Hawaiian or Other Pacific Islander. `r survey.dem$ethnicity[5]`% of participants indicated that their ethnicity could not be described by any single provided category, and `r survey.dem$ethnicity[6] %>% round(0)`% did not report ethnicity. The average participant age was `r survey.dem$age.m` ($SD$ = `r survey.dem$age.sd`). Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester).
+Using a web-based Qualtrics survey, a convenience sample of `r survey.dem$n` undergraduates from (anonymous for peer review) reviewed 10 randomly selected vignettes in exchange for course credit (`r survey.dem$gend[1]`% female; `r survey.dem$gend[3]`% male, `r survey.dem$gend[6] %>% round(0)`% did not report gender; `r survey.dem$gend[2] + survey.dem$gend[4] + survey.dem$gend[5]`% transgender or gender non-conforming). `r survey.dem$ethnicity[7]`% of participants reported they were White/Caucasian, `r survey.dem$ethnicity[2] %>% round(0)`% Asian, `r survey.dem$ethnicity[3]`% Black/African American, and `r survey.dem$ethnicity[4] %>% round(0)`% Native Hawaiian or Other Pacific Islander. `r survey.dem$ethnicity[5]`% of participants indicated that their ethnicity could not be described by any single provided category, and `r survey.dem$ethnicity[6] %>% round(0)`% did not report ethnicity. The average participant age was `r survey.dem$age.m` ($SD$ = `r survey.dem$age.sd`). Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester).
 
 For each vignette, raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving an irrelevant dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, they rated the extent to which they would hypothetically (1) be motivated to adjust responses based on the researcher's stated hypothesis (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable), and (3) expect the hypothesized effect to occur (-3 ="strong disbelief" to 3 = "strong belief"). Raters also indicated whether they believed participants would change their responses to confirm the hypothesis. These questions were presented in random order.
 
@@ -1127,7 +1127,7 @@ Even if researchers cannot explain how demand characteristics work, it might be 
 
 ### Transparency and openness
 
-All materials, data, and code are openly available at <https://osf.io/3hkre/?view_only=2dc92af53f194e5eab0d7aecafaf01c2>. This link also contains analysis pre-registration plan, as well as documented amendments. Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester). All code has been checked for reproducibility. The study was reviewed and approved by the Stanford University IRB (protocol #: 67335; protocol title: "Research participant experiences").
+All materials, data, and code are openly available at <https://osf.io/3hkre/?view_only=2dc92af53f194e5eab0d7aecafaf01c2>. This link also contains analysis pre-registration plan, as well as documented amendments. Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester). All code has been checked for reproducibility. The study was reviewed and approved by the (anonymous for peer review) IRB (protocol #: anonymous for peer review; protocol title: anonymous for peer review).
 
 ## Results
 
@@ -1445,7 +1445,7 @@ Using a similar procedure as Study 2, participants were excluded if they did not
 
 ### Transparency and openness
 
-All materials (including exploratory items not described in the manuscript), data, and code are openly available at <https://osf.io/3hkre/?view_only=2dc92af53f194e5eab0d7aecafaf01c2>. Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester). Because the study was exploratory, there was no pre-registration. All code has been checked for reproducibility. The study was reviewed and approved by the Stanford University IRB (protocol #: 67335; protocol title: "Research participant experiences").
+All materials (including exploratory items not described in the manuscript), data, and code are openly available at <https://osf.io/3hkre/?view_only=2dc92af53f194e5eab0d7aecafaf01c2>. Sample size was based on availability of resources (i.e., we collected as much data as possible in a single semester). Because the study was exploratory, there was no pre-registration. All code has been checked for reproducibility. The study was reviewed and approved by the (anonymous for peer review) IRB (protocol #: anonymous for peer review; protocol title: anonymous for peer review).
 
 ## Results
 
