@@ -476,6 +476,43 @@ DF.surv <- DF.surv %>%
   filter(att.chk == 1)
 ```
 
+## [optional] look at reliability of ratings
+```{r}
+# mot icc: .08
+
+m <- lmer(mot ~ 1 + (1 | ss) + (1 | vig),
+          data = DF.surv)
+
+icc(m,
+    by_group = T)
+
+# opp icc: .12
+m <- lmer(opp ~ 1 + (1 | ss) + (1 | vig),
+          data = DF.surv)
+
+
+# bel icc: .20
+m <- lmer(bel ~ 1 + (1 | ss) + (1 | vig),
+          data = DF.surv)
+
+icc(m,
+    by_group = T)
+
+# opp icc: .12
+m <- lmer(opp ~ 1 + (1 | ss) + (1 | vig),
+          data = DF.surv)
+
+icc(m,
+    by_group = T)
+
+  
+  pivot_wider(names_from = vig,
+              values_from = awr : opp)
+  group_by(vig) %>% 
+  summarise(n = n())
+```
+
+
 ## Calculate survey summary statistics
 For each vignette, we want the average of participants ratings of the extent to which they would:
 1. Be motivated to adjust their responses to fit the communicated hypothesis (m.mot)
