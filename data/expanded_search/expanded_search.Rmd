@@ -1,0 +1,66 @@
+---
+title: "Metaware 04/17 Expanded Search"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+# clear environment
+rm(list = ls())
+
+# load libraries
+library(tidyverse)
+library(readxl)
+
+# open original file
+DF.orig <- read_excel(path = 'metaware_EsData_raw_041724.xlsx',
+                      sheet = "records.screening")
+
+# open first updated search
+DF.new.1 <- read_excel(path = "metaware_ExpandedSearch_NewTerms_041724.xls") %>% 
+  
+  # add variables that will be needed for later merge
+  mutate(MW_include = "",
+         MW_rationale = "",
+         NC_include = "",
+         NC_rationale = "",
+         note = "") %>% 
+  
+  # rename and select essential variables
+  rename(title = Title,
+         abstract = Abstract,
+         authors = Authors,
+         database = Database,
+         link = DocumentURL) %>% 
+  select(title, abstract, 
+         MW_include, MW_rationale, NC_include, NC_rationale, note,
+         authors, year, link, database)
+  
+
+# open second updated search
+DF.new.2 <- read_excel(path = "metaware_ExpandedSearch_OldTerms_041724.xls") %>% 
+  
+  # add variables that will be needed for later merge
+  mutate(MW_include = "",
+         MW_rationale = "",
+         NC_include = "",
+         NC_rationale = "",
+         note = "") %>% 
+  
+  # rename and select essential variables
+  rename(title = Title,
+         abstract = Abstract,
+         authors = Authors,
+         database = Database,
+         link = DocumentURL) %>% 
+  select(title, abstract, 
+         MW_include, MW_rationale, NC_include, NC_rationale, note,
+         authors, year, link, database)
+
+# merge updated searches and remove any duplicates
+DF.new <- rbind(DF.new.1, DF.new.2) %>% 
+  filter(!duplicated(title))
+
+rm(DF.new.1, DF.new.2)
+```
