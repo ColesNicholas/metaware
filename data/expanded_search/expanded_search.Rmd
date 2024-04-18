@@ -60,7 +60,32 @@ DF.new.2 <- read_excel(path = "metaware_ExpandedSearch_OldTerms_041724.xls") %>%
 
 # merge updated searches and remove any duplicates
 DF.new <- rbind(DF.new.1, DF.new.2) %>% 
-  filter(!duplicated(title))
+  filter(!duplicated(title)) %>% 
+  mutate(database = "APA PsycInfo (2024)")
 
 rm(DF.new.1, DF.new.2)
 ```
+
+```{r}
+# merge new and old search
+DF <- rbind(DF.orig, DF.new)
+
+# examine the extent to which this new search was duplicative
+DF$title %>%
+  duplicated() %>%
+  table() %>% 
+  prop.table()
+
+DF$title %>% duplicated %>% sum
+
+# remove duplicates
+DF <- DF %>% 
+  filter(!duplicated(title))
+
+rm(DF.new, DF.orig)
+
+# export
+write.csv(DF,
+          'metaware_EsData_raw_updated.csv')
+```
+
