@@ -14,6 +14,8 @@ This code processes and merges:
 # load libraries
 library("tidyverse")
 library("readxl")
+library("performance")
+library("lme4")
 ```
 
 # Open and clean metaware_ESData_raw.xlsx
@@ -478,38 +480,89 @@ DF.surv <- DF.surv %>%
 
 ## [optional] look at reliability of ratings
 ```{r}
+
+even <- DF.surv |>
+  sample_frac(.5, replace = FALSE)
+
+odd <- anti_join(DF.surv, even)
+
+even <- even |>
+  group_by(vig) |>
+  summarise(mot_even = mean(mot, na.rm = TRUE), 
+            bel_even = mean(bel, na.rm = TRUE))
+
+odd <- odd |>
+  group_by(vig) |>
+  summarise(mot_odd = mean(mot, na.rm=TRUE), 
+            bel_odd = mean(bel, na.rm = TRUE)) 
+
+even_odd <- full_join(even, odd)
+
+r_mot = cor.test(even_odd$mot_even, even_odd$mot_odd)$estimate
+r_bel = cor.test(even_odd$bel_even, even_odd$bel_odd)$estimate
+(2 * r_mot)/(1 + r_mot)
+(2 * r_bel)/(1 + r_bel)
+```
+
+```{r}
 # mot icc: .08
-
-m <- lmer(mot ~ 1 + (1 | ss) + (1 | vig),
-          data = DF.surv)
-
-icc(m,
-    by_group = T)
+lmer(mot ~ 1 + (1 | ss) + (1 | vig),
+     data = DF.surv) %>% 
+  performance::icc(by_group = T)
 
 # opp icc: .12
-m <- lmer(opp ~ 1 + (1 | ss) + (1 | vig),
-          data = DF.surv)
-
+lmer(opp ~ 1 + (1 | ss) + (1 | vig),
+     data = DF.surv) %>% 
+  icc(by_group = T)
 
 # bel icc: .20
-m <- lmer(bel ~ 1 + (1 | ss) + (1 | vig),
-          data = DF.surv)
+lmer(bel ~ 1 + (1 | ss) + (1 | vig),
+     data = DF.surv)  %>% 
+  icc(by_group = T)
 
-icc(m,
-    by_group = T)
+```
 
-# opp icc: .12
-m <- lmer(opp ~ 1 + (1 | ss) + (1 | vig),
-          data = DF.surv)
-
-icc(m,
-    by_group = T)
-
-  
-  pivot_wider(names_from = vig,
-              values_from = awr : opp)
+### Alternative way of looking at icc
+```{r}
+# structure dataframe for traditional icc approach
+tmp <- DF.surv %>% 
+  select(-c(dem, att.chk)) %>% 
+  mutate(ss = as.numeric(ss)) %>% 
+  arrange(vig) %>% 
   group_by(vig) %>% 
-  summarise(n = n())
+  mutate(ss = 1 : n()) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = ss,
+              values_from = awr : opp)
+  
+library('irr')
+
+# this gives NA, possibly there are too many NA's in those later cols
+tmp %>% 
+  select(mot_1 : mot_25) %>% 
+  irr::icc(model="twoway", 
+           type="agreement")
+
+icc(anxiety, model  = "twoway", type = "agreement")
+
+# here's how it looks when we remove columns until it fits
+## mot: .13
+tmp %>% 
+  select(mot_1 : mot_22) %>% 
+  irr::icc(model="twoway", 
+           type="agreement")
+
+## opp: .31
+tmp %>% 
+  select(opp_1 : opp_22) %>% 
+  irr::icc(model="twoway", 
+           type="agreement")
+
+## bel: .18
+tmp %>% 
+  select(bel_1 : bel_22) %>% 
+  irr::icc(model="twoway", 
+           type="agreement")
 ```
 
 
