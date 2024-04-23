@@ -15,7 +15,12 @@ library(readxl)
 
 # open original file
 DF.orig <- read_excel(path = 'metaware_EsData_raw_041724.xlsx',
-                      sheet = "records.screening")
+                      sheet = "records.screening") %>% 
+  mutate(database = 
+           if_else(database == "APA PsycInfo (2022)",
+                   true = "Search 1: APA PsycInfo (2022)",
+                   false = "Search 2: open call")
+         )
 
 # open first updated search
 DF.new.1 <- read_excel(path = "metaware_ExpandedSearch_NewTerms_041724.xls") %>% 
@@ -25,7 +30,10 @@ DF.new.1 <- read_excel(path = "metaware_ExpandedSearch_NewTerms_041724.xls") %>%
          MW_rationale = "",
          NC_include = "",
          NC_rationale = "",
-         note = "") %>% 
+         note = "") %>%
+  
+  # add search info
+  mutate(Database = "Search 3: APA PsycInfo (2024)") %>% 
   
   # rename and select essential variables
   rename(title = Title,
@@ -33,10 +41,10 @@ DF.new.1 <- read_excel(path = "metaware_ExpandedSearch_NewTerms_041724.xls") %>%
          authors = Authors,
          database = Database,
          link = DocumentURL) %>% 
+  
   select(title, abstract, 
          MW_include, MW_rationale, NC_include, NC_rationale, note,
          authors, year, link, database)
-  
 
 # open second updated search
 DF.new.2 <- read_excel(path = "metaware_ExpandedSearch_OldTerms_041724.xls") %>% 
@@ -47,6 +55,9 @@ DF.new.2 <- read_excel(path = "metaware_ExpandedSearch_OldTerms_041724.xls") %>%
          NC_include = "",
          NC_rationale = "",
          note = "") %>% 
+  
+  # add search info
+  mutate(Database = "Search 4: APA PsycInfo (2024)") %>%
   
   # rename and select essential variables
   rename(title = Title,
@@ -59,8 +70,7 @@ DF.new.2 <- read_excel(path = "metaware_ExpandedSearch_OldTerms_041724.xls") %>%
          authors, year, link, database)
 
 # merge updated searches
-DF.new <- rbind(DF.new.1, DF.new.2) %>%
-  mutate(database = "APA PsycInfo (2024)")
+DF.new <- rbind(DF.new.1, DF.new.2)
 
 rm(DF.new.1, DF.new.2)
 ```
@@ -68,6 +78,9 @@ rm(DF.new.1, DF.new.2)
 ```{r}
 # merge new and old search
 DF <- rbind(DF.orig, DF.new)
+
+# descriptives
+DF$database %>% table()
 
 # examine the extent to which this new search was duplicative
 DF$title %>%
