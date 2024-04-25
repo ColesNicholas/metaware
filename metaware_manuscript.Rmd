@@ -180,7 +180,7 @@ DF.s <-
 
 # calculate number of records from PsycInfo by removing all records with no known database (i.e., ones that were personally found)
 r.pi <- DF.s %>% 
-  filter(!is.na(Database)) %>% 
+  filter(!is.na(database)) %>% 
   nrow()
 
 # calculate number of unpublished records (i.e., dissertations)
@@ -602,6 +602,10 @@ mod.r[["ref.type"]] <-
   ModAnalysis(m = "ref.type",
               df = DF.es[DF.es$ref.r == "single", ])
 
+# test all ref.type
+mod.r[["ref.type.full"]] <- 
+  ModAnalysis(m = "ref.type")
+
 # add motivation, opportunity, belief, and prediction moderators
 ## Note: comparisons with nil-demand conditions are excluded
 mod.r.2 <- 
@@ -618,6 +622,509 @@ mod.r = c(mod.r, mod.r.2)
 # delete vestigial 
 rm(mod.r.2)
 ```
+
+```{r modtable}
+rbind(
+  ################
+  # student status
+  ################
+  cbind(
+    `Moderator (bolded) and level` = "Student Status",
+    s = mod.r$student$mod$s.nlevels.f[[1]],
+    k = mod.r$student$mod$s.nlevels.f[[2]],
+    d = "--",
+    B1 = "--",
+    `F` = mod.r$student$mod$QM %>% round(2),
+    `95% CI` = "--",
+    p = mod.r$student$mod$QMp
+  ),
+  
+  ## student: yes
+  cbind(
+    `Moderator (bolded) and level` = "     yes",
+    s = DF.es[DF.es$student == 'yes',]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$student == 'yes',]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$student$sub$b[[3]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$student$sub$zval[[3]] ^ 2 %>%
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$student$sub$ci.lb[[3]] %>% round(2),
+        ", ",
+        mod.r$student$sub$ci.ub[[3]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$student$sub$pval[[3]]
+  ),
+  
+  ## student: no
+  cbind(
+    `Moderator (bolded) and level` = "     no",
+    s = DF.es[DF.es$student == 'no',]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$student == 'no',]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$student$sub$b[[2]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$student$sub$zval[[2]] ^ 2 %>%
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$student$sub$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$student$sub$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$student$sub$pval[[2]]
+  ),
+  
+  ## student: mix
+  cbind(
+    `Moderator (bolded) and level` = "     mix",
+    s = DF.es[DF.es$student == 'mix',]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$student == 'mix',]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$student$sub$b[[1]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$student$sub$zval[[1]] ^ 2 %>%
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$student$sub$ci.lb[[1]] %>% round(2),
+        ", ",
+        mod.r$student$sub$ci.ub[[1]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$student$sub$pval[[1]]
+  ),
+  
+  ################
+  # payment status
+  ################
+  cbind(
+    `Moderator (bolded) and level` = "Payment Status",
+    s = mod.r$paid$mod$s.nlevels.f[[1]],
+    k = mod.r$paid$mod$s.nlevels.f[[2]],
+    d = "--",
+    B1 = "--",
+    `F` = mod.r$paid$mod$QM %>% round(2),
+    `95% CI` = "--",
+    p = mod.r$paid$mod$QMp
+  ),
+  
+  ## yes
+  cbind(
+    `Moderator (bolded) and level` = "     yes",
+    s = DF.es[DF.es$paid == 'yes',]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$paid == 'yes',]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$paid$sub$b[[2]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$paid$sub$zval[[2]] ^ 2 %>%
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$paid$sub$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$paid$sub$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$paid$sub$pval[[2]]
+  ),
+  
+  # no
+  cbind(
+    `Moderator (bolded) and level` = "     no",
+    s = DF.es[DF.es$paid == 'no',]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$paid == 'no',]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$paid$sub$b[[1]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$paid$sub$zval[[1]] ^ 2 %>%
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$paid$sub$ci.lb[[1]] %>% round(2),
+        ", ",
+        mod.r$paid$sub$ci.ub[[1]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$paid$sub$pval[[1]]
+  ),
+  
+  ################
+  # Modality
+  ################
+  cbind(
+    `Moderator (bolded) and level` = "Setting",
+    s = mod.r$online$mod$s.nlevels.f[[1]],
+    k = mod.r$online$mod$s.nlevels.f[[2]],
+    d = "--",
+    B1 = "--",
+    `F` = mod.r$online$mod$QM %>% round(2),
+    `95% CI` = "--",
+    p = mod.r$online$mod$QMp
+  ),
+  
+  ## online
+  cbind(
+    `Moderator (bolded) and level` = "     online",
+    s = DF.es[DF.es$online == 'yes',]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$online == 'yes',]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$online$sub$b[[2]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$online$sub$zval[[2]] ^ 2 %>%
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$online$sub$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$online$sub$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$online$sub$pval[[2]]
+  ),
+  
+  # in person
+  cbind(
+    `Moderator (bolded) and level` = "     in-person",
+    s = DF.es[DF.es$online == 'no',]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$online == 'no',]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$online$sub$b[[1]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$online$sub$zval[[1]] ^ 2 %>%
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$online$sub$ci.lb[[1]] %>% round(2),
+        ", ",
+        mod.r$online$sub$ci.ub[[1]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$online$sub$pval[[1]]
+  ),
+  
+  ################
+  # Design
+  ################
+  cbind(
+    `Moderator (bolded) and level` = "Design",
+    s = mod.r$design$mod$s.nlevels.f[[1]],
+    k = mod.r$design$mod$s.nlevels.f[[2]],
+    d = "--",
+    B1 = "--",
+    `F` = mod.r$design$mod$QM %>% round(2),
+    `95% CI` = "--",
+    p = mod.r$design$mod$QMp
+  ),
+  
+  ## within
+  cbind(
+    `Moderator (bolded) and level` = "     within-subjects",
+    s = DF.es[DF.es$design == 'within',]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$design == 'within',]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$design$sub$b[[2]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$design$sub$zval[[2]] ^ 2 %>%
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$design$sub$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$design$sub$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$design$sub$pval[[2]]
+  ),
+  
+  # in person
+  cbind(
+    `Moderator (bolded) and level` = "     between-subjects",
+    s = DF.es[DF.es$design == 'between',]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$design == 'between',]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$design$sub$b[[1]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$design$sub$zval[[1]] ^ 2 %>%
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$design$sub$ci.lb[[1]] %>% round(2),
+        ", ",
+        mod.r$design$sub$ci.ub[[1]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$design$sub$pval[[1]]
+  ),
+  
+  ################
+  # Comparison
+  ################
+  cbind(
+    `Moderator (bolded) and level` = "Comparison type",
+    s = mod.r$ref.type.full$mod$s.nlevels.f[[1]],
+    k = mod.r$ref.type.full$mod$s.nlevels.f[[2]],
+    d = "--",
+    B1 = "--",
+    `F` = mod.r$ref.type.full$mod$QM %>% round(2),
+    `95% CI` = "--",
+    p = mod.r$ref.type.full$mod$QMp
+  ),
+  
+  ## cvp
+  cbind(
+    `Moderator (bolded) and level` = "     positive vs. control",
+    s = DF.es[DF.es$ref.type == 'cvp', ]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$design == 'cvp', ]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$ref.type.full$sub$b[[1]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$ref.type.full$sub$zval[[1]] ^ 2 %>% 
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$ref.type.full$sub$ci.lb[[1]] %>% round(2),
+        ", ",
+        mod.r$ref.type.full$sub$ci.ub[[1]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$ref.type.full$sub$pval[[1]]
+  ),
+  
+  ## cvp
+  cbind(
+    `Moderator (bolded) and level` = "     nil vs. control",
+    s = DF.es[DF.es$ref.type == 'cvz', ]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$design == 'cvz', ]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$ref.type.full$sub$b[[2]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$ref.type.full$sub$zval[[2]] ^ 2 %>% 
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$ref.type.full$sub$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$ref.type.full$sub$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$ref.type.full$sub$pval[[2]]
+  ),
+  
+  ## cvn
+  cbind(
+    `Moderator (bolded) and level` = "     nil vs. control",
+    s = DF.es[DF.es$ref.type == 'cvz', ]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$design == 'cvz', ]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$ref.type.full$sub$b[[2]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$ref.type.full$sub$zval[[2]] ^ 2 %>% 
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$ref.type.full$sub$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$ref.type.full$sub$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$ref.type.full$sub$pval[[2]]
+  ),
+  
+  ## nvc
+  cbind(
+    `Moderator (bolded) and level` = "     negative vs. control",
+    s = DF.es[DF.es$ref.type == 'nvc', ]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$design == 'nvc', ]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$ref.type.full$sub$b[[3]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$ref.type.full$sub$zval[[3]] ^ 2 %>% 
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$ref.type.full$sub$ci.lb[[3]] %>% round(2),
+        ", ",
+        mod.r$ref.type.full$sub$ci.ub[[3]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$ref.type.full$sub$pval[[3]]
+  ),
+  
+  ## pvz
+  cbind(
+    `Moderator (bolded) and level` = "     positive vs. nil",
+    s = DF.es[DF.es$ref.type == 'pvz', ]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$design == 'pvz', ]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$ref.type.full$sub$b[[5]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$ref.type.full$sub$zval[[5]] ^ 2 %>% 
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$ref.type.full$sub$ci.lb[[5]] %>% round(2),
+        ", ",
+        mod.r$ref.type.full$sub$ci.ub[[5]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$ref.type.full$sub$pval[[5]]
+  ),
+  
+  ## pvz
+  cbind(
+    `Moderator (bolded) and level` = "     positive vs. negative",
+    s = DF.es[DF.es$ref.type == 'pvn', ]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$design == 'pvn', ]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$ref.type.full$sub$b[[4]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$ref.type.full$sub$zval[[4]] ^ 2 %>% 
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$ref.type.full$sub$ci.lb[[4]] %>% round(2),
+        ", ",
+        mod.r$ref.type.full$sub$ci.ub[[4]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$ref.type.full$sub$pval[[4]]
+  ),
+  
+  ################
+  # Publication status
+  ################
+  cbind(
+    `Moderator (bolded) and level` = "Publication status",
+    s = mod.r$published$mod$s.nlevels.f[[1]],
+    k = mod.r$published$mod$s.nlevels.f[[2]],
+    d = "--",
+    B1 = "--",
+    `F` = mod.r$published$mod$QM %>% round(2),
+    `95% CI` = "--",
+    p = mod.r$published$mod$QMp
+  ),
+  
+  ## published
+  cbind(
+    `Moderator (bolded) and level` = "     published",
+    s = DF.es[DF.es$published == 'yes', ]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$published == 'yes', ]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$published$sub$b[[2]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$published$sub$zval[[2]] ^ 2 %>% 
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$published$sub$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$published$sub$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$published$sub$pval[[2]]
+  ),
+
+  ## unpublished
+  cbind(
+    `Moderator (bolded) and level` = "     unpublished",
+    s = DF.es[DF.es$published == 'no', ]$id.study %>%
+      unique() %>%
+      length(),
+    k = DF.es[DF.es$published == 'no', ]$id.es %>%
+      unique() %>%
+      length(),
+    d = mod.r$published$sub$b[[1]] %>% round(2),
+    B1 = "--",
+    `F` = mod.r$published$sub$zval[[1]] ^ 2 %>% 
+      round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$published$sub$ci.lb[[1]] %>% round(2),
+        ", ",
+        mod.r$published$sub$ci.ub[[1]] %>% round(2),
+        "]"
+      ),
+    p = mod.r$published$sub$pval[[1]]
+  )
+) %>% 
+  apa_table()
+```
+
+```{r}
+
+```
+
+
 
 ```{r modforest, fig.cap = "For each moderator, we fit a separate 3LMA and subsequently derived subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 3.75, fig.width = 6.5, warning = F}
 ## list of moderators
