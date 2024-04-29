@@ -330,6 +330,19 @@ DF <- DF %>%
   ungroup()
 ```
 
+## Convert to Hedge's g (reviewer suggestion)
+Formulas in Section 1.1. of this link: https://www.campbellcollaboration.org/escalc/equations.php
+```{r}
+DF <- DF %>% 
+  rowwise() %>% 
+  mutate(j = 1 - (3 / ((4 * (n.1  + n.2 - 2)) - 1)),
+         es = es * j,
+         es.var = es.var * (j^2)) %>% 
+  ungroup() %>% 
+  select(-j)
+```
+
+
 ## Remove objects we no longer need
 ```{r}
 DF <- DF %>% 
