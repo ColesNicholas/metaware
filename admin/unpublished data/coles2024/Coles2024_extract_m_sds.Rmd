@@ -1,0 +1,54 @@
+---
+title: "Extraction of M and SDs from Coles et al. 2024 for demand characteristics meta-analysis"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+# clear environment
+rm(list = ls())
+
+# load packages
+library('tidyverse')
+
+# load data
+d <- read.csv("metaware_replication_clean.csv") %>% 
+  select(sub : happy)
+
+# prep data
+d <- d %>% 
+  # restructure data
+  pivot_wider(names_from = block.num,
+              values_from = happy) %>% 
+  pivot_wider(names_from = trial,
+              values_from = c(`1`, `2`)) %>% 
+  
+  # average across blocks
+  rowwise() %>% 
+  mutate(hap = mean(c(`1_hap`, `2_hap`)),
+         neu = mean(c(`1_neu`, `2_neu`))
+         ) %>% 
+  
+  # calculate difference score
+  mutate(dif = hap - neu) %>% 
+  ungroup()
+
+# examine difference score
+d %>%
+  filter(!is.na(dif)) %>% 
+  group_by(demand) %>% 
+  summarise(m.happy = mean(hap,
+                           na.rm = T),
+            sd.happy = sd(hap,
+                          na.rm = T),
+            n = n())
+
+# examine difference in difference
+d %>% 
+  filter(!is.na(dif)) %>% 
+  group_by(demand) %>% 
+  summarise(m.dif = mean(dif, na.rm = T),
+            sd.dif = sd(dif, na.rm = T),
+            n = n())
+```
