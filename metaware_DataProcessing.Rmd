@@ -16,6 +16,7 @@ library("tidyverse")
 library("readxl")
 library("performance")
 library("lme4")
+library("presize")
 ```
 
 # Open and clean metaware_ESData_raw.xlsx
@@ -493,7 +494,6 @@ DF.surv <- DF.surv %>%
 
 ## [optional] look at reliability of ratings
 ```{r}
-
 even <- DF.surv |>
   sample_frac(.5, replace = FALSE)
 
@@ -578,6 +578,97 @@ tmp %>%
            type="agreement")
 ```
 
+## Further inspections
+```{r}
+DF.surv %>% head
+
+# number of participants (n = 222)
+DF.surv$ss %>% unique %>% length
+
+# number of vignettes (n = 119)
+DF.surv$vig %>% unique %>% length
+
+# vignette ratings (all)
+DF.surv %>% 
+  filter(!is.na(awr)) %>% 
+  group_by(vig) %>% 
+  summarise(n = n()) %>% 
+  summarise(n.min = min(n),
+            n.max = max(n),
+            n.mean = mean(n))
+
+# vignette ratings (passed attention checks)
+DF.surv %>% 
+  filter(!is.na(awr),
+         att.chk == 1) %>% 
+  group_by(vig) %>% 
+  summarise(n = n()) %>% 
+  summarise(n.min = min(n),
+            n.max = max(n),
+            n.mean = mean(n))
+
+# precision of estimates
+prec <- sapply(
+  X = c("mot", "opp", "bel", "pre"),
+  USE.NAMES = T,
+  FUN = function(x){
+    DF.surv %>% 
+      filter(!is.na(get(x)),
+             att.chk == 1) %>%
+      group_by(vig) %>%
+      summarise(n.est = n(),
+                sd.est = sd(get(x)),
+                se.est = sd.est / sqrt(n.est),
+                imp = 2 * (1.96 * se.est)) %>% 
+      summarise(m.imp = mean(imp)) %>% 
+      return()
+       }
+  )
+
+bind_rows(prec) %>% rowMeans() # overall precision
+
+# precision sample size estimate
+prec <- sapply(
+  X = c("mot", "opp", "bel", "pre"),
+  USE.NAMES = T,
+  FUN = function(x){
+    
+    # get M and SD
+    desc <- DF.surv %>% 
+      filter(!is.na(get(x)),
+             att.chk == 1) %>%
+      group_by(vig) %>%
+      summarise(m.est = mean(get(x)),
+                sd.est = sd(get(x))
+                )
+    
+    # precision sample planning
+    prec_mean(mean = desc$m.est,
+              sd = desc$sd.est,
+              conf.width = 1)$n %>% 
+      mean() %>% 
+      return()
+       }
+  )
+
+bind_rows(prec) %>% rowMeans() # overall need
+
+# OLD precision analyses
+tmp <- DF.surv %>% 
+  filter(!is.na(awr),
+         att.chk == 1) %>% 
+  group_by(vig) %>% 
+  summarise(n = n(),
+            m.mot = mean(mot),
+            sd.mot = sd(mot),
+            se.mot = sd.mot / sqrt(n),
+            lb.95 = m.mot - (1.96 * se.mot),
+            ub.95 = m.mot + (1.96 * se.mot),
+            imp = 2 * (1.96 * se.mot))
+
+tmp$imp %>% mean
+        
+```
 
 ## Calculate survey summary statistics
 For each vignette, we want the average of participants ratings of the extent to which they would:
