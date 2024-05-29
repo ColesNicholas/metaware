@@ -358,11 +358,12 @@ This part of the code focuses only on the vignette rating data. This part of the
 By the end of the code chunk, we will have one row for each participants' rating of each vignette (i.e., very long data)
 ```{r}
 # import data
-DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>%
+DF.surv <- read_csv(file = "data/metaware_SurvData_test.csv") %>%
   
   # remove unnecessary variables
   select(-c(StartDate : UserLanguage),
-         -c(hap1_bl1_hap : survey_order),
+         -c(hap1_bl1_hap : survey_order), # keep this in
+         #-c(vig_assign, mot_gen : id), # drop this
          -contains("Click"),
          -contains("Submit"),
          -contains("Count")) %>% 
