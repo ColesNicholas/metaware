@@ -256,9 +256,6 @@ sample <- DF.surv %>%
 
 # total number of participants we need to recruit in follow up study: 220
 sum(sample$needed_n) / 10  #  divide by 10 because each subject views 10 vignettes
-
-# estimated cost
-220 * 
 ```
 
 ## Export information
