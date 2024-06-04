@@ -350,6 +350,7 @@ DF <- DF %>%
 ```
 
 # Open and clean vignette rating data
+## Vignette survey 1
 metaware_SurvData_raw.csv contains vignette rating data (as well as data from a replication of Coles et al., 2022)
 
 This part of the code focuses only on the vignette rating data. This part of the dataset is structured awkwardly, so it warrants its own data processing code.
@@ -357,12 +358,11 @@ This part of the code focuses only on the vignette rating data. This part of the
 By the end of the code chunk, we will have one row for each participants' rating of each vignette (i.e., very long data)
 ```{r}
 # import data
-DF.surv <- read_csv(file = "data/metaware_SurvData_raw") %>%
+DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>%
   
   # remove unnecessary variables
   select(-c(StartDate : UserLanguage),
-         -c(hap1_bl1_hap : survey_order), # keep this in
-         #-c(vig_assign, mot_gen : id), # drop this
+         -c(hap1_bl1_hap : survey_order),
          -contains("Click"),
          -contains("Submit"),
          -contains("Count")) %>% 
@@ -419,6 +419,85 @@ DF.surv <- DF.surv %>%
   # convert columns to correct class
   mutate_at(c("awr", "mot", "opp", "bel", "pre"),
             as.numeric)
+```
+
+## Vignette survey 2
+metaware_SurvData2_raw.csv contains vignette rating data only
+```{r}
+# import data
+DF.surv2 <- read_csv(file = "data/metaware_SurvData2_raw.csv") %>%
+  
+  # remove unnecessary variables
+  select(-c(StartDate : UserLanguage,
+            vig_assign,
+            `indiv_desc_tme_First Click` : SESSION_ID),
+         -contains("Click"),
+         -contains("Submit"),
+         -contains("Count")) %>% 
+  
+  # remove row containing ImportId
+  filter(!grepl("ImportId", `1_awr`)) %>% 
+  
+  # assign participant ids
+  mutate(ss = 1 : nrow(.),
+         ss = as.character(ss)) %>%  
+  
+  # select columns containing information from the vignettes
+  select(`1_awr` : `121_opp`, ss) %>% 
+  
+  # extract vignette identifier from the first row of data
+  # note: I warned you the data structure is awkward
+  mutate_all(~if_else(condition = grepl("#", .),
+                      true = substr(x = .,
+                                    start = 2,
+                                    stop = 9),
+                      false = .))
+
+# append first row (containing vignette identifiers) to the column name
+## append name
+colnames(DF.surv2) <- paste(sep = "##",
+                            colnames(DF.surv2),
+                            as.character(unlist(DF.surv2[1, ]))
+                            )
+
+## remove the first row
+### now that the vignette identifier has been added to the column name, we don't need this row anymore
+DF.surv2 <- DF.surv2[-1, ]
+
+## fix ss (subject identifier) variable naming
+DF.surv2 <- DF.surv2 %>% 
+  rename("ss" = "ss##1")
+
+# pivot data so that there is one row for each participants' rating of each vignette
+DF.surv2 <- DF.surv2 %>% 
+  # pivot longer
+  pivot_longer(cols = contains("##"),
+               names_to = c("var", "vig"),
+               names_sep = "##") %>% 
+  
+  # extract variable name
+  mutate(var = substr(x = var,
+                      start = nchar(var) - 2,
+                      stop = nchar(var))) %>% 
+  
+  # pivot wider
+  pivot_wider(names_from = var,
+              values_from = value) %>% 
+  
+  # convert columns to correct class
+  mutate_at(c("awr", "mot", "opp", "bel", "pre"),
+            as.numeric) %>% 
+  
+  # assign subject identifiers that are distinct from DF.surv
+  mutate(ss = as.numeric(ss) + max(as.numeric(DF.surv$ss)),
+         ss = as.character(ss))
+```
+
+## Combine vignette surveys
+```{r}
+DF.surv <- rbind(DF.surv, DF.surv2)
+
+rm(DF.surv2)
 ```
 
 ## Process attention checks

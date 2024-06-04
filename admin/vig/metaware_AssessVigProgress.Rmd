@@ -92,17 +92,17 @@ DF.surv <- DF.surv %>%
 ## Examine reliability of ratings
 ### Nicholas' approach (calculate ICC via mixed-effect model)
 ```{r}
-# mot icc: .24
+# mot icc: .24 (new = .23)
 lmer(mot ~ 1 + (1 | ss) + (1 | vig),
      data = DF.surv) %>% 
   performance::icc(by_group = T)
 
-# opp icc: .21
+# opp icc: .21 (new .23)
 lmer(opp ~ 1 + (1 | ss) + (1 | vig),
      data = DF.surv) %>% 
   performance::icc(by_group = T)
 
-# bel icc: .15
+# bel icc: .15 (new = .16)
 lmer(bel ~ 1 + (1 | ss) + (1 | vig),
      data = DF.surv)  %>% 
   performance::icc(by_group = T)
