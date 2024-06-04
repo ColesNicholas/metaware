@@ -1,5 +1,5 @@
 ---
-title: "Extraction of M and SDs from Coles et al. 2024b for demand characteristics meta-analysis"
+title: "Extraction of M and SDs from Coles et al. 2024 for demand characteristics meta-analysis"
 output: html_document
 editor_options: 
   chunk_output_type: console
@@ -81,6 +81,6 @@ DF <- DF %>%
   
   # export
 DF %>%
-  write.csv("coles2024b.csv",
+  write.csv("coles2024.csv",
             row.names = F)
 ```

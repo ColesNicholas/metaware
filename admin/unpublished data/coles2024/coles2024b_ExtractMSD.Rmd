@@ -1,0 +1,35 @@
+---
+title: "Extraction of M and SDs from Coles et al. 2024 for demand characteristics meta-analysis"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+In this study, participants completed a line judgment task.
+
+The study featured a 2 (no information received; information received) x 2 (information received is about the researcher's hypothesis; information received is about typical group responses) x 2 (lines are left justified first; lines are right justified first) fractional factorial design. The first factor was manipulated within-subjects, and the second and third were manipulated between-subjects.
+
+As of June 4, 2024, data for this study have been collected at 6 sites.
+
+```{r}
+# set up packages
+library(tidyverse)
+
+# open data
+DF <- read.csv("coles2024.csv")
+
+# calculate summary statistics
+DF %>% 
+  group_by(lab, info.pres) %>% 
+  summarise(m.rating = mean(value) %>% 
+              round(2),
+            sd.rating = sd(value) %>% 
+              round(2),
+            n = ResponseId %>% 
+              unique %>% 
+              length,
+            lab = unique(lab),
+            modality = unique(modality),
+            incentive = unique(incentive)) %>% 
+  write.csv("coles2024.MSD.csv",
+            row.names = F)
+```
