@@ -48,14 +48,7 @@ DF <- DF %>%
   
   # create study and es_id columns
   rename(id.study = id) %>% 
-  mutate(id.es = 1 : nrow(DF)) %>% 
-  
-  # where appropriate, convert variables to factors
-  mutate(across(.cols = c(id.study, id.es, published, student,
-                          paid, online, ref.type,
-                          ref.r),
-                .fns = as.factor)
-         )
+  mutate(id.es = 1 : nrow(DF))
 
 # create blank columns for effect size and effect size variance
 # Note: these pre-existing columns are necessary for the 
@@ -342,10 +335,52 @@ DF <- DF %>%
   select(-j)
 ```
 
+## Open, process, and merge quality ratings
+```{r}
+qual <- 
+  # open data
+  read_xlsx(path = "data/metaware_EsData_raw.xlsx",
+            sheet = "quality.coding", 
+            na = c("NA")) %>% 
+  
+  # calculate scales
+  rowwise() %>% 
+  mutate(report = mean(c(report_1, report_2,
+                         report_3, report_4,
+                         report_6, report_7,
+                         report_10),
+                       na.rm = T),
+         
+         external = external_12,
+         internal = mean(c(internal_14, internal_15,
+                           internal_16, internal_18),
+                         na.rm = T),
+         id.study = id) %>% 
+  ungroup() %>% 
+  
+  # select relevant variables
+  select(id.study, report, external, internal)
 
-## Remove objects we no longer need
+# merge data
+DF <- left_join(x = DF,
+                y = qual,
+                by = "id.study")
+
+rm(qual)
+```
+
+## Fix columns 
 ```{r}
 DF <- DF %>% 
+  
+  # where appropriate, convert variables to factors
+  mutate(across(.cols = c(id.study, id.es, published, student,
+                          paid, online, ref.type,
+                          ref.r),
+                .fns = as.factor)
+         ) %>% 
+  
+  # remove unnecessary columns
   select(-c(es.calc : pval))
 ```
 
