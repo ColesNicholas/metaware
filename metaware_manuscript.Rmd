@@ -534,6 +534,8 @@ ggplot() +
 
 ```
 
+In total, we extracted `r overall$k` effect sizes from `r overall$n` studies from between the years `r DF.es$year %>% min()` and `r DF.es$year %>% max()`. 
+
 Overall, results indicated that explicit manipulations of demand characteristics cause participants' responses to shift in a manner consistent with the communicated hypothesis, $g$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. As a hypothetical example, if participants were told that the researcher hypothesizes that an intervention will improve mood (positive demand), they would generally report slightly improved moods; if told that the researcher hypothesizes that an intervention will worsen mood (negative demand), they would generally report slightly worsened moods.
 
 ```{r forest, fig.cap = "Forest plot of effect sizes (grey diamonds), their 95% confidence intervals (grey error bars), and their citations (left; see openly-available data for more information). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; g > 0.10), more hypothesis-inconsistent responding (red; g < -0.10), or negligible shifts in responding (grey; |g| < 0.10).", fig.height = 7, fig.width = 6.5, warning = F}
@@ -1192,8 +1194,69 @@ rbind(
     `F` = mod.r$published$sub$zval[[1]] ^ 2 %>% 
       round(2),
     p = mod.r$published$sub$pval[[1]] %>% as.numeric %>% apa_p()
-  )
-) %>% 
+  ),
+  
+  ################
+  # Theory-relevant moderators
+  ################
+  
+  ## motivation to adjust responses
+  cbind(
+    `Moderator (bolded) and level` = "motivation to adjust responses",
+    s = mod.r$mot$mod$n,
+    k = mod.r$mot$mod$k,
+    g =  "--",
+    B1 = mod.r$mot$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$mot$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$mot$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$mot$mod$QM,
+    p = mod.r$mot$mod$QMp %>% apa_p()
+  ),
+  
+  ## opportunity to adjust responses
+  cbind(
+    `Moderator (bolded) and level` = "opportunity to adjust responses",
+    s = mod.r$opp$mod$n,
+    k = mod.r$opp$mod$k,
+    g =  "--",
+    B1 = mod.r$opp$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$opp$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$opp$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$opp$mod$QM,
+    p = mod.r$opp$mod$QMp %>% apa_p()
+  ),
+  
+  ## belief in hypothesized effect
+  ## opportunity to adjust responses
+  cbind(
+    `Moderator (bolded) and level` = "belief in communicated hypothesis",
+    s = mod.r$bel$mod$n,
+    k = mod.r$bel$mod$k,
+    g =  "--",
+    B1 = mod.r$bel$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$bel$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$bel$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$bel$mod$QM,
+    p = mod.r$bel$mod$QMp %>% apa_p()
+  )) %>%
   apa_table()
 ```
 
