@@ -1714,12 +1714,11 @@ rm(in.s, on.s, v.s, p.s,
 PubBias = function(rho.val = .5){
   # 1. sensitivity analyses (no longer working?)
   ########################
-  sens <- "not working"
-  # sens <- pubbias_meta(yi = DF.es$es,
-  #                      vi = DF.es$es.var, 
-  #                      cluster = DF.es$id.study,
-  #                      selection_ratio = 2, 
-  #                      model_type = "robust")
+  sens <- pubbias_meta(yi = DF.es$es,
+                       vi = DF.es$es.var, 
+                       cluster = DF.es$id.study,
+                       selection_ratio = 1000000, 
+                       model_type = "robust")
   
   # 2a. three-level precision-effect test
   ########################
