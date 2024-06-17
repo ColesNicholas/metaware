@@ -584,7 +584,7 @@ ggplot() +
 
 ```
 
-In total, we extracted `r overall$k` effect sizes from `r overall$n` studies from between the years `r DF.es$year %>% min()` and `r DF.es$year %>% max()`. The average coder rating of reporting quality, internal validity, and external validity was `r DF.es$report %>% mean()`, `r DF.es$internal`, and `r DF.es$external` out of 1, respectively. The low external validity scores were driven by the reliance on non-representative sampling methods, a common practice in experimental psychology that is nonetheless identified as a threat to external validity in the DOWNS AND BLACK checklist.
+In total, we extracted `r overall$k` effect sizes from `r overall$n` studies from between the years `r DF.es$year %>% min()` and `r DF.es$year %>% max()`. The average coder rating of reporting quality, internal validity, and external validity was `r DF.es$report %>% mean() %>% round(2)`, `r DF.es$internal %>%  mean() %>% round(2)`, and `r DF.es$external %>%  mean() %>% round(2)` out of 1, respectively. The low external validity scores were driven by the reliance on non-representative sampling methods, a common practice in experimental psychology that is nonetheless identified as a threat to external validity in the DOWNS AND BLACK checklist.
 
 Overall, results indicated that explicit manipulations of demand characteristics cause participants' responses to shift in a manner consistent with the communicated hypothesis, $g$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. As a hypothetical example, if participants were told that the researcher hypothesizes that an intervention will improve mood (positive demand), they would generally report slightly improved moods; if told that the researcher hypothesizes that an intervention will worsen mood (negative demand), they would generally report slightly worsened moods.
 
@@ -1317,7 +1317,7 @@ rbind(
     `F` = mod.r$pre$mod$QM %>% round(2),
     p = mod.r$pre$mod$QMp %>% apa_p()
   )) %>%
-  apa_table(Note: "Many studies yielded effect sizes for multiple levels of a moderator (e.g., having both a positive vs. control and negative vs. control comparison). Thus, the number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderator.")
+  apa_table(note = "Many studies yielded effect sizes for multiple levels of a moderator (e.g., having both a positive vs. control and negative vs. control comparison). Thus, the number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderator.")
 ```
 
 ```{r modforest, fig.cap = "For each moderator, we fit a separate 3LMA and subsequently derived subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 3.75, fig.width = 6.5, warning = F}
