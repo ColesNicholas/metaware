@@ -759,8 +759,8 @@ rbind(
   ################
   cbind(
     `Moderator (bolded) and level` = "Student Status",
-    s = mod.r$student$mod$s.nlevels.f[[1]],
-    k = mod.r$student$mod$s.nlevels.f[[2]],
+    s = mod.r$student$mod$n,
+    k = mod.r$student$mod$k,
     g =  "--",
     B1 = "--",
     `95% CI` = "--",
@@ -771,12 +771,13 @@ rbind(
   ## student: yes
   cbind(
     `Moderator (bolded) and level` = "     yes",
-    s = DF.es[DF.es$student == 'yes',]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$student == 'yes',]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(student == "yes") %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(student == "yes") %>% 
+      nrow(),
     g =  mod.r$student$sub$b[[3]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -795,12 +796,13 @@ rbind(
   ## student: no
   cbind(
     `Moderator (bolded) and level` = "     no",
-    s = DF.es[DF.es$student == 'no',]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$student == 'no',]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(student == "no") %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(student == "no") %>% 
+      nrow(),
     g =  mod.r$student$sub$b[[2]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -819,12 +821,13 @@ rbind(
   ## student: mix
   cbind(
     `Moderator (bolded) and level` = "     mix",
-    s = DF.es[DF.es$student == 'mix',]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$student == 'mix',]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(student == "mix") %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(student == "mix") %>% 
+      nrow(),
     g =  mod.r$student$sub$b[[1]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -845,8 +848,8 @@ rbind(
   ################
   cbind(
     `Moderator (bolded) and level` = "Payment Status",
-    s = mod.r$paid$mod$s.nlevels.f[[1]],
-    k = mod.r$paid$mod$s.nlevels.f[[2]],
+    s = mod.r$paid$mod$n,
+    k = mod.r$paid$mod$k,
     g =  "--",
     B1 = "--",
     `95% CI` = "--",
@@ -857,12 +860,13 @@ rbind(
   ## yes
   cbind(
     `Moderator (bolded) and level` = "     yes",
-    s = DF.es[DF.es$paid== 'yes',]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$paid == 'yes',]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(paid == "yes") %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(paid == 'yes') %>% 
+      nrow(),
     g =  mod.r$paid$sub$b[[2]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -881,12 +885,13 @@ rbind(
   # no
   cbind(
     `Moderator (bolded) and level` = "     no",
-    s = DF.es[DF.es$paid == 'no',]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$paid == 'no',]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(paid == "no") %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k =  DF.es %>% 
+      filter(paid == 'no') %>% 
+      nrow(),
     g =  mod.r$paid$sub$b[[1]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -907,8 +912,8 @@ rbind(
   ################
   cbind(
     `Moderator (bolded) and level` = "Setting",
-    s = mod.r$online$mod$s.nlevels.f[[1]],
-    k = mod.r$online$mod$s.nlevels.f[[2]],
+    s = mod.r$online$mod$n,
+    k = mod.r$online$mod$k,
     g =  "--",
     B1 = "--",
     `95% CI` = "--",
@@ -919,12 +924,13 @@ rbind(
   ## online
   cbind(
     `Moderator (bolded) and level` = "     online",
-    s = DF.es[DF.es$online == 'yes',]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$online == 'yes',]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(online == "yes") %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k =  DF.es %>% 
+      filter(online == 'yes') %>% 
+      nrow(),
     g =  mod.r$online$sub$b[[2]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -943,12 +949,13 @@ rbind(
   # in person
   cbind(
     `Moderator (bolded) and level` = "     in-person",
-    s = DF.es[DF.es$online == 'no',]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$online == 'no',]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(online == "no") %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(online == 'no') %>% 
+      nrow(),
     g =  mod.r$online$sub$b[[1]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -969,8 +976,8 @@ rbind(
   ################
   cbind(
     `Moderator (bolded) and level` = "Design",
-    s = mod.r$design$mod$s.nlevels.f[[1]],
-    k = mod.r$design$mod$s.nlevels.f[[2]],
+    s = mod.r$design$mod$n,
+    k = mod.r$design$mod$k,
     g =  "--",
     B1 = "--",
     `95% CI` = "--",
@@ -981,12 +988,13 @@ rbind(
   ## within
   cbind(
     `Moderator (bolded) and level` = "     within-subjects",
-    s = DF.es[DF.es$design == 'within',]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$design == 'within',]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(design == "within") %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(design == 'within') %>% 
+      nrow(),
     g =  mod.r$design$sub$b[[2]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -1005,12 +1013,13 @@ rbind(
   # in person
   cbind(
     `Moderator (bolded) and level` = "     between-subjects",
-    s = DF.es[DF.es$design == 'between',]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$design == 'between',]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(design == "between") %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(design == 'between') %>% 
+      nrow(),
     g =  mod.r$design$sub$b[[1]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -1031,8 +1040,8 @@ rbind(
   ################
   cbind(
     `Moderator (bolded) and level` = "Comparison type",
-    s = mod.r$ref.type.full$mod$s.nlevels.f[[1]],
-    k = mod.r$ref.type.full$mod$s.nlevels.f[[2]],
+    s = mod.r$ref.type.full$mod$n,
+    k = mod.r$ref.type.full$mod$k,
     g =  "--",
     B1 = "--",
     `95% CI` = "--",
@@ -1043,12 +1052,13 @@ rbind(
   ## cvp
   cbind(
     `Moderator (bolded) and level` = "     positive vs. control",
-    s = DF.es[DF.es$ref.type == 'cvp', ]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$ref.type == 'cvp', ]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(ref.type == 'cvp') %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(ref.type == 'cvp') %>% 
+      nrow(),
     g =  mod.r$ref.type.full$sub$b[[1]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -1064,39 +1074,16 @@ rbind(
     p = mod.r$ref.type.full$sub$pval[[1]] %>% as.numeric %>% apa_p()
   ),
   
-  ## cvp
+  ## cvz
   cbind(
     `Moderator (bolded) and level` = "     nil vs. control",
-    s = DF.es[DF.es$ref.type == 'cvz', ]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$ref.type == 'cvz', ]$id.es %>%
-      unique() %>%
-      length(),
-    g =  mod.r$ref.type.full$sub$b[[2]] %>% round(2),
-    B1 = "--",
-    `95% CI` =
-      paste0(
-        "[",
-        mod.r$ref.type.full$sub$ci.lb[[2]] %>% round(2),
-        ", ",
-        mod.r$ref.type.full$sub$ci.ub[[2]] %>% round(2),
-        "]"
-      ),
-    `F` = mod.r$ref.type.full$sub$zval[[2]] ^ 2 %>% 
-      round(2),
-    p = mod.r$ref.type.full$sub$pval[[2]] %>% as.numeric %>% apa_p()
-  ),
-  
-  ## cvn
-  cbind(
-    `Moderator (bolded) and level` = "     nil vs. control",
-    s = DF.es[DF.es$ref.type == 'cvz', ]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$ref.type == 'cvz', ]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(ref.type == 'cvz') %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(ref.type == 'cvz') %>% 
+      nrow(),
     g =  mod.r$ref.type.full$sub$b[[2]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -1115,12 +1102,13 @@ rbind(
   ## nvc
   cbind(
     `Moderator (bolded) and level` = "     negative vs. control",
-    s = DF.es[DF.es$ref.type == 'nvc', ]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$ref.type == 'nvc', ]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(ref.type == 'nvc') %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(ref.type == 'nvc') %>% 
+      nrow(),
     g =  mod.r$ref.type.full$sub$b[[3]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -1139,12 +1127,13 @@ rbind(
   ## pvz
   cbind(
     `Moderator (bolded) and level` = "     positive vs. nil",
-    s = DF.es[DF.es$ref.type == 'pvz', ]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$ref.type == 'pvz', ]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(ref.type == 'pvz') %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(ref.type == 'pvz') %>% 
+      nrow(),
     g =  mod.r$ref.type.full$sub$b[[5]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -1160,15 +1149,16 @@ rbind(
     p = mod.r$ref.type.full$sub$pval[[5]] %>% as.numeric %>% apa_p()
   ),
   
-  ## pvz
+  ## pvn
   cbind(
     `Moderator (bolded) and level` = "     positive vs. negative",
-    s = DF.es[DF.es$ref.type == 'pvn', ]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$ref.type == 'pvn', ]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(ref.type == 'pvn') %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(ref.type == 'pvn') %>% 
+      nrow(),
     g =  mod.r$ref.type.full$sub$b[[4]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -1189,8 +1179,8 @@ rbind(
   ################
   cbind(
     `Moderator (bolded) and level` = "Publication status",
-    s = mod.r$published$mod$s.nlevels.f[[1]],
-    k = mod.r$published$mod$s.nlevels.f[[2]],
+    s = mod.r$published$mod$n,
+    k = mod.r$published$mod$k,
     g =  "--",
     B1 = "--",
     `95% CI` = "--",
@@ -1201,12 +1191,13 @@ rbind(
   ## published
   cbind(
     `Moderator (bolded) and level` = "     published",
-    s = DF.es[DF.es$published == 'yes', ]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$published == 'yes', ]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(published == 'yes') %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(published == 'yes') %>% 
+      nrow(),
     g =  mod.r$published$sub$b[[2]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -1225,12 +1216,13 @@ rbind(
   ## unpublished
   cbind(
     `Moderator (bolded) and level` = "     unpublished",
-    s = DF.es[DF.es$published == 'no', ]$id.study %>%
-      unique() %>%
-      length(),
-    k = DF.es[DF.es$published == 'no', ]$id.es %>%
-      unique() %>%
-      length(),
+    s = DF.es %>% 
+      filter(published == 'no') %>%
+      reframe(n.study = unique(id.study)) %>% 
+      nrow(),
+    k = DF.es %>% 
+      filter(published == 'no') %>% 
+      nrow(),
     g =  mod.r$published$sub$b[[1]] %>% round(2),
     B1 = "--",
     `95% CI` =
@@ -1265,7 +1257,7 @@ rbind(
         mod.r$mot$mod$ci.ub[[2]] %>% round(2),
         "]"
       ),
-    `F` = mod.r$mot$mod$QM,
+    `F` = mod.r$mot$mod$QM %>% round(2),
     p = mod.r$mot$mod$QMp %>% apa_p()
   ),
   
@@ -1284,7 +1276,7 @@ rbind(
         mod.r$opp$mod$ci.ub[[2]] %>% round(2),
         "]"
       ),
-    `F` = mod.r$opp$mod$QM,
+    `F` = mod.r$opp$mod$QM%>% round(2),
     p = mod.r$opp$mod$QMp %>% apa_p()
   ),
   
@@ -1304,10 +1296,28 @@ rbind(
         mod.r$bel$mod$ci.ub[[2]] %>% round(2),
         "]"
       ),
-    `F` = mod.r$bel$mod$QM,
+    `F` = mod.r$bel$mod$QM %>% round(2),
     p = mod.r$bel$mod$QMp %>% apa_p()
+  ),
+  
+  cbind(
+    `Moderator (bolded) and level` = "raters' predictions about demand effects",
+    s = mod.r$pre$mod$n,
+    k = mod.r$pre$mod$k,
+    g =  "--",
+    B1 = mod.r$pre$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$pre$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$pre$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$pre$mod$QM %>% round(2),
+    p = mod.r$pre$mod$QMp %>% apa_p()
   )) %>%
-  apa_table()
+  apa_table(Note: "Many studies yielded effect sizes for multiple levels of a moderator (e.g., having both a positive vs. control and negative vs. control comparison). Thus, the number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderator.")
 ```
 
 ```{r modforest, fig.cap = "For each moderator, we fit a separate 3LMA and subsequently derived subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 3.75, fig.width = 6.5, warning = F}
@@ -1376,11 +1386,7 @@ When variability in effect sizes exceeds what would be expected from sampling er
 
 #### Study features
 
-Results indicated that the effects of demand characteristics tended to differ by participant pool, $F$(`r mod.r$student$mod$QMdf[1]`, `r mod.r$student$mod$QMdf[2]`) = `r mod.r$student$mod$QM`, $p$ = `r printp(mod.r$student$mod$QMp)`. As shown in Figure \@ref(fig:modforest), effects were generally positive and medium-to-large in studies with students ($g$ = `r mod.r$student$sub$b[3]`, 95% CI [`r mod.r$student$sub$ci.lb[3]`, `r mod.r$student$sub$ci.ub[3]`], $p$ `r printp(mod.r$student$sub$pval[3])`), and near-zero in studies with non-students ($g$ = `r mod.r$student$sub$b[2]`, 95% CI [`r mod.r$student$sub$ci.lb[2]`, `r mod.r$student$sub$ci.ub[2]`], $p$ = `r printp(mod.r$student$sub$pval[2])`) or a mix of students and non-students ($g$ = `r mod.r$student$sub$b[1]`, 95% CI [`r mod.r$student$sub$ci.lb[1]`, `r mod.r$student$sub$ci.ub[1]`], $p$ = `r printp(mod.r$student$sub$pval[1])`). The effects of demand characteristics also tended to be slightly more positive for in-person ($g$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($g$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies; however, this difference was not significant, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)` (Figure \@ref(fig:modforest)).
-
-The effects of demand characteristics were additive. Compared to instances where a demand characteristic condition was compared to a control group ($g$ = `r mod.r$ref.r$sub$b[2]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[2]`, `r mod.r$ref.r$sub$ci.ub[2]`], $p$ = `r printp(mod.r$ref.r$sub$pval[2])`), effect sizes were approximately twice as large when two demand characteristic conditions were compared ($g$ = `r mod.r$ref.r$sub$b[1]`, 95% CI [`r mod.r$ref.r$sub$ci.lb[1]`, `r mod.r$ref.r$sub$ci.ub[1]`], $p$ `r printp(mod.r$ref.r$sub$pval[1])`), $F$(`r mod.r$ref.r$mod$QMdf[1]`, `r mod.r$ref.r$mod$QMdf[2]`) = `r mod.r$ref.r$mod$QM`, $p$ `r printp(mod.r$ref.r$mod$QMp)`. Instances where a demand characteristic condition was compared to a control group allowed us to additionally test whether participants respond more strongly to positive, nil, or negative demand characteristics. Results indicated that they do, $F$(`r mod.r$ref.type$mod$QMdf[1]`, `r mod.r$ref.type$mod$QMdf[2]`) = `r mod.r$ref.type$mod$QM`, $p$ = `r printp(mod.r$ref.type$mod$QMp)`. As shown in Figure \@ref(fig:modforest), the effect of demand characteristics tended to be nearly twice as large in the nil ($g$ = `r mod.r$ref.type$sub$b[2]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[2]`, `r mod.r$ref.type$sub$ci.ub[2]`], $p$ `r printp(mod.r$ref.type$sub$pval[2])`) vs. positive ($d$ = `r mod.r$ref.type$sub$b[1]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[1]`, `r mod.r$ref.type$sub$ci.ub[1]`], $p$ = `r printp(mod.r$ref.type$sub$pval[1])`), and negative demand conditions ($g$ = `r mod.r$ref.type$sub$b[3]`, 95% CI [`r mod.r$ref.type$sub$ci.lb[3]`, `r mod.r$ref.type$sub$ci.ub[3]`], $p$ = `r printp(mod.r$ref.type$sub$pval[3])`). In other words, participants' responses most strongly shift when researchers communicate that they hypothesize *no* change in response
-
-We did not find that the effects of demand characteristics tended to differ depending on whether they were manipulated within- ($g$ = `r mod.r$design$sub$b[1]`, 95% CI [`r mod.r$design$sub$ci.lb[1]`, `r mod.r$design$sub$ci.ub[1]`], $p$ `r printp(mod.r$design$sub$pval[1])`) vs. between-subjects ($g$ = `r mod.r$design$sub$b[2]`, 95% CI [`r mod.r$design$sub$ci.lb[2]`, `r mod.r$design$sub$ci.ub[2]`], $p$ = `r printp(mod.r$design$sub$pval[2])`), $F$(`r mod.r$design$mod$QMdf[1]`, `r mod.r$design$mod$QMdf[2]`) = `r mod.r$design$mod$QM`, $p$ = `r printp(mod.r$design$mod$QMp)` (Figure \@ref(fig:modforest)). We also did not find that the effects of demand characteristics differed depending on whether participants were unpaid ($g$ = `r mod.r$paid$sub$b[1]`, 95% CI [`r mod.r$paid$sub$ci.lb[1]`, `r mod.r$paid$sub$ci.ub[1]`], $p$ `r printp(mod.r$paid$sub$pval[1])`) vs. paid ($g$ = `r mod.r$paid$sub$b[2]`, 95% CI [`r mod.r$paid$sub$ci.lb[2]`, `r mod.r$paid$sub$ci.ub[2]`], $p$ = `r printp(mod.r$paid$sub$pval[2])`), $F$(`r mod.r$paid$mod$QMdf[1]`, `r mod.r$paid$mod$QMdf[2]`) = `r mod.r$paid$mod$QM`, $p$ = `r printp(mod.r$paid$mod$QMp)` (Figure \@ref(fig:modforest)).
+In general, we found little-to-evidence that demand effects are moderated by study features (see Table X). The exception was modality. The effects of demand characteristics tended to be slightly more positive for in-person ($g$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($g$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)`.
 
 ```{r modfig, fig.cap= "Scatterplots of relationships between the observed effects of demand characteristics (y-axis) and motivation (Panel A), opportunity (Panel B), expectancy (Panel C), and prediction (Panel D) ratings (x-axis). Grey dots represent jittered observations, black lines represent estimated linear relationships, and blue ribbons represent 95% confidence intervals for estimated linear relationships.", fig.height = 4.5, fig.width = 6.5}
 #################
