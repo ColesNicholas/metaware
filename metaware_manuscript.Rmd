@@ -504,23 +504,38 @@ In total, we extracted `r overall$k` effect sizes from `r overall$n` studies fro
 
 Overall, results indicated that explicit manipulations of demand characteristics cause participants' responses to shift in a manner consistent with the communicated hypothesis, $g$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. As a hypothetical example, if participants were told that the researcher hypothesizes that an intervention will improve mood (positive demand), they would generally report slightly improved moods; if told that the researcher hypothesizes that an intervention will worsen mood (negative demand), they would generally report slightly worsened moods.
 
-```{r forest, fig.cap = "Forest plot of effect sizes (grey diamonds), their 95% confidence intervals (grey error bars), and their citations (left; see openly-available data for more information). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; g > 0.10), more hypothesis-inconsistent responding (red; g < -0.10), or negligible shifts in responding (grey; |g| < 0.10).", fig.height = 7, fig.width = 6.5, warning = F}
-# create a temporary dataset containing effect sizes and 95% CI's
+```{r forest, fig.cap = "Forest plot of effect sizes (grey diamonds), their 95% confidence intervals (grey error bars), and their citations (left). For visualization purposes, effect sizes are aggregated within-studies (see openly-available data for non-aggregated effect sizes). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; g > 0.10), more hypothesis-inconsistent responding (red; g < -0.10), or negligible shifts in responding (grey; |g| < 0.10).", fig.height = 7, fig.width = 6.5, warning = F}
+# create a temporary dataset that (a) aggregates dependent effect sizes, and (b) computes 95% CI's
 tmp <- DF.es %>%
+  # convert to an 'escalc' object so function can run
+  escalc(yi = es,
+         vi = es.var,
+         data = DF.es,
+         measure = "SMD") %>% 
+  
+  # delete vestigial: es is now yi; es.var is now vi
+  select(-c(es, es.var)) %>% 
+  
+  # aggregate dependencies
+  aggregate(x = .,
+            cluster = id.study,
+            rho = .5) %>% 
+  
+  # compute CI's
   rowwise() %>% 
-  mutate(se = sqrt(es.var),
-         ub = es + (se * 1.96),
+  mutate(se = sqrt(vi),
+         ub = yi + (se * 1.96),
          ub = round(ub, 2),
-         lb = es - (se * 1.96),
+         lb = yi - (se * 1.96),
          lb = round(lb, 2),
-         es = round(es, 2)) %>% 
+         yi = round(yi, 2)) %>% 
   ungroup() %>% 
-  arrange(es, id.study)
+  arrange(yi, id.study)
 
 # create a forest plot w/ distribution overlay
-ggplot(data= tmp, 
-       aes(y = rev(1: nrow(tmp)) * 0.007692308, 
-           x = es,
+ggplot(data = tmp, 
+       aes(y = rev(1: nrow(tmp)) * .023, 
+           x = yi,
            xmin = lb,
            xmax = ub)) +
   
@@ -563,40 +578,59 @@ ggplot(data= tmp,
 
   # add points and error bars
   geom_point(shape = "diamond",
-             size = 1,
+             size = 2.5,
              alpha = .8,
              color = "dark grey") +
   geom_errorbarh(height = .005,
-                 size = .1,
+                 size = .75,
                  alpha = .8,
                  color = "dark grey") +
   
   # add citation label
   geom_text(aes(label = citation),
-            x = -2.7,
+            x = -2.2,
             hjust = 0,
-            size = 1) +
+            size = 2.5) +
   
   # add CI label
-  geom_text(aes(label = paste0(es,
+  geom_text(aes(label = paste0(yi,
                                " [", lb, ", ", ub, "]")),
-            x = 3.9,
-            size = 1,
+            x = 3.1,
+            size = 2.5,
             hjust = 1) +
   
   labs(x = expression(paste("Hedge's ", italic("g"))),
        y = "density") +
   
   # increase plotting area
-  scale_x_continuous(limits = c(-2.7, 4),
+  scale_x_continuous(limits = c(-2.25, 3.25),
                      breaks = seq(from = -2, to = 3, by = 1),
                      expand = c(.01, .01)) +
   scale_y_continuous(expand = c(.005, 0))
+
 ```
 
 As a reminder, rather than assume that there is a single true effect of demand characteristics, 3LMA assumes that there are *multiple true effects.* Consistent with this assumption, observed variability in demand effects drastically exceeded what would be expected from sampling error alone (between-study $\tau$ = `r sqrt(overall$sigma2[1])`; within-study $\sigma$ = `r sqrt(overall$sigma2[2])`; $Q$(`r overall$k - 1`) = `r overall$QE`, $p$ `r printp(overall$QEp)`). 3LMA assumes that the multiple true effects form a normal distribution, which we recreated based on estimates of the average effect size and variability attributed to sources other than sampling error (between-study $\tau$ + within-study $\sigma$). As shown in Figure \@ref(fig:forest), this estimated distribution suggests that demand effects can range from approximately $g$ = `r dist.min` to $g$ = `r dist.max` --- covering the range of most conceivable effects in psychology.
 
-As a heuristic, we arbitrarily classified any effect size less than 0.10 standard deviation in either direction (i.e., \|$g$\| \< .10) as "negligible". Based on this classification, the recreated distribution suggested that demand characteristics most often produce hypothesis-consistent shifts (`r h.c`%), but sometimes produce negligible shifts (`r 100 - h.c - h.i`%) or shifts in the *opposite* direction of the communicated hypothesis (`r h.i`%). Such results are consistent with Rosnow and colleagues' prediction that demand characteristics can lead to both hypothesis-consistent and hypothesis-*inconsistent* shifts in participants' responses. However, both the observed effects and estimated distribution in Figure \@ref(fig:forest) suggest that hypothesis-inconsistent shifts in participants' responses are quite rare.
+```{r neg.demand, include = F}
+# compute number of effect sizes that were negative and significant
+neg.demand.raw <- DF.es %>% 
+  filter(ub < 0) %>% 
+  nrow()
+
+# compute number of *aggregated* effect sizes that were negative and significant
+neg.demand.agg <- tmp %>%
+  filter(ub < 0) %>% 
+  nrow()
+  
+rm(tmp)
+```
+
+As a heuristic, we arbitrarily classified any effect size less than 0.10 standard deviation in either direction (i.e., \|$g$\| \< .10) as "negligible". Based on this classification, the recreated distribution suggested that demand characteristics most often produce hypothesis-consistent shifts (`r h.c`%), but sometimes produce negligible shifts (`r 100 - h.c - h.i`%) or shifts in the *opposite* direction of the communicated hypothesis (`r h.i`%). Such results are consistent with Rosnow and colleagues' prediction that demand characteristics can lead to both hypothesis-consistent and hypothesis-*inconsistent* shifts in participants' responses. However, both the observed effects and estimated distribution in Figure \@ref(fig:forest) suggest that hypothesis-inconsistent shifts in participants' responses are quite rare. The distribution of effect sizes aggregated at the study level reveal that only significant hypothesis-inconsistent shifts in participants' responses were only observed in `r neg.demand.agg` case (Figure \@ref(fig:forest)). Even when considering non-aggregated effect sizes, hypothesis-inconsistent shifts in participants' responses were only observed in `r neg.demand.raw` cases.
+
+```{r clean.env.99, include = F}
+rm(neg.demand.raw, neg.demand.agg)
+```
 
 ### Moderator analyses
 
@@ -670,7 +704,72 @@ mod.r = c(mod.r, mod.r.2)
 rm(mod.r.2)
 ```
 
-```{r modtable}
+```{r modforest, fig.cap = "For each moderator, we fit a separate 3LMA and subsequently derived subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 3.75, fig.width = 6.5, warning = F}
+## list of moderators
+mod.list <- c("student", "paid", "online", "ref.type", "design")
+
+## function for extraction
+mod.df <- map_df(mod.list, function(x) {
+  tibble(mod = x,
+         level = str_replace(rownames(mod.r[[x]]$sub$beta), mod, ""),
+         beta = mod.r[[x]]$sub$beta %>% 
+           as.numeric() %>% 
+           round(2),
+         lb = mod.r[[x]]$sub$ci.lb %>% 
+           round(2),
+         ub = mod.r[[x]]$sub$ci.ub %>% 
+           round(2))
+})
+
+## manually update some labels
+mod.df <- mod.df %>% 
+  mutate(level = recode_factor(.x = level,
+                               nvc = "negative",
+                               cvp = "positive",
+                               cvz = "nil"),
+         mod = recode_factor(.x = mod,
+                             ref.type = "demand"))
+
+## reorder factors
+mod.df$level <- fct_reorder(mod.df$level, 
+                            mod.df$beta, 
+                            .desc = TRUE)
+
+## Create forest plot with effect size distribution superimposed
+ggplot(mod.df, 
+       aes(x = level, 
+           y = beta)) + 
+  
+  # dotted line at d = 0
+  geom_hline(yintercept = 0,
+             linetype = "dotted", 
+             alpha = .5, 
+             size =.5) +
+  
+  # estimates and CI
+  geom_pointrange(aes(ymin = lb, 
+                      ymax = ub),
+                  alpha = .8,
+                  color = "dark grey") +
+
+  # update labels
+  xlab("") + 
+  ylab(expression(paste("Estimated subgroup mean (Hedge's ", italic("g"), ")"))) +
+
+  # clean up aesthetics
+  coord_flip() + 
+  facet_grid(mod ~ . , scales = "free_y") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = .5,  hjust=1))
+
+# delete vestigial
+rm(mod.df)
+```
+
+When variability in effect sizes exceeds what would be expected from sampling error alone, it suggests the presence of moderators. Below, we examine potential moderators.
+
+
+```{r feature.mod.table}
 rbind(
   ################
   # Group comparison
@@ -680,7 +779,6 @@ rbind(
     s = mod.r$ref.type.full$mod$n,
     k = mod.r$ref.type.full$mod$k,
     g =  "--",
-    B1 = "--",
     `95% CI` = "--",
     `F` = mod.r$ref.type.full$mod$QM %>% round(2),
     p = mod.r$ref.type.full$mod$QMp %>% as.numeric %>% apa_p()
@@ -697,7 +795,6 @@ rbind(
       filter(ref.type == 'cvp') %>% 
       nrow(),
     g =  mod.r$ref.type.full$sub$b[[1]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -722,7 +819,6 @@ rbind(
       filter(ref.type == 'cvz') %>% 
       nrow(),
     g =  mod.r$ref.type.full$sub$b[[2]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -747,7 +843,6 @@ rbind(
       filter(ref.type == 'nvc') %>% 
       nrow(),
     g =  mod.r$ref.type.full$sub$b[[3]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -772,7 +867,6 @@ rbind(
       filter(ref.type == 'pvz') %>% 
       nrow(),
     g =  mod.r$ref.type.full$sub$b[[5]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -797,7 +891,6 @@ rbind(
       filter(ref.type == 'pvn') %>% 
       nrow(),
     g =  mod.r$ref.type.full$sub$b[[4]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -819,7 +912,6 @@ rbind(
     s = mod.r$ref.r$mod$n,
     k = mod.r$ref.r$mod$k,
     g =  "--",
-    B1 = "--",
     `95% CI` = "--",
     `F` = mod.r$ref.r$mod$QM %>% round(2),
     p = mod.r$ref.r$mod$QMp %>% as.numeric %>% apa_p()
@@ -836,7 +928,6 @@ rbind(
       filter(ref.r == "single") %>% 
       nrow(),
     g =  mod.r$ref.r$sub$b[[2]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -861,7 +952,6 @@ rbind(
       filter(ref.r == "double") %>% 
       nrow(),
     g =  mod.r$ref.r$sub$b[[1]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -883,7 +973,6 @@ rbind(
     s = mod.r$ref.type$mod$n,
     k = mod.r$ref.type$mod$k,
     g =  "--",
-    B1 = "--",
     `95% CI` = "--",
     `F` = mod.r$ref.type$mod$QM %>% round(2),
     p = mod.r$ref.type$mod$QMp %>% as.numeric %>% apa_p()
@@ -897,7 +986,6 @@ rbind(
     s = mod.r$design$mod$n,
     k = mod.r$design$mod$k,
     g =  "--",
-    B1 = "--",
     `95% CI` = "--",
     `F` = mod.r$design$mod$QM %>% round(2),
     p = mod.r$design$mod$QMp %>% as.numeric %>% apa_p()
@@ -914,7 +1002,6 @@ rbind(
       filter(design == 'within') %>% 
       nrow(),
     g =  mod.r$design$sub$b[[2]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -939,7 +1026,6 @@ rbind(
       filter(design == 'between') %>% 
       nrow(),
     g =  mod.r$design$sub$b[[1]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -961,7 +1047,6 @@ rbind(
     s = mod.r$student$mod$n,
     k = mod.r$student$mod$k,
     g =  "--",
-    B1 = "--",
     `95% CI` = "--",
     `F` = mod.r$student$mod$QM %>% round(2),
     p = mod.r$student$mod$QMp %>% as.numeric %>% apa_p()
@@ -978,7 +1063,6 @@ rbind(
       filter(student == "yes") %>% 
       nrow(),
     g =  mod.r$student$sub$b[[3]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -1003,7 +1087,6 @@ rbind(
       filter(student == "no") %>% 
       nrow(),
     g =  mod.r$student$sub$b[[2]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -1028,7 +1111,6 @@ rbind(
       filter(student == "mix") %>% 
       nrow(),
     g =  mod.r$student$sub$b[[1]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -1050,7 +1132,6 @@ rbind(
     s = mod.r$online$mod$n,
     k = mod.r$online$mod$k,
     g =  "--",
-    B1 = "--",
     `95% CI` = "--",
     `F` = mod.r$online$mod$QM %>% round(2),
     p = mod.r$online$mod$QMp %>% as.numeric %>% apa_p()
@@ -1067,7 +1148,6 @@ rbind(
       filter(online == 'yes') %>% 
       nrow(),
     g =  mod.r$online$sub$b[[2]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -1092,7 +1172,6 @@ rbind(
       filter(online == 'no') %>% 
       nrow(),
     g =  mod.r$online$sub$b[[1]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -1114,7 +1193,6 @@ rbind(
     s = mod.r$paid$mod$n,
     k = mod.r$paid$mod$k,
     g =  "--",
-    B1 = "--",
     `95% CI` = "--",
     `F` = mod.r$paid$mod$QM %>% round(2),
     p = mod.r$paid$mod$QMp %>% as.numeric %>% apa_p()
@@ -1131,7 +1209,6 @@ rbind(
       filter(paid == 'yes') %>% 
       nrow(),
     g =  mod.r$paid$sub$b[[2]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -1156,7 +1233,6 @@ rbind(
       filter(paid == 'no') %>% 
       nrow(),
     g =  mod.r$paid$sub$b[[1]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -1178,7 +1254,6 @@ rbind(
     s = mod.r$published$mod$n,
     k = mod.r$published$mod$k,
     g =  "--",
-    B1 = "--",
     `95% CI` = "--",
     `F` = mod.r$published$mod$QM %>% round(2),
     p = mod.r$published$mod$QMp %>% as.numeric %>% apa_p()
@@ -1195,7 +1270,6 @@ rbind(
       filter(published == 'yes') %>% 
       nrow(),
     g =  mod.r$published$sub$b[[2]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -1220,7 +1294,6 @@ rbind(
       filter(published == 'no') %>% 
       nrow(),
     g =  mod.r$published$sub$b[[1]] %>% round(2),
-    B1 = "--",
     `95% CI` =
       paste0(
         "[",
@@ -1232,12 +1305,15 @@ rbind(
     `F` = mod.r$published$sub$zval[[1]] ^ 2 %>% 
       round(2),
     p = mod.r$published$sub$pval[[1]] %>% as.numeric %>% apa_p()
-  ),
-  
-  ################
-  # Theory-relevant moderators
-  ################
-  
+    )
+  ) %>%
+  apa_table(caption = "Moderator and subgroup analyses",
+            note = "s = number of studies; k = number of effect size estimates; g = Hedge's g; 95% CI corresponds to the estimated value of Hedge's g; F-values represent the test of moderation in bolded rows -- and tests of the model-dervied overall effect size in non-bolded rows; The number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderators because many studies yielded effect sizes for multiple levels.")
+```
+
+
+```{r study.mod.table}
+rbind(
   ## motivation to adjust responses
   cbind(
     `Moderator (bolded) and level` = "motivation to adjust responses",
@@ -1313,72 +1389,9 @@ rbind(
     `F` = mod.r$pre$mod$QM %>% round(2),
     p = mod.r$pre$mod$QMp %>% apa_p()
   )) %>%
-  apa_table(note = "Many studies yielded effect sizes for multiple levels of a moderator (e.g., having both a positive vs. control and negative vs. control comparison). Thus, the number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderator.")
+  apa_table(caption = "Moderator and subgroup analyses",
+            note = "s = number of studies; k = number of effect size estimates; g = Hedge's g; 95% CI corresponds to the estimated value of Hedge's g; F-values represent the test of moderation in bolded rows -- and tests of the model-dervied overall effect size in non-bolded rows; The number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderators because many studies yielded effect sizes for multiple levels.")
 ```
-
-```{r modforest, fig.cap = "For each moderator, we fit a separate 3LMA and subsequently derived subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 3.75, fig.width = 6.5, warning = F}
-## list of moderators
-mod.list <- c("student", "paid", "online", "ref.type", "design")
-
-## function for extraction
-mod.df <- map_df(mod.list, function(x) {
-  tibble(mod = x,
-         level = str_replace(rownames(mod.r[[x]]$sub$beta), mod, ""),
-         beta = mod.r[[x]]$sub$beta %>% 
-           as.numeric() %>% 
-           round(2),
-         lb = mod.r[[x]]$sub$ci.lb %>% 
-           round(2),
-         ub = mod.r[[x]]$sub$ci.ub %>% 
-           round(2))
-})
-
-## manually update some labels
-mod.df <- mod.df %>% 
-  mutate(level = recode_factor(.x = level,
-                               nvc = "negative",
-                               cvp = "positive",
-                               cvz = "nil"),
-         mod = recode_factor(.x = mod,
-                             ref.type = "demand"))
-
-## reorder factors
-mod.df$level <- fct_reorder(mod.df$level, 
-                            mod.df$beta, 
-                            .desc = TRUE)
-
-## Create forest plot with effect size distribution superimposed
-ggplot(mod.df, 
-       aes(x = level, 
-           y = beta)) + 
-  
-  # dotted line at d = 0
-  geom_hline(yintercept = 0,
-             linetype = "dotted", 
-             alpha = .5, 
-             size =.5) +
-  
-  # estimates and CI
-  geom_pointrange(aes(ymin = lb, 
-                      ymax = ub),
-                  alpha = .8,
-                  color = "dark grey") +
-
-  # update labels
-  xlab("") + 
-  ylab(expression(paste("Estimated subgroup mean (Hedge's ", italic("g"), ")"))) +
-
-  # clean up aesthetics
-  coord_flip() + 
-  facet_grid(mod ~ . , scales = "free_y") + 
-  theme_classic() + 
-  theme(axis.text.x = element_text(angle = 90, vjust = .5,  hjust=1))
-
-# delete vestigial
-rm(mod.df)
-```
-
-When variability in effect sizes exceeds what would be expected from sampling error alone, it suggests the presence of moderators. Below, we examine potential moderators
 
 #### Study features
 

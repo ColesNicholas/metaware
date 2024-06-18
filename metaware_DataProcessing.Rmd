@@ -335,6 +335,17 @@ DF <- DF %>%
   select(-j)
 ```
 
+## Calculate 95% confidence intervals
+```{r}
+DF <- DF %>% 
+  rowwise() %>% 
+  mutate(se = sqrt(es.var),
+         ub = es + (se * 1.96),
+         lb = es - (se * 1.96)) %>% 
+  ungroup() %>% 
+  select(-se)
+```
+
 ## Open, process, and merge quality ratings
 ```{r}
 qual <- 
@@ -767,9 +778,9 @@ DF[DF$id.study == 18, ]$pre = NA
 DF <- DF %>% 
   select(id.study, id.es, 
          citation : ref.r, 
-         es, es.var,
+         es, es.var, lb, ub,
          mot : pre,
-        report : internal)
+         report : internal)
 ```
 
 # Prep dataset for replication of Coles et al. 2022
