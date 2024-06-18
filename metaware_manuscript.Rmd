@@ -704,70 +704,11 @@ mod.r = c(mod.r, mod.r.2)
 rm(mod.r.2)
 ```
 
-```{r modforest, fig.cap = "For each moderator, we fit a separate 3LMA and subsequently derived subgroup mean effect sizes (dots) and their 95% confidence intervals (error bars).", fig.height = 3.75, fig.width = 6.5, warning = F}
-## list of moderators
-mod.list <- c("student", "paid", "online", "ref.type", "design")
-
-## function for extraction
-mod.df <- map_df(mod.list, function(x) {
-  tibble(mod = x,
-         level = str_replace(rownames(mod.r[[x]]$sub$beta), mod, ""),
-         beta = mod.r[[x]]$sub$beta %>% 
-           as.numeric() %>% 
-           round(2),
-         lb = mod.r[[x]]$sub$ci.lb %>% 
-           round(2),
-         ub = mod.r[[x]]$sub$ci.ub %>% 
-           round(2))
-})
-
-## manually update some labels
-mod.df <- mod.df %>% 
-  mutate(level = recode_factor(.x = level,
-                               nvc = "negative",
-                               cvp = "positive",
-                               cvz = "nil"),
-         mod = recode_factor(.x = mod,
-                             ref.type = "demand"))
-
-## reorder factors
-mod.df$level <- fct_reorder(mod.df$level, 
-                            mod.df$beta, 
-                            .desc = TRUE)
-
-## Create forest plot with effect size distribution superimposed
-ggplot(mod.df, 
-       aes(x = level, 
-           y = beta)) + 
-  
-  # dotted line at d = 0
-  geom_hline(yintercept = 0,
-             linetype = "dotted", 
-             alpha = .5, 
-             size =.5) +
-  
-  # estimates and CI
-  geom_pointrange(aes(ymin = lb, 
-                      ymax = ub),
-                  alpha = .8,
-                  color = "dark grey") +
-
-  # update labels
-  xlab("") + 
-  ylab(expression(paste("Estimated subgroup mean (Hedge's ", italic("g"), ")"))) +
-
-  # clean up aesthetics
-  coord_flip() + 
-  facet_grid(mod ~ . , scales = "free_y") + 
-  theme_classic() + 
-  theme(axis.text.x = element_text(angle = 90, vjust = .5,  hjust=1))
-
-# delete vestigial
-rm(mod.df)
-```
-
 When variability in effect sizes exceeds what would be expected from sampling error alone, it suggests the presence of moderators. Below, we examine potential moderators.
 
+#### Study features
+
+In general, we found little-to-evidence that demand effects are moderated by study features (see Table X). The exception was modality. The effects of demand characteristics tended to be slightly more positive for in-person ($g$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($g$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)`.
 
 ```{r feature.mod.table}
 rbind(
@@ -1307,19 +1248,40 @@ rbind(
     p = mod.r$published$sub$pval[[1]] %>% as.numeric %>% apa_p()
     )
   ) %>%
-  apa_table(caption = "Moderator and subgroup analyses",
+  apa_table(caption = "Study feature moderator and subgroup analyses",
             note = "s = number of studies; k = number of effect size estimates; g = Hedge's g; 95% CI corresponds to the estimated value of Hedge's g; F-values represent the test of moderation in bolded rows -- and tests of the model-dervied overall effect size in non-bolded rows; The number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderators because many studies yielded effect sizes for multiple levels.")
 ```
 
+#### Theoretical moderators
 
-```{r study.mod.table}
+Despite the popularity and comprehensiveness of the framework developed by Rosnow and colleagues, we did not uncover significant evidence that demand effects are moderated by ratings of motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$dfs[2]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`, or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$dfs[2]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])`. We also did not find that demand effects are moderated by ratings of belief in the hypothesized effect, $\beta$ = `r mod.r$bel$mod$b["bel"]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$dfs[2]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])`. Even more puzzlingly, we did not find that raters were able to accurately predict the emergence of demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$dfs[2]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])`. In other words, even equipped with theory-generated ratings scales, we failed to uncover evidence that participants are able to predict the impact and mechanisms underlying demand characteristics.
+
+```{r part.mod.table}
 rbind(
-  ## motivation to adjust responses
+  
+  # predicted demand effects
+  cbind(
+    `Moderator (bolded) and level` = "predicted demand effects",
+    s = mod.r$pre$mod$n,
+    k = mod.r$pre$mod$k,
+    B1 = mod.r$pre$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$pre$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$pre$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$pre$mod$QM %>% round(2),
+    p = mod.r$pre$mod$QMp %>% apa_p()
+    ),
+    
+  # motivation to adjust responses
   cbind(
     `Moderator (bolded) and level` = "motivation to adjust responses",
     s = mod.r$mot$mod$n,
     k = mod.r$mot$mod$k,
-    g =  "--",
     B1 = mod.r$mot$mod$b[2] %>% round(2),
     `95% CI` =
       paste0(
@@ -1333,12 +1295,11 @@ rbind(
     p = mod.r$mot$mod$QMp %>% apa_p()
   ),
   
-  ## opportunity to adjust responses
+  # opportunity to adjust responses
   cbind(
     `Moderator (bolded) and level` = "opportunity to adjust responses",
     s = mod.r$opp$mod$n,
     k = mod.r$opp$mod$k,
-    g =  "--",
     B1 = mod.r$opp$mod$b[2] %>% round(2),
     `95% CI` =
       paste0(
@@ -1352,13 +1313,11 @@ rbind(
     p = mod.r$opp$mod$QMp %>% apa_p()
   ),
   
-  ## belief in hypothesized effect
-  ## opportunity to adjust responses
+  # belief in communicated hypothesis
   cbind(
     `Moderator (bolded) and level` = "belief in communicated hypothesis",
     s = mod.r$bel$mod$n,
     k = mod.r$bel$mod$k,
-    g =  "--",
     B1 = mod.r$bel$mod$b[2] %>% round(2),
     `95% CI` =
       paste0(
@@ -1370,186 +1329,11 @@ rbind(
       ),
     `F` = mod.r$bel$mod$QM %>% round(2),
     p = mod.r$bel$mod$QMp %>% apa_p()
-  ),
-  
-  cbind(
-    `Moderator (bolded) and level` = "raters' predictions about demand effects",
-    s = mod.r$pre$mod$n,
-    k = mod.r$pre$mod$k,
-    g =  "--",
-    B1 = mod.r$pre$mod$b[2] %>% round(2),
-    `95% CI` =
-      paste0(
-        "[",
-        mod.r$pre$mod$ci.lb[[2]] %>% round(2),
-        ", ",
-        mod.r$pre$mod$ci.ub[[2]] %>% round(2),
-        "]"
-      ),
-    `F` = mod.r$pre$mod$QM %>% round(2),
-    p = mod.r$pre$mod$QMp %>% apa_p()
-  )) %>%
-  apa_table(caption = "Moderator and subgroup analyses",
-            note = "s = number of studies; k = number of effect size estimates; g = Hedge's g; 95% CI corresponds to the estimated value of Hedge's g; F-values represent the test of moderation in bolded rows -- and tests of the model-dervied overall effect size in non-bolded rows; The number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderators because many studies yielded effect sizes for multiple levels.")
+    )
+  ) %>%
+  apa_table(caption = "Participant rating moderator analyses",
+            note = "s = number of studies; k = number of effect size estimates; B1 = estimated linear relationship between participant ratings and observed Hedge's g scores; 95% CI corresponds to the estimated value of B1.")
 ```
-
-#### Study features
-
-In general, we found little-to-evidence that demand effects are moderated by study features (see Table X). The exception was modality. The effects of demand characteristics tended to be slightly more positive for in-person ($g$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($g$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)`.
-
-```{r modfig, fig.cap= "Scatterplots of relationships between the observed effects of demand characteristics (y-axis) and motivation (Panel A), opportunity (Panel B), expectancy (Panel C), and prediction (Panel D) ratings (x-axis). Grey dots represent jittered observations, black lines represent estimated linear relationships, and blue ribbons represent 95% confidence intervals for estimated linear relationships.", fig.height = 4.5, fig.width = 6.5}
-#################
-# motivation plot
-#################
-# get predicted (for the regression line) and actual values into a single dataset
-mot.df <- predict(mod.r$mot$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$mot$mod$yi)
-
-# plot
-m <- ggplot(data = mot.df,
-            aes(x = X.mot,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .8,
-              fill = "dark grey",
-              color = "dark grey") +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = expression(paste("Hedge's ", italic("g"))), 
-       x = "motivation ratings")
-
-rm(mot.df)
-
-#################
-# opportunity plot
-#################
-# get predicted and actual values into a single dataset
-opp.df <- predict(mod.r$opp$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$opp$mod$yi)
-
-# plot
-o <- ggplot(data = opp.df,
-            aes(x = X.opp,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .8,
-              fill = "dark grey",
-              color = "dark grey") +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "", 
-       x = "opportunity ratings")
-
-rm(opp.df)
-
-#################
-# belief  plot
-#################
-# get predicted and actual values into a single dataset
-bel.df <- predict(mod.r$bel$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$bel$mod$yi)
-
-# plot
-b <- ggplot(data = bel.df,
-            aes(x = X.bel,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .8,
-              fill = "dark grey",
-              color = "dark grey") +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = expression(paste("Hedge's ", italic("g"))),
-       x = "expectancy ratings")
-
-rm(bel.df)
-
-#################
-# prediction plot
-#################
-# get predicted and actual values into a single dataset
-pre.df <- predict(mod.r$pre$mod,
-                  addx = T) %>% 
-  as.data.frame() %>% 
-  cbind(.,
-        yi = mod.r$pre$mod$yi)
-
-# plot
-p <- ggplot(data = pre.df,
-            aes(x = X.pre,
-                y = yi)) +
-  
-  # jittered raw data
-  geom_jitter(alpha = .8,
-              fill = "dark grey",
-              color = "dark grey") +
-  
-  # model derived prediction line
-  geom_line(aes(y = pred)) +
-  
-  # model derived CI
-  geom_ribbon(aes(ymin = ci.lb, 
-                  ymax = ci.ub), 
-              alpha = .10,
-              fill = "#3366FF") +
-  
-  # adjust labels
-  labs(y = "", 
-       x = "prediction ratings")
-
-rm(pre.df)
-
-#################
-# merge plots
-#################
-plot_grid(m, o, b, p,
-          labels = c("A", "B", "C", "D"))
-
-rm(m, o, b, p, survey.dem)
-```
-
-#### Theoretical moderators
-
-Despite the popularity and comprehensiveness of the framework developed by Rosnow and colleagues, we did not uncover significant evidence that demand effects are moderated by ratings of motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$dfs[2]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`, or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$dfs[2]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])`. We also did not find that demand effects are moderated by ratings of belief in the hypothesized effect, $\beta$ = `r mod.r$bel$mod$b["bel"]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$dfs[2]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])`. Even more puzzlingly, we did not find that raters were able to accurately predict the emergence of demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$dfs[2]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])`. In other words, even equipped with theory-generated ratings scales, we failed to uncover evidence that participants are able to predict the impact and mechanisms underlying demand characteristics.
 
 #### Residual variability
 
