@@ -692,13 +692,18 @@ DF.surv %>%
   arrange(m)
 ```
 
-Limit to observations where attention check was passed
+## Calculate survey summary statistics
+For each vignette, determine the proportion of participants who passed the attentino check. Then, remove participants who failed attention checks.
 ```{r}
+surv.att <- DF.surv %>% 
+  group_by(vig) %>% 
+  summarise(m.att = mean(att.chk,
+                         na.rm = T))
+
 DF.surv <- DF.surv %>% 
   filter(att.chk == 1)
 ```
 
-## Calculate survey summary statistics
 For each vignette, we want the average of participants ratings of the extent to which they would:
 1. Be motivated to adjust their responses to fit the communicated hypothesis (m.mot)
 2. Have the opportunity to adjust their responses (m.opp)
@@ -713,6 +718,11 @@ surv.sum <- DF.surv %>%
             m.pre = mean(pre, na.rm = T)
             ) %>% 
    ungroup()
+
+# combine with attention check data
+surv.sum <- full_join(surv.att, surv.sum)
+
+rm(surv.att)
 
 # remove old survey dataframe (not needed anymore)
 rm(DF.surv)
@@ -733,7 +743,8 @@ DF <- DF %>%
             by = "vig") %>% 
   
   ## rename vig.1 summary columns
-  rename(v1.mot = m.mot, 
+  rename(v1.att = m.att,
+         v1.mot = m.mot, 
          v1.opp = m.opp, 
          v1.bel = m.bel, 
          v1.pre = m.pre) %>% 
@@ -750,14 +761,17 @@ DF <- DF %>%
             by = "vig") %>% 
   
   ## rename vig.2 summary columns
-  rename(v2.mot = m.mot, 
+  rename(v2.att = m.att,
+         v2.mot = m.mot, 
          v2.opp = m.opp, 
          v2.bel = m.bel, 
          v2.pre = m.pre) %>% 
   
   # sum motivation, opportunity, belief, and prediction scores
   rowwise() %>% 
-  mutate(mot = sum(c(v1.mot, v2.mot), 
+  mutate(att = sum(c(v1.att, v2.att),
+                   na.rm = T),
+         mot = sum(c(v1.mot, v2.mot), 
                    na.rm = T),
          opp = sum(c(v1.opp, v2.opp), 
                    na.rm = T),
@@ -767,8 +781,9 @@ DF <- DF %>%
                    na.rm = T)) %>% 
   ungroup()
 
-# set motivation, opportunity, belief, and prediction scores blank for id 18
+# set attention, motivation, opportunity, belief, and prediction scores blank for id 18
 # we did not create vignettes for id 18 because it was a *massive* outlier that we removed from all analyses 
+DF[DF$id.study == 18, ]$att = NA
 DF[DF$id.study == 18, ]$mot = NA
 DF[DF$id.study == 18, ]$opp = NA
 DF[DF$id.study == 18, ]$bel = NA
@@ -779,7 +794,7 @@ DF <- DF %>%
   select(id.study, id.es, 
          citation : ref.r, 
          es, es.var, lb, ub,
-         mot : pre,
+         att : pre,
          report : internal)
 ```
 
