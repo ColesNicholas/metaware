@@ -670,13 +670,18 @@ ModAnalysis = function(m, df = DF.es) {
 # conduct moderator and subgroup analyses for moderators assessed with full dataset 
 mod.l <- c("student", "paid", "online", 
            "design", "ref.r", "published",
-           "year")
+           "year", "att")
 mod.r <- 
   sapply(X = mod.l,
          simplify = F,
          FUN = ModAnalysis)
 
 rm(mod.l)
+
+# test attention moderator in scenarios where there is a control comparison (i.e., ref.r == single)
+mod.r[["awr.control"]] <- 
+  ModAnalysis(m = "att",
+              df = DF.es[DF.es$ref.r == "single", ])
 
 # test ref.type moderator in scenarios where there is a control comparison (i.e., ref.r == single)
 mod.r[["ref.type"]] <- 
@@ -694,6 +699,12 @@ mod.r.2 <-
          simplify = F,
          FUN = ModAnalysis,
          df = DF.es %>% 
+               filter(ref.type != "cvz" &
+                        ref.type != "pvz"))
+
+# test
+ModAnalysis(m = "att * mot * opp",
+            df = DF.es %>% 
                filter(ref.type != "cvz" &
                         ref.type != "pvz"))
 
@@ -1265,9 +1276,14 @@ apa_table(
 ```{r vig.rel.full, include = F}
 vig.rel <- readRDS("output/vig.survfull.rel.rds")
 
-vig.rel
-```
+vig.desc <- read.csv("output/surv.sum.csv")
 
+vig.desc$m.att %>% mean(na.rm = T)
+vig.desc$m.mot %>% mean(na.rm = T)
+vig.desc$m.opp %>% mean(na.rm = T)
+vig.desc$m.bel %>% mean(na.rm = T)
+vig.desc$m.pre %>% mean(na.rm = T)
+```
 
 Even if researchers cannot explain how demand characteristics work, it might be valuable to be able to predict their effects [@yarkoni2017choosing]. @orne1969demand suggested that one group that may be particularly good at predicting these effects is participants themselves. We did not find this to be the case. As originally described in our *Methodology*, X sampled participants generally did not agree about the predicted impact of demand characteristics (full sample ICC = `r vig1.rel$pre$ICC[1]`). Averaging across these large number of noisy ratings failed to meaningfully predict the magnitude of demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$dfs[2]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])`.
 

@@ -726,6 +726,11 @@ rm(surv.att)
 
 # remove old survey dataframe (not needed anymore)
 rm(DF.surv)
+
+# output this data (for later analyses)
+write.csv(x = surv.sum,
+          file = "output/surv.sum.csv",
+          row.names = F)
 ```
 
 # Join the summary statistics (surv.sum) to the effect size dataframe (DF)
