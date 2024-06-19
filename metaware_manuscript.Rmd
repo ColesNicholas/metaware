@@ -344,7 +344,7 @@ vig.surv2 <-
   mutate(survey = "survey_2")
 
 vig.surv <- rbind(vig.surv1, vig.surv2)
-rm(vig.surv1, vig.surv2, vig.n)
+rm(vig.surv1, vig.surv2)
 
 # describe participant demographics
 survey.n <- nrow(vig.surv)
@@ -399,7 +399,7 @@ Sample size was initially based on availability of resources. We initially colle
 The low estimated intraclass correlations from our original sample indicates that participants strongly disagree about how they will respond to demand characteristics. Nonetheless, the Law of Large Numbers stipulates that these relatively imprecise ratings should converge into relatively precise estimates of the true mean at larger samples. We attempted to exploit this statistical tendency by collecting additional ratings from Prolific workers. This left us with a total of `r survey.dem$n` participants (`r survey.dem$gend[1]`% female; `r survey.dem$gend[2]`% male; all other participants indicated they were transgender, gender non-conforming, some other gender, or unwilling to disclose gender). `r survey.dem$ethnicity[1]`% of participants reported they were White/Caucasian, `r survey.dem$ethnicity[10] %>% round(0)`% Asian, `r survey.dem$ethnicity[7]`% Black/African American. All other participants declined to respond or indicated their ethnicity could not be described a single (or any) provided category. The average participant age was `r survey.dem$age.m` ($SD$ = `r survey.dem$age.sd`).
 
 ```{r del.vest, eval = F}
-rm(survey.dem, vig1.rel)
+rm(survey.dem, vig1.rel, vig.n)
 ```
 
 ##### Accounting for different demand comparisons
@@ -504,7 +504,7 @@ In total, we extracted `r overall$k` effect sizes from `r overall$n` studies fro
 
 Overall, results indicated that explicit manipulations of demand characteristics cause participants' responses to shift in a manner consistent with the communicated hypothesis, $g$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. As a hypothetical example, if participants were told that the researcher hypothesizes that an intervention will improve mood (positive demand), they would generally report slightly improved moods; if told that the researcher hypothesizes that an intervention will worsen mood (negative demand), they would generally report slightly worsened moods.
 
-```{r forest, fig.cap = "Forest plot of effect sizes (grey diamonds), their 95% confidence intervals (grey error bars), and their citations (left). For visualization purposes, effect sizes are aggregated within-studies (see openly-available data for non-aggregated effect sizes). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; g > 0.10), more hypothesis-inconsistent responding (red; g < -0.10), or negligible shifts in responding (grey; |g| < 0.10).", fig.height = 7, fig.width = 6.5, warning = F}
+```{r forest, fig.cap = "Forest plot of effect sizes (grey diamonds), their 95% confidence intervals (grey error bars), and their citations (left). For visualization purposes, effect sizes are aggregated within-studies (see openly-available data for non-aggregated effect sizes). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; g > 0.10), more hypothesis-inconsistent responding (red; g < -0.10), or negligible shifts in responding (grey; |g| < 0.10).", fig.height = 6.64, fig.width = 6.5, warning = F}
 # create a temporary dataset that (a) aggregates dependent effect sizes, and (b) computes 95% CI's
 tmp <- DF.es %>%
   # convert to an 'escalc' object so function can run
@@ -534,7 +534,7 @@ tmp <- DF.es %>%
 
 # create a forest plot w/ distribution overlay
 ggplot(data = tmp, 
-       aes(y = rev(1: nrow(tmp)) * .023, 
+       aes(y = rev(1: nrow(tmp)) * .05, 
            x = yi,
            xmin = lb,
            xmax = ub)) +
@@ -588,14 +588,14 @@ ggplot(data = tmp,
   
   # add citation label
   geom_text(aes(label = citation),
-            x = -2.2,
+            x = -3.15,
             hjust = 0,
             size = 2.5) +
   
   # add CI label
   geom_text(aes(label = paste0(yi,
                                " [", lb, ", ", ub, "]")),
-            x = 3.1,
+            x = 3.6,
             size = 2.5,
             hjust = 1) +
   
@@ -603,8 +603,8 @@ ggplot(data = tmp,
        y = "density") +
   
   # increase plotting area
-  scale_x_continuous(limits = c(-2.25, 3.25),
-                     breaks = seq(from = -2, to = 3, by = 1),
+  scale_x_continuous(limits = c(-3.25, 3.75),
+                     breaks = seq(from = -2, to = 2, by = 1),
                      expand = c(.01, .01)) +
   scale_y_continuous(expand = c(.005, 0))
 
@@ -710,8 +710,8 @@ When variability in effect sizes exceeds what would be expected from sampling er
 
 In general, we found little-to-evidence that demand effects are moderated by study features (see Table X). The exception was modality. The effects of demand characteristics tended to be slightly more positive for in-person ($g$ = `r mod.r$online$sub$b[1]`, 95% CI [`r mod.r$online$sub$ci.lb[1]`, `r mod.r$online$sub$ci.ub[1]`], $p$ `r printp(mod.r$online$sub$pval[1])`) vs. online ($g$ = `r mod.r$online$sub$b[2]`, 95% CI [`r mod.r$online$sub$ci.lb[2]`, `r mod.r$online$sub$ci.ub[2]`], $p$ = `r printp(mod.r$online$sub$pval[2])`) studies, $F$(`r mod.r$online$mod$QMdf[1]`, `r mod.r$online$mod$QMdf[2]`) = `r mod.r$online$mod$QM`, $p$ = `r printp(mod.r$online$mod$QMp)`.
 
-```{r feature.mod.table}
-rbind(
+```{r}
+feature.mod.table <- rbind(
   ################
   # Group comparison
   ################
@@ -1247,18 +1247,20 @@ rbind(
       round(2),
     p = mod.r$published$sub$pval[[1]] %>% as.numeric %>% apa_p()
     )
-  ) %>%
-  apa_table(caption = "Study feature moderator and subgroup analyses",
-            note = "s = number of studies; k = number of effect size estimates; g = Hedge's g; 95% CI corresponds to the estimated value of Hedge's g; F-values represent the test of moderation in bolded rows -- and tests of the model-dervied overall effect size in non-bolded rows; The number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderators because many studies yielded effect sizes for multiple levels.")
+  )
+
+apa_table(
+  feature.mod.table,
+  caption = "Study feature moderator and subgroup analyses",
+  note = "s = number of studies; k = number of effect size estimates; g = Hedge's g; 95% CI corresponds to the estimated value of Hedge's g; F-values represent the test of moderation in bolded rows -- and tests of the model-dervied overall effect size in non-bolded rows; The number of studies listed for a moderator analysis is not necessarily the sum of the number of studies listed for the individual levels of the moderators because many studies yielded effect sizes for multiple levels.")
 ```
 
 #### Theoretical moderators
 
 Despite the popularity and comprehensiveness of the framework developed by Rosnow and colleagues, we did not uncover significant evidence that demand effects are moderated by ratings of motivation, $\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$dfs[2]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`, or opportunity to adjust responses, $\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$dfs[2]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])`. We also did not find that demand effects are moderated by ratings of belief in the hypothesized effect, $\beta$ = `r mod.r$bel$mod$b["bel"]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$dfs[2]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])`. Even more puzzlingly, we did not find that raters were able to accurately predict the emergence of demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$dfs[2]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])`. In other words, even equipped with theory-generated ratings scales, we failed to uncover evidence that participants are able to predict the impact and mechanisms underlying demand characteristics.
 
-```{r part.mod.table}
+```{r}
 rbind(
-  
   # predicted demand effects
   cbind(
     `Moderator (bolded) and level` = "predicted demand effects",
