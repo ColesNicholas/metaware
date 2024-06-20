@@ -773,17 +773,43 @@ DF <- DF %>%
          v2.pre = m.pre) %>% 
   
   # sum motivation, opportunity, belief, and prediction scores
+  # Note: the if_else approach helps ensure that 0 isn't assigned to cases with two NA's
   rowwise() %>% 
-  mutate(att = sum(c(v1.att, v2.att),
-                   na.rm = T),
-         mot = sum(c(v1.mot, v2.mot), 
-                   na.rm = T),
-         opp = sum(c(v1.opp, v2.opp), 
-                   na.rm = T),
-         bel = sum(c(v1.bel, v2.bel), 
-                   na.rm = T),
-         pre = sum(c(v1.pre, v2.pre), 
-                   na.rm = T)) %>% 
+  mutate(att = 
+           if_else(is.na(v1.att),
+                   true = NA,
+                   false = 
+                     sum(c(v1.att, v2.att),
+                         na.rm = T)
+                   ),
+         mot = 
+           if_else(is.na(v1.mot),
+                   true = NA,
+                   false = 
+                     sum(c(v1.mot, v2.mot),
+                         na.rm = T)
+                   ),
+         opp = 
+           if_else(is.na(v1.opp),
+                   true = NA,
+                   false = 
+                     sum(c(v1.opp, v2.opp),
+                         na.rm = T)
+                   ),
+         bel = 
+           if_else(is.na(v1.bel),
+                   true = NA,
+                   false = 
+                     sum(c(v1.bel, v2.bel),
+                         na.rm = T)
+                   ),
+         pre = 
+           if_else(is.na(v1.pre),
+                   true = NA,
+                   false = 
+                     sum(c(v1.pre, v2.pre),
+                         na.rm = T)
+                   )) %>% 
   ungroup()
 
 # set attention, motivation, opportunity, belief, and prediction scores blank for id 18

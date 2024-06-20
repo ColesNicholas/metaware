@@ -647,10 +647,10 @@ ModAnalysis = function(m, df = DF.es) {
                   data = df,
                   random = ~ 1 | id.study / id.es,
                   mods = as.formula(paste0("~ ", m)),
-                  test= "t") %>% 
-  robust(x = .,
-         cluster = id.study,
-         clubSandwich = T)
+                  test= "t") #%>% 
+   # robust(x = .,
+   #        cluster = id.study,
+   #        clubSandwich = T)
   
   sub.m <- rma.mv(yi = es,
                   V = es.var,
@@ -716,6 +716,43 @@ rm(mod.r.2)
 ```
 
 When variability in effect sizes exceeds what would be expected from sampling error alone, it suggests the presence of moderators. Below, we examine potential moderators.
+
+```{r three.way.int}
+tmp <- DF.es %>% 
+  mutate(att.c = att - mean(att, na.rm = T),
+         mot.c = mot - mean(mot, na.rm = T),
+         opp.c = opp - mean(opp, na.rm = T),
+         att.c = att - mean(att, na.rm = T))
+
+
+tmp.m.1 <- ModAnalysis(m = "att * mot * opp",
+            df = tmp %>% 
+               filter(ref.type != "cvz" &
+                        ref.type != "pvz"))
+
+tmp.m.2 <- ModAnalysis(m = "att.c * mot.c * opp.c",
+            df = tmp %>% 
+               filter(ref.type != "cvz" &
+                        ref.type != "pvz"))
+
+tmp.m.3 <- ModAnalysis(m = "mot.c * opp.c",
+            df = tmp %>% 
+               filter(ref.type != "cvz" &
+                        ref.type != "pvz"))
+
+tmp.m.2$mod
+
+
+
+z
+
+
+mod.r$att$mod
+mod.r$mot$mod
+mod.r$opp$mod
+mod.r$pre$mod
+```
+
 
 #### Study features
 
