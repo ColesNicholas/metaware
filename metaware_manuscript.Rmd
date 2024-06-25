@@ -441,7 +441,7 @@ Second, we conducted precision-effect tests [@stanley2014meta]. In precision-eff
 
 Third, we deployed weight-function modeling using the weightR package [@R-weightr]. In weight-function modeling, weighted distribution theory is used to model biased selection based on the significance of observed effects [@vevea1995general]. If the adjusted model provides increased fit, publication bias is a concern and the model can be used to estimate the bias-corrected overall effect size. Once again, weight-function modeling was designed for independent effect sizes. Nonetheless, it has fairly good statistical properties when non-independent effect sizes are aggregated, which we did here [@rodgers2021evaluating].
 
-As a sensitivity analysis, we used the PublicationBias package in R [\@R-PublicationBias] to estimate the ratio in which publication bias would have to favor affirmative studies in order make the overall effect size in a robust random effects model non-significant [\@mathur2020sensitivity]. We also estimated the difference in the magnitude of published vs. unpublished effects in a separate moderator analysis.
+As a sensitivity analysis, we used the PublicationBias package in R [@R-PublicationBias] to estimate the ratio in which publication bias would have to favor affirmative studies in order make the overall effect size in a robust random effects model non-significant [@mathur2020sensitivity]. We also estimated the difference in the magnitude of published vs. unpublished effects in a separate moderator analysis.
 
 ### Transparency and openness
 
@@ -1444,92 +1444,6 @@ To evaluate how much variability in demand effects is currently accounted for by
 
 Including all moderators increased the pseudo-$R^2$ to `r round(r2$full.r2 * 100, 2)`%, indicating that the majority of observed variability in demand effects is still unaccounted.
 
-### Estimating demand effects in specific study contexts
-
-```{r predplot, fig.cap = "Estimated overall effects (dot) and 95% confidence intervals (error bars) of positive demand characteristics in a classic experimental setting (in-person studies testing positive effects with volunteer student samples) and an online worker setting (online studies testing positive effects with paid non-student samples).", fig.height = 3, fig.width = 6.5, warning = F}
-# set R back to default contrasts
-options(contrasts = c("contr.treatment", "contr.poly"))
-
-# change reference levels for: 
-## In-person study, no payment, students, positive demand
-DF.es$student <- factor(DF.es$student, 
-                        levels = c("yes", "mix", "no"))
-## fit model
-m.s1 <- rma.mv(yi = es,
-               V = es.var,
-               data = DF.es,
-               random = ~ 1 | id.study / id.es,
-               mods = ~ student + paid + online + ref.type,
-               test = "t")
-
-# change reference levels for: 
-## Online study, payment, non-students, positive demand
-DF.es$online <- factor(DF.es$online,
-                       levels = c("yes", "no"))
-DF.es$paid <- factor(DF.es$paid,
-                     levels = c("yes", "no"))
-DF.es$student <- factor(DF.es$student, 
-                        levels = c("no", "mix", "yes"))
-
-## fit model
-m.s2 <- rma.mv(yi = es,
-               V = es.var,
-               data = DF.es,
-               random = ~ 1 | id.study / id.es,
-               mods = ~ student + paid + online + ref.type,
-               test = "t")
-
-# manually add output from the models that estimated effects in two common research scenarios
-pred_df <- 
-  bind_rows(tibble(level = "in-person\nstudents\nno payment",
-                   mod = "custom",
-                   beta = m.s1$beta[1] %>%
-                     as.numeric %>%
-                     round(2),
-                   lb = m.s1$ci.lb[1] %>%
-                     as.numeric %>%
-                     round(2),
-                   ub = m.s1$ci.ub[1] %>%
-                     as.numeric %>%
-                     round(2)), 
-            tibble(level = "online\nnon-students\npayment",
-                   mod = "custom",
-                   beta = m.s2$beta[1] %>%
-                     as.numeric %>%
-                     round(2),
-                   lb = m.s2$ci.lb[1] %>%
-                     as.numeric %>%
-                     round(2),
-                   ub = m.s2$ci.ub[1] %>%
-                     as.numeric %>%
-                     round(2)
-            ))
-# plot
-ggplot(pred_df, aes(x = level, y = beta)) + 
-  
-  # line at d = 0
-  geom_hline(yintercept = 0, 
-             lty = 2,
-             alpha = .5, 
-             size =.5) +
-  
-  # point estimate and 95% CI
-  geom_pointrange(aes(ymin = lb, ymax = ub),
-                  alpha = .8,
-                  color = "dark grey") +
-  
-  # aes
-  xlab("") + 
-  coord_flip() + 
-  ylab(expression(paste("Estimated overall effect (Hedge's ", italic("g"), ")"))) +
-  theme_classic() + 
-  theme(axis.text.x = element_text(angle = 90, vjust = .5,  hjust=1))
-```
-
-Our openly-available data allow researchers to estimate the effects of demand characteristics in various study contexts. To demonstrate this functionality, we fit a 3LMA with student status, data collection medium, payment status, and type of demand characteristic comparison entered as dummy-coded factors. By changing the reference level of these dummy-coded factors, we were able to derive estimates of demand effects in two common scenarios described below.
-
-First, we estimated the overall impact of demand characteristics in what we call a "classic experimental setting": studies that (a) are run in-person, (b) sample students, (c) do not offer participant payment, and (d) are testing for a positive effect (i.e., positive demand). In this context, demand characteristics are estimated to produce, on average, a small increase in hypothesis-consistent responding, $g$ = `r m.s1$beta[1]`, 95% CI [`r m.s1$ci.lb[1]`, `r m.s1$ci.ub[1]`, $p$ = `r printp(m.s1$pval[1])`] (Figure \@ref(fig:predplot)). Second, we estimated the overall impact of demand characteristics in an "online worker experimental context": studies that (a) are run online, (b) sample non-students, (c) offer participant payment, and (d) test for a positive effect. Here, we did not find that demand characteristics, on average, produce changes in participants' responses, $g$ = `r m.s2$beta[1]`, 95% CI [`r m.s2$ci.lb[1]`, `r m.s2$ci.ub[1]`], $p$ = `r m.s2$pval[1]` (Figure \@ref(fig:predplot)).
-
 ### Publication bias analyses
 
 ```{r pub.bias, include = F}
@@ -1550,13 +1464,22 @@ rm(in.s, on.s, v.s, p.s,
 ##########################
 
 PubBias = function(rho.val = .5){
-  # 1. sensitivity analyses (no longer working?)
+  # 1. sensitivity analyses
   ########################
   sens <- pubbias_meta(yi = DF.es$es,
                        vi = DF.es$es.var, 
-                       cluster = DF.es$id.study,
-                       selection_ratio = 1000000, 
-                       model_type = "robust")
+                       cluster = DF.es$id.study, 
+                       selection_ratio = 10000000, 
+                       model_type = "robust", 
+                       favor_positive = T)
+  
+  # you can run the code below to see how nonsensicle it is to look at disfavor bias
+  # pubbias_meta(yi = DF.es$es,
+  #              vi = DF.es$es.var, 
+  #              cluster = DF.es$id.study,
+  #              selection_ratio = 10000000, 
+  #              model_type = "robust", 
+  #              favor_positive = F)
   
   # 2a. three-level precision-effect test
   ########################
@@ -1602,6 +1525,15 @@ PubBias = function(rho.val = .5){
                   mods = ~ sqrt(vi),
                   data = DF.agg,
                   method = "REML")
+  
+  # temp code: aggregated precision-effect test
+  ########################
+  rma.uni(yi = yi,
+          vi = vi, 
+          mods = ~ sqrt(vi), 
+          data = DF.agg %>% filter(id.study != 30,
+                                   id.study != 55), 
+          method = "REML")
 
   # 3c. Weight-function model
   ########################
@@ -1682,13 +1614,14 @@ rm(rho.l, PubBias)
 # pub.r$rho_0.5$weight.funct %>% View()
 ```
 
-Overall, publication bias analyses were inconclusive. A funnel plot containing all effect sizes indicated that publication bias favored instances where participants' responses shifted in a hypothesis-consistent manner. However, a funnel plot where non-independent effect sizes were aggregated indicated the opposite: that publication bias favored non-significant or hypothesis-inconsistent shifts in participants' responses.
+Overall, publication bias analyses were inconclusive. Both precision-effect tests with 3LMA ($\beta$ = `r pub.r$rho_0.5$pe.3l$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[2]`, `r pub.r$rho_0.5$pe.3l$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[2])`) and aggregated dependencies $\beta$ = `r pub.r$rho_0.5$pe.a$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[2]`, `r pub.r$rho_0.5$pe.a$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[2])` provided non-significant evidence of publication bias that favored hypothesis-consistent shifts in participants’ responses. The bias-corrected overall effect size estimates with both 3LMA ($g$ = `r pub.r$rho_0.5$pe.3l$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[1]`, `r pub.r$rho_0.5$pe.3l$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[1])`) and aggregated dependencies ($g$ = `r pub.r$rho_0.5$pe.a$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[1]`, `r pub.r$rho_0.5$pe.a$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[1])`) did not significantly vary from zero. In other words, precision-effect tests failed to uncover evidence of publication bias, but also suggested that the overall effect size may not be robust if publication bias does exist. Further complicating matters is the unusual distribution of the funnel plots, especially in regards to two unusually large aggregated effect size estimates (see Figure \@ref(fig:funnel)).
 
-Precision-effect tests similarly yielded opposite conclusions depending on whether we used (a) 3LMA with non-aggregated effect size estimates, or (b) two-level meta-analysis with aggregated dependent effect size estimates. On one hand, precision-effect tests with 3LMA yielded a non-significant estimate of publication bias that favored hypothesis-consistent shifts in participants' responses, $\beta$ = `r pub.r$rho_0.5$pe.3l$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[2]`, `r pub.r$rho_0.5$pe.3l$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[2])`. The bias-corrected overall effect size estimate did not significantly differ from zero, $g$ = `r pub.r$rho_0.5$pe.3l$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[1]`, `r pub.r$rho_0.5$pe.3l$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[1])`. On the other hand, two-level precision-effect tests with aggregated dependent effect size estimates yielded an opposite pattern: that there was a slight (but not statistically significant) preference for non-significant or hypothesis-inconsistent shifts in participants' responses, $\beta$ = `r pub.r$rho_0.5$pe.a$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[2]`, `r pub.r$rho_0.5$pe.a$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[2])`. The bias-corrected overall effect size estimate was virtually unchanged, $g$ = `r pub.r$rho_0.5$pe.a$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[1]`, `r pub.r$rho_0.5$pe.a$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[1])`. In other words, depending on how dependencies were handled, precision-effect tests yielded opposite conclusions about the direction of publication bias and the significance of the bias-corrected overall effect of demand characteristics.
+Examining aggregated effect sizes using weight-function modeling – as opposed to precision effect tests – yields the opposite conclusion: better fit is achieved in a model where publication bias favored non-significant or hypothesis-inconsistent shifts in participants’ responses, $\chi^2$(1) = 6.50, $p$ = .01. The bias-corrected overall effect size was thus upward-adjusted, $g$ = 0.32, 95% CI [0.15, 0.49], $p$ \< .001. 
 
-Weight-function modeling suggested that better fit was achieved in a model where publication bias favored non-significant or hypothesis-inconsistent shifts in participants' responses, $\chi^2$(1) = 10.80, $p$ = .001. The bias-corrected overall effect size was thus upward-adjusted, $g$ = 0.41, 95% CI [0.19, 0.62], $p$ \< .001. A comparison of unpublished ($g$ = `r mod.r$published$sub$b[1]`, 95% CI [`r mod.r$published$sub$ci.lb[1]`, `r mod.r$published$sub$ci.ub[1]`], $p$ = `r printp(mod.r$published$sub$pval[1])`) and published ($g$ = `r mod.r$published$sub$b[2]`, 95% CI [`r mod.r$published$sub$ci.lb[2]`, `r mod.r$published$sub$ci.ub[2]`], $p$ = `r printp(mod.r$published$sub$pval[2])`) studies yielded a similar pattern, although the difference was not significant, $F$(`r mod.r$published$mod$QMdf[1]`, `r mod.r$published$mod$QMdf[2]`) = `r mod.r$published$mod$QM`, $p$ = `r printp(mod.r$published$mod$QMp)`.
+We did not find significant differences in the magnitude of demand effects between published ($g$ = `r mod.r$published$sub$b[2]`, 95% CI [`r mod.r$published$sub$ci.lb[2]`, `r mod.r$published$sub$ci.ub[2]`], $p$ = `r printp(mod.r$published$sub$pval[2])`) and unpublished ($g$ = `r mod.r$published$sub$b[1]`, 95% CI [`r mod.r$published$sub$ci.lb[1]`, `r mod.r$published$sub$ci.ub[1]`], $p$ = `r printp(mod.r$published$sub$pval[1])`) studies, $F$(`r mod.r$published$mod$QMdf[1]`, `r mod.r$published$mod$QMdf[2]`) = `r mod.r$published$mod$QM`, $p$ = `r printp(mod.r$published$mod$QMp)`. If there is a biased selection of instances where participants responses shift in a hypothesis consistent manner, sensitivity analyses indicated that it would have to be extreme selection pressure to make the effect size non-significant [@mathur2020sensitivity]. Even if hypothesis-consistent shifts were 
+`r pub.r$rho_0.5$sens$values$selection_ratio` more likely to be published, the overall effect would still be `r pub.r$rho_0.5$sens$stats$estimate`, 95% CI [`r pub.r$rho_0.5$sens$stats$ci_lower`, `r pub.r$rho_0.5$sens$stats$ci_upper`], *p* = `r printp(pub.r$rho_0.5$sens$stats$p_value)`.
 
-```{r funnel, fig.cap = "Raw (Panel A) or aggregated (Panel B) effect sizes plotted against their corresponding standard errors.", fig.height = 3.75, fig.width = 6.5}
+```{r funnel, fig.cap = "Raw (Panel A) or aggregated (Panel B) effect sizes plotted against their corresponding standard errors. Funnel plot is inverted to illustrate correspondance with slope estimates from precision-effect tests.", fig.height = 3.75, fig.width = 6.5}
 ########## 
 # Funnel plot with non-aggregated dependencies
 ########## 
@@ -1729,7 +1662,8 @@ a <- ggplot(data = tmp,
   geom_jitter(alpha = .8,
               fill = "dark grey",
               color = "dark grey") +
-  scale_y_reverse(expand = c(.01, 0)) +
+  # scale_y_reverse(expand = c(.01, 0)) +
+  scale_y_continuous(expand = c(.01, 0)) +
   scale_x_continuous(limits = c(-1.5, 2.1),
                      expand = c(.01, .01)) +
   geom_vline(xintercept = overall$b[1],
@@ -1786,7 +1720,8 @@ b <- ggplot(data = tmp,
   geom_jitter(alpha = .8,
               fill = "dark grey",
               color = "dark grey") +
-  scale_y_reverse(expand = c(.01, 0)) +
+  #scale_y_reverse(expand = c(.01, 0)) +
+  scale_y_continuous(expand = c(.01, 0)) +
   scale_x_continuous(limits = c(-1.5, 2.1),
                      expand = c(.01, .01)) +
   geom_vline(xintercept = tmp.meta$b[1],
@@ -1806,27 +1741,25 @@ plot_grid(a, b,
 rm(a, b)
 ```
 
-## Discussion
+# Discussion
 
-Overall, explicit manipulations of demand characteristics caused participants' responses to shift in a manner consistent with the communicated hypothesis. However, high levels of heterogeneity were observed. As an illustration, we estimated the true distribution of demand effects, which suggested that `r h.c`% of demand characteristic manipulations produce hypothesis-consistent shifts ($g$ \> 0.10); `r h.i`% produce hypothesis-*in*consistent shifts ($g$ \< -0.10), and `r 100 - h.c - h.i`% produce negligible shifts in either direction (-0.10 \< $g$ \> 0.10). Moderator analyses revealed two study features that were associated with more hypothesis-consistent shifts in responses: (1) sampling student populations, and (2) communicating that the researchers hypothesizes there will be *no* shift in responses (i.e., using nil demand manipulations).
+In the *Introduction*, we described a fictitious discipline that we suspect very few scientists would take seriously – one plagued by a methodological artifact that (a) can lead to both false positives and false negatives, (b) can create both upward bias and downward bias, (c) has unreliable effects, and (d) is difficult to explain. If one agrees that such a characterization is problematic, they face an uncomfortable observation: our meta-analysis suggests that this characterization also currently applies to experimental psychology.
 
-More practically, we estimated that demand characteristics produce small increases in hypothesis-consistent responding in "classic experimental settings": in-person studies testing positive effects with unpaid student samples. In contrast, when these studies are run online with paid workers -- an "online worker experimental setting" -- we estimated that demand effects are near zero. However, these results are ultimately preliminary given the high heterogeneity and inconsistent evidence of the direction and impact of publication bias.
+Since Orne popularized the concept in the mid-1900's, demand characteristics have become a literal textbook methodological concern in experimental psychology. Consistent with an influential framework developed by Rosnow and colleagues [@rosnow1997people; @rosnow1973mediation; @strohmetz2008research], the observed and estimated true distribution of effects in this literature suggest that demand characteristics can create false positives (-@orne1959nature), false negatives (@hayes1967two), and upward and downward bias (@coles2022fact). Even more concerning is our observation that such effects are unreliable across studies. On average, explicit hypothesis cues lead to small increases in hypothesis-consistent responding. However, such cues also frequently lead to shifts in responses that might be characterized as "negligible" -- and occasionally they even lead to increases in hypothesis-*inconsistent* responding. The estimated distribution of these effects range from $g$ = `r dist.min` to $g$ = `r dist.max` – covering the span of pretty much any conceivable effect in experimental psychology [@lovakov2021empirically].
 
-Study 1 provides preliminary insights on the magnitude, consistency, and contextual moderators of demand effects. However, it was not designed to examine mechanisms often discussed in motivation and expectancy accounts of demand characteristics. For example, consider our finding that demand characteristics tend to produce more hypothesis-consistent shifts in responses when students (vs. workers) are sampled. If this is true, it may occur because students are more motivated to help the experimenter confirm their hypothesis (motivation account). Alternatively, it may occur because students are more likely to *believe* the communicated hypothesis (expectancy account). In other words, although we have preliminary evidence of contextual modifiers of demand effects, we still lack an explanation of why these contexts matter and how demand effects work more broadly. In Study 2, we begin investigating this outstanding issue through an extension of the meta-analysis.
+Observing demand effects that are strong, inferentially-consequential, and unreliable would be less concerning if researchers had an explanation for how such effects operate. Unfortunately, our analysis of the cumulative evidence offers little explanation. We focused our review on a popular and influential framework developed by Rosnow and colleagues, who successfully predicted that demand effects are heterogeneous [@rosnow1997people; @rosnow1973mediation; @strohmetz2008research]. However, we found few attempts to test their proposed explanation for such heterogeneity: differences in the extent to which participants are receptive, motivated, and able to respond to demand characteristics. [One exception is an *unpublished* record by @coles2024replication.] Contrary to early advice by Orne [-@orne1969demand], we did not find that clarity emerged when consulting participants themselves. When we provided a large set of naïve participants with summaries of the studies included in our meta-analysis, we found that their predictions about demand effects and their underlying mechanisms were not only unreliable, but also not predictive of the actual observed effects. Coding study features also failed to explain a meaningful proportion of variability in demand effects – revealing only that demand effects tend to be larger when studies are run in-person and include two demand characteristic conditions.
 
-# General Discussion
+## Limitations
 
-Demand characteristics are a puzzling methodological artifact in experimental psychology. Using meta-analysis and a replication of a recent study, we sought to consolidate knowledge about the magnitude, reliability, and mechanisms underlying these effects. The meta-analysis revealed that demand characteristics typically led participants to slightly shift their responses in the direction of the communicated hypothesis. However, publication bias analyses were inconclusive, and the estimated effects were heterogeneous. This heterogeneity led us to estimate the true *distribution* of demand effects. This distribution suggests that approximately `r h.c`% of demand characteristic manipulations produce hypothesis-consistent shifts in participants' responses ($g$ \> 0.10), `r h.i`% produce hypothesis-*in*consistent shifts in participants' responses ($g$ \< -0.10), and `r 100 - h.c - h.i`% produce negligible shifts in either direction (-0.10 \< $g$ \> 0.10). Most worrisome, the estimated distribution of demand effects ranges from approximately $g$ = `r dist.min` to $g$ = `r dist.max` -- remarkable similar to the distribution of theory-relevant effects in experimental psychology [@lovakov2021empirically]. Thus, to distinguish theory-relevant effects from artifactual demand effects, it is essential that experimental psychologists better understand the latter [@boot2013pervasive; @corneille2022sixty; @sharpe2016frightened].
+Our meta-analysis is, of course, not without limitations. Some may argue that our inclusion criteria were too narrow. Some may argue they were too broad. Publication bias analyses sometimes yielded evidence of publication bias, sometimes yielded evidence of *reverse* publication bias, and sometimes. And it still remains unclear why participants were generally unable to predict and explain demand effects.
 
-Participants themselves appeared to have little ability to predict or explain the impact of demand characteristics in the studies they reviewed, although it is possible that their performance would improve if they were provided with more information, given better measures, and/or better incentivized to provide accurate predictions. Fortunately, our meta-analysis allows us to make some predictions. Moderator analyses provided preliminary evidence that some methodological factors -- such as student samples -- are associated with increases in hypothesis-consistent responding. We also found that demand characteristics tended to be more impactful when a nil (as opposed to negative or positive) hypothesis was communicated. Nonetheless, most of the variability we observed in the meta-analysis was not explained.
+Broad definitions of the demand characteristics construct is yet another challenging characteristic of the demand characteristics literature [@corneille2022sixty]. At its broadest, demand characteristics are defined as *any* cue that may impact participants' understanding of the purpose of the study, including instructions, rumors, and experimenter behavior [@orne1962social]. However, such a definition arguably creates a boundless conceptual space where any systematic change in a research design or setting might be considered a threat to scientific inferences. We focused our meta-analysis on a subset of the conceptual space that is more amenable to precise definition and study: explicit cues of the study hypothesis. Although we do not reject broader definitions of demand characteristics, we suspect that such broadening will only further deepen the mystery surrounding their effects.
 
-Although motivation accounts are popular in in the demand characteristics literature [@rosnow1997people; @orne1962social; @riecken1962program; @rosenberg1969conditions; @sigall1970cooperative; @cook1970demand], we found little support for this view. In the Study 2 meta-analysis, we did not find that external ratings of two factors oft-discussed in motivation accounts -- motivation and opportunity to adjust responses -- moderated demand effects. We found some evidence in Study 3 that motivation (but not opportunity) ratings moderated demand effects, but the evidence was weak.
+The commensurability – or lack thereof – of even a relatively narrow subset of the demand characteristics literature presents another challenge. Researchers have tested the effects of explicit hypothesis cues on a variety of outcomes, including hypnosis symptoms (e.g., @orne1964contribution), eating behavior (e.g., @kersbergen2019hypothesis), visual judgments (e.g., @durgin2012social), relationship satisfaction (e.g., cramer2005effect), mood (e.g., coles2022fact), policy support (e.g., @mummolo2019demand), test scores (e.g., @veitch1991demand), and so on. Researchers also varied in how they conducted their investigations – e.g., in whether they conducted their studies in-person vs. online, sampled students vs. non-students, and manipulated hypothesis cues within- vs. between-subjects (footnote about challenges). We generally failed to uncover evidence that such decisions explain a meaningful proportion of variability in demand effects. Nonetheless, it is possible that such a large number of [often unsystematic] differences between studies limits power to detect meaningful moderators in the demand characteristics literature.
 
-Consistent with expectancy accounts, our results consistently indicated that participants' expectations about hypothesized effects partially drive demand effects. This may occur because demand characteristics activate pre-existing beliefs about a phenomenon being investigated. It is also possible that demand characteristics cause participants to update or form new expectations. If true, research on how beliefs are formed, updated, and impact participant responses may help explain the heterogeneous effects of demand characteristic manipulations. For example, if expectations are governed by Bayesian principles [for a review, see @kube2021beliefs], demand characteristics should exert larger effects in contexts where participants have relatively uncertain pre-existing expectations.
+A third major limitation relates to our attempt to use a naïve set of participants to predict and offer theory-relevant explanations for demand effects. It is unclear whether the lack of reliable and predictive participant ratings are valid insights in themselves or indicative of our own methodological shortcomings. Perhaps participants need to experience the study context first-hand (@orne1969demand). Perhaps they need better measures of the psychological mechanisms that may underlie demand effects (@flake2020measurement). And perhaps they are too different than the original participants to provide comparable insights at all (@gergen1973social).
 
-Expectancy effects can certainly be reduced -- but it is not clear if they can be fully avoided [@boot2013pervasive]. Indeed, participants possess a rich array of pre-existing expectations *before* they enter our studies [@dweck2012implicit]. For example, @coles2022fact estimated that 44% of sampled undergraduates and 34% of sampled online workers believed -- before entering the study -- that facial poses impact emotion. Even with deception about the purpose of the study, these pre-existing beliefs appear to shape the extent to which participants exhibit facial feedback effects. Similar observations have been made elsewhere, for example in literature examining the effects of videogame training on cognitive tasks [@boot2013pervasive]. In other words, deception about the purpose of the study does not guarantee an unbiased estimate of a mechanism-of-interest. In the real world, the mechanisms that psychologists theorize about may be naturalistically confounded with participants' beliefs.
-
-We end on a note of concern. We estimated that experimentally manipulated demand characteristics have a similar distribution of effects as the theory-relevant phenomena that many psychologists study [@lovakov2021empirically]. These demand effects appear to be most reliably predicted by participant expectations about the hypothesized effects (i.e., expectancy effects). Even when specific demand characteristics are eliminated, participants have expectations about the phenomena we study -- and these expectations may be naturalistically confounded with the theory-relevant mechanisms we wish to study. Thus, if (a) demand characteristics are present or (b) participants are likely to have pre-existing expectations about the phenomenon being studied, researchers should be wary of concluding that an observed effect is not compromised by methodological artifacts [@boot2013pervasive; @corneille2022sixty].
+We do not deny the importance of these methodological limitations. Instead, we point out that they do little to change our conclusion: the demand effects that experimental psychologists have observed across the past 50+ years appear to be inferentially consequential, unreliable, and currently difficult to predict and explain. Whether such observations should undermine confidence in the utility of experimental psychology is a question that demand more attention.
 
 # References
 
