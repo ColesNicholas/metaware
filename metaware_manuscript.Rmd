@@ -1374,76 +1374,6 @@ rbind(
             note = "s = number of studies; k = number of effect size estimates; B1 = estimated linear relationship between participant ratings and observed Hedge's g scores; 95% CI corresponds to the estimated value of B1.")
 ```
 
-#### Residual variability
-
-```{r r2, include = F}
-# calculate a pseudo-R2
-## see this page for a discussion of the method:
-## https://stackoverflow.com/questions/22356450/getting-r-squared-from-a-mixed-effects-multilevel-model-in-metafor
-
-## pairwise delete observations where we don't have information for moderator analyses
-## this is to ensure that the two models we are comparing have the same observations
-DF.cmplt <- DF.es %>% 
-  filter(!is.na(student),
-         !is.na(paid),
-         !is.na(online),
-         !is.na(ref.type),
-         !is.na(bel),
-         !is.na(mot),
-         !is.na(opp))
-
-## fit intercept-only model
-m.int <- rma.mv(yi = es,
-                V = es.var,
-                data = DF.cmplt,
-                random = ~ 1 | id.study / id.es,
-                test = "t")
-
-# fit study 1 moderator model and calculate r2
-m.s1 <- rma.mv(yi = es,
-               V = es.var,
-               data = DF.cmplt,
-               random = ~ 1 | id.study / id.es,
-               mods = ~ student + online + ref.type + design + paid,
-               test = "t")
-
-s1.r2 <- (sum(m.int$sigma2) - sum(m.s1$sigma2)) / sum(m.int$sigma2) 
-
-
-# fit study 2 moderator model and calculate r2
-m.s2 <- rma.mv(yi = es,
-               V = es.var,
-               data = DF.cmplt,
-               random = ~ 1 | id.study / id.es,
-               mods = ~ bel + mot + opp,
-               test = "t")
-
-s2.r2 <- (sum(m.int$sigma2) - sum(m.s2$sigma2)) / sum(m.int$sigma2)
-
-# fit full moderator model and calculate r2
-m.full <- rma.mv(yi = es,
-                 V = es.var,
-                 data = DF.cmplt,
-                 random = ~ 1 | id.study / id.es,
-                 mods = ~ student + paid + online + ref.type +
-                   bel + mot + opp,
-                 test = "t")
-
-full.r2 <- (sum(m.int$sigma2) - sum(m.full$sigma2)) / sum(m.int$sigma2)
-
-# compile into list
-r2 <- list(s1.r2 = s1.r2, 
-           s2.r2 = s2.r2, 
-           full.r2 = full.r2)
-
-rm(s1.r2, s2.r2, full.r2)
-rm(DF.cmplt, m.int, m.s1, m.s2, m.full)
-```
-
-To evaluate how much variability in demand effects is currently accounted for by the moderators examined in Studies 1 and 2, we calculated a pseudo-$R^2$ statistic. We did so by comparing the sum of the variance components (between-study $\tau^2$ + within-study $\sigma^2$) in a model containing only an intercept and (1) a model containing Study 1 moderators (type of demand characteristics manipulation, participant pool, setting, study design, and payment), (2) a model containing Study 2 moderators (motivation, opportunity, and expectations), and (3) a model containing both Study 1 and 2 moderators. To ensure comparability, all models included the same set of observations (e.g., any incomplete observations were removed). Results indicated that the Study 1 and 2 moderators respectively accounted for `r round(r2$s1.r2 * 100, 2)`% and `r round(r2$s2.r2 * 100, 2)`% of observed variability in demand effects. This might suggest that study features are more powerful predictors of demand effects than the theorized underlying psychological mechanisms; however, we caution against such interpretations given the imperfect ad-hoc measurement of motivations and expectations.
-
-Including all moderators increased the pseudo-$R^2$ to `r round(r2$full.r2 * 100, 2)`%, indicating that the majority of observed variability in demand effects is still unaccounted.
-
 ### Publication bias analyses
 
 ```{r pub.bias, include = F}
@@ -1751,7 +1681,7 @@ Observing demand effects that are strong, inferentially-consequential, and unrel
 
 ## Limitations
 
-Our meta-analysis is, of course, not without limitations. Some may argue that our inclusion criteria were too narrow. Some may argue they were too broad. Publication bias analyses sometimes yielded evidence of publication bias, sometimes yielded evidence of *reverse* publication bias, and sometimes. And it still remains unclear why participants were generally unable to predict and explain demand effects.
+Our meta-analysis is, of course, not without limitations. Some may argue that our inclusion criteria were too narrow. Some may argue they were too broad. Publication bias analyses diverged in the estimated direction, significance, and impact of publication bias. And it still remains unclear why participants were generally unable to predict and explain demand effects.
 
 Broad definitions of the demand characteristics construct is yet another challenging characteristic of the demand characteristics literature [@corneille2022sixty]. At its broadest, demand characteristics are defined as *any* cue that may impact participants' understanding of the purpose of the study, including instructions, rumors, and experimenter behavior [@orne1962social]. However, such a definition arguably creates a boundless conceptual space where any systematic change in a research design or setting might be considered a threat to scientific inferences. We focused our meta-analysis on a subset of the conceptual space that is more amenable to precise definition and study: explicit cues of the study hypothesis. Although we do not reject broader definitions of demand characteristics, we suspect that such broadening will only further deepen the mystery surrounding their effects.
 
@@ -1759,7 +1689,10 @@ The commensurability – or lack thereof – of even a relatively narrow subset 
 
 A third major limitation relates to our attempt to use a naïve set of participants to predict and offer theory-relevant explanations for demand effects. It is unclear whether the lack of reliable and predictive participant ratings are valid insights in themselves or indicative of our own methodological shortcomings. Perhaps participants need to experience the study context first-hand (@orne1969demand). Perhaps they need better measures of the psychological mechanisms that may underlie demand effects (@flake2020measurement). And perhaps they are too different than the original participants to provide comparable insights at all (@gergen1973social).
 
-We do not deny the importance of these methodological limitations. Instead, we point out that they do little to change our conclusion: the demand effects that experimental psychologists have observed across the past 50+ years appear to be inferentially consequential, unreliable, and currently difficult to predict and explain. Whether such observations should undermine confidence in the utility of experimental psychology is a question that demand more attention.
+We do not deny the importance of these methodological limitations. Instead, we point out that they do little to change the conclusion we outline below.
+
+## Concluding Remarks
+Demand effects that experimental psychologists have observed across the past 50+ years appear to be inferentially consequential, unreliable, and currently difficult to predict and explain. Whether such observations should undermine confidence in the utility of experimental psychology is a question that demand more attention.
 
 # References
 
