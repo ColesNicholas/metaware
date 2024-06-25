@@ -420,7 +420,7 @@ Many of the items in the @downs1998feasibility checklist are difficult to evalua
 
 For our meta-analytic approach, we used three-level meta-analysis (3LMA; also referred to as "multilevel" meta-analysis). Rather than assume that there is a single true effect of demand characteristics, 3LMA assumes that there is a distribution containing *multiple true effects*. To separate variability in these true effects from mere sampling error, 3LMA models three sources of variability: sampling error of individual studies (level 1), variability within studies (level 2), and variability between studies (level 3; often referred to as "random effects").
 
-We fit all models using the metafor package [@R-metafor] in R [@R-base]. We weighed effect sizes based on their inverse-variance and used cluster-robust methods for estimating variance-covariance matrices [@pustejovsky2018small]. To estimate the overall effect size, we fit an intercept-only 3LMA model. We conducted moderator analyses by separately entering variables (dummy-coded or mean-centered for categorical and continuous moderators respectively) factors into a new model. In doing so, we hoped to avoid issues with collinearity and overfitting. To test the significance of each moderators, we used model comparison *F*-tests. To estimate effect sizes within each subgroup of the moderator, we used model-derived estimates.
+We fit all models using the metafor package [@R-metafor] in R [@R-base]. We weighed effect sizes based on their inverse-variance and used cluster-robust methods for estimating variance-covariance matrices [@pustejovsky2018small]. To estimate the overall effect size, we fit an intercept-only 3LMA model. We conducted moderator analyses by separately entering variables into a new model. In doing so, we hoped to avoid issues with collinearity and overfitting. Categorical moderators were dummy coded. To test the significance of each moderators, we used model comparison *F*-tests. To estimate effect sizes within each subgroup of the moderator, we used model-derived estimates.
 
 ```{r clean.env.2, include = F}
 # delete vestigial
@@ -647,10 +647,10 @@ ModAnalysis = function(m, df = DF.es) {
                   data = df,
                   random = ~ 1 | id.study / id.es,
                   mods = as.formula(paste0("~ ", m)),
-                  test= "t") #%>% 
-   # robust(x = .,
-   #        cluster = id.study,
-   #        clubSandwich = T)
+                  test= "t") %>% 
+    robust(x = .,
+           cluster = id.study,
+           clubSandwich = T)
   
   sub.m <- rma.mv(yi = es,
                   V = es.var,
@@ -702,57 +702,22 @@ mod.r.2 <-
                filter(ref.type != "cvz" &
                         ref.type != "pvz"))
 
-# test
-ModAnalysis(m = "att * mot * opp",
-            df = DF.es %>% 
-               filter(ref.type != "cvz" &
-                        ref.type != "pvz"))
+# explore possible higher-order interactions
+## center continuous variables
+mod.r[["att.mot.opp.int"]] <- 
+  ModAnalysis(m = "att * mot * opp",
+              df = DF.es %>% 
+                filter(ref.type != "cvz" &
+                         ref.type != "pvz"))
 
 ## combine results
 mod.r = c(mod.r, mod.r.2)
 
 # delete vestigial 
-rm(mod.r.2)
+rm(mod.r.2, mod.r.3)
 ```
 
 When variability in effect sizes exceeds what would be expected from sampling error alone, it suggests the presence of moderators. Below, we examine potential moderators.
-
-```{r three.way.int}
-tmp <- DF.es %>% 
-  mutate(att.c = att - mean(att, na.rm = T),
-         mot.c = mot - mean(mot, na.rm = T),
-         opp.c = opp - mean(opp, na.rm = T),
-         att.c = att - mean(att, na.rm = T))
-
-
-tmp.m.1 <- ModAnalysis(m = "att * mot * opp",
-            df = tmp %>% 
-               filter(ref.type != "cvz" &
-                        ref.type != "pvz"))
-
-tmp.m.2 <- ModAnalysis(m = "att.c * mot.c * opp.c",
-            df = tmp %>% 
-               filter(ref.type != "cvz" &
-                        ref.type != "pvz"))
-
-tmp.m.3 <- ModAnalysis(m = "mot.c * opp.c",
-            df = tmp %>% 
-               filter(ref.type != "cvz" &
-                        ref.type != "pvz"))
-
-tmp.m.2$mod
-
-
-
-z
-
-
-mod.r$att$mod
-mod.r$mot$mod
-mod.r$opp$mod
-mod.r$pre$mod
-```
-
 
 #### Study features
 
@@ -1310,6 +1275,7 @@ apa_table(
 ```
 
 #### Can participants help us understand demand effects?
+
 ```{r vig.rel.full, include = F}
 vig.rel <- readRDS("output/vig.survfull.rel.rds")
 
@@ -1318,15 +1284,17 @@ vig.desc <- read.csv("output/surv.sum.csv")
 vig.rel <- readRDS("output/vig.survfull.rel.rds")
 ```
 
-Even if researchers cannot explain how demand characteristics work, it might be valuable to be able to predict their effects [@yarkoni2017choosing]. @orne1969demand suggested that one group that may be particularly good at predicting these effects is participants themselves. 
+Even if researchers cannot explain how demand characteristics work, it might be valuable to be able to predict their effects [@yarkoni2017choosing]. @orne1969demand suggested that one group that may be particularly good at predicting these effects is participants themselves.
 
-Across the `r vig.desc %>% nrow()` vignettes reviewed, participants generally understood the researcher's hypothesis (hypothesis correctly identified in `r vig.desc$m.att %>% mean(na.rm = T) %>% round(2) %>% * 100`). However, participants did not generally have strong beliefs about whether such hypothesized effects would actually occur (*M* = `r vig.desc$m.bel %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.bel %>% sd(na.rm = T)`). Participants indicated that they are highly capable of adjusting their responses (*M* = `r vig.desc$m.opp %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.opp %>% sd(na.rm = T)`), but not very motivated to do so (*M* = `r vig.desc$m.mot %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.mot %>% sd(na.rm = T)`). Participants also predicted that other subjects  would be generally unlikely to adjust their responses to fit the experimenter's hypothesis (*M* = `r vig.desc$m.pre %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.pre %>% sd(na.rm = T)`). 
+Across the `r vig.desc %>% nrow()` vignettes reviewed, participants generally understood the researcher's hypothesis (hypothesis correctly identified in `r vig.desc$m.att %>% mean(na.rm = T) %>% round(2) * 100`). However, participants did not generally have strong beliefs about whether such hypothesized effects would actually occur (*M* = `r vig.desc$m.bel %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.bel %>% sd(na.rm = T)`). Participants indicated that they are highly capable of adjusting their responses (*M* = `r vig.desc$m.opp %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.opp %>% sd(na.rm = T)`), but not very motivated to do so (*M* = `r vig.desc$m.mot %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.mot %>% sd(na.rm = T)`). Participants also predicted that other subjects would be generally unlikely to adjust their responses to fit the experimenter's hypothesis (*M* = `r vig.desc$m.pre %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.pre %>% sd(na.rm = T)`).
 
 The above results suggests that participants generally report being receptive to demand characteristics, agnostic about hypothesized effects, capable of adjusting their responses, but not motivated to do so. That being said, the low reliability of their ratings might be suggestive of strong individual differences (or measurement difficulties, see *Discussion*; motivation ICC = `r vig.rel$mot$ICC[1]`; opportunity to adjust responses ICC = `r vig.rel$opp$ICC[1]`; belief ICC = `r vig.rel$bel$ICC[1]`).
 
-Even after averaging across a large number of noisy participant forecasts (*M* = `r vig.desc$m.pre %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.pre %>% sd(na.rm = T)`), we did not find they were able to predict the magnitude of demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$dfs[2]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])`. 
+Even after averaging across a large number of noisy participant forecasts (*M* = `r vig.desc$m.pre %>% mean(na.rm = T)`, *SD* = `r vig.desc$m.pre %>% sd(na.rm = T)`), we did not find they were able to predict the magnitude of demand effects, $\beta$ = `r mod.r$pre$mod$b["pre", ]`, 95% CI [`r mod.r$pre$mod$ci.lb[2]`, `r mod.r$pre$mod$ci.ub[2]`], $t$(`r mod.r$pre$mod$dfs[2]`) = `r mod.r$pre$mod$zval[2]`, $p$ = `r printp(mod.r$pre$mod$pval[2])`.
 
 Consistent with Rosnow and colleagues' framework, the extent to which participants correctly identified the hypothesis described in vignettes was predictive of demand effects, $\beta$ = `r mod.r$att$mod$b["att", ]`, 95% CI [`r mod.r$att$mod$ci.lb[2]`, `r mod.r$att$mod$ci.ub[2]`], $t$(`r mod.r$att$mod$dfs[2]`) = `r mod.r$att$mod$zval[2]`, $p$ = `r printp(mod.r$att$mod$pval[2])`. In other words, demand effects were weaker when an external set of participants indicated confusion about the communicated hypothesis. However, we did not uncover a significant association between observed demand effects and participant ratings of (a) motivation to adjust responses ($\beta$ = `r mod.r$mot$mod$b["mot", ]`, 95% CI [`r mod.r$mot$mod$ci.lb[2]`, `r mod.r$mot$mod$ci.ub[2]`], $t$(`r mod.r$mot$mod$dfs[2]`) = `r mod.r$mot$mod$zval[2]`, $p$ = `r printp(mod.r$mot$mod$pval[2])`), (b) opportunity to adjust responses ($\beta$ = `r mod.r$opp$mod$b["opp", ]`, 95% CI [`r mod.r$opp$mod$ci.lb[2]`, `r mod.r$opp$mod$ci.ub[2]`], $t$(`r mod.r$opp$mod$dfs[2]`) = `r mod.r$opp$mod$zval[2]`, $p$ = `r printp(mod.r$opp$mod$pval[2])`), and belief in the hypothesized effect ($\beta$ = `r mod.r$bel$mod$b["bel"]`, 95% CI [`r mod.r$bel$mod$ci.lb[2]`, `r mod.r$bel$mod$ci.ub[2]`], $t$(`r mod.r$bel$mod$dfs[2]`) = `r mod.r$bel$mod$zval[2]`, $p$ = `r printp(mod.r$bel$mod$pval[2])`).
+
+Of course, Rosnow and colleagues' posited that receptivity, motivation, and opportunity *interact* to shape demand effects. However, when we explored this question, we did not find robust evidence that including all possible higher order interactions significantly improved model fit, *F*(`r mod.r$att.mot.opp.int$mod$QMdf[1]`, `r mod.r$att.mot.opp.int$mod$QMdf[2]`) = `r mod.r$att.mot.opp.int$mod$QM %>% round(2)`, *p* = `r mod.r$att.mot.opp.int$mod$QMp %>% apa_p()`.
 
 ```{r}
 rbind(
