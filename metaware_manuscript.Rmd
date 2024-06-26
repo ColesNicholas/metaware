@@ -249,7 +249,10 @@ sens.res <-
            m <- rma.mv(yi = es,
                        V = es.var,
                        data = DF.es,
-                       random = ~ 1 | id.study / id.es)
+                       random = ~ 1 | id.study / id.es) %>% 
+             robust(x = .,
+                    cluster = id.study,
+                    clubSandwich = T)
            
            # return overall es as a number
            m$b %>% 
@@ -508,8 +511,8 @@ Most effect sizes represented a positive demand compared to a control group (*k*
 
 Most effect sizes came from student samples (*k* = `r DF.es %>% filter(student == "yes") %>% nrow()`), although some samples were non-students (*k* = `r DF.es %>% filter(student == "no") %>% nrow()`), a mix of students and non-students (*k* = `r DF.es %>% filter(student == "mix") %>% nrow()`), or not described well enough to make a determination (*k* = `r DF.es %>% filter(is.na(student)) %>% nrow()`). Most effect sizes came from unpaid samples (*k* = `r DF.es %>% filter(paid == "no") %>% nrow()`), although some were paid (*k* = `r DF.es %>% filter(paid == "yes") %>% nrow()`) and some were not described well enough to make a determination (*k* = `r DF.es %>% filter(is.na(paid)) %>% nrow()`). The majority of effect sizes came from in-person studies (*k* = `r DF.es %>% filter(online == "no") %>% nrow()`), but some were in-person (*k* = `r DF.es %>% filter(online == "yes") %>% nrow()`) or not described well enough to make a determination (*k* = `r DF.es %>% filter(is.na(online)) %>% nrow()`).
 
-
 ### Overall results
+
 Overall, results indicated that explicit manipulations of demand characteristics cause participants' responses to shift in a manner consistent with the communicated hypothesis, $g$ = `r overall$b`, 95% CI [`r overall$ci.lb`, `r overall$ci.ub`], $t$ = `r overall$zval`, $p$ `r printp(overall$pval)`. As a hypothetical example, if participants were told that the researcher hypothesizes that an intervention will improve mood (positive demand), they would generally report slightly improved moods; if told that the researcher hypothesizes that an intervention will worsen mood (negative demand), they would generally report slightly worsened moods.
 
 ```{r forest, fig.cap = "Forest plot of effect sizes (grey diamonds), their 95% confidence intervals (grey error bars), and their citations (left). For visualization purposes, effect sizes are aggregated within-studies (see openly-available data for non-aggregated effect sizes). The estimated effect size distribution is also shown and colored based on whether demand characteristics produce more hypothesis-consistent responding (green; g > 0.10), more hypothesis-inconsistent responding (red; g < -0.10), or negligible shifts in responding (grey; |g| < 0.10).", fig.height = 6.64, fig.width = 6.5, warning = F}
@@ -726,6 +729,82 @@ mod.r = c(mod.r, mod.r.2)
 
 # delete vestigial 
 rm(mod.r.2)
+```
+
+```{r mod.sens, eval = F}
+# A reviewer pointed out that some people might argue that we should not have combined within and between subject designs. You can run this code and change the type argument to explore this issue.
+
+# create moderator analysis function
+ModSens = function(m, type = "within",
+                   df = DF.es) {
+  
+  # set dataset
+  df <- df %>% 
+    filter(design == type)
+  
+  # moderator analysis
+  mod.m <- rma.mv(yi = es,
+                  V = es.var,
+                  data = df,
+                  random = ~ 1 | id.study / id.es,
+                  mods = as.formula(paste0("~ ", m)),
+                  test= "t") %>% 
+    robust(x = .,
+           cluster = id.study,
+           clubSandwich = T)
+  
+  sub.m <- rma.mv(yi = es,
+                  V = es.var,
+                  data = df,
+                  random = ~ 1 | id.study / id.es,
+                  mods = as.formula(paste0("~ 0 + ", m)),
+                  test= "t") %>%
+  robust(x = .,
+         cluster = id.study,
+         clubSandwich = T)
+  
+  # return results as list
+  return(list(mod = mod.m,
+              sub = sub.m)) 
+}
+
+# conduct moderator and subgroup analyses for moderators assessed with full dataset 
+mod.l <- c("student", "paid", "online", "ref.r", "published",
+           "year", "att",
+           
+           # exploratory quality control measures
+           'report', 'internal')
+mod.r.sens <- 
+  sapply(X = mod.l,
+         simplify = F,
+         FUN = ModSens)
+
+rm(mod.l)
+
+# test ref.type moderator in scenarios where there is a control comparison (i.e., ref.r == single)
+mod.r.sens[["ref.type"]] <- 
+  ModSens(m = "ref.type",
+              df = DF.es[DF.es$ref.r == "single", ])
+
+# test all ref.type
+mod.r.sens[["ref.type.full"]] <- 
+  ModSens(m = "ref.type")
+
+# add motivation, opportunity, belief, and prediction moderators
+## Note: comparisons with nil-demand conditions are excluded
+mod.r.sens.2 <- 
+  sapply(X = c("mot", "opp", "bel", "pre"),
+         simplify = F,
+         FUN = ModSens,
+         df = DF.es %>% 
+               filter(ref.type != "cvz" &
+                        ref.type != "pvz"))
+
+## combine results
+mod.r.sens = c(mod.r.sens, mod.r.sens.2)
+
+# delete vestigial 
+rm(mod.r.sens.2)
 ```
 
 When variability in effect sizes exceeds what would be expected from sampling error alone, it suggests the presence of moderators. Below, we examine potential moderators.
@@ -1695,7 +1774,9 @@ Our meta-analysis is, of course, not without limitations. Some may argue that ou
 
 Broad definitions of the demand characteristics construct is a challenging characteristic of the demand characteristics literature. At its broadest, demand characteristics are defined as *any* cue that may impact participants' understanding of the purpose of the study, including instructions, rumors, and experimenter behavior [@orne1962social]. However, such a definition arguably creates a boundless conceptual space where any systematic change in a research design or setting might be considered a threat to scientific inferences. We focused our meta-analysis on a subset of the conceptual space that is more amenable to precise definition and study: explicit cues of the study hypothesis. Although we do not reject broader definitions of demand characteristics, we suspect that such broadening will only further deepen the mystery surrounding their effects.
 
-The commensurability – or lack thereof – of even a relatively narrow subset of the demand characteristics literature presents another challenge. Researchers have tested the effects of explicit hypothesis cues on a variety of outcomes, including hypnosis symptoms [e.g., @orne1964contribution], eating behavior [e.g., @kersbergen2019hypothesis], visual judgments [e.g., @durgin2012social], relationship satisfaction [e.g., @cramer2005effect], mood [e.g., @coles2022fact], policy support [e.g., @mummolo2019demand], test scores [e.g., @veitch1991demand], and so on. Researchers also varied in how they conducted their investigations – e.g., in whether they conducted their studies in-person [e.g., @mummolo2019demand] vs. online [e.g., @orne1964contribution], sampled students [e.g., @rose2014choice] vs. non-students [e.g., @terhune2006induction], and manipulated hypothesis cues within- [e.g., @martin2018attention] vs. between-subjects [e.g., @coles2022fact]. We generally failed to uncover evidence that such methodological differences explain a meaningful proportion of variability in demand effects. Nonetheless, it is possible that such a large number of [often unsystematic] differences between studies limits power to detect meaningful moderators in the demand characteristics literature.
+The commensurability – or lack thereof – of even a relatively narrow subset of the demand characteristics literature presents another challenge. Researchers have tested the effects of explicit hypothesis cues on a variety of outcomes, including hypnosis symptoms [e.g., @orne1964contribution], eating behavior [e.g., @kersbergen2019hypothesis], visual judgments [e.g., @durgin2012social], relationship satisfaction [e.g., @cramer2005effect], mood [e.g., @coles2022fact], policy support [e.g., @mummolo2019demand], test scores [e.g., @veitch1991demand], and so on. Researchers also varied in how they conducted their investigations – e.g., in whether they conducted their studies in-person [e.g., @mummolo2019demand] vs. online [e.g., @orne1964contribution], sampled students [e.g., @rose2014choice] vs. non-students [e.g., @terhune2006induction], and manipulated hypothesis cues within- [e.g., @martin2018attention] vs. between-subjects [e.g., @coles2022fact]. [^7]We generally failed to uncover evidence that such methodological differences explain a meaningful proportion of variability in demand effects. Nonetheless, it is possible that such a large number of [often unsystematic] differences between studies limits power to detect meaningful moderators in the demand characteristics literature.
+
+[^7]: Whether meta-analysts should combine effects from within and between-subjects design has sparked considerable debate [@morris2002combining]. We felt that combining such effects was justified given that (a) effect sizes were converted into a common metric using design-specific estimates of sampling variance, (b) sensitivity analyases of assumed within-subject correlations produced virtually no change in our overall effect size estimate, and (c) we did not detect significant differences between studies that manipulated explicit hypothesis cues within- vs. between-subjects. However, if this methodological decision eventually proves to be problematic, we suspect it won't change our conclusions: that demand effects are inferentially consequential, heterogeneous, and difficult-to-explain.
 
 A third major limitation relates to our attempt to use a naïve set of participants to predict and offer theory-relevant explanations for demand effects. It is unclear whether the lack of reliable and predictive participant ratings are valid insights in themselves or indicative of our own methodological shortcomings. Perhaps participants need to experience the study context first-hand [@orne1969demand]. Perhaps they need better measures of the psychological mechanisms that may underlie demand effects [@flake2020measurement]. And perhaps they are too different than the original participants to provide comparable insights at all [@gergen1973social].
 
