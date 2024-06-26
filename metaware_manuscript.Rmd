@@ -210,7 +210,7 @@ To be eligible for inclusion in the meta-analysis, the following criteria must h
 
 [^2]: After completing the meta-analysis, we realized we included one record with a clinical population: patients who suffered pulmonary or cerebrovascular accidents [@lana1971subject]. Excluding their results does not change the general pattern of results.
 
-N. C. and M. W. screened records independently, reviewed potentially relevant records together, and worked together to code the information for moderator analyses and effect size computations. Disagreements were resolved through discussion. N. C. also coded the quality of each record included in the final synthesis (described later). In total, `r num.s` studies from `r num.p` records were eligible for inclusion. However, one record [@allen2012demand] was removed because the information provided led to implausibly large effect size estimates (e.g., $d$ = `r outlier.es`).
+N. C. and M. W. screened records independently, reviewed potentially relevant records together, and worked together to code the information for moderator analyses and effect size computations. Any disagreements were resolved through discussion. N. C. also coded the quality of each record included in the final synthesis (described later). In total, `r num.s` studies from `r num.p` records were eligible for inclusion. However, one record [@allen2012demand] was removed because the information provided led to implausibly large effect size estimates (e.g., $d$ = `r outlier.es`).
 
 ```{r clean.env.1, include = F}
 # remove outlier and re-initialize id factors
@@ -725,7 +725,7 @@ mod.r[["att.mot.opp.int"]] <-
 mod.r = c(mod.r, mod.r.2)
 
 # delete vestigial 
-rm(mod.r.2, mod.r.3)
+rm(mod.r.2)
 ```
 
 When variability in effect sizes exceeds what would be expected from sampling error alone, it suggests the presence of moderators. Below, we examine potential moderators.
