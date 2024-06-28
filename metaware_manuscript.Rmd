@@ -124,11 +124,9 @@ To start, Rosnow and colleagues reasoned that participants must be receptive to 
 
 If and when participants correctly interpret demand characteristics, Rosnow and colleagues theorized that subsequent changes in participants' responses would be driven by their motivation (or lack thereof) to provide hypothesis-consistent responses. Early work on demand characteristics was marked by debates about whether participants are motivated to adjust their responses to (a) help the researcher confirm their hypothesis [@orne1962social], (b) receive positive evaluations [@riecken1962program; @rosenberg1969conditions; @sigall1970cooperative], (c) interfere with the purpose of the study [@cook1970demand; @masling1966role], or (d) follow directions as closely as possible [@fillenbaun1970more]. Rosnow and colleagues advanced this line of thinking by demonstrating that participants have *multiple* shifting motivations in mind when they conceptualize their roles as subjects [@rosnow1997people, see also @silverman1965demand]. For example, participants appear to be motivated to increase performance on simple tasks when told that this is the experimenter's expectation -- but not when the experimenter adds that the increase in performance will be indicative of a negative personality trait [@sigall1970cooperative]. Rosnow and colleagues, thus, suggested that participants in any given context can be characterized as being overall motivated to either: (a) non-acquiesce (i.e., not change their responses based on knowledge about the hypothesis), (b) acquiesce (i.e., provide hypothesis-consistent responses), or (c) counter-acquiesce (i.e., provide hypothesis-inconsistent responses).
 
-If participants are motivated to adjust their response, Rosnow and colleagues theorized that subsequent changes in participants' responses would then be driven by their ability to alter the outcome of interest. As elaborated by @corneille2022sixty, this could occur through faking, imagination, or phenomenological control (voluntary changes experienced by the participant as involuntary). Taking this third moderator -- opportunity -- into account, Rosnow and colleagues concluded that demand characteristics only bias responses when participants (1) notice the cues, (2) are motivated to adjust their responses, and (3) can adjust their responses.[^1] This framework directly maps onto psychologists' playbook for avoiding the impact of demand characteristics: use deception (reduce receptivity), incentivize honest reporting (reduce motivation), and/or deploy difficult-to-control outcome measures (reduce opportunity to adjust responses).
+If participants are motivated to adjust their response, Rosnow and colleagues theorized that subsequent changes in participants' responses would then be driven by their ability to alter the outcome of interest. As elaborated by @corneille2022sixty, this could occur through faking, imagination, or phenomenological control (voluntary changes experienced by the participant as involuntary). Taking this third moderator -- opportunity -- into account, Rosnow and colleagues concluded that demand characteristics only bias responses when participants (1) notice the cues, (2) are motivated to adjust their responses, and (3) can adjust their responses. This framework directly maps onto psychologists' playbook for avoiding the impact of demand characteristics: use deception (reduce receptivity), incentivize honest reporting (reduce motivation), and/or deploy difficult-to-control outcome measures (reduce opportunity to adjust responses).
 
-[^1]: Although outside the scope of what we are able to evaluate in the present meta-analysis, it is worth noting that other researchers have argued that demand characteristics can impact participant responses even when they have neither the motivation nor opportunity to adjust responses. For example, @coles
-
-Of course, not all researchers agree with Rosnow and colleagues. @corneille2022sixty, for example, notes that there are outcomes that may seem outside of participants control but can actually be changed via imagination. @coles2022fact notes that mechanisms discussed in research on placebo effects (e.g., conditioned responses) may create changes in participants' responses – even with they apparantly have neither the motivation nor opportunity to adjust responses. We focus our review on Rosnow and colleagues' influential framework, but we revisit oustanding disagreements in the *Discussion*.
+Of course, not all researchers agree with Rosnow and colleagues. @corneille2022sixty, for example, notes that there are outcomes that may seem outside of participants control but can actually be changed via imagination. @coles2022fact notes that mechanisms discussed in research on placebo effects (e.g., conditioned responses) may create changes in participants' responses – even with they apparently have neither the motivation nor opportunity to adjust responses. We focus our review on Rosnow and colleagues' influential framework, but we revisit outstanding disagreements in the *Discussion*.
 
 # Methodology
 
@@ -202,17 +200,17 @@ outlier.es <- DF.es %>%
 
 To be eligible for inclusion in the meta-analysis, the following criteria must have been met:
 
--   The researcher manipulated what participants were told about the effect of an independent variable on a dependent variable.[^2] In most cases, the effect of the independent variable was described explicitly, but there were some included studies where it was strongly implied.
+-   The researcher manipulated what participants were told about the effect of an independent variable on a dependent variable.[^1] In most cases, the effect of the independent variable was described explicitly, but there were some included studies where it was strongly implied.
 
 -   The demand characteristics manipulation was not strongly confounded with another manipulation. For example, we excluded a study by @sigall1970cooperative because the manipulation of the stated hypothesis was confounded with a disclosure about the meaning of the behavior (i.e., that confirming the hypothesis would be indicative of an obsessive-compulsive personality disorder).
 
--   A non-clinical population was studied.[^3]
+-   A non-clinical population was studied.[^2]
 
 -   Information necessary for computing at least one effect size was included.
 
-[^2]: We excluded conditions where the researcher communicated a *non-directional* effect. We did so because participants in these scenarios could not unambiguously infer how their responses were expected to change. For example, if participants were told that an independent variable would "impact mood", it is not clear if participants should infer that the mood will be boosted or dampened.
+[^1]: We excluded conditions where the researcher communicated a *non-directional* effect. We did so because participants in these scenarios could not unambiguously infer how their responses were expected to change. For example, if participants were told that an independent variable would "impact mood", it is not clear if participants should infer that the mood will be boosted or dampened.
 
-[^3]: After completing the meta-analysis, we realized we included one record with a clinical population: patients who suffered pulmonary or cerebrovascular accidents [@lana1971subject]. Excluding their results does not change the general pattern of results.
+[^2]: After completing the meta-analysis, we realized we included one record with a clinical population: patients who suffered pulmonary or cerebrovascular accidents [@lana1971subject]. Excluding their results does not change the general pattern of results.
 
 N. C. and M. W. screened records independently, reviewed potentially relevant records together, and worked together to code the information for moderator analyses and effect size computations. Any disagreements were resolved through discussion. N. C. also coded the quality of each record included in the final synthesis (described later). In total, `r num.s` studies from `r num.p` records were eligible for inclusion. However, one record [@allen2012demand] was removed because the information provided led to implausibly large effect size estimates (e.g., $d$ = `r outlier.es`).
 
@@ -395,13 +393,15 @@ rm(survey.n, survey.gend,
 vig1.rel <- readRDS("output/vig.surv1.rel.rds")
 ```
 
-For each study included in the meta-analysis after our original literature search[^4], we created vignettes that described the key details for each demand characteristic condition and dependent variable combination. For example, @standing2008demonstration had two demand characteristic manipulations (positive and negative demand) and two dependent variables (measures of verbal and spatial reasoning). Thus, we created four vignettes for this study. In an effort to help participants understand the study context, vignettes also contained information about (a) whether students vs. non-students were sampled, (b) whether subjects received compensation, and (c) whether the study was conducted online or in-person.
+For each study included in the meta-analysis after our original literature search[^3], we created vignettes that described the key details for each demand characteristic condition and dependent variable combination. For example, @standing2008demonstration had two demand characteristic manipulations (positive and negative demand) and two dependent variables (measures of verbal and spatial reasoning). Thus, we created four vignettes for this study. In an effort to help participants understand the study context, vignettes also contained information about (a) whether students vs. non-students were sampled, (b) whether subjects received compensation, and (c) whether the study was conducted online or in-person.
 
-[^4]: As a reminder, we performed two literature searches. The second literature search was inspired by reviewer feedback, which we received after we started collecting data using the vignette methodology.
+[^3]: As a reminder, we performed two literature searches. The second literature search was inspired by reviewer feedback, which we received after we started collecting data using the vignette methodology.
 
 In total, there were `r vig.n` vignettes. We did not create vignettes for control conditions because participants were not given information about the experimenter's hypothesis (i.e., there were no explicit demand characteristics to act upon).
 
-Using a web-based Qualtrics survey, a convenience sample of participants reviewed 10 randomly selected vignettes. For each participants , raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving an irrelevant dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Afterwards, participants rated the extent to which they would hypothetically (1) be motivated to adjust responses based on the researcher's stated hypothesis (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable"), and (3) believe the hypothesized effect would occur (-3 = "strong disbelief" to 3 = "strong belief"). Participants also indicated the extent to which they expected other participants to adjust their responses to confirm the hypothesized effect (-3 = "extremely likely to adjust responses to be *inconsistent*" to 3 "extremely likely to adjust responses to be consistent). These ratings scales were presented in random order.
+Using a web-based Qualtrics survey, a convenience sample of participants reviewed 10 randomly selected vignettes. For each participants , raters were asked to first identify the researcher's hypothesis. Here, participants chose between four options that described a filler effect (usually involving an irrelevant dependent variable) or a positive, negative, or nil effect of the independent variable on the dependent variable. Although not originally pre-registered, we used estimates of the proportion of participants who correctly identified they hypothesis (0 - 1) as a proxy for 'receptivity'.
+
+Afterwards, participants rated the extent to which they would hypothetically (1) be motivated to adjust responses based on the researcher's stated hypothesis (-3 = "extremely motivated to adjust responses to be inconsistent" to 3 = "extremely motivated to adjust responses to be consistent"), (2) be able to adjust their responses on the outcome-of-interest (0 = "extremely incapable" to 4 = "extremely capable"), and (3) believe the hypothesized effect would occur (-3 = "strong disbelief" to 3 = "strong belief"). Participants also indicated the extent to which they expected other participants to adjust their responses to confirm the hypothesized effect (-3 = "extremely likely to adjust responses to be *inconsistent*" to 3 "extremely likely to adjust responses to be consistent). These ratings scales were presented in random order.
 
 Sample size was initially based on availability of resources. We initially collected as much data as possible (n = `r vig.surv1.n`) in a single semester from undergraduates from (anonymous for peer review). Following a reviewer recommendation, we performed post-hoc examinations of the reliability of their ratings. More specifically, we calculated intraclass correlations using mixed effects models. For ratings of predicted demand effects, motivation to adjust responses, opportunity to adjust responses, and belief in the hypothesized effect, we used the lme4 package [@R-lme4] in R [@R-base] to fit an intercept-only mixed effect model with random intercepts at the level of participant and vignette. We then used the performance package [@R-performance] to calculate the intraclass correlation for the participant random intercept. The intraclass coefficient for predicted demand effects (ICC = `r vig1.rel$pre$ICC[1]`), motivation to adjust responses (ICC = `r vig1.rel$mot$ICC[1]`), opportunity to adjust responses (ICC = `r vig1.rel$opp$ICC[1]`), and belief in the researcher's stated hypothesis (ICC = `r vig1.rel$bel$ICC[1]`) was low.
 
@@ -413,7 +413,7 @@ rm(survey.dem, vig1.rel, vig.n)
 
 ##### Accounting for different demand comparisons
 
-As mentioned before, Hedge's $g$ represents the standardized difference between *two* groups. Thus, for each observation in the meta-analysis, we summed participants' average motivation, opportunity, and belief ratings (after removing cases where they identified the wrong hypothesis). Doing so allowed us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where participants are told a procedure will boost mood (positive demand), told a procedure will dampen mood (negative demand), or not told about an expected effect (control). Compared to a control condition, participants who are motivated to confirm the hypothesis are theorized to have upward-biased responses in the positive demand condition and downward-biased responses in the negative demand condition. If those demand conditions are compared to each other -- instead of a control condition -- their effects should be additive. Summing participants ratings allowed us to accommodate this possibility.
+As mentioned before, Hedge's $g$ represents the standardized difference between *two* groups. Thus, for each observation in the meta-analysis, we summed participants' average motivation, opportunity, and belief ratings (after removing cases where they identified the wrong hypothesis). We also summed the estimates of how likely participants were to correctly identify the communicated hypothesis. Doing so allowed us to accommodate the fact that some comparisons involved two demand characteristics conditions. For example, imagine a study where participants are told a procedure will boost mood (positive demand), told a procedure will dampen mood (negative demand), or not told about an expected effect (control). Compared to a control condition, participants who are motivated to confirm the hypothesis are theorized to have upward-biased responses in the positive demand condition and downward-biased responses in the negative demand condition. If those demand conditions are compared to each other -- instead of a control condition -- their effects should be additive. Summing participants ratings allowed us to accommodate this possibility.
 
 We did not include nil-hypothesis comparisons in our analyses because our coding strategy could not accommodate the potential moderating role of motivation and belief in these conditions. For example, imagine that a participant is (a) told that an intervention will not impact mood (nil demand), and (b) is motivated to disconfirm the hypothesis. Relative to a control condition, this participant could disconfirm the hypothesis by either increasing *or* decreasing their mood report. Thus, even if motivation does moderate the effects of demand characteristics, we would not expect a systematic pattern to emerge with our coding scheme.
 
@@ -421,9 +421,9 @@ We did not include nil-hypothesis comparisons in our analyses because our coding
 
 Following a reviewer recommendation, we coded the quality of each record included in the meta-analysis. To do so, we used a modified version of the @downs1998feasibility checklist. This original checklist contains ten items designed to evaluate reporting quality (e.g., "Are the main findings of the study clearly described?"), three to evaluate external validity (e.g., "Were the subjects asked to participate in the study representative of the entire population from which they were recruited?"), seven to evaluate internal validity (e.g., " Was an attempt made to blind those measuring the main outcomes of the intervention?), six to evaluate selection bias (e.g., "Were losses of patients to follow-up taken into account?"), and one to evaluate statistical power.
 
-Many of the items in the @downs1998feasibility checklist are difficult to evaluate or inapplicable to the literature we evaluated[^5]. We thus focused our analysis on seven reporting quality, one external validity, and three internal validity items. Each item was coded as either a 1 ("yes"), 0 ("no") or NA ("not applicable"). For each record in the meta-analysis, the scores within each category of the checklist were averaged.
+Many of the items in the @downs1998feasibility checklist are difficult to evaluate or inapplicable to the literature we evaluated[^4]. We thus focused our analysis on seven reporting quality, one external validity, and three internal validity items. Each item was coded as either a 1 ("yes"), 0 ("no") or NA ("not applicable"). For each record in the meta-analysis, the scores within each category of the checklist were averaged.
 
-[^5]: The @downs1998feasibility checklist has been widely endorsed as a measure of the quality of records included in meta-analyses [e.g., @johnson2021toward]. We do not share this endorsement; Many items were not applicable to the work we were evaluating (e.g., whether distributions of principle confounders are described). Many other were difficult to evaluate (e.g., whether the study had adequate statistical power, which cannot be assessed without knowing the true underlying distribution of effects).
+[^4]: The @downs1998feasibility checklist has been widely endorsed as a measure of the quality of records included in meta-analyses [e.g., @johnson2021toward]. We do not share this endorsement; Many items were not applicable to the work we were evaluating (e.g., whether distributions of principle confounders are described). Many other were difficult to evaluate (e.g., whether the study had adequate statistical power, which cannot be assessed without knowing the true underlying distribution of effects).
 
 ### Meta-analytic approach
 
@@ -440,13 +440,13 @@ rm(mult.eff.per, sens.range)
 
 Publication bias refers to the well-documented propensity for hypothesis-inconsistent findings to be disproportionately omitted from the published scientific record [@franco2014publication]. When present, publication bias can lead to inaccurate effect size estimates and inferential errors in meta-analysis. Consequently, we used three main approaches for assessing and correcting for potential publication bias in our estimation of the overall effect of demand characteristics.
 
-First, we visually examined *funnel plots,* wherein observed effect sizes are plotted against a measure of their precision (e.g., standard error). In the absence of publication bias, the distribution typically resembles a funnel; relatively large studies estimate the effect with high precision, and effect sizes fan out in *both* directions as the studies become smaller. If, however, non-significant findings are disproportionately omitted from the scientific record (i.e., there is publication bias), the distribution is often asymmetric/sloped. Funnel plots traditionally contain one effect size per study, but many of our studies included multiple relevant effect sizes. Thus, we examined two funnel plots: one with all effect sizes and one with the dependent effect sizes aggregated[^6].
+First, we visually examined *funnel plots,* wherein observed effect sizes are plotted against a measure of their precision (e.g., standard error). In the absence of publication bias, the distribution typically resembles a funnel; relatively large studies estimate the effect with high precision, and effect sizes fan out in *both* directions as the studies become smaller. If, however, non-significant findings are disproportionately omitted from the scientific record (i.e., there is publication bias), the distribution is often asymmetric/sloped. Funnel plots traditionally contain one effect size per study, but many of our studies included multiple relevant effect sizes. Thus, we examined two funnel plots: one with all effect sizes and one with the dependent effect sizes aggregated[^5].
 
-[^6]: For effect size aggregation, we assumed a default dependent effect size correlation of $r$ = .50 but performed sensitivity analysis with $r$ = .10, .30, .50, .70, and .90. These sensitivity analyses did not change our overall conclusion about publication bias, so we do not discuss them.
+[^5]: For effect size aggregation, we assumed a default dependent effect size correlation of $r$ = .50 but performed sensitivity analysis with $r$ = .10, .30, .50, .70, and .90. These sensitivity analyses did not change our overall conclusion about publication bias, so we do not discuss them.
 
-Second, we conducted precision-effect tests [@stanley2014meta]. In precision-effect tests, the relationship between observed effect sizes and their standard errors -- which is typically absent when there is no publication bias -- is estimated and controlled for in a meta-regression model. The slope of this model is often interpreted as an estimate of publication bias, and the intercept is often interpreted as the bias-corrected overall effect. These precision-effect tests were developed and validated for meta-analyses with independent effect sizes. Nonetheless, @rodgers2021evaluating demonstrated that the method retains fairly good statistical properties when (1) 3LMA is used or (2) dependent effect sizes are aggregated and modeled using random-effects (i.e., two level) meta-regression. We used both approaches[^7].
+Second, we conducted precision-effect tests [@stanley2014meta]. In precision-effect tests, the relationship between observed effect sizes and their standard errors -- which is typically absent when there is no publication bias -- is estimated and controlled for in a meta-regression model. The slope of this model is often interpreted as an estimate of publication bias, and the intercept is often interpreted as the bias-corrected overall effect. These precision-effect tests were developed and validated for meta-analyses with independent effect sizes. Nonetheless, @rodgers2021evaluating demonstrated that the method retains fairly good statistical properties when (1) 3LMA is used or (2) dependent effect sizes are aggregated and modeled using random-effects (i.e., two level) meta-regression. We used both approaches[^6].
 
-[^7]: When assessing publication bias using 3LMA, we also fit an exploratory model that included cluster-robust estimates of the variance covariance matrix. Cluster-robust estimation procedures did not change our inferences.
+[^6]: When assessing publication bias using 3LMA, we also fit an exploratory model that included cluster-robust estimates of the variance covariance matrix. Cluster-robust estimation procedures did not change our inferences.
 
 Third, we deployed weight-function modeling using the weightR package [@R-weightr]. In weight-function modeling, weighted distribution theory is used to model biased selection based on the significance of observed effects [@vevea1995general]. If the adjusted model provides increased fit, publication bias is a concern and the model can be used to estimate the bias-corrected overall effect size. Once again, weight-function modeling was designed for independent effect sizes. Nonetheless, it has fairly good statistical properties when non-independent effect sizes are aggregated, which we did here [@rodgers2021evaluating].
 
@@ -687,7 +687,7 @@ ModAnalysis = function(m, df = DF.es) {
 # conduct moderator and subgroup analyses for moderators assessed with full dataset 
 mod.l <- c("student", "paid", "online", 
            "design", "ref.r", "published",
-           "year", "att",
+           "year", #"att",
            
            # exploratory quality control measures
            'report', 'internal')
@@ -715,7 +715,7 @@ mod.r[["ref.type.full"]] <-
 # add motivation, opportunity, belief, and prediction moderators
 ## Note: comparisons with nil-demand conditions are excluded
 mod.r.2 <- 
-  sapply(X = c("mot", "opp", "bel", "pre"),
+  sapply(X = c("att", "mot", "opp", "bel", "pre"),
          simplify = F,
          FUN = ModAnalysis,
          df = DF.es %>% 
@@ -1358,6 +1358,102 @@ Consistent with Rosnow and colleagues' framework, the extent to which participan
 
 Of course, Rosnow and colleagues' posited that receptivity, motivation, and opportunity *interact* to shape demand effects. However, when we explored this question, we did not find robust evidence that including all possible higher order interactions significantly improved model fit, *F*(`r mod.r$att.mot.opp.int$mod$QMdf[1]`, `r mod.r$att.mot.opp.int$mod$QMdf[2]`) = `r mod.r$att.mot.opp.int$mod$QM %>% round(2)`, *p* = `r mod.r$att.mot.opp.int$mod$QMp %>% apa_p()`.
 
+```{r}
+rbind(
+  # predicted demand effects
+  cbind(
+    `Moderator (bolded) and level` = "predicted demand effects",
+    s = mod.r$pre$mod$n,
+    k = mod.r$pre$mod$k,
+    B1 = mod.r$pre$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$pre$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$pre$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$pre$mod$QM %>% round(2),
+    p = mod.r$pre$mod$QMp %>% apa_p()
+    ),
+  
+  # understanding of study hypothesis
+  cbind(
+    `Moderator (bolded) and level` = "understanding of study hypothesis",
+    s = mod.r$att$mod$n,
+    k = mod.r$att$mod$k,
+    B1 = mod.r$att$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$att$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$att$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$att$mod$QM %>% round(2),
+    p = mod.r$att$mod$QMp %>% apa_p()
+  ),
+    
+  # motivation to adjust responses
+  cbind(
+    `Moderator (bolded) and level` = "motivation to adjust responses",
+    s = mod.r$mot$mod$n,
+    k = mod.r$mot$mod$k,
+    B1 = mod.r$mot$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$mot$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$mot$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$mot$mod$QM %>% round(2),
+    p = mod.r$mot$mod$QMp %>% apa_p()
+  ),
+  
+  # opportunity to adjust responses
+  cbind(
+    `Moderator (bolded) and level` = "opportunity to adjust responses",
+    s = mod.r$opp$mod$n,
+    k = mod.r$opp$mod$k,
+    B1 = mod.r$opp$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$opp$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$opp$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$opp$mod$QM%>% round(2),
+    p = mod.r$opp$mod$QMp %>% apa_p()
+  ),
+  
+  # belief in communicated hypothesis
+  cbind(
+    `Moderator (bolded) and level` = "belief in communicated hypothesis",
+    s = mod.r$bel$mod$n,
+    k = mod.r$bel$mod$k,
+    B1 = mod.r$bel$mod$b[2] %>% round(2),
+    `95% CI` =
+      paste0(
+        "[",
+        mod.r$bel$mod$ci.lb[[2]] %>% round(2),
+        ", ",
+        mod.r$bel$mod$ci.ub[[2]] %>% round(2),
+        "]"
+      ),
+    `F` = mod.r$bel$mod$QM %>% round(2),
+    p = mod.r$bel$mod$QMp %>% apa_p()
+    )
+  ) %>%
+  apa_table(caption = "Participant rating moderator analyses",
+            note = "s = number of studies; k = number of effect size estimates; B1 = estimated linear relationship between participant ratings and observed Hedge's g scores; 95% CI corresponds to the estimated value of B1.")
+```
+
 ### Publication bias analyses
 
 ```{r pub.bias, include = F}
@@ -1528,9 +1624,9 @@ rm(rho.l, PubBias)
 # pub.r$rho_0.5$weight.funct %>% View()
 ```
 
-Overall, publication bias analyses were inconclusive. Both precision-effect tests with 3LMA[^8] ($\beta$ = `r pub.r$rho_0.5$pe.3l$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[2]`, `r pub.r$rho_0.5$pe.3l$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[2])`) and aggregated dependencies $\beta$ = `r pub.r$rho_0.5$pe.a$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[2]`, `r pub.r$rho_0.5$pe.a$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[2])` provided non-significant evidence of publication bias that favored hypothesis-consistent shifts in participants’ responses. The bias-corrected overall effect size estimates with both 3LMA ($g$ = `r pub.r$rho_0.5$pe.3l$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[1]`, `r pub.r$rho_0.5$pe.3l$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[1])`) and aggregated dependencies ($g$ = `r pub.r$rho_0.5$pe.a$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[1]`, `r pub.r$rho_0.5$pe.a$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[1])`) did not significantly vary from zero. In other words, precision-effect tests failed to uncover evidence of publication bias, but also suggested that the overall effect size may not be robust if publication bias does exist. Further complicating matters is the unusual distribution of the funnel plots, especially in regards to two unusually large aggregated effect size estimates (see Figure \@ref(fig:funnel)).
+Overall, publication bias analyses were inconclusive. Both precision-effect tests with 3LMA[^7] ($\beta$ = `r pub.r$rho_0.5$pe.3l$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[2]`, `r pub.r$rho_0.5$pe.3l$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[2])`) and aggregated dependencies $\beta$ = `r pub.r$rho_0.5$pe.a$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[2]`, `r pub.r$rho_0.5$pe.a$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[2])` provided non-significant evidence of publication bias that favored hypothesis-consistent shifts in participants’ responses. The bias-corrected overall effect size estimates with both 3LMA ($g$ = `r pub.r$rho_0.5$pe.3l$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[1]`, `r pub.r$rho_0.5$pe.3l$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[1])`) and aggregated dependencies ($g$ = `r pub.r$rho_0.5$pe.a$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[1]`, `r pub.r$rho_0.5$pe.a$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[1])`) did not significantly vary from zero. In other words, precision-effect tests failed to uncover evidence of publication bias, but also suggested that the overall effect size may not be robust if publication bias does exist. Further complicating matters is the unusual distribution of the funnel plots, especially in regards to two unusually large aggregated effect size estimates (see Figure \@ref(fig:funnel)).
 
-[^8]: A reviewer suggested that we consider using cluster-robust methods for estimating variance-covariance matrices in precision-effect tests with 3LMA. Doing so widens the confidence intervals of the insignificant estimates of publication bias and the bias-correct overall effect size.
+[^7]: A reviewer suggested that we consider using cluster-robust methods for estimating variance-covariance matrices in precision-effect tests with 3LMA. Doing so widens the confidence intervals of the insignificant estimates of publication bias and the bias-correct overall effect size.
 
 Examining aggregated effect sizes using weight-function modeling – as opposed to precision effect tests – yields the opposite conclusion: better fit is achieved in a model where publication bias favored non-significant or hypothesis-inconsistent shifts in participants’ responses, $\chi^2$(1) = 6.50, $p$ = .01. The bias-corrected overall effect size was thus upward-adjusted, $g$ = 0.32, 95% CI [0.15, 0.49], $p$ \< .001.
 
@@ -1670,19 +1766,21 @@ Contrary to early advice by Orne [-@orne1969demand], we did not find that much c
 
 When our participants were more likely to misidentify the hypothesis described in study summaries, demand effects tended to be smaller. This may be taken as evidence in support of Rosnow and colleagues' proposed receptivity moderator. However, we failed to find evidence that ratings of motivation or opportunity to adjust responses significantly predicted demand effects. Although outside the scope of Rosnow and colleagues' framework, we also failed to find evidence that ratings of belief in the researcher's hypothesis significantly predicted demand effects.
 
-We currently lack a satisfying explanation for our results. One possibility is that demand characteristics are not driven by motivation, opportunity, and belief in the experimenter's hypothesis. However, we find this explanation unlikely given the face validity of those proposed mechanisms. A second possibility is that these mechanisms matter – but in a way that is more complex than we were able to capture in the present review. For example, @corneille2022sixty notes that there are outcomes that may seem outside of participants control but can actually be changed via imagination. Similarly, @coles2022fact notes that mechanisms discussed in research on placebo effects (e.g., conditioned responses) may create changes in participants' responses – even with they apparently have neither the motivation nor opportunity to adjust responses. The existence of alternative mechanisms may mean that motivation and opportunity have a relatively weak relationship with demand effects that we were not able to reliably detect in our meta-analysis. A third possibility, of course, is that our own methodological limitations inhibited our ability to detect the effects of these moderators. We discuss these limitations next.
+We currently lack a satisfying explanation for our results. One possibility is that demand characteristics are not driven by motivation, opportunity, and belief in the experimenter's hypothesis. However, we find this explanation unlikely given the face validity of those proposed mechanisms. Indeed, @rosnow1997people argued that opportunity was the least important mechanism because "...not many experimenters would design a study so that a participant would be *incapable* of responding to cues closely tied to the experimenter's own expectation." A second possibility is that these mechanisms are not as essential as Rosnow and colleagues expected. For example, @coles2022fact argued that demand characteristics may activate mechanisms described in research on placebo effects (e.g., conditioned responses). In doing so, it may create changes in participants' responses – even with they are not motivated for such effects to occur. A third possibility is that participants are not able to accurately reflect on these mechanisms. For example, @corneille2022sixty suggested that participants may not be aware that they were motivated to adjust their responses -- e.g., in cases of phenomenological control
+
+of course, is that our own methodological limitations inhibited our ability to detect the effects of these moderators. We discuss these limitations next.
 
 ## Limitations
 
 Our meta-analysis is, of course, not without limitations. It still remains unclear why participants were generally unable to predict and explain demand effects. Publication bias analyses diverged in the estimated direction, significance, and impact of publication bias. And it is unclear if our inclusion criteria were too narrow – or not narrow enough.
 
-[@orne1969demand] suggested that participants themselves may help researchers understand demand effects. At first glance, this assumption seems reasonable. Participants are capable of predicting a variety of effects in psychology when exposed to information about the study procedures [@corneille2023instruction] – and this very procedure is often used to raise concerns about demand characteristics [@bartels2019revisiting]. We, however, failed to find that similar procedures could be used to predict or explain demand effects. Yet, it is unclear whether this is a valid and important insight in itself -- or indicative of our own methodological shortcomings. Perhaps participants need to experience the study context first-hand [@orne1969demand]. Perhaps they need better measures of the psychological mechanisms that may underlie demand effects [@flake2020measurement]. And perhaps they are too different than the original participants to provide comparable insights at all [@gergen1973social].
+[@orne1969demand] suggested that participants themselves may help researchers understand demand effects. At first glance, this assumption seems reasonable. Participants are capable of predicting a variety of effects in psychology when exposed to information about the study procedures [@corneille2023instruction] – and this very procedure is often used to raise concerns about demand characteristics [@bartels2019revisiting]. We, however, failed to find that similar procedures could be used to predict or explain demand effects at the meta-analytic level. Yet, it is unclear whether this is a valid and important insight in itself -- or indicative of our own methodological shortcomings. For example, perhaps participants are too different than the original participants [@gergen1973social], perhaps they need to experience the study context first-hand [@orne1969demand], and perhaps they need better measures of the psychological mechanisms that may underlie demand effects [@flake2020measurement]. Given the low agreement between participants on the rated variables is indicative of the futility of averaging and studying such moderators at a meta-analytic level.
 
 Broad definitions of the demand characteristics construct presented us with yet another challenge. At its broadest, demand characteristics are defined as *any* cue that may impact participants' understanding of the purpose of the study, including instructions, rumors, and experimenter behavior [@orne1962social]. However, such a definition arguably creates a boundless conceptual space where any systematic change in a research design or setting might be considered a threat to scientific inferences. We focused our meta-analysis on a subset of the conceptual space that is more amenable to precise definition and study: explicit cues of the study hypothesis. Although we do not reject broader definitions of demand characteristics, we suspect that such broadening will only further deepen the mystery surrounding their effects.
 
-Even with our relatively narrow subset of the demand characteristics literature, commensurability was a challenge. Researchers have tested the effects of explicit hypothesis cues on a variety of outcomes, including hypnosis symptoms [e.g., @orne1964contribution], eating behavior [e.g., @kersbergen2019hypothesis], visual judgments [e.g., @durgin2012social], relationship satisfaction [e.g., @cramer2005effect], mood [e.g., @coles2022fact], policy support [e.g., @mummolo2019demand], test scores [e.g., @veitch1991demand], and so on. Researchers also varied in how they conducted their investigations – e.g., in whether they conducted their studies in-person [e.g., @mummolo2019demand] vs. online [e.g., @orne1964contribution], sampled students [e.g., @rose2014choice] vs. non-students [e.g., @terhune2006induction], and manipulated hypothesis cues within- [e.g., @martin2018attention] vs. between-subjects [e.g., @coles2022fact]. [^9] We generally failed to uncover evidence that such methodological differences explain a meaningful proportion of variability in demand effects. Nonetheless, it is possible that such a large number of [often unsystematic] differences between studies limits power to detect meaningful moderators in the demand characteristics literature.
+Even with our relatively narrow subset of the demand characteristics literature, commensurability was a challenge. Researchers have tested the effects of explicit hypothesis cues on a variety of outcomes, including hypnosis symptoms [e.g., @orne1964contribution], eating behavior [e.g., @kersbergen2019hypothesis], visual judgments [e.g., @durgin2012social], relationship satisfaction [e.g., @cramer2005effect], mood [e.g., @coles2022fact], policy support [e.g., @mummolo2019demand], test scores [e.g., @veitch1991demand], and so on. Researchers also varied in how they conducted their investigations – e.g., in whether they conducted their studies in-person [e.g., @mummolo2019demand] vs. online [e.g., @orne1964contribution], sampled students [e.g., @rose2014choice] vs. non-students [e.g., @terhune2006induction], and manipulated hypothesis cues within- [e.g., @martin2018attention] vs. between-subjects [e.g., @coles2022fact]. [^8] We generally failed to uncover evidence that such methodological differences explain a meaningful proportion of variability in demand effects. Nonetheless, it is possible that such a large number of [often unsystematic] differences between studies limits power to detect meaningful moderators in the demand characteristics literature.
 
-[^9]: Whether meta-analysts should combine effects from within and between-subjects design has sparked considerable debate [@morris2002combining]. We felt that combining such effects was justified given that (a) effect sizes were converted into a common metric using design-specific estimates of sampling variance, (b) sensitivity analyases of assumed within-subject correlations produced virtually no change in our overall effect size estimate, and (c) we did not detect significant differences between studies that manipulated explicit hypothesis cues within- vs. between-subjects. However, if this methodological decision eventually proves to be problematic, we suspect it won't change our conclusions: that demand effects are inferentially consequential, heterogeneous, and difficult-to-explain.
+[^8]: Whether meta-analysts should combine effects from within and between-subjects design has sparked considerable debate [@morris2002combining]. We felt that combining such effects was justified given that (a) effect sizes were converted into a common metric using design-specific estimates of sampling variance, (b) sensitivity analyases of assumed within-subject correlations produced virtually no change in our overall effect size estimate, and (c) we did not detect significant differences between studies that manipulated explicit hypothesis cues within- vs. between-subjects. However, if this methodological decision eventually proves to be problematic, we suspect it won't change our conclusions: that demand effects are inferentially consequential, heterogeneous, and difficult-to-explain.
 
 We do not deny the importance of these methodological limitations. Instead, we point out that they do little to change the conclusion we outline below.
 
