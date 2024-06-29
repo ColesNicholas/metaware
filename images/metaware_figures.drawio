@@ -1,4 +1,51 @@
-<mxfile host="Electron" modified="2024-06-07T22:25:02.378Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.8 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="npE9gnXy-nGOc7WaWEcb" version="24.4.8" type="device" pages="9">
+<mxfile host="Electron" modified="2024-06-29T18:48:43.804Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.5.3 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="sexw_yaADWLGdJjb6H9f" version="24.5.3" type="device" pages="10">
+  <diagram id="piW5OMK61M_fQfiwsTg8" name="PRISMA">
+    <mxGraphModel dx="1235" dy="731" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-1" value="Identification" style="rounded=0;whiteSpace=wrap;html=1;rotation=-90;fillColor=#9DC3E6;fontStyle=1;strokeColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="-20" y="160" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="FppYZfDL3XwRvYIJn-Vf-2" target="FppYZfDL3XwRvYIJn-Vf-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#333333;" edge="1" parent="1" source="FppYZfDL3XwRvYIJn-Vf-2" target="FppYZfDL3XwRvYIJn-Vf-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="FppYZfDL3XwRvYIJn-Vf-2" target="FppYZfDL3XwRvYIJn-Vf-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-2" value="&lt;p style=&quot;margin-bottom: 0in; line-height: normal;&quot; class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;font-size: 9pt; font-family: Arial, sans-serif;&quot; lang=&quot;EN-AU&quot;&gt;Records identified from:&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0in 0in 0in 14.2pt; line-height: normal;&quot; class=&quot;MsoNormal&quot;&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 9pt; font-family: Arial, sans-serif;&quot; lang=&quot;EN-AU&quot;&gt;PsycInfo (original search; n = 850)&lt;/span&gt;&lt;/li&gt;&lt;li&gt;PsycInfo (updated search; n = 29)&lt;/li&gt;&lt;li&gt;PsycInfo (expanded search; n = 572)&lt;/li&gt;&lt;li&gt;Open calls (n = 6)&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;rotation=0;align=left;spacingLeft=0;spacing=10;strokeColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="260" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-3" value="&lt;p style=&quot;margin-bottom:0in;line-height:normal&quot; class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;font-size: 9pt; font-family: Arial, sans-serif;&quot; lang=&quot;EN-AU&quot;&gt;No records removed before screening&lt;/span&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;rotation=0;align=left;spacingLeft=0;spacing=10;strokeColor=#333333;spacingBottom=13;" vertex="1" parent="1">
+          <mxGeometry x="380" y="120" width="460" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-5" value="Screening" style="rounded=0;whiteSpace=wrap;html=1;rotation=-90;fillColor=#9DC3E6;fontStyle=1;strokeColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="-130" y="430" width="340" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="FppYZfDL3XwRvYIJn-Vf-6" target="FppYZfDL3XwRvYIJn-Vf-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#333333;endArrow=block;endFill=1;" edge="1" parent="1" source="FppYZfDL3XwRvYIJn-Vf-6" target="FppYZfDL3XwRvYIJn-Vf-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-6" value="&lt;p style=&quot;margin-bottom:0in;line-height:normal&quot; class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;font-size: 9pt; font-family: Arial, sans-serif;&quot; lang=&quot;EN-AU&quot;&gt;Records&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-family: Arial, sans-serif; background-color: initial;&quot;&gt;simultaneously&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 9pt; font-family: Arial, sans-serif;&quot; lang=&quot;EN-AU&quot;&gt;screened and assessed for eligibility&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 9pt; font-family: Arial, sans-serif;&quot;&gt;(n = 1457)&lt;/span&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;rotation=0;align=left;spacingLeft=0;spacing=10;strokeColor=#333333;spacingBottom=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="280" width="260" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-10" value="&lt;p class=&quot;MsoNormal&quot; style=&quot;margin-bottom: 0in; line-height: normal;&quot;&gt;&lt;span lang=&quot;EN-AU&quot; style=&quot;font-size: 9pt;&quot;&gt;Records excluded (n = 1418):&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot; style=&quot;margin: 0in 0in 0in 14.2pt; line-height: normal;&quot;&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font&gt;Not primary research (&lt;/font&gt;n = 329)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;Demand cues not explicitly manipulated&amp;nbsp;&lt;span style=&quot;font-size: 7pt; line-height: 107%; font-family: Arial, sans-serif;&quot; lang=&quot;EN-AU&quot;&gt;–&lt;/span&gt;&amp;nbsp;or manipulated in confounded manner (n = 849)&lt;/li&gt;&lt;li&gt;Explicit demand cues do not specify the direction of anticipated effect (n = 3)&lt;/li&gt;&lt;li&gt;Researchers merely mearsued aweareness of the study purpose/hypothesis (n = 61)&lt;/li&gt;&lt;li&gt;Researchers did not explain the hypothesized effect of the IV on the DV&amp;nbsp;&lt;span style=&quot;font-size: 7pt; line-height: 9.98667px; font-family: Arial, sans-serif;&quot; lang=&quot;EN-AU&quot;&gt;–&amp;nbsp;&lt;/span&gt;or explained it to someone other than the participant (e.g., the person running the experiment; n = 136)&lt;/li&gt;&lt;li&gt;Clinical population (e.g., people with dementia) or intervention (e.g., drug) studies (n = 18)&lt;/li&gt;&lt;li&gt;Could not access record (n = 7)&lt;/li&gt;&lt;li&gt;Duplicate record (n = 7)&lt;/li&gt;&lt;li&gt;Dependent variable described in the manipulation was not measured (n = 4)&lt;/li&gt;&lt;li&gt;Could not extract enough information to compute an effect size (n = 4)&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;rotation=0;align=left;spacingLeft=0;spacing=10;strokeColor=#333333;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="380" y="280" width="460" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-13" value="Included" style="rounded=0;whiteSpace=wrap;html=1;rotation=-90;fillColor=#9DC3E6;fontStyle=1;strokeColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="-10" y="690" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FppYZfDL3XwRvYIJn-Vf-14" value="&lt;p style=&quot;margin-bottom:0in;line-height:normal&quot; class=&quot;MsoNormal&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;Papers included in review (n = 39)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin-bottom:0in;line-height:normal&quot; class=&quot;MsoNormal&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;Studies included in review (n = 54; 53 after excluding outlier)&lt;/font&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;rotation=0;align=left;spacingLeft=0;spacing=10;strokeColor=#333333;spacingBottom=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="660" width="260" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
   <diagram name="FrameworkFigure" id="fj6JEE7aAOzdSKQT0K79">
     <mxGraphModel dx="1034" dy="668" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>

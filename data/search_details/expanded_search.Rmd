@@ -90,11 +90,6 @@ DF$title %>%
 
 DF$title %>% duplicated %>% sum
 
-# remove duplicates
-# DF <- DF %>% 
-#   filter(!duplicated(title))
-#rm(DF.new, DF.orig)
-
 # export
 write.csv(DF,
           'metaware_EsData_raw_updated.csv',
