@@ -1,46 +1,56 @@
-DF <- read_xlsx(path = "data/metaware_EsData_raw.xlsx",
-                sheet = "records.screening",
-                na = c("N/A"))
+#----------------------------------------------
+# load libraries
+library("tidyverse")
+library("readxl")
 
-# check that the include numbers are correct
-DF$MW_include %>% 
+#----------------------------------------------
+# load screening data
+DF.screen <- 
+  read_xlsx(path = "data/metaware_EsData_raw.xlsx",
+            sheet = "records.screening",
+            na = c("N/A"))
+
+# load coding data
+DF.code <- 
+  read_xlsx(path = "data/metaware_EsData_raw.xlsx",
+            sheet = "coding",
+            na = c("N/A"))
+
+#----------------------------------------------
+# check that coding categories are correct
+DF.screen$MW_include %>% 
   unique()
 
-DF$MW_rationale %>% 
+DF.screen$MW_rationale %>% 
   unique()
 
-DF$NC_include %>% 
+DF.screen$NC_include %>% 
   unique()
 
-DF$NC_rationale %>% 
+DF.screen$NC_rationale %>% 
   unique()
 
-# check that NC didn't miss anything
-tmp <- DF %>% 
-  filter(MW_include == 1)
-
-tmp %>% 
+#----------------------------------------------
+# check that NC didn't miss any records that MW said were eligible
+DF.screen %>% 
+  filter(MW_include == 1) %>% 
   group_by(NC_include) %>% 
   summarise(n = n())
 
-# check that the number of records that NC said would be include actually matches how many were in there 
-DF %>% 
+# examine MW and NC cross-tabs (there should be a handful of double-coded records)
+table(DF.screen$MW_include, 
+      DF.screen$NC_include)
+
+#----------------------------------------------
+# check that number of eligible articles = number of included articles
+s <- DF.screen %>% 
   filter(NC_include == 1) %>% 
   nrow()
 
-D2F <- read_xlsx(path = "data/metaware_EsData_raw.xlsx",
-                sheet = "coding",
-                na = c("N/A"))
+c <- DF.code$name %>% 
+  unique %>%
+  length()
 
-D2F$name %>% unique %>% length
+s == c
 
-
-s <- DF %>% 
-  filter(NC_include == 1) %>% 
-  select(title) %>% 
-  arrange(title)
-
-c <- D2F$name %>% 
-  unique()
-
-s.c <- merge(s, c)
+rm(s, c)
