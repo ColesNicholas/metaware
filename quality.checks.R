@@ -54,3 +54,11 @@ c <- DF.code$name %>%
 s == c
 
 rm(s, c)
+
+#----------------------------------------------
+# check that a rationale was always provided for excluding records
+DF.screen %>% 
+  filter(is.na(MW_rationale),
+         is.na(NC_rationale)) %>% 
+  View()
+
