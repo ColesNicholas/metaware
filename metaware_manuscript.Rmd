@@ -168,11 +168,22 @@ r.unp <- DF.s %>%
   nrow()
 ```
 
-Our literature search strategy was initially developed in consultation with a librarian at (anonymous for peer review) and then later expanded based on reviewer feedback.
+```{r prisma.info, include = F}
+records.per.search <- DF.s %>% 
+  group_by(database) %>% 
+  summarise(n = n())
+```
 
-On January 12, 2022, we searched APA PsycInfo using broad search terms: "demand characteristics" OR "hypothesis awareness". On April 17, 2024, we repeated the search to identify records published after the initial search. At that time, we also expanded the search to include conceptually similar terms found in the appendix of Rosnow and Rosenthal's [-@rosnow1997people] book on experimental artifacts: “participant role” OR “demand effects” OR “good subject effect” OR “expectancy effect” OR “evaluative apprehension”. We also released a call for unpublished studies on the Society for Personality and Social Psychology Open Forum, Twitter, the Facebook Psychological Methods Discussion group, and the Facebook PsychMAP group.
+Figure (\@ref(fig:prisma)) summarizes our literature search and screening, which was initially developed in consultation with a librarian at (anonymous for peer review) and then later expanded based on reviewer feedback.
+
+On January 12, 2022, we searched APA PsycInfo using broad search terms: "demand characteristics" OR "hypothesis awareness" (n = `r records.per.search[1,2]` records identified). On April 17, 2024, we repeated the search to identify records published after the initial search (n = `r records.per.search[4,2]` records identified). At that time, we also expanded the search to include conceptually similar terms found in the appendix of Rosnow and Rosenthal's [-@rosnow1997people] book on experimental artifacts: “participant role” OR “demand effects” OR “good subject effect” OR “expectancy effect” OR “evaluative apprehension” (n = `r records.per.search[3,2]` records identified). We also released a call for unpublished studies on the Society for Personality and Social Psychology Open Forum, Twitter, the Facebook Psychological Methods Discussion group, and the Facebook PsychMAP group (n = `r``records.per.search[2,2]` records identified).
 
 Our search did not have language restrictions and went as far back as 1840, which yielded `r r.pub` published and `r r.unp` unpublished records.
+
+```{r prisma, fig.cap = "PRISMA-style flowchart illustrating the identification, screening, and selection of studies."}
+knitr::include_graphics("images/metaware_PRISMA.png")
+
+```
 
 ### Screening
 
@@ -198,7 +209,7 @@ outlier.es <- DF.es %>%
   round(2)
 ```
 
-To be eligible for inclusion in the meta-analysis, the following criteria must have been met:
+Put simply, records must have met the following criteria in order to be eligible for inclusion in the meta-analysis:
 
 -   The researcher manipulated what participants were told about the effect of an independent variable on a dependent variable.[^1] In most cases, the effect of the independent variable was described explicitly, but there were some included studies where it was strongly implied.
 
@@ -212,6 +223,8 @@ To be eligible for inclusion in the meta-analysis, the following criteria must h
 
 [^2]: After completing the meta-analysis, we realized we included one record with a clinical population: patients who suffered pulmonary or cerebrovascular accidents [@lana1971subject]. Excluding their results does not change the general pattern of results.
 
+Figure (\@ref(fig:prisma)) more thoroughly summarizes exclusion criteria. Coderes were asked to choose only one option in instances where many criteria applied.
+
 N. C. and M. W. screened records independently, reviewed potentially relevant records together, and worked together to code the information for moderator analyses and effect size computations. Any disagreements were resolved through discussion. N. C. also coded the quality of each record included in the final synthesis (described later). In total, `r num.s` studies from `r num.p` records were eligible for inclusion. However, one record [@allen2012demand] was removed because the information provided led to implausibly large effect size estimates (e.g., $d$ = `r outlier.es`).
 
 ```{r clean.env.1, include = F}
@@ -222,7 +235,7 @@ DF.es <- DF.es %>%
          id.es = factor(id.es))
 
 # clean environment
-rm(DF.s, r.pub, r.unp, num.s, num.p, outlier.es)
+rm(DF.s, r.pub, r.unp, num.s, num.p, outlier.es, records.per.search)
 ```
 
 ### Effect size index
@@ -515,7 +528,7 @@ dist.max <- dist %>%
 rm(dist)
 ```
 
-In total, we extracted `r overall$k` effect sizes from `r overall$n` studies from between the years `r DF.es$year %>% min()` and `r DF.es$year %>% max()` (*M* = `r DF.es$year %>% mean() round(0)`, *SD* = `r DF.es$year %>% sd())`. `r DF.es %>% filter(published == 'no') %>% reframe(n.study = unique(id.study)) %>% nrow()` of these studies were unpublished. Rating of reporting quality were modest (*M* *=* `r DF.es$report %>% mean(na.rm = T) %>% round(2)`, *SD* = `r DF.es$report %>% sd(na.rm = T) %>% round(2)`); ratings of internal validity were high (*M* *=* `r DF.es$internal %>% mean(na.rm = T) %>% round(2)`, *SD* = `r DF.es$internal %>% sd(na.rm = T) %>% round(2)`); and ratings of external validity were consistently `r DF.es$external %>% mean(na.rm = T) %>% round(2)`. The low external validity scores were driven by the reliance on non-representative sampling methods, an unfortunately common limitation in experimental psychology [@frank2023experimentology]. Quality ratings were not associated with observed effect sizes and are not discussed further.
+In total, we extracted `r overall$k` effect sizes from `r overall$n` studies from between the years `r DF.es$year %>% min()` and `r DF.es$year %>% max()` (*M* = `r DF.es$year %>% mean() %>% round(0)`, *SD* = `r DF.es$year %>% sd()`). `r DF.es %>% filter(published == 'no') %>% reframe(n.study = unique(id.study)) %>% nrow()` of these studies were unpublished. Rating of reporting quality were modest (*M* *=* `r DF.es$report %>% mean(na.rm = T) %>% round(2)`, *SD* = `r DF.es$report %>% sd(na.rm = T) %>% round(2)`); ratings of internal validity were high (*M* *=* `r DF.es$internal %>% mean(na.rm = T) %>% round(2)`, *SD* = `r DF.es$internal %>% sd(na.rm = T) %>% round(2)`); and ratings of external validity were consistently `r DF.es$external %>% mean(na.rm = T) %>% round(2)`. The low external validity scores were driven by the reliance on non-representative sampling methods, an unfortunately common limitation in experimental psychology [@frank2023experimentology]. Quality ratings were not associated with observed effect sizes and are not discussed further.
 
 Most effect sizes represented a positive demand compared to a control group (*k* = `r DF.es %>% filter(ref.type == 'cvp') %>% nrow()`), negative demand to a control group (*k* = `r DF.es %>% filter(ref.type == 'nvc') %>% nrow()`), or positive demand to negative demand (*k* = `r DF.es %>% filter(ref.type == 'pvn') %>% nrow()`). Occasionally, a nil demand condition was compared to a control (*k* = `r DF.es %>% filter(ref.type == 'cvz') %>% nrow()`) or positive demand group (*k* = `r DF.es %>% filter(ref.type == 'pvz') %>% nrow()`). More broadly, effect sizes tended to compare one demand condition to a control group (*k* = `r DF.es %>% filter(ref.r == "single") %>% nrow()`) – as opposed to a group exposed to a different type of explicit demand characteristics (*k* = `r DF.es %>% filter(ref.r == "double") %>% nrow()`). Regardless of what type of demand manipulation was used, it was more common to manipulate the cues between (*k* = `r DF.es %>% filter(design == "between") %>% nrow()`) vs. within subjects (*k* = `r DF.es %>% filter(design == "within") %>% nrow()`).
 
