@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-06-29T18:48:43.804Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.5.3 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="sexw_yaADWLGdJjb6H9f" version="24.5.3" type="device" pages="10">
+<mxfile host="Electron" modified="2024-07-01T16:46:01.703Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.5.3 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="vVQNC5vUdZ3sgRbGoOlH" version="24.5.3" type="device" pages="10">
   <diagram id="piW5OMK61M_fQfiwsTg8" name="PRISMA">
     <mxGraphModel dx="1235" dy="731" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -642,26 +642,23 @@
     </mxGraphModel>
   </diagram>
   <diagram name="VignetteFigure" id="zAT21sjI2VfNxCTfOIdL">
-    <mxGraphModel dx="1418" dy="940" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1050" dy="621" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="HEZQVVWsh_5-5IZxta0F-0" />
         <mxCell id="HEZQVVWsh_5-5IZxta0F-1" parent="HEZQVVWsh_5-5IZxta0F-0" />
         <mxCell id="HEZQVVWsh_5-5IZxta0F-2" value="" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;strokeColor=none;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
           <mxGeometry x="30" y="150" width="750" height="470" as="geometry" />
         </mxCell>
-        <mxCell id="RH5vbMcviN5znLqDzlZ9-2" value="&lt;i&gt;Spatial reasoning&lt;/i&gt;" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#1A1A1A;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=1;arcSize=18;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
-          <mxGeometry x="10" y="310" width="180" height="40" as="geometry" />
+        <mxCell id="RH5vbMcviN5znLqDzlZ9-2" value="&lt;i&gt;Spatial reasoning&lt;/i&gt;" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#1A1A1A;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=0;arcSize=18;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
+          <mxGeometry x="10.36999999999999" y="310" width="180" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="HEZQVVWsh_5-5IZxta0F-4" value="" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#000000;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=0;arcSize=17;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
-          <mxGeometry x="87.15" y="404.49" width="26.71" height="41.01" as="geometry" />
-        </mxCell>
-        <mxCell id="HEZQVVWsh_5-5IZxta0F-6" value="&lt;i&gt;Verbal reasoning&lt;/i&gt;" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#1A1A1A;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=1;arcSize=19;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
-          <mxGeometry x="10" y="490" width="180" height="40" as="geometry" />
+        <mxCell id="HEZQVVWsh_5-5IZxta0F-6" value="&lt;i&gt;Verbal reasoning&lt;/i&gt;" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#1A1A1A;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=0;arcSize=19;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
+          <mxGeometry x="10.370000000000005" y="490" width="180" height="40" as="geometry" />
         </mxCell>
         <mxCell id="HEZQVVWsh_5-5IZxta0F-5" value="&lt;u&gt;Negative demand&lt;/u&gt;" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#1A1A1A;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;fontStyle=1;verticalAlign=middle;rounded=1;arcSize=18;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
           <mxGeometry x="440" y="200" width="320" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="HEZQVVWsh_5-5IZxta0F-7" value="&lt;u&gt;Positive demand&lt;/u&gt;" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;fontColor=#1A1A1A;fontStyle=1;verticalAlign=middle;rounded=1;arcSize=21;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
+        <mxCell id="HEZQVVWsh_5-5IZxta0F-7" value="&lt;u&gt;Positive demand&lt;/u&gt;" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;fontColor=#1A1A1A;fontStyle=1;verticalAlign=middle;rounded=0;arcSize=21;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
           <mxGeometry x="120" y="200" width="320" height="40" as="geometry" />
         </mxCell>
         <mxCell id="HEZQVVWsh_5-5IZxta0F-8" value="&lt;u&gt;Demand characteristics condition&lt;/u&gt;" style="text;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;fontColor=#1A1A1A;fontStyle=1;verticalAlign=middle;fontSize=14;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
@@ -676,14 +673,8 @@
         <mxCell id="HEZQVVWsh_5-5IZxta0F-12" value="&lt;p class=&quot;MsoNormal&quot;&gt;Imagine that you are a university student completing an in-person study as a volunteer or for course credit.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;The researcher informs you that they are interested in the &lt;u&gt;&lt;b&gt;deleterious effects&lt;/b&gt; &lt;/u&gt;of listening to Mozart on test-taking capabilities.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;While Mozart music is played, you are then asked to complete a &lt;b style=&quot;&quot;&gt;&lt;i style=&quot;&quot;&gt;test measuring verbal reasoning&lt;/i&gt;&lt;/b&gt;, wherein you are asked to fill in the first and last word of example sentences.&lt;/p&gt;" style="text;whiteSpace=wrap;html=1;spacingLeft=10;spacingRight=10;spacing=0;strokeColor=none;verticalAlign=top;horizontal=1;spacingTop=0;fontColor=#333333;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
           <mxGeometry x="440" y="420" width="320" height="180" as="geometry" />
         </mxCell>
-        <mxCell id="RH5vbMcviN5znLqDzlZ9-3" value="" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#000000;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=0;arcSize=17;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
-          <mxGeometry x="98.37" y="229.38" width="10" height="32.25" as="geometry" />
-        </mxCell>
         <mxCell id="HEZQVVWsh_5-5IZxta0F-11" value="&lt;p class=&quot;MsoNormal&quot;&gt;Imagine that you are a university student completing an in-person study as a volunteer or for course credit.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;The researcher informs you that they are interested in the &lt;u&gt;&lt;b&gt;beneficial effects&lt;/b&gt;&lt;/u&gt; of listening to Mozart on test-taking capabilities.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;While Mozart music is played, you are then asked to complete a &lt;b style=&quot;&quot;&gt;&lt;i style=&quot;&quot;&gt;test measuring verbal reasoning&lt;/i&gt;&lt;/b&gt;, wherein you are asked to fill in the first and last word of example sentences.&lt;/p&gt;" style="text;whiteSpace=wrap;html=1;spacingLeft=10;spacingRight=10;spacing=0;strokeColor=#AFAFAF;verticalAlign=top;horizontal=1;spacingTop=0;fillColor=default;fontColor=#333333;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
           <mxGeometry x="120" y="420" width="320" height="180" as="geometry" />
-        </mxCell>
-        <mxCell id="RH5vbMcviN5znLqDzlZ9-5" value="" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#000000;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=0;arcSize=17;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
-          <mxGeometry x="98.37" y="579" width="10" height="32.25" as="geometry" />
         </mxCell>
         <mxCell id="HEZQVVWsh_5-5IZxta0F-3" value="&lt;p class=&quot;MsoNormal&quot;&gt;Imagine that you are a university student completing an in-person study as a volunteer or for course credit.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;The researcher informs you that they are interested in the &lt;b&gt;&lt;u&gt;beneficial effects&lt;/u&gt; &lt;/b&gt;of listening to Mozart on test-taking capabilities.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;While Mozart music is played, you are then asked to complete a &lt;b style=&quot;&quot;&gt;&lt;i style=&quot;&quot;&gt;test measuring spatial reasoning&lt;/i&gt;&lt;/b&gt;, wherein you see unfolding shapes and guess the corresponding folded pattern.&lt;/p&gt;" style="text;whiteSpace=wrap;html=1;spacingLeft=10;spacingRight=10;spacing=0;strokeColor=#AFAFAF;verticalAlign=top;horizontal=1;spacingTop=0;fillColor=default;fontColor=#333333;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
           <mxGeometry x="120" y="240" width="320" height="180" as="geometry" />
@@ -694,22 +685,13 @@
             <mxPoint x="120" y="420" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="uLg3s1LSUtIXWb01ceHq-5" value="" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#000000;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=0;arcSize=17;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
-          <mxGeometry x="421.73" y="183.45" width="40.53" height="73" as="geometry" />
-        </mxCell>
         <mxCell id="uLg3s1LSUtIXWb01ceHq-2" value="" style="endArrow=none;html=1;rounded=1;strokeColor=#AFAFAF;fontColor=#FFFFFF;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" parent="HEZQVVWsh_5-5IZxta0F-1" source="HEZQVVWsh_5-5IZxta0F-5" target="HEZQVVWsh_5-5IZxta0F-3" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="160" y="280" as="sourcePoint" />
             <mxPoint x="270" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="uLg3s1LSUtIXWb01ceHq-4" value="" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#000000;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=0;arcSize=17;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
-          <mxGeometry x="131" y="219" width="10" height="32.25" as="geometry" />
-        </mxCell>
-        <mxCell id="uLg3s1LSUtIXWb01ceHq-8" value="" style="text;whiteSpace=wrap;html=1;fillColor=#F2F2F2;fontColor=#000000;strokeColor=none;spacingLeft=5;spacingRight=2;spacing=5;align=center;rotation=-90;fontStyle=1;verticalAlign=middle;rounded=0;arcSize=17;" parent="HEZQVVWsh_5-5IZxta0F-1" vertex="1">
-          <mxGeometry x="739" y="219" width="10" height="32.25" as="geometry" />
-        </mxCell>
-        <mxCell id="RH5vbMcviN5znLqDzlZ9-1" value="" style="endArrow=none;html=1;rounded=1;strokeColor=#AFAFAF;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="HEZQVVWsh_5-5IZxta0F-1" source="HEZQVVWsh_5-5IZxta0F-10" target="HEZQVVWsh_5-5IZxta0F-5" edge="1">
+        <mxCell id="RH5vbMcviN5znLqDzlZ9-1" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#AFAFAF;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;curved=0;" parent="HEZQVVWsh_5-5IZxta0F-1" source="HEZQVVWsh_5-5IZxta0F-10" target="HEZQVVWsh_5-5IZxta0F-5" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="120" y="240" as="sourcePoint" />
             <mxPoint x="170" y="190" as="targetPoint" />
@@ -721,7 +703,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="uLg3s1LSUtIXWb01ceHq-1" value="" style="endArrow=none;html=1;rounded=1;strokeColor=#AFAFAF;fontColor=#FFFFFF;entryX=1;entryY=1;entryDx=0;entryDy=0;" parent="HEZQVVWsh_5-5IZxta0F-1" target="HEZQVVWsh_5-5IZxta0F-5" edge="1">
+        <mxCell id="uLg3s1LSUtIXWb01ceHq-1" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#AFAFAF;fontColor=#FFFFFF;entryX=1;entryY=1;entryDx=0;entryDy=0;curved=0;" parent="HEZQVVWsh_5-5IZxta0F-1" target="HEZQVVWsh_5-5IZxta0F-5" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="120" y="240" as="sourcePoint" />
             <mxPoint x="260" y="270" as="targetPoint" />
