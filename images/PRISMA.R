@@ -2,17 +2,21 @@
 # load libraries
 library("tidyverse")
 library("readxl")
+library("here")
+
+# specify directory
+i_am("images/PRISMA.R")
 
 #----------------------------------------------
 # load screening data
 DF.screen <- 
-  read_xlsx(path = "data/metaware_EsData_raw.xlsx",
+  read_xlsx(path = here("data/metaware_EsData_raw.xlsx"),
             sheet = "records.screening",
             na = c("N/A"))
 
 # load coding data
 DF.code <- 
-  read_xlsx(path = "data/metaware_EsData_raw.xlsx",
+  read_xlsx(path = here("data/metaware_EsData_raw.xlsx"),
             sheet = "coding",
             na = c("N/A"))
 
@@ -96,6 +100,6 @@ DF.code$id %>%
   unique %>%
   length()
 
-# number of effect sizes'
+# number of effect sizes
 DF.code %>% 
   nrow

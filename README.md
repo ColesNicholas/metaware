@@ -2,16 +2,17 @@
 - **metaware_manuscript.Rmd**: RMarkdown version of manuscript
 - **metaware_manuscript.docx**: Word version of manuscript (knitted from metaware_manuscript.Rmd)
 - **r-references.bib**: List of manuscript references
-- **metaware_DataProcessing.Rmd**: R code for processing the effect size (metaware_EsData_raw.xlsx) and survey (metaware_SurvData_raw.csv) data. Produces clean copies of the effect size data (metaware_meta_clean.csv) and replication study data (metaware_replication_clean.csv) and vignette data (metaware_vignette_clean.csv)
+- **metaware_DataProcessing.Rmd**: R code for processing the effect size (metaware_EsData_raw.xlsx) and survey (metaware_SurvData_raw.csv) data. Produces clean copies of the effect size data (metaware_meta_clean.csv) and replication study data (metaware_replication_clean.csv) and vignette data (metaware_vignette_clean.csv). Also exports vignette-specific averages of participant ratings (surv.sum.csv) and aggregated estimates of the reliability of these ratings (vig.surv1.rel.rds and vis.gusrfull.el.rds)
 - **metaware_DataProcessingSens.Rmd**: R code that runs metaware_EsProcessing.Rmd with different assumed correlations (used for sensitivity analyses in metaware_manuscript.Rmd)
 - **metaware_FileOrganizationHelper.png**: Image explaining how the most essential files interface in order to create the final manuscript
 - **README.md**: Readme file
-- **sessionInfo.txt**: sessionInfo for the R code used in the project.
+- **sessionInfo.txt**: sessionInfo for the R code used in the project
 
 ## data folder
 - **metaware_csv_codebooks.xlsx**: contains codebooks for every .csv file used in this project
-- **metaware_EsData_raw.xlsx**: contains information for record screening and effect size/moderator coding
+- **metaware_EsData_raw.xlsx**: contains information for record screening, effect size/moderator, and quality coding
 - **metaware_SurvData_raw.csv**: contains responses to a survey where participants (1) reviewed vignettes from the meta-analysis, and (2) completed a close replication of a demand characteristics study
+- **metaware_SurvData2_raw.csv**: contains responses to a follow-up survey where participants reviewed vignettes from the meta-analysis
 - **metaware_meta_clean.csv**: cleaned data for meta-analysis
 - **metaware_replication_clean.csv**: contains responses to the close replication of a demand characteristic study
 
@@ -22,10 +23,16 @@ Contains copies of metaware_data_clean.csv where different correlations were ass
 Contains a variety of images that are auto-saved when metaware_manuscript.Rmd is knitted.
 
 ## images folder
-- **metaware_figures.drawio**: Drawio program file used to create a few manuscript figures (described below)
-- **metaware_framework.png**: Image showing frameworks for conceptualizing demand effects
-- **metaware_mods.pn**g: Image showing how motivation, opportunity, and belief scores were summed
+- **metaware_figures.drawio**: Drawio program file used to create a couple manuscript figures (described below)
+- **metaware_PRISMA.png** PRISMA flowchart showing literature search details
 - **metaware_vigs.png**: Image showing how vignettes were created
+- **PRISMA.R** R file used to compile information for the PRISMA flowchart
+
+## output folder
+Contains a few pieces of useful output
+-**surv.sum.csv**: vignette-specific (vig) averages of the extent to which participants correctly identified the communicated hypothesis (m.att), indicated that they would be motivated (m.mot) and able (m.opp) to adjust responses, believed the hypothesized effect would occur (m.bel), and predicted that other participants would respond to the demand cues  (m.pre)
+-**vig.surv1.rel.rds**: List of intraclass correlation values for participant ratings of the extent to which they would be motivated (mot) and able (opp) to adjust responses, believed the hypothesized effect would occur (bel), and predicted that other participants would respond to the demand cues (pre). Values are only for participants who completed the first wave of data collection
+-**vig.survfull.rel.rds**: Similar file to vig.surv1.rel.rds -- except it includes data from all participants
 
 ## admin folder
 Contains various files used for project admin
@@ -41,15 +48,26 @@ Contains various files used for project admin
 ### prereg folder
 Contains copies of pre-registered analysis plan in .docx and .pdf format
 
+### search_details
+- **metaware_OriginalSearch.xls**: exported results for original literature search
+- **metaware_EsData_raw_041724.xlsx**: backup of the raw meta-analysis data from 041724 -- i.e., before an expanded search was performed based on reviewer feedback. This file contains a number of errors that were later fixed (e.g., lack of screening labels), but is retained for record keeping.
+- **metaware_ExpandedSearch_OldTerms_041724.xls**: exported results from expanded literature search, using the same terms as the original literature search
+- **metaware_ExpandedSearch_OldTerms_041724.xls**: exported results from expanded literature search, using the same terms as the original literature search
+- **metaware_ExpandedSearch_NewTerms_041724.xls**: exported results from expanded literature search, using a new set of search terms
+- **metaware_EsData_raw_updated.csv**: Updated literature search results. After extensive screening and coding, this file eventually becomes metaware_ESData.raw.xlsx (located in the data folder)
+
 ### survey folder
-Contains copy of vignette survey and replication of demand study in .docx and .qsf (Qualtrics) format
+Contains copy of vignette survey and replication of demand study in .docx and .qsf (Qualtrics) format.
+- **metaware_survey1**: original survey where participants (1) reviewed vignettes from the meta-analysis, and (2) completed a close replication of a demand characteristics study
+- **metaware_survey2**: follow-up survey with an additional set of participants who only reviewed vignettes from the meta-analysis
 
 ### unpublished data folder
-Contains copies of files that we used to extract unpublished information about effect sizes.
+Contains a list of files that we used to extract unpublished information about effect sizes. List may be somewhat incomplete due to substandard file management, but we organized what we could find
 
 ### vig folder
 - **metaware_CombineVigs.Rmd**: File used to combine information about vignettes into a single csv (metaware_VigCombined.csv)
 - **metaware_VigCombined.csv**: Contains vignette information used in the survey
+- **metaware_AssessVigProgress.Rmd**: File used to plan sample size for second wave of vignette data collection
 
 ##### vignettes subfolder
 Contains a text file for each study, which contains the information needed to make the vignettes. 
