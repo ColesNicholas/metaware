@@ -9,7 +9,7 @@
 - **sessionInfo.txt**: sessionInfo for the R code used in the project
 
 ## data folder
-- **metaware_csv_codebooks.xlsx**: contains codebooks for every .csv file used in this project
+- **metaware_csv_codebooks.xlsx**: contains codebooks for every major .csv file used in this project
 - **metaware_EsData_raw.xlsx**: contains information for record screening, effect size/moderator, and quality coding
 - **metaware_SurvData_raw.csv**: contains responses to a survey where participants (1) reviewed vignettes from the meta-analysis, and (2) completed a close replication of a demand characteristics study
 - **metaware_SurvData2_raw.csv**: contains responses to a follow-up survey where participants reviewed vignettes from the meta-analysis
