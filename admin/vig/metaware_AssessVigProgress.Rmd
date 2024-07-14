@@ -8,6 +8,8 @@ On May 29, 2024, we began preparing to collect additional data using our vignett
 
 The main goal of this follow-up data collection effort is to increase and equalize the number of participants who viewed each vignette. As shown below, our first batch of data collection revealed that the ratings are not highly reliable across participants. This first batch also revealed that the Qualtrics randomization function did not force equal cell counts, leading to large discrepancies in the number of participants who viewed each vignette.
 
+This code ultimately exports vignette-specific sample sizes and estimates of how many more observations we need to achieve a 95% CI width of 1.
+
 # Prep environment
 ```{r}
 # clean environment
@@ -45,7 +47,7 @@ DF.surv <- read_csv(file = here("data/metaware_SurvData_raw.csv")) %>%
   select(`1_awr` : `119_opp`, ss) %>% 
   
   # extract vignette identifier from the first row of data
-  # note: I warned you the data structure is awkward
+  # note: data structure is awkward
   mutate_all(~if_else(condition = grepl("#", .),
                       true = substr(x = .,
                                     start = 2,
@@ -88,21 +90,19 @@ DF.surv <- DF.surv %>%
             as.numeric)
 ```
 
-
-## Examine reliability of ratings
-### Nicholas' approach (calculate ICC via mixed-effect model)
+## Examine reliability of ratings (ICC via mixed-effect models)
 ```{r}
-# mot icc: .24 (new = .23)
+# mot icc: .24
 lmer(mot ~ 1 + (1 | ss) + (1 | vig),
      data = DF.surv) %>% 
   performance::icc(by_group = T)
 
-# opp icc: .21 (new .23)
+# opp icc: .21
 lmer(opp ~ 1 + (1 | ss) + (1 | vig),
      data = DF.surv) %>% 
   performance::icc(by_group = T)
 
-# bel icc: .15 (new = .16)
+# bel icc: .15
 lmer(bel ~ 1 + (1 | ss) + (1 | vig),
      data = DF.surv)  %>% 
   performance::icc(by_group = T)
@@ -128,7 +128,7 @@ sum(sample$needed_n) / 10  #  divide by 10 because each subject views 10 vignett
 
 ## Export information
 ```{r}
-# to maintain ordering, connect sample with DF. surv
+# to maintain ordering, connect sample with DF.surv
 sample.planning <- DF.surv %>% 
   # get one row per vignette
   distinct(vig) %>% 
@@ -142,4 +142,3 @@ write.csv(sample.planning,
           "metaware_VigSuppSamplePlanning.csv",
           row.names = F)
 ```
-

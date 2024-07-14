@@ -7,10 +7,12 @@ editor_options:
 This code processes and merges:
 1. metaware_ESData_raw.xlsx: contains information about each study in the meta-analysis (as well as statistics needed to calculate Cohen's d)
 
-2. metaware_SurvData_raw.csv: contains ratings of vignettes describing studies in the meta-analysis. Also contains ratings from a replication of Coles et al. 2022.
+2. metaware_SurvData_raw.csv and metaware_SurvData2_raw.csv: contains ratings of vignettes describing studies in the meta-analysis. metaware_SurvData_raw.csv also contains ratings from a replication of Coles et al., 2022.
+
+The code also calculates and exports ICC scores for participant ratings for metaware_SurvData_raw.csv (vig.surv1.rel.rds) and metaware_SurvData2_raw.csv (vig.survfull.rel.rds)
 
 # Prep environment
-```{r setup and load packages, include = FALSE}
+```{r setup and load packages, include = F}
 # load libraries
 library("tidyverse")
 library("readxl")
@@ -19,7 +21,7 @@ library("lme4")
 ```
 
 # Open and clean metaware_ESData_raw.xlsx
-```{r open/clean data, message = FALSE, warning = FALSE}
+```{r open/clean data, message = F, warning = F}
 # import data
 DF <- read_xlsx(path = "data/metaware_EsData_raw.xlsx",
                 sheet = "coding",
@@ -325,7 +327,7 @@ DF <- DF %>%
 
 ## Convert to Hedge's g (reviewer suggestion)
 Formulas in Section 1.1. of this link: https://www.campbellcollaboration.org/escalc/equations.php
-```{r}
+```{r convert to g}
 DF <- DF %>% 
   rowwise() %>% 
   mutate(j = 1 - (3 / ((4 * (n.1  + n.2 - 2)) - 1)),
@@ -336,7 +338,7 @@ DF <- DF %>%
 ```
 
 ## Calculate 95% confidence intervals
-```{r}
+```{r compute 95% CI}
 DF <- DF %>% 
   rowwise() %>% 
   mutate(se = sqrt(es.var),
@@ -347,7 +349,7 @@ DF <- DF %>%
 ```
 
 ## Open, process, and merge quality ratings
-```{r}
+```{r open quality ratings}
 qual <- 
   # open data
   read_xlsx(path = "data/metaware_EsData_raw.xlsx",
@@ -381,7 +383,7 @@ rm(qual)
 ```
 
 ## Fix columns 
-```{r}
+```{r fix columns}
 DF <- DF %>% 
   
   # where appropriate, convert variables to factors
@@ -402,7 +404,7 @@ metaware_SurvData_raw.csv contains vignette rating data (as well as data from a 
 This part of the code focuses only on the vignette rating data. This part of the dataset is structured awkwardly, so it warrants its own data processing code.
 
 By the end of the code chunk, we will have one row for each participants' rating of each vignette (i.e., very long data)
-```{r}
+```{r open and process vig survey 1}
 # import data
 DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>%
   
@@ -424,7 +426,7 @@ DF.surv <- read_csv(file = "data/metaware_SurvData_raw.csv") %>%
   select(`1_awr` : `119_opp`, ss) %>% 
   
   # extract vignette identifier from the first row of data
-  # note: I warned you the data structure is awkward
+  # note: this is being done because the data structure is awkward
   mutate_all(~if_else(condition = grepl("#", .),
                       true = substr(x = .,
                                     start = 2,
@@ -468,7 +470,7 @@ DF.surv <- DF.surv %>%
 ```
 
 ### Calculate reliability statistics
-```{r}
+```{r vig surv 1 reliability}
 # create temporary dataset with only completed ratings
 tmp.DF <- DF.surv %>% 
   filter(!is.na(mot),
@@ -507,10 +509,9 @@ list(mot = mot.icc,
 rm(tmp.DF, mot.icc, opp.icc, pre.icc, bel.icc)
 ```
 
-
 ## Vignette survey 2
 metaware_SurvData2_raw.csv contains vignette rating data only
-```{r}
+```{r open and process vig survey 2}
 # import data
 DF.surv2 <- read_csv(file = "data/metaware_SurvData2_raw.csv") %>%
   
@@ -533,7 +534,7 @@ DF.surv2 <- read_csv(file = "data/metaware_SurvData2_raw.csv") %>%
   select(`1_awr` : `121_opp`, ss) %>% 
   
   # extract vignette identifier from the first row of data
-  # note: I warned you the data structure is awkward
+  # note: data structure is awkward
   mutate_all(~if_else(condition = grepl("#", .),
                       true = substr(x = .,
                                     start = 2,
@@ -581,14 +582,14 @@ DF.surv2 <- DF.surv2 %>%
 ```
 
 ## Combine vignette surveys
-```{r}
+```{r combine vig surveys}
 DF.surv <- rbind(DF.surv, DF.surv2)
 
 rm(DF.surv2)
 ```
 
 ### Calculate reliability statistics
-```{r}
+```{r combined survey reliability}
 # create temporary dataset with only completed ratings
 tmp.DF <- DF.surv %>% 
   filter(!is.na(mot),
@@ -631,7 +632,7 @@ rm(tmp.DF, mot.icc, opp.icc, pre.icc, bel.icc)
 Specify whether participants correctly identified the communicated hypothesis
 
 Note: participants either read about a positive (pos), negative (neg), or nil (nil) researcher hypothesis. If they correctly understood the communicated hypothesis, their awr rating should be 1, 2, and 3 for pos, neg, and nil respectively
-```{r}
+```{r process attention checks}
 DF.surv <- DF.surv %>% 
   
   # identify whether the researcher hypothesis was pos, neg, or nil
@@ -669,7 +670,7 @@ DF.surv[DF.surv$vig == "28_p_dis" &
 ```
 
 [optional] if you would like to examine the attention check data, the code below is useful
-```{r eval = F}
+```{r inspect attention checks, eval = F}
 # proportion of participants who passed the attention check
 DF.surv %>%
   summarise(m = mean(att.chk,
@@ -693,8 +694,8 @@ DF.surv %>%
 ```
 
 ## Calculate survey summary statistics
-For each vignette, determine the proportion of participants who passed the attentino check. Then, remove participants who failed attention checks.
-```{r}
+For each vignette, determine the proportion of participants who passed the attention check. Then, remove participants who failed attention checks.
+```{r remove failed attention checks}
 surv.att <- DF.surv %>% 
   group_by(vig) %>% 
   summarise(m.att = mean(att.chk,
@@ -709,7 +710,7 @@ For each vignette, we want the average of participants ratings of the extent to 
 2. Have the opportunity to adjust their responses (m.opp)
 3. Believe the communicated hypothesis (m.bel)
 4. Predict that others will adjust their responses to fit the hypothesis (m.pre)
-```{r}
+```{r calculate vignette-specific summaries}
 surv.sum <- DF.surv %>% 
   group_by(vig) %>% 
   summarise(m.mot = mean(mot, na.rm = T),
@@ -735,7 +736,7 @@ write.csv(x = surv.sum,
 
 # Join the summary statistics (surv.sum) to the effect size dataframe (DF)
 Note: some effect sizes involved a comparison between two demand characteristic manipulations. In these scenarios, the first demand characteristic condition is "vig.1" and the second is "vig.2". In these scenarios, we sum the summary statistics scores, for reasons we describe in the paper.
-```{r}
+```{r merge surv.sum and DF}
 # connect summary data to effect size dataframe
 DF <- DF %>% 
   # join vig.1 data
@@ -830,7 +831,8 @@ DF <- DF %>%
 ```
 
 # Prep dataset for replication of Coles et al. 2022
-```{r}
+Note: this was originally a Study 3 for the meta-analysis, but is now only summarized in the overall synthesis (based on reviewer feedback)
+```{r open replication data}
 # import data
 DF.surv2 <- 
   read_csv(file = "data/metaware_SurvData_raw.csv")
@@ -1013,7 +1015,7 @@ DF.surv2$bel.c = scale(DF.surv2$bel,
 
 # Export
 When sensitivity analyses are performed, there will be a token variable created called "sens". If this variable does not exist (i.e., it isn't a sensitivity analysis) export the main data as the official clean version.
-```{r}
+```{r export sens}
 if(!exists("sens")){
   write.csv(DF, 
             "data/metaware_meta_clean.csv", 
@@ -1022,7 +1024,7 @@ if(!exists("sens")){
 ```
 
 Export replication study dataset
-```{r}
+```{r export}
 write.csv(DF.surv2,
           "data/metaware_replication_clean.csv",
           row.names = F)

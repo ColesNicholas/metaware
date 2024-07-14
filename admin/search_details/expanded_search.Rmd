@@ -1,9 +1,11 @@
 ---
-title: "Metaware 04/17 Expanded Search"
+title: "Metaware 04/17/24 Expanded Search"
 output: html_document
 editor_options: 
   chunk_output_type: console
 ---
+
+During first round review, reviewers suggested that we update our literature search strategy. On April 17, 2024, this code was developed to merge (a) the original coding sheet, with (b) the outputs of two additional searches performed to address the reviewer feedback.
 
 ```{r}
 # clear environment
@@ -13,9 +15,11 @@ rm(list = ls())
 library(tidyverse)
 library(readxl)
 
-# open original file
+# open copy of what the coding sheet looks like as of 04/17/24
 DF.orig <- read_excel(path = 'metaware_EsData_raw_041724.xlsx',
                       sheet = "records.screening") %>% 
+  
+  # clean database labels
   mutate(database = 
            if_else(database == "APA PsycInfo (2022)",
                    true = "Search 1: APA PsycInfo (2022)",
@@ -65,6 +69,7 @@ DF.new.2 <- read_excel(path = "metaware_ExpandedSearch_OldTerms_041724.xls") %>%
          authors = Authors,
          database = Database,
          link = DocumentURL) %>% 
+  
   select(title, abstract, 
          MW_include, MW_rationale, NC_include, NC_rationale, note,
          authors, year, link, database)
@@ -73,14 +78,9 @@ DF.new.2 <- read_excel(path = "metaware_ExpandedSearch_OldTerms_041724.xls") %>%
 DF.new <- rbind(DF.new.1, DF.new.2)
 
 rm(DF.new.1, DF.new.2)
-```
 
-```{r}
 # merge new and old search
 DF <- rbind(DF.orig, DF.new)
-
-# descriptives
-DF$database %>% table()
 
 # examine the extent to which this new search was duplicative
 DF$title %>%
@@ -95,4 +95,3 @@ write.csv(DF,
           'metaware_EsData_raw_updated.csv',
           row.names = F)
 ```
-

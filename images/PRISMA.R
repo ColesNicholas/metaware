@@ -1,3 +1,6 @@
+# This code is used to complile information for a PRISMA flowchart detailing the literature search strategy
+# author: "Anonymous for peer review; NAC"
+
 #----------------------------------------------
 # load libraries
 library("tidyverse")
@@ -57,37 +60,6 @@ DF.screen %>%
   # summarise
   group_by(exclusion.final) %>% 
   summarise(n = n())
-
-#----------------------------------------------
-# why so many 5's?
-DF.screen %>%
-  
-  # identify final exclusion reason
-  mutate(exclusion.final = 
-           if_else(condition = !is.na(NC_rationale),
-                   true = NC_rationale,
-                   false = MW_rationale)) %>% 
-  
-  filter(exclusion.final == 5) %>% 
-  View()
-
-#----------------------------------------------
-# Should also split by search type and check the reasons. E.g., there should be no 6's in Searches 1 and 2. If there is, it was a neural outcomes
-DF.screen %>%
-  
-  # identify final exclusion reason
-  mutate(exclusion.final = 
-           if_else(condition = !is.na(NC_rationale),
-                   true = NC_rationale,
-                   false = MW_rationale)) %>% 
-  
-  # select excluded records
-  filter(MW_include == 0 |
-           NC_include == 0) %>% 
-  
-  # summarise
-  group_by(database, exclusion.final) %>% 
-  summarise(n = n()) %>% View()
 
 #----------------------------------------------
 # number of papers
