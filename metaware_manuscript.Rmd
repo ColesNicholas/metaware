@@ -148,7 +148,7 @@ DF.s <-
   read_xlsx(path = "data/metaware_EsData_raw.xlsx",
             sheet = "records.screening") %>% 
   
-  # identify 
+  # identify:
   # unpublished dissertations by identifying links that contain the word 'dissertation' AND
   # records identified manually by identify links that contain 'NA'
   mutate(unpub = 
@@ -183,7 +183,6 @@ Our search did not have language restrictions and went as far back as 1840, whic
 
 ```{r prisma, fig.cap = "PRISMA-style flowchart illustrating the identification, screening, and selection of studies."}
 knitr::include_graphics("images/metaware_PRISMA.png")
-
 ```
 
 ### Screening
@@ -236,7 +235,8 @@ DF.es <- DF.es %>%
          id.es = factor(id.es))
 
 # clean environment
-rm(DF.s, r.pub, r.unp, num.s, num.p, outlier.es, records.per.search)
+rm(DF.s, r.pub, r.unp, num.s, 
+   num.p, outlier.es, records.per.search)
 ```
 
 ### Effect size index
@@ -1382,8 +1382,6 @@ m.mod <- rma.mv(yi = es,
 
 r2 <- (sum(m.int$sigma2) - sum(m.mod$sigma2)) / sum(m.int$sigma2) 
 
-
-
 rm(DF.cmplt, m.int, m.mod)
 ```
 
@@ -1653,22 +1651,11 @@ names(pub.r) = paste0("rho_", rho.l) #  name list
 # delete vestigial 
 rm(rho.l, PubBias)
 
-# look at sensitivity analyses
+# look at sensitivity analyses, if you'd like
 ## general story: often, but not always, find evidence of reverse publication bias (preference for negative effects)
 # lapply(pub.r, function(x){x[["pe.a"]]})
-# lapply(pub.r, function(x){x[["peese"]]})
 # lapply(pub.r, function(x){x[["weight.funct"]]})
 # lapply(pub.r, function(x){x[["funnel"]]})
-
-# plot funnels
-# overall %>% 
-#   metafor::funnel(x = .,
-#                   hlines = "lightgray",
-#                   xlab = "Cohen's standardized d")
-# 
-# pub.r$rho_0.5$pe.3l$b[2]
-# 
-# pub.r$rho_0.5$weight.funct %>% View()
 ```
 
 Overall, publication bias analyses were inconclusive. Both precision-effect tests with 3LMA[^8] ($\beta$ = `r pub.r$rho_0.5$pe.3l$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[2]`, `r pub.r$rho_0.5$pe.3l$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[2])`) and aggregated dependencies ($\beta$ = `r pub.r$rho_0.5$pe.a$b[2]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[2]`, `r pub.r$rho_0.5$pe.a$ci.ub[2]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[2])`) provided non-significant evidence of publication bias that favored hypothesis-consistent shifts in participants’ responses. The bias-corrected overall effect size estimates with both 3LMA ($g$ = `r pub.r$rho_0.5$pe.3l$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.3l$ci.lb[1]`, `r pub.r$rho_0.5$pe.3l$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.3l$pval[1])`) and aggregated dependencies ($g$ = `r pub.r$rho_0.5$pe.a$b[1]`, 95% CI [`r pub.r$rho_0.5$pe.a$ci.lb[1]`, `r pub.r$rho_0.5$pe.a$ci.ub[1]`], $p$ = `r printp(pub.r$rho_0.5$pe.a$pval[1])`) did not significantly vary from zero. In other words, precision-effect tests failed to uncover evidence of publication bias, but also suggested that the overall effect size may not be robust if publication bias does exist. Further complicating matters is the unusual distribution of the funnel plots, especially in regards to two unusually large aggregated effect size estimates (see Figure \@ref(fig:funnel)).
@@ -1836,38 +1823,6 @@ We do not deny the importance of these methodological limitations. Instead, we p
 Since @orne1962social famously described the idea 50+ years ago, demand characteristics have become a literal textbook methodological concern in experimental psychology [@sharpe2016frightened]. @orne1962social further suggested that demand characteristics constituted an omnipresent threat to the validity of experimental psychology, arguing that "...all experiments will have demand characteristics, and these will always have some effects" [-@orne1962social, p. 779]. Consequently, it is perhaps not surprising that significant effort has been dedicated to their study.
 
 Unfortunately, it is not clear if much has been learned in these 50+ years. Our review suggested that demand effects can indeed be inferentially consequential -- but are also unreliable, difficult to predict, and challenging to explain. Whether such observations should undermine confidence in the utility of experimental psychology is a question we believe demands more attention.
-
-```{r rating.feature.links, include = F}
-# open library
-library(lmerTest)
-
-# allow for Type III Sums of Square
-options(contrasts = c('contr.sum', 'contr.poly'))
-
-# att
-att <-
-  lmer(att ~ student + paid + online + (1 | id.study),
-       data = DF.es) %>% 
-  anova()
-
-mot <-
-  lmer(mot ~ student + paid + online + (1 | id.study),
-       data = DF.es) %>% 
-  anova()
-
-opp <-
-  lmer(opp ~ student + paid + online + (1 | id.study),
-       data = DF.es) %>% 
-  anova()
-   
-bel <-
-  lmer(bel ~ student + paid + online + (1 | id.study),
-       data = DF.es) %>% 
-  anova() 
-
-rm(att, mot, opp, bel)
-
-```
 
 # References
 
