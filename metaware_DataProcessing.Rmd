@@ -18,6 +18,9 @@ library("tidyverse")
 library("readxl")
 library("performance")
 library("lme4")
+
+# set wd
+setwd("~/Documents/GitHub/metaware")
 ```
 
 # Open and clean metaware_ESData_raw.xlsx
