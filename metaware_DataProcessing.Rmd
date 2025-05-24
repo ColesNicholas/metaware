@@ -388,8 +388,8 @@ DF <- DF %>%
   
   # where appropriate, convert variables to factors
   mutate(across(.cols = c(id.study, id.es, published, student,
-                          paid, online, ref.type,
-                          ref.r),
+                          paid, online, ref.type, ref.r,
+                          comparison),
                 .fns = as.factor)
          ) %>% 
   
