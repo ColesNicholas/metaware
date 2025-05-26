@@ -702,7 +702,10 @@ mod.l <- c("student", "paid", "online",
            "year", #"att",
            
            # exploratory quality control measures
-           'report', 'internal')
+           'report', 'internal',
+           
+           # exploratory type of effect size
+           "comparison")
 mod.r <- 
   sapply(X = mod.l,
          simplify = F,
