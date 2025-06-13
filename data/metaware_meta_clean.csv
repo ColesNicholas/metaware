@@ -237,77 +237,77 @@
 "46","236","Fresson et al. (2017)","The role of self-transcendence and cognitive processes in the response expectancy effect",2017,1,"yes","BEL",NA,NA,"no","within","cvp","N/A","N/A","diff","single",0.782188664861628,0.149974231404959,0.0231491353473287,1.54122819437593,NA,NA,NA,NA,NA,0.571428571428571,0,1
 "47","237","Balze (1999)","The role of expectancy in treatment efficacy: The use of a therapeutic ""frame"" to enhance performance",1998,1,"no","USA","yes","no","no","between","cvp","N/A","N/A","diff_diff","single",0.118865960279622,0.0309335400624318,-0.225857533993452,0.463589454552696,NA,NA,NA,NA,NA,0.571428571428571,0,1
 "48","238","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff_diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","239","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff_diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","240","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff_diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","241","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff_diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","242","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff_diff","single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","243","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff_diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","244","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff_diff","double",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","245","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff_diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","246","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff_diff","single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","247","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff_diff","single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","248","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff_diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","249","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff_diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","250","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","251","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","252","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","253","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff","single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","254","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff","single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","255","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","256","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","257","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","258","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","259","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","260","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff","single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","261","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","262","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","263","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff","double",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","264","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","265","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff","single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","266","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff","single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","267","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","268","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","269","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","pvn","N/A","N/A",NA,"double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","pvn","N/A","N/A","diff","double",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","270","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","271","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","cvp","N/A","N/A",NA,"single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","cvp","N/A","N/A","diff","single",-0.222207855765077,0.106913491567946,-0.863081376209963,0.418665664679808,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","272","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "48","273","Palomba & Stegagno (1995)","Dissociation between actual and expected cardiac
-changes: Interoception and emotional experience",1995,1,"yes",NA,NA,NA,"no","between","nvc","N/A","N/A",NA,"single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
+changes: Interoception and emotional experience",1995,1,"yes","ITA",NA,NA,"no","between","nvc","N/A","N/A","diff","single",0.222207855765077,0.106913491567946,-0.418665664679808,0.863081376209963,NA,NA,NA,NA,NA,0.142857142857143,0,1
 "49","274","Coles et al. (2024, Study 1)","Coles et al. (2024) unpublished conceptual replication of Berry (1967)",2024,1,"no","DNK","no","yes","yes","within","cvp","N/A","N/A","diff","single",-0.097576304494011,0.0125968726221088,-0.317558453463179,0.122405844475157,NA,NA,NA,NA,NA,0,0,1
 "50","275","Coles et al. (2024, Study 2)","Coles et al. (2024) unpublished conceptual replication of Berry (1967)",2024,2,"no","MYS","yes","no","yes","within","cvp","N/A","N/A","diff","single",-0.223725465297766,0.114863854929002,-0.888000246615898,0.440549316020366,NA,NA,NA,NA,NA,0,0,1
 "51","276","Coles et al. (2024, Study 3)","Coles et al. (2024) unpublished conceptual replication of Berry (1967)",2024,3,"no","POL","yes","yes","yes","within","cvp","N/A","N/A","diff","single",-0.150201622105411,0.01449653715918,-0.386188691985746,0.0857854477749231,NA,NA,NA,NA,NA,0,0,1
