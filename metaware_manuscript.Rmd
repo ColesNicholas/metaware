@@ -292,7 +292,15 @@ sens.range <- max(sens.res) - min(sens.res)
 rm(sens.df.list, sens.res)
 ```
 
-We calculated Hedge's $g$ by applying a small sample correction to Cohen's $d_{s}$ (for between-subject designs) and $d_{rm}$ (for within-subject designs[^3]) estimates. Whenever possible, we used the *M*'s and *SD*'s reported in a paper to compute Cohen's *d*. If these values were not reported, we used (in order of preference), (1) *t*-values, (2) descriptive statistics extracted from figures (e.g., bar charts) using the WebPlotDigitizer [@drevon2017intercoder], (3) *F*-values, or (4) *p*-values. In instances where relevant information was not provided but the statistical significance and direction of the effect was described, we assumed *p*-values of .04 and .50 for statistically significant and non-significant effects respectively [e.g., @kenealy1988validation]. In a few instances, an outcome variable in a study was discrete, as opposed to continuous [e.g., @orne1964contribution]. In these cases, we approximated a Cohen's *d* score based on a transformation of the log odds ratio [@borenstein2011introduction].
+```{r es.index, include = FALSE}
+es.index <- 
+  DF.es$es.calc %>% 
+  table %>% 
+  prop.table %>% 
+  round(2)* 100
+```
+
+We calculated Hedge's $g$ by applying a small sample correction to Cohen's $d_{s}$ (for between-subject designs) and $d_{rm}$ (for within-subject designs[^3]) estimates. In `r es.index[2]`% of cases, we used the *M*'s and *SD*'s reported in a paper [or extracted from WebPlotDigitizer; @drevon2017intercoder]. If these values were not available, we used (in order of preference), (1) *t*-values (`r es.index[5]`%), (2) *F*-values (`r es.index[1]`%), or (3) *p*-values (`r es.index[4]`%). In instances where relevant information was not provided but the statistical significance and direction of the effect was described, we assumed *p*-values of .04 and .50 for statistically significant and non-significant effects respectively [e.g., @kenealy1988validation]. In a few instances (`r es.index[3]`%), an outcome variable in a study was discrete, as opposed to continuous [e.g., @orne1964contribution]. In these cases, we approximated a Cohen's *d* score based on a transformation of the log odds ratio [@borenstein2011introduction].
 
 [^3]: For repeated-measure comparisons, the correlation between the repeated measures is needed to calculate Cohen's $d_{rm}$. This correlation is rarely reported, so we followed a recommendation by @borenstein2009effect and performed sensitivity analyses on an assumed correlation. We preregistered a default correlation of $r$ = .50 but performed sensitivity analysis with $r$ = .10, .30, .50, .70, and .90. These sensitivity analyses produced virtually no change in overall effect size estimates, so we do not discuss them further.
 
