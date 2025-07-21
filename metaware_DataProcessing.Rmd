@@ -389,12 +389,12 @@ DF <- DF %>%
   # where appropriate, convert variables to factors
   mutate(across(.cols = c(id.study, id.es, published, student,
                           paid, online, ref.type, ref.r,
-                          comparison),
+                          comparison, es.calc),
                 .fns = as.factor)
          ) %>% 
   
   # remove unnecessary columns
-  select(-c(es.calc : pval))
+  select(-c(direction : pval))
 ```
 
 # Open and clean vignette rating data
@@ -827,7 +827,7 @@ DF <- DF %>%
          citation : ref.r, 
          es, es.var, lb, ub,
          att : pre,
-         report : internal)
+         report : internal, es.calc)
 ```
 
 # Prep dataset for replication of Coles et al. 2022
